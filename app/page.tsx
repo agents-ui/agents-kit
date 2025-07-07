@@ -17,24 +17,6 @@ import { PromptInputChatGPT } from "./examples/chatgpt"
 import { PromptInputDeepSeek } from "./examples/deepseek"
 import { PromptInputMistralAI } from "./examples/mistralai"
 
-const TABS = [
-  {
-    label: "ChatGPT",
-    component: PromptInputChatGPT,
-    img: getAssetPath("/openai_logo.png"),
-  },
-  {
-    label: "Mistral AI",
-    component: PromptInputMistralAI,
-    img: getAssetPath("/mistral_logo.png"),
-  },
-  {
-    label: "DeepSeek",
-    component: PromptInputDeepSeek,
-    img: getAssetPath("/deepseek_logo.png"),
-  },
-]
-
 const CODE_SAMPLE = `import {
   PromptInput,
   PromptInputTextarea,
@@ -64,6 +46,24 @@ const MOTION_TRANSITION = {
 }
 
 export default function Home() {
+  const TABS = [
+    {
+      label: "ChatGPT",
+      component: PromptInputChatGPT,
+      img: getAssetPath("/openai_logo.png"),
+    },
+    {
+      label: "Mistral AI",
+      component: PromptInputMistralAI,
+      img: getAssetPath("/mistral_logo.png"),
+    },
+    {
+      label: "DeepSeek",
+      component: PromptInputDeepSeek,
+      img: getAssetPath("/deepseek_logo.png"),
+    },
+  ]
+
   const [activeTab, setActiveTab] = useState(TABS[0])
   const [hasCopyLabel, setHasCopyLabel] = useState(false)
 
