@@ -8,6 +8,8 @@ const chConfig = {
   syntaxHighlighting: { theme: "github-light" },
 }
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export" as const, // Enable static HTML export
@@ -20,9 +22,11 @@ const nextConfig = {
   images: {
     unoptimized: true, // Required for static export
   },
-  // Uncomment these lines when deploying to GitHub Pages subdirectory
-  // basePath: "/agents-kit",
-  // assetPrefix: "/agents-kit",
+  // Apply basePath and assetPrefix when NEXT_PUBLIC_BASE_PATH is set
+  ...(basePath && {
+    basePath,
+    assetPrefix: basePath,
+  }),
 }
 
 const withMDX = createMDX({
