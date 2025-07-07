@@ -3,7 +3,7 @@
 **Advanced UI components for building AI agent interfaces.**  
 Build sophisticated agent experiences, autonomous assistants, and multi-agent systems with beautiful, customizable components.
 
-![agents-ui-kit hero](/public/screenshots/agents-ui-kit-hero.png)
+![agents-ui-kit hero](/screenshot.png)
 
 ## About
 
