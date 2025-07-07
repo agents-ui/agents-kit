@@ -17,8 +17,9 @@
     "build:registry": "tsx scripts/registry-build.ts",
     "generate-llms-txt": "node scripts/generate-llms-txt.js",
     "build:static": "next build && echo 'Static site built to ./out directory'",
+    "build:github": "next build --config next.config.github.ts",
     "serve:static": "npx serve out",
-    "deploy:gh-pages": "npm run build && npx gh-pages -d out"
+    "deploy:gh-pages": "npm run build:github && npx gh-pages -d out"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",

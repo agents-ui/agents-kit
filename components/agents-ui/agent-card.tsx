@@ -56,7 +56,10 @@ export function AgentCard({
   const statusInfo = statusConfig[status]
 
   return (
-    <div className={cn("rounded-lg border bg-card p-4", className)}>
+    <div className={cn(
+      "rounded-lg p-4 bg-card border",
+      className
+    )}>
       <div className="flex items-start gap-3">
         <Avatar className="h-10 w-10">
           <AvatarImage src={avatar} alt={name} />

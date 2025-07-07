@@ -20,9 +20,9 @@ const nextConfig = {
   images: {
     unoptimized: true, // Required for static export
   },
-  // Uncomment these lines when deploying to GitHub Pages subdirectory
-  // basePath: "/agents-kit",
-  // assetPrefix: "/agents-kit",
+  // Base path for GitHub Pages
+  basePath: "/agents-kit",
+  assetPrefix: "/agents-kit",
 }
 
 const withMDX = createMDX({

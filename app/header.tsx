@@ -28,7 +28,7 @@ export function Header({ triggerViewportWidth }: HeaderProps) {
           ) : (
             <a
               className="inline-flex items-center gap-1 rounded-md border border-border bg-background px-2 py-1 text-sm text-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-              href="https://github.com/ibelick/prompt-kit"
+              href="https://github.com/agents-ui/agents-kit"
               target="_blank"
               rel="noopener noreferrer"
             >

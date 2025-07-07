@@ -1,8 +1,9 @@
 import { generateMetadata } from "../utils/metadata"
+import { CodeBlock } from "@/components/prompt-kit/code-block"
 
 export const metadata = generateMetadata(
   "Installation",
-  "Installation guide for prompt-kit."
+  "Installation guide for agents-ui-kit and prompt-kit components."
 )
 
 # Installation
@@ -13,25 +14,92 @@ Before installing, ensure you have the following:
 
 - [Node.js](https://nodejs.org/en/download/) version **18** or later
 - [React](https://react.dev/) version **19** or later
+- [Next.js](https://nextjs.org/) version **14** or later (recommended)
 
 ## Install shadcn/ui
 
 First, you'll need to install and configure shadcn/ui in your project. Follow the installation guide at [shadcn/ui documentation](https://ui.shadcn.com/docs/installation).
 
-Once shadcn/ui is set up, you can install **prompt-kit** components using the **shadcn CLI**.
+## Installing Components
 
-## Using the shadcn CLI
+agents-ui-kit extends prompt-kit with additional components. You can install components from both libraries using the shadcn CLI.
+
+### Installing prompt-kit Components
+
+For base AI interface components (chat, messages, code blocks, etc.):
 
 <CodeBlock
   language="bash"
   code={`npx shadcn@latest add "https://prompt-kit.com/c/[COMPONENT].json"`}
 />
 
+### Installing agents-ui Components
+
+For agent-specific components (agent cards, memory bank, etc.):
+
+<CodeBlock
+  language="bash"
+  code={`npx shadcn@latest add "https://agents-ui-kit.com/c/[COMPONENT].json"`}
+/>
+
+## Example Installation
+
+Here's how to install commonly used components:
+
+<CodeBlock
+  language="bash"
+  code={`# Install base components from prompt-kit
+npx shadcn@latest add "https://prompt-kit.com/c/prompt-input.json"
+npx shadcn@latest add "https://prompt-kit.com/c/message.json"
+npx shadcn@latest add "https://prompt-kit.com/c/chat-container.json"
+
+# Install agent components from agents-ui-kit
+npx shadcn@latest add "https://agents-ui-kit.com/c/agent-card.json"`}
+/>
+
 ## Usage
 
-After installation, import and start using the components in your project:
+After installation, import and use the components in your project:
 
 <CodeBlock
   language="tsx"
-  code={`import { PromptInput } from "@/components/ui/prompt-input";`}
+  code={`// prompt-kit components
+import { PromptInput } from "@/components/prompt-kit/prompt-input"
+import { Message } from "@/components/prompt-kit/message"
+
+// agents-ui components
+import { AgentCard } from "@/components/agents-ui/agent-card"`}
 />
+
+## Project Structure
+
+Components will be installed in the following structure:
+
+```
+components/
+├── ui/              # shadcn/ui base components
+├── prompt-kit/      # AI interface components
+└── agents-ui/       # Agent-specific components
+```
+
+## TypeScript Configuration
+
+Ensure your `tsconfig.json` includes the proper path aliases:
+
+<CodeBlock
+  language="json"
+  code={`{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}`}
+/>
+
+## Next Steps
+
+1. Browse the component documentation to see all available components
+2. Check out the [Agent Card](/docs/agent-card) component for building agent interfaces
+3. Explore the Memory Bank system for advanced state management
+4. Join our community for support and updates

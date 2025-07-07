@@ -304,6 +304,32 @@
         "ai",
         "prompt-kit"
       ]
+    },
+    {
+      "name": "agent-card",
+      "type": "registry:ui", 
+      "title": "Agent Card",
+      "description": "A versatile component for displaying AI agent information with status indicators and capabilities",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [
+        "avatar",
+        "button",
+        "tooltip"
+      ],
+      "files": [
+        {
+          "path": "components/agents-ui/agent-card.tsx",
+          "type": "registry:component",
+          "content": "import { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Button } from \"@/components/ui/button\"\nimport {\n  Tooltip,\n  TooltipContent,\n  TooltipProvider,\n  TooltipTrigger,\n} from \"@/components/ui/tooltip\"\nimport { cn } from \"@/lib/utils\"\nimport { \n  Bot, \n  CheckCircle2, \n  Circle, \n  CircleDot, \n  Loader2, \n  PauseCircle, \n  XCircle \n} from \"lucide-react\"\n\nexport type AgentStatus = \"idle\" | \"thinking\" | \"running\" | \"paused\" | \"error\" | \"completed\"\n\nexport interface AgentCapability {\n  name: string\n  description: string\n  icon?: React.ReactNode\n}\n\nexport interface AgentCardProps {\n  name: string\n  description?: string\n  avatar?: string\n  status?: AgentStatus\n  capabilities?: AgentCapability[]\n  className?: string\n  onAction?: (action: string) => void\n  variant?: \"default\" | \"dark\" | \"light\" | \"gradient\"\n  theme?: \"auto\" | \"dark\" | \"light\"\n}\n\nconst statusConfig: Record<AgentStatus, { icon: React.ReactNode; color: string; label: string }> = {\n  idle: { icon: <Circle className=\"h-3 w-3\" />, color: \"text-muted-foreground\", label: \"Idle\" },\n  thinking: { icon: <CircleDot className=\"h-3 w-3 animate-pulse\" />, color: \"text-yellow-500\", label: \"Thinking\" },\n  running: { icon: <Loader2 className=\"h-3 w-3 animate-spin\" />, color: \"text-blue-500\", label: \"Running\" },\n  paused: { icon: <PauseCircle className=\"h-3 w-3\" />, color: \"text-orange-500\", label: \"Paused\" },\n  error: { icon: <XCircle className=\"h-3 w-3\" />, color: \"text-red-500\", label: \"Error\" },\n  completed: { icon: <CheckCircle2 className=\"h-3 w-3\" />, color: \"text-green-500\", label: \"Completed\" },\n}\n\nexport function AgentCard({\n  name,\n  description,\n  avatar,\n  status = \"idle\",\n  capabilities = [],\n  className,\n  onAction,\n  variant = \"default\",\n  theme = \"auto\",\n}: AgentCardProps) {\n  const statusInfo = statusConfig[status]\n\n  const variantStyles = {\n    default: \"bg-card border\",\n    dark: \"bg-zinc-900 border-zinc-700 text-white\",\n    light: \"bg-white border-gray-200 text-gray-900\",\n    gradient: \"bg-gradient-to-br from-purple-500 to-pink-500 text-white border-0\",\n  }\n\n  const themeOverride = theme !== \"auto\" ? (theme === \"dark\" ? \"dark\" : \"\") : \"\"\n\n  return (\n    <div className={cn(\n      \"rounded-lg p-4\",\n      variantStyles[variant],\n      themeOverride,\n      className\n    )}>\n      <div className=\"flex items-start gap-3\">\n        <Avatar className=\"h-10 w-10\">\n          <AvatarImage src={avatar} alt={name} />\n          <AvatarFallback>\n            <Bot className=\"h-5 w-5\" />\n          </AvatarFallback>\n        </Avatar>\n        \n        <div className=\"flex-1 space-y-1\">\n          <div className=\"flex items-center justify-between\">\n            <h3 className=\"font-semibold\">{name}</h3>\n            <TooltipProvider>\n              <Tooltip>\n                <TooltipTrigger asChild>\n                  <div className={cn(\"flex items-center gap-1\", statusInfo.color)}>\n                    {statusInfo.icon}\n                    <span className=\"text-xs\">{statusInfo.label}</span>\n                  </div>\n                </TooltipTrigger>\n                <TooltipContent>\n                  <p>Status: {statusInfo.label}</p>\n                </TooltipContent>\n              </Tooltip>\n            </TooltipProvider>\n          </div>\n          \n          {description && (\n            <p className=\"text-sm text-muted-foreground\">{description}</p>\n          )}\n          \n          {capabilities.length > 0 && (\n            <div className=\"pt-2\">\n              <p className=\"text-xs font-medium text-muted-foreground mb-1\">Capabilities:</p>\n              <div className=\"flex flex-wrap gap-1\">\n                {capabilities.map((capability, index) => (\n                  <TooltipProvider key={index}>\n                    <Tooltip>\n                      <TooltipTrigger asChild>\n                        <span className=\"inline-flex items-center gap-1 rounded-md bg-secondary px-2 py-1 text-xs\">\n                          {capability.icon}\n                          {capability.name}\n                        </span>\n                      </TooltipTrigger>\n                      <TooltipContent>\n                        <p>{capability.description}</p>\n                      </TooltipContent>\n                    </Tooltip>\n                  </TooltipProvider>\n                ))}\n              </div>\n            </div>\n          )}\n        </div>\n      </div>\n      \n      {onAction && (\n        <div className=\"mt-3 flex gap-2\">\n          {status === \"idle\" && (\n            <Button size=\"sm\" onClick={() => onAction(\"start\")}>\n              Start Agent\n            </Button>\n          )}\n          {(status === \"running\" || status === \"thinking\") && (\n            <>\n              <Button size=\"sm\" variant=\"outline\" onClick={() => onAction(\"pause\")}>\n                Pause\n              </Button>\n              <Button size=\"sm\" variant=\"destructive\" onClick={() => onAction(\"stop\")}>\n                Stop\n              </Button>\n            </>\n          )}\n          {status === \"paused\" && (\n            <Button size=\"sm\" onClick={() => onAction(\"resume\")}>\n              Resume\n            </Button>\n          )}\n          {(status === \"completed\" || status === \"error\") && (\n            <Button size=\"sm\" onClick={() => onAction(\"restart\")}>\n              Restart\n            </Button>\n          )}\n        </div>\n      )}\n    </div>\n  )\n}"
+        }
+      ],
+      "categories": [
+        "ai",
+        "agents-ui"
+      ]
     }
   ]
 }

@@ -54,7 +54,7 @@ const blocksMenuItems = routes
 const socialMenuItems = [
   {
     title: "GitHub",
-    url: "https://github.com/ibelick/prompt-kit",
+    url: "https://github.com/agents-ui/agents-kit",
   },
   {
     title: "X (Twitter)",

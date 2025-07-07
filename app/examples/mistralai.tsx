@@ -6,7 +6,6 @@ import {
   PromptInputTextarea,
 } from "@/components/prompt-kit/prompt-input"
 import { Button } from "@/components/ui/button"
-import { Arrow } from "@radix-ui/react-tooltip"
 import {
   ArrowRight,
   FileText,
@@ -78,14 +77,7 @@ export function PromptInputMistralAI() {
           <PromptInputAction
             delayDuration={0}
             className="duration-0 data-[state=closed]:duration-0"
-            tooltip={
-              <div className="bg-black">
-                <Arrow className="fill-black" />
-                <span className="text-xs leading-none font-normal text-white">
-                  Drop PDFs or images here
-                </span>
-              </div>
-            }
+            tooltip="Drop PDFs or images here"
           >
             <Button
               variant="ghost"

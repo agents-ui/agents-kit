@@ -95,7 +95,7 @@ export default function Home() {
             Get Started
           </Link>
           <Link
-            href="https://github.com/ibelick/prompt-kit"
+            href="https://github.com/agents-ui/agents-kit"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex h-10 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 text-base text-black dark:text-white transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-700"
@@ -123,7 +123,7 @@ export default function Home() {
           <AnimatedBackground
             defaultValue={activeTab.label}
             className={cn(
-              "rounded-lg bg-zinc-100 transition-colors group-hover:bg-zinc-200/60 group-active:bg-zinc-200"
+              "rounded-lg bg-zinc-100 dark:bg-zinc-800 transition-colors"
             )}
             transition={MOTION_TRANSITION}
             onValueChange={(newActiveId) => {
@@ -138,9 +138,9 @@ export default function Home() {
                 key={tab.label}
                 data-id={tab.label}
                 className={cn(
-                  "rounded-md px-2 py-1 text-sm text-zinc-500 transition-all hover:text-black active:scale-[0.98]",
+                  "rounded-md px-2 py-1 text-sm text-zinc-500 dark:text-zinc-400 transition-all hover:text-black dark:hover:text-white active:scale-[0.98]",
                   "group",
-                  activeTab.label === tab.label && "text-black"
+                  activeTab.label === tab.label && "text-black dark:text-white"
                 )}
                 type="button"
               >

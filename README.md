@@ -118,4 +118,4 @@ Email: me@abhishek.it
 
 ---
 
-Built with ❤️ on top of [prompt-kit](https://github.com/[original-repo]/prompt-kit) and [shadcn/ui](https://ui.shadcn.com)
+Built with ❤️ on top of [prompt-kit](https://github.com/ibelick/prompt-kit) and [shadcn/ui](https://ui.shadcn.com)
