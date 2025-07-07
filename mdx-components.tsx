@@ -45,7 +45,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         <ClientCodeWrapper code={fileContent}>
           <div
             dangerouslySetInnerHTML={{ __html: html }}
-            className="not-prose bg-background overflow-auto rounded-md border border-zinc-200 p-2 text-[13px]"
+            className="not-prose bg-zinc-50 dark:bg-zinc-900/50 overflow-auto rounded-md border border-zinc-200 dark:border-zinc-700 p-4 text-[13px]"
             {...props}
           />
         </ClientCodeWrapper>
@@ -87,7 +87,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       className,
       ...props
     }: React.HTMLAttributes<HTMLTableElement>) => (
-      <div className="not-prose relative w-full table-auto overflow-auto rounded-lg border border-zinc-200 text-sm dark:border-zinc-800">
+      <div className="not-prose relative w-full table-auto overflow-auto rounded-lg border border-zinc-200 dark:border-zinc-700 text-sm">
         <table className={cn("w-full", className)} {...props} />
       </div>
     ),
@@ -97,7 +97,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     }: React.HTMLAttributes<HTMLTableSectionElement>) => (
       <thead
         className={cn(
-          "bg-zinc-100 text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100",
+          "bg-zinc-100 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100",
           className
         )}
         {...props}
@@ -109,7 +109,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     }: React.HTMLAttributes<HTMLTableSectionElement>) => (
       <tbody
         className={cn(
-          "divide-y divide-zinc-200 dark:divide-y dark:divide-zinc-600",
+          "divide-y divide-zinc-200 dark:divide-y dark:divide-zinc-700",
           className
         )}
         {...props}

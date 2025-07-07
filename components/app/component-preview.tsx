@@ -73,7 +73,7 @@ export default function ComponentPreview({
   return (
     <div
       className={cn(
-        "flex min-h-[350px] w-full items-center justify-center rounded-md border border-zinc-200",
+        "flex min-h-[350px] w-full items-center justify-center rounded-md border border-zinc-200 dark:border-zinc-700",
         className
       )}
     >

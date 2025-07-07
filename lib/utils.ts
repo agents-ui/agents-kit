@@ -37,8 +37,9 @@ export function getBaseUrl() {
       return process.env.NEXT_PUBLIC_BASE_URL
     }
 
-    // Default for development
-    return process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""
+    // Default for development - check PORT env var first
+    const port = process.env.PORT || 3000
+    return process.env.NODE_ENV === "development" ? `http://localhost:${port}` : ""
   }
 
   // For client-side, we can just use the browser's location

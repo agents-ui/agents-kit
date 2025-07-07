@@ -6,7 +6,40 @@ import React from "react"
 async function importComponent(componentName: string) {
   try {
     const module = await import(`@/components/blocks/${componentName}`)
-    return module.default || Object.values(module)[0]
+    
+    // Handle default export
+    if (module.default) {
+      return module.default
+    }
+    
+    // Handle named exports - try to find a component that matches the file name
+    // Convert kebab-case to PascalCase
+    const pascalCase = componentName
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join('')
+    
+    // Try exact match first
+    if (module[pascalCase]) {
+      return module[pascalCase]
+    }
+    
+    // Try with "Component" suffix
+    if (module[`${pascalCase}Component`]) {
+      return module[`${pascalCase}Component`]
+    }
+    
+    // Fall back to first exported component
+    const exports = Object.values(module).filter(
+      exp => typeof exp === 'function' && exp.prototype?.isReactComponent !== false
+    )
+    
+    if (exports.length > 0) {
+      return exports[0]
+    }
+    
+    console.error(`No valid component export found in ${componentName}`)
+    return null
   } catch (error) {
     console.error(`Failed to import component ${componentName}:`, error)
     return null
@@ -41,14 +74,12 @@ export async function generateStaticParams() {
   try {
     const componentsDir = path.join(
       process.cwd(),
-      "app",
-      "agi-kit",
-      "docs",
+      "components",
       "blocks"
     )
 
     if (!fs.existsSync(componentsDir)) {
-      console.warn("Blocks directory not found")
+      console.warn("Blocks directory not found at:", componentsDir)
       return []
     }
 
@@ -56,10 +87,10 @@ export async function generateStaticParams() {
     const params = files
       .filter((file: string) => file.endsWith(".tsx") || file.endsWith(".jsx"))
       .map((file: string) => {
-        const component = file.replace(/\.(tsx|jsx)$/, "")
-        console.log("Generated param for component:", component)
+        const componentSlug = file.replace(/\.(tsx|jsx)$/, "")
+        console.log("Generated param for component:", componentSlug)
         return {
-          component,
+          componentSlug,
         }
       })
 

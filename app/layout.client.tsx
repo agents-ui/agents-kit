@@ -1,10 +1,11 @@
 "use client"
 
-import { PromptKitLogo } from "@/components/app/icon/prompt-kit-logo"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useEffect } from "react"
+import { ThemeToggle } from "@/components/app/theme-toggle"
+import { BringToFront } from "lucide-react"
 import {
   Sidebar,
   SidebarContent,
@@ -89,13 +90,16 @@ function AppSidebar() {
       >
         <div className="flex h-full flex-col pb-20 pl-0">
           <SidebarHeader className="hidden items-start px-5 pt-8 md:flex">
-            <Link
-              href="/"
-              className="flex items-center gap-2 pl-2 text-xl font-medium tracking-tighter"
-            >
-              <PromptKitLogo className="h-6 w-6" />
-              <h1 className="leading-none">prompt-kit</h1>
-            </Link>
+            <div className="flex w-full items-center justify-between">
+              <Link
+                href="/"
+                className="flex items-center gap-2 pl-2 text-xl font-medium tracking-tighter"
+              >
+                <BringToFront className="h-6 w-6" />
+                <h1 className="leading-none">agents-ui-kit</h1>
+              </Link>
+              <ThemeToggle />
+            </div>
           </SidebarHeader>
           <SidebarGroup className="border-none pr-0 pl-2 md:px-5 md:pt-[3.6rem]">
             <SidebarGroupLabel className="text-lg md:text-sm">

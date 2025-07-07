@@ -313,3 +313,41 @@ code {
     content: counter(step);
   }
 }
+
+/* Shiki Syntax Highlighting Theme Support */
+html.light {
+  --shiki-color-text: var(--shiki-light);
+  --shiki-color-background: transparent;
+  --shiki-token-constant: var(--shiki-light-token-constant);
+  --shiki-token-string: var(--shiki-light-token-string);
+  --shiki-token-comment: var(--shiki-light-token-comment);
+  --shiki-token-keyword: var(--shiki-light-token-keyword);
+  --shiki-token-parameter: var(--shiki-light-token-parameter);
+  --shiki-token-function: var(--shiki-light-token-function);
+  --shiki-token-string-expression: var(--shiki-light-token-string-expression);
+  --shiki-token-punctuation: var(--shiki-light-token-punctuation);
+  --shiki-token-link: var(--shiki-light-token-link);
+}
+
+html.dark {
+  --shiki-color-text: var(--shiki-dark);
+  --shiki-color-background: transparent;
+  --shiki-token-constant: var(--shiki-dark-token-constant);
+  --shiki-token-string: var(--shiki-dark-token-string);
+  --shiki-token-comment: var(--shiki-dark-token-comment);
+  --shiki-token-keyword: var(--shiki-dark-token-keyword);
+  --shiki-token-parameter: var(--shiki-dark-token-parameter);
+  --shiki-token-function: var(--shiki-dark-token-function);
+  --shiki-token-string-expression: var(--shiki-dark-token-string-expression);
+  --shiki-token-punctuation: var(--shiki-dark-token-punctuation);
+  --shiki-token-link: var(--shiki-dark-token-link);
+}
+
+/* Ensure code blocks have transparent background */
+pre {
+  background-color: transparent !important;
+}
+
+pre code {
+  background-color: transparent !important;
+}

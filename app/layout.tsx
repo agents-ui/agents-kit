@@ -3,6 +3,7 @@ import { Geist_Mono, Inter } from "next/font/google"
 import "./globals.css"
 import Script from "next/script"
 import { LayoutClient } from "./layout.client"
+import { Providers } from "./providers"
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,9 +16,9 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "prompt-kit",
+  title: "agents-ui-kit",
   description:
-    "Core building blocks for AI apps. High-quality, accessible, and customizable components for AI interfaces. Built with React, shadcn/ui and Tailwind CSS.",
+    "Advanced UI components for building AI agent interfaces. Build sophisticated agent experiences, autonomous assistants, and multi-agent systems with beautiful, customizable components.",
 }
 
 export default function RootLayout({
@@ -39,7 +40,9 @@ export default function RootLayout({
       <body
         className={`${inter.className} ${geistMono.variable} font-sans antialiased`}
       >
-        <LayoutClient>{children}</LayoutClient>
+        <Providers>
+          <LayoutClient>{children}</LayoutClient>
+        </Providers>
       </body>
     </html>
   )

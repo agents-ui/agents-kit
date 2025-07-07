@@ -79,10 +79,10 @@ export default function Home() {
     <>
       <div className="mb-12 flex flex-col items-start">
         <div className="mb-5 flex flex-col gap-1 text-pretty">
-          <p className="text-3xl font-[450] tracking-tight text-black">
+          <p className="text-3xl font-[450] tracking-tight text-black dark:text-white">
             Core building blocks for AI apps.
           </p>
-          <p className="text-3xl font-[450] tracking-tight text-zinc-500">
+          <p className="text-3xl font-[450] tracking-tight text-zinc-500 dark:text-zinc-400">
             High-quality, accessible, and customizable components for AI
             interfaces.
           </p>
@@ -98,14 +98,14 @@ export default function Home() {
             href="https://github.com/ibelick/prompt-kit"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-10 items-center justify-center rounded-full border border-zinc-200 bg-white px-4 text-base text-black transition-colors hover:bg-zinc-50"
+            className="inline-flex h-10 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 text-base text-black dark:text-white transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-700"
           >
             <Github className="mr-2 size-4" /> Star on GitHub
           </Link>
         </div>
       </div>
       <div className="-mx-6 mb-40 flex flex-col gap-10 sm:mx-0">
-        <div className="flex min-h-[350px] w-full items-end rounded border border-zinc-200 p-4 sm:p-8">
+        <div className="flex min-h-[350px] w-full items-end rounded border border-zinc-200 dark:border-zinc-700 p-4 sm:p-8">
           <AnimatePresence initial={false} mode="wait">
             <motion.div
               key={activeTab.label}
