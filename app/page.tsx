@@ -7,6 +7,7 @@ import {
 } from "@/components/prompt-kit/code-block"
 import { AnimatedBackground } from "@/components/ui/animated-background"
 import { TextMorph } from "@/components/ui/text-morph"
+import { getAssetPath } from "@/lib/assets"
 import { cn } from "@/lib/utils"
 import { Github } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
@@ -20,17 +21,17 @@ const TABS = [
   {
     label: "ChatGPT",
     component: PromptInputChatGPT,
-    img: "/openai_logo.png",
+    img: getAssetPath("/openai_logo.png"),
   },
   {
     label: "Mistral AI",
     component: PromptInputMistralAI,
-    img: "/mistral_logo.png",
+    img: getAssetPath("/mistral_logo.png"),
   },
   {
     label: "DeepSeek",
     component: PromptInputDeepSeek,
-    img: "/deepseek_logo.png",
+    img: getAssetPath("/deepseek_logo.png"),
   },
 ]
 

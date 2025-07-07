@@ -1,6 +1,7 @@
 "use client"
 
 import { AgentCard } from "@/components/agents-ui/agent-card"
+import { getAssetPath } from "@/lib/assets"
 import { Bot, Brain, FileSearch, MessageSquare } from "lucide-react"
 import { useState } from "react"
 
@@ -52,7 +53,7 @@ export default function AgentCardInteractive() {
     <AgentCard
       name="AI Assistant"
       description="A versatile AI agent that can help with research, analysis, and conversation"
-      avatar="/mistral_logo.png"
+      avatar={getAssetPath("/mistral_logo.png")}
       status={status}
       capabilities={capabilities}
       onAction={handleAction}

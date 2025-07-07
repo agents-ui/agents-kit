@@ -1,24 +1,19 @@
-// Helper to get the correct asset path for both local dev and production
+/**
+ * Get the correct asset path based on the environment
+ * - On localhost: use normal path like /image.png
+ * - On GitHub Pages: use full URL like https://agents-ui.github.io/agents-kit/image.png
+ */
 export function getAssetPath(path: string): string {
-  // Remove leading slash if present
-  const cleanPath = path.startsWith('/') ? path.slice(1) : path
-  
-  // In production, prepend the basePath
-  if (process.env.NODE_ENV === 'production') {
-    return `/agents-kit/${cleanPath}`
+  // Only transform in browser environment
+  if (typeof window === 'undefined') {
+    return path
   }
-  
-  // In development, just return the path
-  return `/${cleanPath}`
-}
 
-// For use in components where we need runtime path resolution
-export function useAssetPath() {
-  const isProd = process.env.NODE_ENV === 'production'
-  const basePath = isProd ? '/agents-kit' : ''
-  
-  return (path: string) => {
-    const cleanPath = path.startsWith('/') ? path.slice(1) : path
-    return `${basePath}/${cleanPath}`
+  // If localhost, return the path as-is
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return path
   }
+
+  // Otherwise, use the full GitHub Pages URL
+  return `https://agents-ui.github.io/agents-kit${path}`
 }
