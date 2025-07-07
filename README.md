@@ -3,11 +3,11 @@
 **Advanced UI components for building AI agent interfaces.**  
 Build sophisticated agent experiences, autonomous assistants, and multi-agent systems with beautiful, customizable components.
 
-![cover](/app/opengraph-image.jpg)
+![agents-ui-kit hero](/public/screenshots/agents-ui-kit-hero.png)
 
 ## About
 
-`agents-ui-kit` extends the excellent [prompt-kit](https://github.com/[original-repo]/prompt-kit) library with additional components specifically designed for AI agent interfaces. This library includes all the original prompt-kit components plus new agent-focused components.
+`agents-ui-kit` extends the excellent [prompt-kit](https://github.com/ibelick/prompt-kit) library with additional components specifically designed for AI agent interfaces. This library includes all the original prompt-kit components plus new agent-focused components.
 
 ### Attribution
 
@@ -47,6 +47,20 @@ import { Message } from "@/components/prompt-kit/message"
 import { AgentCard } from "@/components/agents-ui/agent-card"
 import { TaskQueue } from "@/components/agents-ui/task-queue"
 ```
+
+## Components Preview
+
+### Agent Card Component
+The Agent Card displays agent information with real-time status, capabilities, and interactive controls.
+
+![Agent Card Basic](/public/screenshots/agent-card-basic.png)
+
+![Agent Card Interactive](/public/screenshots/agent-card-interactive.png)
+
+### Navigation Structure
+The sidebar clearly separates agents-ui components from the original prompt-kit components.
+
+![Sidebar Navigation](/public/screenshots/sidebar-navigation.png)
 
 ## Component Libraries
 
@@ -100,7 +114,7 @@ MIT License - see [LICENSE.md](LICENSE.md) for details.
 ## Author
 
 **Abhishek Gahlot**  
-Email: me @ abhishek.it
+Email: me@abhishek.it
 
 ---
 
