@@ -1,0 +1,87 @@
+import ComponentCodePreview from "@/components/app/component-code-preview"
+import { generateMetadata } from "../utils/metadata"
+import AgentCardBasic from "./agent-card-basic"
+import AgentCardInteractive from "./agent-card-interactive"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CodeBlock } from "@/components/prompt-kit/code-block"
+
+export const metadata = generateMetadata(
+  "Agent Card",
+  "Display agent information, capabilities, and status with an interactive card component designed for AI agent interfaces."
+)
+
+# Agent Card
+
+Display agent information, capabilities, and status with an interactive card component designed for AI agent interfaces.
+
+## Examples
+
+### Basic Agent Card
+
+<ComponentCodePreview
+  component={<AgentCardBasic />}
+  filePath="app/docs/agent-card/agent-card-basic.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Interactive Agent Card
+
+This example demonstrates an agent card with status changes, capabilities, and action buttons.
+
+<ComponentCodePreview
+  component={<AgentCardInteractive />}
+  filePath="app/docs/agent-card/agent-card-interactive.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-card.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+Copy and paste the following code into your project:
+
+<CodeBlock filePath="components/agents-ui/agent-card.tsx" language="tsx" />
+
+Then update the import paths to match your project setup.
+
+</TabsContent>
+
+</Tabs>
+
+## API Reference
+
+### AgentCard
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | - | The name of the agent |
+| `description` | `string` | - | A brief description of the agent |
+| `avatar` | `string` | - | URL for the agent's avatar image |
+| `status` | `"idle" \| "thinking" \| "running" \| "paused" \| "error" \| "completed"` | `"idle"` | The current status of the agent |
+| `capabilities` | `AgentCapability[]` | `[]` | List of agent capabilities |
+| `className` | `string` | - | Additional CSS classes |
+| `onAction` | `(action: string) => void` | - | Callback when action buttons are clicked |
+
+### AgentCapability
+
+| Prop | Type | Description |
+| --- | --- | --- |
+| `name` | `string` | The name of the capability |
+| `description` | `string` | A description of what the capability does |
+| `icon` | `React.ReactNode` | Optional icon for the capability |

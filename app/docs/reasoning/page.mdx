@@ -1,0 +1,101 @@
+import ComponentCodePreview from "@/components/app/component-code-preview"
+import { generateMetadata } from "../utils/metadata"
+import { ReasoningBasic } from "./reasoning-basic"
+import { ReasoningMarkdown } from "./reasoning-markdown"
+
+export const metadata = generateMetadata(
+  "Reasoning",
+  "A collapsible component for showing AI reasoning, explanations, or logic. You can control it manually or let it auto-close when the stream ends. Markdown is supported."
+)
+
+# Reasoning
+
+A collapsible component for showing AI reasoning, explanations, or logic. You can control it manually or let it auto-close when the stream ends. Markdown is supported.
+
+## Examples
+
+### Basic Usage
+
+The most basic implementation of the Reasoning component with auto-close functionality when streaming ends.
+
+<ComponentCodePreview
+  component={<ReasoningBasic />}
+  filePath="app/docs/reasoning/reasoning-basic.tsx"
+  classNameComponentContainer="p-8 justify-start items-start min-h-[300px]"
+  hasReTrigger
+/>
+
+### With Markdown
+
+Show rich formatting with markdown support for better structured reasoning content.
+
+<ComponentCodePreview
+  component={<ReasoningMarkdown />}
+  filePath="app/docs/reasoning/reasoning-markdown.tsx"
+  classNameComponentContainer="p-8 justify-start items-start min-h-[400px]"
+  hasReTrigger
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://prompt-kit.com/c/reasoning.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/prompt-kit/reasoning.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### Reasoning
+
+| Prop         | Type                    | Default | Description                                                 |
+| :----------- | :---------------------- | :------ | :---------------------------------------------------------- |
+| children     | React.ReactNode         |         | The content of the component                                |
+| className    | string                  |         | Additional CSS classes                                      |
+| open         | boolean                 |         | Control the open state (makes component controlled)         |
+| onOpenChange | (open: boolean) => void |         | Callback when open state changes                            |
+| isStreaming  | boolean                 |         | When false, automatically closes the reasoning (auto-close) |
+
+### ReasoningTrigger
+
+| Prop      | Type            | Default | Description                  |
+| :-------- | :-------------- | :------ | :--------------------------- |
+| children  | React.ReactNode |         | The content of the trigger   |
+| className | string          |         | Additional CSS classes       |
+| ...props  | HTMLAttributes  |         | Additional HTML button props |
+
+### ReasoningContent
+
+| Prop             | Type            | Default | Description                               |
+| :--------------- | :-------------- | :------ | :---------------------------------------- |
+| children         | React.ReactNode |         | The content to be displayed               |
+| className        | string          |         | Additional CSS classes                    |
+| contentClassName | string          |         | Additional CSS classes for the content    |
+| markdown         | boolean         | false   | Enable markdown rendering for the content |
+| ...props         | HTMLAttributes  |         | Additional HTML div props                 |

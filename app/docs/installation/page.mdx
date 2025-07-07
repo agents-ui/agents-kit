@@ -1,0 +1,37 @@
+import { generateMetadata } from "../utils/metadata"
+
+export const metadata = generateMetadata(
+  "Installation",
+  "Installation guide for prompt-kit."
+)
+
+# Installation
+
+## Prerequisites
+
+Before installing, ensure you have the following:
+
+- [Node.js](https://nodejs.org/en/download/) version **18** or later
+- [React](https://react.dev/) version **19** or later
+
+## Install shadcn/ui
+
+First, you'll need to install and configure shadcn/ui in your project. Follow the installation guide at [shadcn/ui documentation](https://ui.shadcn.com/docs/installation).
+
+Once shadcn/ui is set up, you can install **prompt-kit** components using the **shadcn CLI**.
+
+## Using the shadcn CLI
+
+<CodeBlock
+  language="bash"
+  code={`npx shadcn@latest add "https://prompt-kit.com/c/[COMPONENT].json"`}
+/>
+
+## Usage
+
+After installation, import and start using the components in your project:
+
+<CodeBlock
+  language="tsx"
+  code={`import { PromptInput } from "@/components/ui/prompt-input";`}
+/>

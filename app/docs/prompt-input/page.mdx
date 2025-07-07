@@ -1,0 +1,110 @@
+import ComponentCodePreview from "@/components/app/component-code-preview"
+import { generateMetadata } from "../utils/metadata"
+import { PromptInputBasic } from "./prompt-input-basic"
+import { PromptInputWithActions } from "./prompt-input-with-actions"
+
+export const metadata = generateMetadata(
+  "Prompt Input",
+  "An input field that allows users to enter and submit text to an AI model."
+)
+
+# Prompt Input
+
+An input field that allows users to enter and submit text to an AI model.
+
+## Examples
+
+### Prompt Input basic
+
+<ComponentCodePreview
+  component={<PromptInputBasic />}
+  filePath="app/docs/prompt-input/prompt-input-basic.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Prompt Input with actions
+
+You can use `PromptInputActions` to add actions with tooltips to the `PromptInput`.
+
+<ComponentCodePreview
+  component={<PromptInputWithActions />}
+  filePath="app/docs/prompt-input/prompt-input-with-actions.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://prompt-kit.com/c/prompt-input.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/prompt-kit/prompt-input.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### PromptInput
+
+| Prop          | Type                    | Default | Description                                     |
+| :------------ | :---------------------- | :------ | :---------------------------------------------- |
+| isLoading     | boolean                 | false   | Loading state of the input                      |
+| value         | string                  |         | Controlled value of the input                   |
+| onValueChange | (value: string) => void |         | Callback when input value changes               |
+| maxHeight     | number \| string        | 240     | Maximum height of the textarea in pixels        |
+| onSubmit      | () => void              |         | Callback when form is submitted (Enter pressed) |
+| children      | React.ReactNode         |         | Child components to render                      |
+| className     | string                  |         | Additional CSS classes                          |
+
+### PromptInputTextarea
+
+| Prop            | Type                               | Default | Description                            |
+| :-------------- | :--------------------------------- | :------ | :------------------------------------- |
+| disableAutosize | boolean                            | false   | Disable automatic height adjustment    |
+| className       | string                             |         | Additional CSS classes                 |
+| onKeyDown       | (e: KeyboardEvent) => void         |         | Keyboard event handler                 |
+| disabled        | boolean                            | false   | Disable the textarea input             |
+| ...props        | `React.ComponentProps<"textarea">` |         | All other textarea props are supported |
+
+### PromptInputActions
+
+| Prop      | Type                                   | Default | Description                       |
+| :-------- | :------------------------------------- | :------ | :-------------------------------- |
+| children  | React.ReactNode                        |         | Child components to render        |
+| className | string                                 |         | Additional CSS classes            |
+| ...props  | `React.HTMLAttributes<HTMLDivElement>` |         | All other div props are supported |
+
+### PromptInputAction
+
+| Prop      | Type                                   | Default | Description                                     |
+| :-------- | :------------------------------------- | :------ | :---------------------------------------------- |
+| tooltip   | React.ReactNode                        |         | Content to show in the tooltip                  |
+| children  | React.ReactNode                        |         | Child component to trigger the tooltip          |
+| className | string                                 |         | Additional CSS classes for the tooltip          |
+| side      | "top" \| "bottom" \| "left" \| "right" | "top"   | Position of the tooltip relative to the trigger |
+| disabled  | boolean                                | false   | Disable the tooltip trigger                     |
+| ...props  | `React.ComponentProps<typeof Tooltip>` |         | All other Tooltip component props are supported |

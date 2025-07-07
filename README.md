@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# agents-ui-kit
 
-## Getting Started
+**Advanced UI components for building AI agent interfaces.**  
+Build sophisticated agent experiences, autonomous assistants, and multi-agent systems with beautiful, customizable components.
 
-First, run the development server:
+![cover](/app/opengraph-image.jpg)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## About
+
+`agents-ui-kit` extends the excellent [prompt-kit](https://github.com/[original-repo]/prompt-kit) library with additional components specifically designed for AI agent interfaces. This library includes all the original prompt-kit components plus new agent-focused components.
+
+### Attribution
+
+This project is built on top of prompt-kit. We maintain all original components and functionality while adding new agent-specific features.
+
+## Installation
+
+### Install shadcn/ui
+
+First, you'll need to install and configure [shadcn/ui](https://ui.shadcn.com) in your project.  
+Follow the installation guide in the shadcn/ui documentation.
+
+### Install agents-ui-kit components
+
+Once shadcn/ui is set up, you can install components using the shadcn CLI:
+
+#### Original prompt-kit components:
+```sh
+npx shadcn@latest add agents-ui-kit/prompt-kit/[component]
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### New agent-specific components:
+```sh
+npx shadcn@latest add agents-ui-kit/agents-ui/[component]
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Usage
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+After installation, import and start using the components in your project:
 
-## Learn More
+```tsx
+// Original prompt-kit components
+import { PromptInput } from "@/components/prompt-kit/prompt-input"
+import { Message } from "@/components/prompt-kit/message"
 
-To learn more about Next.js, take a look at the following resources:
+// New agent-specific components
+import { AgentCard } from "@/components/agents-ui/agent-card"
+import { TaskQueue } from "@/components/agents-ui/task-queue"
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Component Libraries
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### prompt-kit (Original Components)
+All original prompt-kit components are preserved:
+- **Message** - Display chat messages with avatars and actions
+- **PromptInput** - Enhanced input for prompts
+- **ResponseStream** - Streaming text responses
+- **CodeBlock** - Syntax-highlighted code display
+- **Markdown** - Rich markdown rendering
+- **ChatContainer** - Full chat interface
+- **Loader** - Loading states
+- **ScrollButton** - Scroll controls
+- And more...
 
-## Deploy on Vercel
+### agents-ui (New Components)
+New components designed for agent interfaces:
+- **AgentCard** - Display agent information, capabilities, and status
+- **TaskQueue** - Visualize pending and completed agent tasks
+- **ToolCall** - Show tool/function calls made by agents
+- **AgentConversation** - Extended chat interface for agent interactions
+- **SystemPrompt** - Display and edit system prompts
+- **AgentStatus** - Real-time agent status indicators
+- **MultiAgentView** - Coordinate multiple agents
+- More components coming soon...
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Development
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Build component registry
+npm run build:registry
+```
+
+## Contributing
+
+We welcome contributions! Please feel free to submit issues and pull requests.
+
+## License
+
+MIT License - see [LICENSE.md](LICENSE.md) for details.
+
+## Author
+
+**Abhishek Gahlot**  
+Email: me @ abhishek.it
+
+---
+
+Built with ❤️ on top of [prompt-kit](https://github.com/[original-repo]/prompt-kit) and [shadcn/ui](https://ui.shadcn.com)

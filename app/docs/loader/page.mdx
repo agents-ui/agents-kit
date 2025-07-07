@@ -1,0 +1,222 @@
+import ComponentCodePreview from "@/components/app/component-code-preview"
+import { generateMetadata } from "../utils/metadata"
+import { LoaderBasic } from "./loader-basic"
+import { LoaderSizes } from "./loader-sizes"
+import { LoaderWithText } from "./loader-with-text"
+
+export const metadata = generateMetadata(
+  "Loader",
+  "A loading component with multiple variants to indicate processing states and provide visual feedback to users during wait times."
+)
+
+# Loader
+
+A loading component with multiple variants to indicate processing states and provide visual feedback to users during wait times.
+
+## Examples
+
+### Basic Loader
+
+Showcasing all available loader variants with default settings.
+
+<ComponentCodePreview
+  component={<LoaderBasic />}
+  filePath="app/docs/loader/loader-basic.tsx"
+  classNameComponentContainer="p-0"
+/>
+
+### Loader Sizes
+
+Customize the size of any loader variant with predefined size options.
+
+<ComponentCodePreview
+  component={<LoaderSizes />}
+  filePath="app/docs/loader/loader-sizes.tsx"
+  classNameComponentContainer="p-0"
+/>
+
+### Loader With Text
+
+Some loader variants support displaying custom text while loading.
+
+<ComponentCodePreview
+  component={<LoaderWithText />}
+  filePath="app/docs/loader/loader-with-text.tsx"
+  classNameComponentContainer="p-0 min-h-auto items-start"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://prompt-kit.com/c/loader.json"`}
+  language="bash"
+/>
+
+_Note: If you are using Tailwind CSS v4, you may have to grab the keyframes and add them to your global.css file manually. Check manual installation for more details._
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following into your global.css file.</Step>
+
+<CodeBlock language="css" code={`@keyframes typing {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
+}
+
+@keyframes loading-dots {
+0%,
+100% {
+opacity: 0;
+}
+50% {
+opacity: 1;
+}
+}
+
+@keyframes wave {
+0%,
+100% {
+transform: scaleY(1);
+}
+50% {
+transform: scaleY(0.6);
+}
+}
+
+@keyframes blink {
+0%,
+100% {
+opacity: 1;
+}
+50% {
+opacity: 0;
+}
+}
+
+@keyframes text-blink {
+0%,
+100% {
+color: var(--primary);
+}
+50% {
+color: var(--muted-foreground);
+}
+}
+
+@keyframes bounce-dots {
+0%,
+100% {
+transform: scale(0.8);
+opacity: 0.5;
+}
+50% {
+transform: scale(1.2);
+opacity: 1;
+}
+}
+
+@keyframes thin-pulse {
+0%,
+100% {
+transform: scale(0.95);
+opacity: 0.8;
+}
+50% {
+transform: scale(1.05);
+opacity: 0.4;
+}
+}
+
+@keyframes pulse-dot {
+0%,
+100% {
+transform: scale(1);
+opacity: 0.8;
+}
+50% {
+transform: scale(1.5);
+opacity: 1;
+}
+}
+
+@keyframes shimmer-text {
+0% {
+background-position: 150% center;
+}
+100% {
+background-position: -150% center;
+}
+}
+
+@keyframes wave-bars {
+0%,
+100% {
+transform: scaleY(1);
+opacity: 0.5;
+}
+50% {
+transform: scaleY(0.6);
+opacity: 1;
+}
+}
+
+@keyframes shimmer {
+0% {
+background-position: 200% 50%;
+}
+100% {
+background-position: -200% 50%;
+}
+}
+
+@keyframes spinner-fade {
+0% {
+opacity: 0;
+}
+100% {
+opacity: 1;
+}
+}`} />
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/prompt-kit/loader.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## Component API
+
+### Loader
+
+| Prop      | Type                                                                                                                                                          | Default    | Description                              |
+| :-------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ | :--------- | :--------------------------------------- |
+| variant   | "circular" \| "classic" \| "pulse" \| "pulse-dot" \| "dots" \| "typing" \| "wave" \| "bars" \| "terminal" \| "text-blink" \| "text-shimmer" \| "loading-dots" | "circular" | The visual style of the loader           |
+| size      | "sm" \| "md" \| "lg"                                                                                                                                          | "md"       | The size of the loader                   |
+| text      | string                                                                                                                                                        |            | Text to display (for supported variants) |
+| className | string                                                                                                                                                        |            | Additional CSS classes                   |
