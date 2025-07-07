@@ -50,17 +50,17 @@ export default function Home() {
     {
       label: "ChatGPT",
       component: PromptInputChatGPT,
-      img: getAssetPath("/openai_logo.png"),
+      img: "https://agents-ui.github.io/agents-kit/openai_logo.png",
     },
     {
       label: "Mistral AI",
       component: PromptInputMistralAI,
-      img: getAssetPath("/mistral_logo.png"),
+      img: "https://agents-ui.github.io/agents-kit/mistral_logo.png",
     },
     {
       label: "DeepSeek",
       component: PromptInputDeepSeek,
-      img: getAssetPath("/deepseek_logo.png"),
+      img: "https://agents-ui.github.io/agents-kit/deepseek_logo.png",
     },
   ]
 

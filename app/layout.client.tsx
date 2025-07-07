@@ -56,10 +56,6 @@ const socialMenuItems = [
     title: "GitHub",
     url: "https://github.com/agents-ui/agents-kit",
   },
-  {
-    title: "X (Twitter)",
-    url: "https://twitter.com/ibelick",
-  },
 ]
 
 const llms = [
@@ -212,20 +208,6 @@ function AppSidebar() {
                 })}
               </SidebarMenu>
             </SidebarGroupContent>
-            <SidebarGroupLabel className="mt-8 text-lg md:text-sm">
-              <SidebarMenuButton
-                asChild
-                className={cn(
-                  "hover:bg-sidebar-accent/50 active:bg-sidebar-accent/50 hover:text-primary text-lg transition-all duration-150 md:text-sm",
-                  pathname.includes("/docs/showcase") &&
-                    "text-primary bg-sidebar-accent hover:bg-sidebar-accent font-medium"
-                )}
-              >
-                <Link href="/docs/showcase" className="-m-2">
-                  Showcase
-                </Link>
-              </SidebarMenuButton>
-            </SidebarGroupLabel>
             <SidebarGroupLabel className="mt-8 text-lg md:text-sm">
               Social
             </SidebarGroupLabel>

@@ -36,7 +36,8 @@ const COMPONENT_ORDER = [
   "reasoning",
   "file-upload",
   "jsx-preview",
-  "showcase",
+  "agent-card",
+  "mcp",
 ]
 
 /**
@@ -110,19 +111,6 @@ async function processComponentDocs(componentName) {
  * Format the component section with the full MDX content
  */
 function formatComponentSection(componentName, mdxContent) {
-  // For showcase, provide a simpler format
-  if (componentName === "showcase") {
-    return `## Showcase
-
-Check out these example implementations using prompt-kit components:
-
-- [zola.chat](https://zola.chat/): Open-source AI chat app built with prompt-kit components
-
-${mdxContent}
-
-`
-  }
-
   // For regular components, return the full MDX content
   return mdxContent + "\n\n"
 }
@@ -161,7 +149,7 @@ function generateTableOfContents() {
 
   // Add component subsections
   const componentSections = COMPONENT_ORDER.filter(
-    (section) => !["introduction", "installation", "showcase"].includes(section)
+    (section) => !["introduction", "installation"].includes(section)
   )
 
   componentSections.forEach((component) => {
@@ -170,7 +158,7 @@ function generateTableOfContents() {
     toc += `  - [${formattedName}](#${component})\n`
   })
 
-  toc += `- [Showcase](#showcase)\n\n`
+  toc += `\n`
 
   return toc
 }
@@ -264,10 +252,10 @@ Available blocks:
 function generateResourcesSection() {
   return `## Resources
 
-- [GitHub Repository](https://github.com/ibelick/prompt-kit): Source code and issues
-- [Installation Guide](https://www.prompt-kit.com/docs/installation): Detailed installation instructions
-- [Component Documentation](https://www.prompt-kit.com/docs): Complete component API documentation
-- [Blocks](https://www.prompt-kit.com/blocks): Building blocks for AI apps
+- [GitHub Repository](https://github.com/agents-ui/agents-kit): Source code and issues
+- [Installation Guide](https://agents-ui.github.io/agents-kit/docs/installation): Detailed installation instructions
+- [Component Documentation](https://agents-ui.github.io/agents-kit/docs): Complete component API documentation
+- [Blocks](https://agents-ui.github.io/agents-kit/blocks): Building blocks for AI apps
 - [shadcn/ui Documentation](https://ui.shadcn.com): Documentation for the underlying UI component system
 - [Next.js Documentation](https://nextjs.org/docs): Documentation for the Next.js framework
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs): Documentation for the Tailwind CSS framework
