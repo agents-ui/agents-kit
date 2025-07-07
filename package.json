@@ -6,7 +6,7 @@
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/agents-ui-kit"
+    "url": "https://github.com/agents-ui/agents-kit"
   },
   "license": "MIT",
   "scripts": {
@@ -15,7 +15,10 @@
     "start": "next start",
     "lint": "next lint",
     "build:registry": "tsx scripts/registry-build.ts",
-    "generate-llms-txt": "node scripts/generate-llms-txt.js"
+    "generate-llms-txt": "node scripts/generate-llms-txt.js",
+    "build:static": "next build && echo 'Static site built to ./out directory'",
+    "serve:static": "npx serve out",
+    "deploy:gh-pages": "npm run build && npx gh-pages -d out"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
