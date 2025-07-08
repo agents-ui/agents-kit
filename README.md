@@ -3,11 +3,11 @@
 **Advanced UI components for building AI agent interfaces.**  
 Build sophisticated agent experiences, autonomous assistants, and multi-agent systems with beautiful, customizable components.
 
-![agents-ui-kit hero](/screenshot.png)
+![agents-ui-kit hero](/public/screenshots/screenshot.png)
 
 ## About
 
-`agents-ui-kit` extends the excellent [prompt-kit](https://github.com/ibelick/prompt-kit) library with additional components specifically designed for AI agent interfaces. This library includes all the original prompt-kit components plus new agent-focused components.
+`agents-ui-kit` extends the excellent [prompt-kit] library with additional components specifically designed for AI agent interfaces. This library includes all the original prompt-kit components plus new agent-focused components.
 
 ### Attribution
 
@@ -53,9 +53,9 @@ import { TaskQueue } from "@/components/agents-ui/task-queue"
 ### Agent Card Component
 The Agent Card displays agent information with real-time status, capabilities, and interactive controls.
 
-![Agent Card Basic](/public/screenshots/agent-card-basic.png)
+![Agent Card Basic](/public/screenshots/screenshot1.png)
 
-![Agent Card Interactive](/public/screenshots/agent-card-interactive.png)
+![Agent Card Interactive](/public/screenshots/screenshot2.png)
 
 ### Navigation Structure
 The sidebar clearly separates agents-ui components from the original prompt-kit components.
@@ -118,4 +118,4 @@ Email: me@abhishek.it
 
 ---
 
-Built with ❤️ on top of [prompt-kit](https://github.com/ibelick/prompt-kit) and [shadcn/ui](https://ui.shadcn.com)
+Built on top of [prompt-kit](https://github.com/ibelick/prompt-kit) and [shadcn/ui](https://ui.shadcn.com)
