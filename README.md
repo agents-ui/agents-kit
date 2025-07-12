@@ -7,7 +7,7 @@ Build sophisticated agent experiences, autonomous assistants, and multi-agent sy
 
 ## About
 
-`agents-ui-kit` extends the excellent [prompt-kit] library with additional components specifically designed for AI agent interfaces. This library includes all the original prompt-kit components plus new agent-focused components.
+`agents-ui-kit` extends the excellent [prompt-kit](https://github.com/ibelick/prompt-kit) library with additional components specifically designed for AI agent interfaces. This library includes all the original prompt-kit components plus new agent-focused components.
 
 ### Attribution
 
