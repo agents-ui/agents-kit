@@ -1,0 +1,143 @@
+import AgentToolPaletteBasic from "./agent-tool-palette-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CodeBlock } from "@/components/prompt-kit/code-block"
+
+# Agent Toolkit
+
+A comprehensive tool management interface that displays available agent tools with categories, search, usage statistics, and enable/disable functionality.
+
+## Features
+
+- **Tool Categorization**: Organize tools by data, creative, utility, and communication categories
+- **Search & Filter**: Find tools quickly with search and category filtering
+- **Usage Statistics**: Track tool usage count and last used time
+- **Enable/Disable Tools**: Toggle individual tools on/off
+- **Grid & List Views**: Flexible display options
+- **Tool Parameters**: View input parameters and requirements
+- **Smart Icons**: Automatic icon assignment based on tool type
+
+## Examples
+
+### Toolkit with Stats
+
+A complete tool palette showing usage statistics and management options.
+
+<ComponentCodePreview 
+  component={<AgentToolPaletteBasic />}
+  filePath="app/docs/agent-tool-palette/agent-tool-palette-basic.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-toolkit.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+Copy and paste the following code into your project.
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { AgentToolkit } from "@/components/agents-ui/agent-tool-palette"
+
+const tools = [
+  {
+    id: "1",
+    name: "Web Search",
+    description: "Search the internet for information",
+    category: "data",
+    enabled: true,
+    usageCount: 42,
+    lastUsed: new Date(),
+    parameters: [
+      {
+        name: "query",
+        type: "string",
+        required: true,
+        description: "Search query"
+      }
+    ]
+  },
+  {
+    id: "2",
+    name: "Code Generator",
+    description: "Generate code in various languages",
+    category: "creative",
+    enabled: true,
+    usageCount: 156
+  }
+]
+
+export default function Example() {
+  return (
+    <AgentToolkit
+      tools={tools}
+      onToolClick={(tool) => console.log(tool)}
+      onToolToggle={(id, enabled) => console.log(id, enabled)}
+      showUsageStats
+    />
+  )
+}
+```
+
+## API Reference
+
+### AgentToolkit
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| tools | `AgentTool[]` | - | Array of available tools |
+| onToolClick | `(tool: AgentTool) => void` | - | Callback when a tool is clicked |
+| onToolToggle | `(toolId: string, enabled: boolean) => void` | - | Callback when tool is enabled/disabled |
+| showUsageStats | `boolean` | `false` | Show usage statistics |
+| gridView | `boolean` | `true` | Display as grid (false for list) |
+| className | `string` | - | Additional CSS classes |
+
+### AgentTool
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique tool identifier |
+| name | `string` | Yes | Tool name |
+| description | `string` | Yes | Tool description |
+| category | `ToolCategory` | Yes | Tool category |
+| icon | `ReactNode` | No | Custom icon (auto-assigned if not provided) |
+| enabled | `boolean` | No | Whether tool is enabled (default: true) |
+| usageCount | `number` | No | Number of times used |
+| lastUsed | `Date` | No | Last usage timestamp |
+| parameters | `ToolParameter[]` | No | Tool input parameters |
+
+### ToolCategory
+
+```typescript
+type ToolCategory = "all" | "data" | "creative" | "utility" | "communication"
+```
+
+### ToolParameter
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| name | `string` | Yes | Parameter name |
+| type | `string` | Yes | Parameter type |
+| required | `boolean` | Yes | Whether parameter is required |
+| description | `string` | No | Parameter description |

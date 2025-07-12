@@ -1,0 +1,162 @@
+import AgentStatusPanelBasic from "./agent-status-panel-basic"
+import AgentStatusPanelFull from "./agent-status-panel-full"
+import AgentStatusPanelCompact from "./agent-status-panel-compact"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CodeBlock } from "@/components/prompt-kit/code-block"
+
+# Agent Status Panel
+
+A comprehensive status panel that displays agent connection status, model information, system resources, and capabilities.
+
+## Features
+
+- **Connection Status**: Real-time connection state with visual indicators
+- **Model Information**: Display model name, provider, context length, and pricing
+- **Capabilities Display**: Visual badges for model capabilities
+- **System Resources**: CPU, memory, latency, and uptime monitoring
+- **Resource Meters**: Visual progress bars with threshold warnings
+- **Compact Mode**: Space-efficient version for sidebars
+- **Action Buttons**: Reconnect, refresh, and settings
+
+## Examples
+
+### Basic Status
+
+Simple status panel showing connection state.
+
+<ComponentCodePreview 
+  component={<AgentStatusPanelBasic />}
+  filePath="app/docs/agent-status-panel/agent-status-panel-basic.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Full Featured
+
+Complete status panel with model info and system resources.
+
+<ComponentCodePreview 
+  component={<AgentStatusPanelFull />}
+  filePath="app/docs/agent-status-panel/agent-status-panel-full.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Compact Mode
+
+Space-efficient version ideal for sidebars.
+
+<ComponentCodePreview 
+  component={<AgentStatusPanelCompact />}
+  filePath="app/docs/agent-status-panel/agent-status-panel-compact.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-status-panel.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+Copy and paste the following code into your project.
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { AgentStatusPanel } from "@/components/agents-ui/agent-status-panel"
+
+const modelInfo = {
+  name: "GPT-4",
+  provider: "OpenAI",
+  contextLength: 128000,
+  capabilities: ["chat", "code", "vision", "function-calling"],
+  costPer1kTokens: {
+    input: 0.01,
+    output: 0.03
+  }
+}
+
+const systemResources = {
+  cpu: 45,
+  memory: 72,
+  latency: 125,
+  uptime: "14d 6h 32m"
+}
+
+export default function Example() {
+  return (
+    <AgentStatusPanel
+      connectionStatus="connected"
+      modelInfo={modelInfo}
+      systemResources={systemResources}
+      version="2.1.0"
+      onRefresh={() => {}}
+      onSettings={() => {}}
+    />
+  )
+}
+```
+
+## API Reference
+
+### AgentStatusPanel
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| connectionStatus | `ConnectionStatus` | `"connected"` | Current connection state |
+| modelInfo | `ModelInfo` | - | Model details and capabilities |
+| systemResources | `SystemResources` | - | System resource usage |
+| version | `string` | `"1.0.0"` | Agent version |
+| onReconnect | `() => void` | - | Reconnect callback |
+| onRefresh | `() => void` | - | Refresh callback |
+| onSettings | `() => void` | - | Settings callback |
+| className | `string` | - | Additional CSS classes |
+| compact | `boolean` | `false` | Enable compact mode |
+
+### ConnectionStatus
+
+```typescript
+type ConnectionStatus = "connected" | "connecting" | "disconnected" | "error"
+```
+
+### ModelInfo
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| name | `string` | Yes | Model name |
+| provider | `string` | Yes | Model provider |
+| contextLength | `number` | Yes | Maximum context tokens |
+| capabilities | `ModelCapability[]` | Yes | Model capabilities |
+| costPer1kTokens | `{ input: number; output: number }` | No | Pricing information |
+
+### ModelCapability
+
+```typescript
+type ModelCapability = "chat" | "code" | "vision" | "function-calling" | "embedding"
+```
+
+### SystemResources
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| cpu | `number` | Yes | CPU usage percentage |
+| memory | `number` | Yes | Memory usage percentage |
+| latency | `number` | Yes | Connection latency in ms |
+| uptime | `string` | Yes | System uptime string |

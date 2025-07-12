@@ -1,0 +1,135 @@
+import AgentFeedbackBasic from "./agent-feedback-basic"
+import AgentFeedbackSimple from "./agent-feedback-simple"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CodeBlock } from "@/components/prompt-kit/code-block"
+
+# Agent Feedback
+
+A comprehensive feedback component for collecting user ratings and detailed feedback on agent responses with category selection and reporting functionality.
+
+## Features
+
+- **Quick Feedback**: Simple thumbs up/down for immediate feedback
+- **Detailed Categories**: Select specific feedback categories (accuracy, helpfulness, speed, clarity)
+- **Comment Section**: Optional text feedback for detailed input
+- **Report Functionality**: Flag problematic content with detailed reasons
+- **Expandable Interface**: Collapsible detailed feedback section
+- **Success Confirmation**: Visual feedback after submission
+- **Flexible Modes**: Quick actions only or full feedback form
+
+## Examples
+
+### Full Feedback Form
+
+Complete feedback interface with categories and reporting.
+
+<ComponentCodePreview 
+  component={<AgentFeedbackBasic />}
+  filePath="app/docs/agent-feedback/agent-feedback-basic.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Simple Feedback
+
+Quick feedback with thumbs up/down only.
+
+<ComponentCodePreview 
+  component={<AgentFeedbackSimple />}
+  filePath="app/docs/agent-feedback/agent-feedback-simple.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-feedback.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+Copy and paste the following code into your project.
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { AgentFeedback } from "@/components/agents-ui/agent-feedback"
+
+export default function Example() {
+  return (
+    <AgentFeedback
+      onSubmit={(feedback) => {
+        console.log("Feedback:", feedback)
+        // Send to your analytics service
+      }}
+      onReport={(reason) => {
+        console.log("Report:", reason)
+        // Handle content reporting
+      }}
+      showDetailedFeedback={true}
+      showQuickActions={true}
+    />
+  )
+}
+```
+
+## API Reference
+
+### AgentFeedback
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| onSubmit | `(feedback: FeedbackData) => void` | - | Callback when feedback is submitted |
+| onThumbsUp | `() => void` | - | Callback for quick thumbs up |
+| onThumbsDown | `() => void` | - | Callback for quick thumbs down |
+| onReport | `(reason: string) => void` | - | Callback for content reporting |
+| showDetailedFeedback | `boolean` | `true` | Show expandable detailed feedback |
+| showQuickActions | `boolean` | `true` | Show thumbs up/down buttons |
+| defaultExpanded | `boolean` | `false` | Start with detailed view expanded |
+| className | `string` | - | Additional CSS classes |
+
+### FeedbackData
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| type | `FeedbackType` | Yes | Feedback sentiment |
+| rating | `number` | No | Numeric rating (future feature) |
+| categories | `FeedbackCategory[]` | No | Selected feedback categories |
+| comment | `string` | No | Optional text feedback |
+| timestamp | `Date` | No | Submission timestamp |
+
+### FeedbackType
+
+```typescript
+type FeedbackType = "positive" | "negative" | "neutral"
+```
+
+### FeedbackCategory
+
+```typescript
+type FeedbackCategory = "accuracy" | "helpfulness" | "speed" | "clarity" | "other"
+```
+
+## Category Descriptions
+
+- **Accuracy**: Information was correct and factual
+- **Helpfulness**: Response addressed the user's needs
+- **Speed**: Response was delivered quickly
+- **Clarity**: Response was easy to understand
+- **Other**: Additional feedback not covered by categories

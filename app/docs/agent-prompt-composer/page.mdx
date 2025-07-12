@@ -1,0 +1,143 @@
+import AgentPromptComposerBasic from "./agent-prompt-composer-basic"
+import AgentPromptComposerWithFeatures from "./agent-prompt-composer-with-features"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CodeBlock } from "@/components/prompt-kit/code-block"
+
+# Agent Prompt Composer
+
+An advanced prompt input component with templates, personas, voice input, and rich interactions for AI agent interfaces.
+
+## Features
+
+- **Prompt Templates**: Pre-defined templates for common tasks
+- **Persona Selection**: Switch between different AI personas
+- **Voice Input**: Record prompts using voice (UI ready)
+- **File Attachments**: Attach files to prompts (UI ready)
+- **Character Counter**: Track prompt length with limits
+- **Quick Actions**: Clear and enhance prompts
+- **Keyboard Shortcuts**: Enter to submit, Shift+Enter for new line
+- **Loading States**: Visual feedback during processing
+
+## Examples
+
+### Basic Composer
+
+A simple prompt composer with essential features.
+
+<ComponentCodePreview 
+  component={<AgentPromptComposerBasic />}
+  filePath="app/docs/agent-prompt-composer/agent-prompt-composer-basic.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Full Featured
+
+Complete prompt composer with templates, personas, and all features enabled.
+
+<ComponentCodePreview 
+  component={<AgentPromptComposerWithFeatures />}
+  filePath="app/docs/agent-prompt-composer/agent-prompt-composer-with-features.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-prompt-composer.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+Copy and paste the following code into your project.
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { AgentPromptComposer } from "@/components/agents-ui/agent-prompt-composer"
+
+const templates = [
+  {
+    id: "1",
+    name: "Code Review",
+    prompt: "Review this code for quality and best practices...",
+    description: "Comprehensive code review"
+  }
+]
+
+const personas = [
+  {
+    id: "1",
+    name: "Expert Developer",
+    systemPrompt: "You are an expert developer...",
+    description: "Technical expertise"
+  }
+]
+
+export default function Example() {
+  return (
+    <AgentPromptComposer
+      value={prompt}
+      onChange={setPrompt}
+      onSubmit={handleSubmit}
+      templates={templates}
+      personas={personas}
+      isLoading={isLoading}
+    />
+  )
+}
+```
+
+## API Reference
+
+### AgentPromptComposer
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| value | `string` | `""` | Current prompt value |
+| onChange | `(value: string) => void` | - | Callback when prompt changes |
+| onSubmit | `(value: string, options?: { persona?: Persona; template?: PromptTemplate }) => void` | - | Submit handler |
+| placeholder | `string` | `"Ask anything..."` | Input placeholder text |
+| disabled | `boolean` | `false` | Disable the input |
+| isLoading | `boolean` | `false` | Show loading state |
+| templates | `PromptTemplate[]` | `[]` | Available prompt templates |
+| personas | `Persona[]` | `[]` | Available AI personas |
+| showVoiceInput | `boolean` | `true` | Show voice input button |
+| showFileAttachment | `boolean` | `true` | Show file attachment button |
+| showSettings | `boolean` | `true` | Show settings button |
+| className | `string` | - | Additional CSS classes |
+
+### PromptTemplate
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique identifier |
+| name | `string` | Yes | Template name |
+| prompt | `string` | Yes | Template content |
+| description | `string` | No | Template description |
+
+### Persona
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique identifier |
+| name | `string` | Yes | Persona name |
+| avatar | `string` | No | Avatar URL |
+| systemPrompt | `string` | Yes | System prompt for persona |
+| description | `string` | No | Persona description |

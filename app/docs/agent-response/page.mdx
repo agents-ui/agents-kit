@@ -1,0 +1,155 @@
+import AgentResponseBasic from "./agent-response-basic"
+import AgentResponseWithTools from "./agent-response-with-tools"
+import AgentResponseStreaming from "./agent-response-streaming"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CodeBlock } from "@/components/prompt-kit/code-block"
+
+# Agent Response
+
+A comprehensive component for displaying AI agent responses with support for thinking process, tool usage, artifacts, and interactive actions.
+
+## Features
+
+- **Rich Message Display**: Full markdown support with syntax highlighting
+- **Thinking Process**: Collapsible view of the agent's reasoning
+- **Tool Call Visualization**: Shows function calls with inputs/outputs
+- **Artifact Display**: Renders generated code, files, and data
+- **Streaming Support**: Visual indicator for streaming responses
+- **Interactive Actions**: Regenerate and copy functionality
+- **Responsive Design**: Adapts to different screen sizes
+
+## Examples
+
+### Basic Response
+
+A simple agent response with markdown formatting and action buttons.
+
+<ComponentCodePreview 
+  component={<AgentResponseBasic />}
+  filePath="app/docs/agent-response/agent-response-basic.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### With Tool Usage
+
+Agent response showing thinking process, tool calls, and generated artifacts.
+
+<ComponentCodePreview 
+  component={<AgentResponseWithTools />}
+  filePath="app/docs/agent-response/agent-response-with-tools.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Streaming Response
+
+Demonstrates real-time streaming with visual indicator.
+
+<ComponentCodePreview 
+  component={<AgentResponseStreaming />}
+  filePath="app/docs/agent-response/agent-response-streaming.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-response.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+Copy and paste the following code into your project.
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { AgentResponse } from "@/components/agents-ui/agent-response"
+
+const toolCalls = [
+  {
+    id: "1",
+    name: "search_web",
+    input: { query: "latest AI news" },
+    output: { results: [...] },
+    status: "completed",
+    duration: 230
+  }
+]
+
+const artifacts = [
+  {
+    id: "1",
+    type: "code",
+    name: "example.py",
+    language: "python",
+    content: "print('Hello, World!')"
+  }
+]
+
+export default function Example() {
+  return (
+    <AgentResponse
+      message="Here's what I found..."
+      thinking="Analyzing the request..."
+      toolCalls={toolCalls}
+      artifacts={artifacts}
+      onRegenerate={() => {}}
+      onCopy={() => {}}
+    />
+  )
+}
+```
+
+## API Reference
+
+### AgentResponse
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| message | `string` | - | The main response message (supports markdown) |
+| thinking | `string` | - | Optional thinking process to display |
+| toolCalls | `ToolCall[]` | `[]` | Array of tool/function calls made |
+| artifacts | `Artifact[]` | `[]` | Generated artifacts (code, files, etc.) |
+| isStreaming | `boolean` | `false` | Shows streaming indicator |
+| className | `string` | - | Additional CSS classes |
+| onRegenerate | `() => void` | - | Callback for regenerate action |
+| onCopy | `() => void` | - | Callback for copy action |
+
+### ToolCall
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique identifier |
+| name | `string` | Yes | Tool/function name |
+| input | `any` | Yes | Input parameters |
+| output | `any` | No | Output/result data |
+| status | `"pending" \| "running" \| "completed" \| "failed"` | Yes | Current status |
+| duration | `number` | No | Execution time in ms |
+
+### Artifact
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique identifier |
+| type | `"code" \| "file" \| "image" \| "data"` | Yes | Artifact type |
+| name | `string` | Yes | File/artifact name |
+| content | `string` | Yes | Artifact content |
+| language | `string` | No | Programming language (for code) |
+| size | `string` | No | File size display |

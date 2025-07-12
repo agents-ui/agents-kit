@@ -1,0 +1,138 @@
+import AgentChatHistoryBasic from "./agent-chat-history-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { CodeBlock } from "@/components/prompt-kit/code-block"
+
+# Agent Chat History
+
+A comprehensive chat history component that displays conversation sessions with search, filtering, and management capabilities.
+
+## Features
+
+- **Session Management**: View and manage multiple chat sessions
+- **Search Functionality**: Search through conversations by title or content
+- **Filtering Options**: Filter by starred or archived sessions
+- **Message Preview**: View full conversation history for selected sessions
+- **Actions**: Star, archive, export, and delete sessions
+- **Token Tracking**: Display token usage per message
+- **Time Formatting**: Smart date/time display (Today, Yesterday, etc.)
+
+## Examples
+
+### Basic Chat History
+
+A complete chat history interface with sessions list and message preview.
+
+<ComponentCodePreview 
+  component={<AgentChatHistoryBasic />}
+  filePath="app/docs/agent-chat-history/agent-chat-history-basic.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-chat-history.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+Copy and paste the following code into your project.
+
+</TabsContent>
+
+</Tabs>
+
+## Usage
+
+```tsx
+import { AgentChatHistory } from "@/components/agents-ui/agent-chat-history"
+
+const sessions = [
+  {
+    id: "1",
+    title: "React Development Help",
+    messages: [
+      {
+        id: "msg-1",
+        role: "user",
+        content: "How do I create a custom hook?",
+        timestamp: new Date(),
+        tokens: 10
+      },
+      {
+        id: "msg-2",
+        role: "assistant",
+        content: "Here's how to create a custom hook...",
+        timestamp: new Date(),
+        tokens: 50,
+        model: "gpt-4"
+      }
+    ],
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    starred: true
+  }
+]
+
+export default function Example() {
+  return (
+    <AgentChatHistory
+      sessions={sessions}
+      selectedSessionId="1"
+      onSelectSession={(session) => console.log(session)}
+      onDeleteSession={(id) => console.log("Delete", id)}
+    />
+  )
+}
+```
+
+## API Reference
+
+### AgentChatHistory
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| sessions | `ChatSession[]` | - | Array of chat sessions |
+| selectedSessionId | `string` | - | ID of the currently selected session |
+| onSelectSession | `(session: ChatSession) => void` | - | Callback when a session is selected |
+| onDeleteSession | `(sessionId: string) => void` | - | Callback to delete a session |
+| onStarSession | `(sessionId: string) => void` | - | Callback to star/unstar a session |
+| onArchiveSession | `(sessionId: string) => void` | - | Callback to archive a session |
+| onExportSession | `(sessionId: string) => void` | - | Callback to export a session |
+| className | `string` | - | Additional CSS classes |
+
+### ChatSession
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique session identifier |
+| title | `string` | Yes | Session title |
+| messages | `ChatMessage[]` | Yes | Array of messages in the session |
+| createdAt | `Date` | Yes | Session creation date |
+| updatedAt | `Date` | Yes | Last update date |
+| starred | `boolean` | No | Whether session is starred |
+| archived | `boolean` | No | Whether session is archived |
+
+### ChatMessage
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique message identifier |
+| role | `"user" \| "assistant"` | Yes | Message sender role |
+| content | `string` | Yes | Message content |
+| timestamp | `Date` | Yes | Message timestamp |
+| tokens | `number` | No | Token count for the message |
+| model | `string` | No | Model used (for assistant messages) |

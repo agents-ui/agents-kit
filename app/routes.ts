@@ -109,9 +109,45 @@ export const routes: Route[] = [
     type: "agent",
   },
   {
+    path: "/docs/agent-response",
+    label: "Agent Response",
+    order: 17,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-prompt-composer",
+    label: "Agent Prompt Composer",
+    order: 18,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-chat-history",
+    label: "Agent Chat History",
+    order: 19,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-status-panel",
+    label: "Agent Status Panel",
+    order: 20,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-tool-palette",
+    label: "Agent Toolkit",
+    order: 21,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-feedback",
+    label: "Agent Feedback",
+    order: 22,
+    type: "agent",
+  },
+  {
     path: "/docs/blocks",
     label: "Blocks",
-    order: 17,
+    order: 23,
     type: "block",
   },
 ]
