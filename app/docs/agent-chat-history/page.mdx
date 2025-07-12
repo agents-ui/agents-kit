@@ -1,7 +1,5 @@
 import AgentChatHistoryBasic from "./agent-chat-history-basic"
 import ComponentCodePreview from "@/components/app/component-code-preview"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CodeBlock } from "@/components/prompt-kit/code-block"
 
 # Agent Chat History
 
@@ -49,55 +47,19 @@ A complete chat history interface with sessions list and message preview.
 
 <TabsContent value="manual">
 
-Copy and paste the following code into your project.
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-chat-history.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
 
 </TabsContent>
 
 </Tabs>
-
-## Usage
-
-```tsx
-import { AgentChatHistory } from "@/components/agents-ui/agent-chat-history"
-
-const sessions = [
-  {
-    id: "1",
-    title: "React Development Help",
-    messages: [
-      {
-        id: "msg-1",
-        role: "user",
-        content: "How do I create a custom hook?",
-        timestamp: new Date(),
-        tokens: 10
-      },
-      {
-        id: "msg-2",
-        role: "assistant",
-        content: "Here's how to create a custom hook...",
-        timestamp: new Date(),
-        tokens: 50,
-        model: "gpt-4"
-      }
-    ],
-    createdAt: new Date(),
-    updatedAt: new Date(),
-    starred: true
-  }
-]
-
-export default function Example() {
-  return (
-    <AgentChatHistory
-      sessions={sessions}
-      selectedSessionId="1"
-      onSelectSession={(session) => console.log(session)}
-      onDeleteSession={(id) => console.log("Delete", id)}
-    />
-  )
-}
-```
 
 ## API Reference
 

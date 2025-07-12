@@ -2,8 +2,6 @@ import AgentResponseBasic from "./agent-response-basic"
 import AgentResponseWithTools from "./agent-response-with-tools"
 import AgentResponseStreaming from "./agent-response-streaming"
 import ComponentCodePreview from "@/components/app/component-code-preview"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CodeBlock } from "@/components/prompt-kit/code-block"
 
 # Agent Response
 
@@ -71,51 +69,19 @@ Demonstrates real-time streaming with visual indicator.
 
 <TabsContent value="manual">
 
-Copy and paste the following code into your project.
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-response.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
 
 </TabsContent>
 
 </Tabs>
-
-## Usage
-
-```tsx
-import { AgentResponse } from "@/components/agents-ui/agent-response"
-
-const toolCalls = [
-  {
-    id: "1",
-    name: "search_web",
-    input: { query: "latest AI news" },
-    output: { results: [...] },
-    status: "completed",
-    duration: 230
-  }
-]
-
-const artifacts = [
-  {
-    id: "1",
-    type: "code",
-    name: "example.py",
-    language: "python",
-    content: "print('Hello, World!')"
-  }
-]
-
-export default function Example() {
-  return (
-    <AgentResponse
-      message="Here's what I found..."
-      thinking="Analyzing the request..."
-      toolCalls={toolCalls}
-      artifacts={artifacts}
-      onRegenerate={() => {}}
-      onCopy={() => {}}
-    />
-  )
-}
-```
 
 ## API Reference
 

@@ -1,8 +1,6 @@
 import AgentPromptComposerBasic from "./agent-prompt-composer-basic"
 import AgentPromptComposerWithFeatures from "./agent-prompt-composer-with-features"
 import ComponentCodePreview from "@/components/app/component-code-preview"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CodeBlock } from "@/components/prompt-kit/code-block"
 
 # Agent Prompt Composer
 
@@ -61,48 +59,19 @@ Complete prompt composer with templates, personas, and all features enabled.
 
 <TabsContent value="manual">
 
-Copy and paste the following code into your project.
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-prompt-composer.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
 
 </TabsContent>
 
 </Tabs>
-
-## Usage
-
-```tsx
-import { AgentPromptComposer } from "@/components/agents-ui/agent-prompt-composer"
-
-const templates = [
-  {
-    id: "1",
-    name: "Code Review",
-    prompt: "Review this code for quality and best practices...",
-    description: "Comprehensive code review"
-  }
-]
-
-const personas = [
-  {
-    id: "1",
-    name: "Expert Developer",
-    systemPrompt: "You are an expert developer...",
-    description: "Technical expertise"
-  }
-]
-
-export default function Example() {
-  return (
-    <AgentPromptComposer
-      value={prompt}
-      onChange={setPrompt}
-      onSubmit={handleSubmit}
-      templates={templates}
-      personas={personas}
-      isLoading={isLoading}
-    />
-  )
-}
-```
 
 ## API Reference
 

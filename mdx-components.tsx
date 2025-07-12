@@ -46,7 +46,6 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
           <div
             dangerouslySetInnerHTML={{ __html: html }}
             className="not-prose bg-zinc-50 dark:bg-zinc-900/50 overflow-auto rounded-md border border-zinc-200 dark:border-zinc-700 p-4 text-[13px]"
-            {...props}
           />
         </ClientCodeWrapper>
       )

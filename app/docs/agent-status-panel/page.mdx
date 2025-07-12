@@ -2,8 +2,6 @@ import AgentStatusPanelBasic from "./agent-status-panel-basic"
 import AgentStatusPanelFull from "./agent-status-panel-full"
 import AgentStatusPanelCompact from "./agent-status-panel-compact"
 import ComponentCodePreview from "@/components/app/component-code-preview"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CodeBlock } from "@/components/prompt-kit/code-block"
 
 # Agent Status Panel
 
@@ -71,48 +69,19 @@ Space-efficient version ideal for sidebars.
 
 <TabsContent value="manual">
 
-Copy and paste the following code into your project.
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-status-panel.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
 
 </TabsContent>
 
 </Tabs>
-
-## Usage
-
-```tsx
-import { AgentStatusPanel } from "@/components/agents-ui/agent-status-panel"
-
-const modelInfo = {
-  name: "GPT-4",
-  provider: "OpenAI",
-  contextLength: 128000,
-  capabilities: ["chat", "code", "vision", "function-calling"],
-  costPer1kTokens: {
-    input: 0.01,
-    output: 0.03
-  }
-}
-
-const systemResources = {
-  cpu: 45,
-  memory: 72,
-  latency: 125,
-  uptime: "14d 6h 32m"
-}
-
-export default function Example() {
-  return (
-    <AgentStatusPanel
-      connectionStatus="connected"
-      modelInfo={modelInfo}
-      systemResources={systemResources}
-      version="2.1.0"
-      onRefresh={() => {}}
-      onSettings={() => {}}
-    />
-  )
-}
-```
 
 ## API Reference
 

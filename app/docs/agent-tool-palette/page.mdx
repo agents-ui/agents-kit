@@ -1,7 +1,5 @@
 import AgentToolPaletteBasic from "./agent-tool-palette-basic"
 import ComponentCodePreview from "@/components/app/component-code-preview"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CodeBlock } from "@/components/prompt-kit/code-block"
 
 # Agent Toolkit
 
@@ -49,56 +47,19 @@ A complete tool palette showing usage statistics and management options.
 
 <TabsContent value="manual">
 
-Copy and paste the following code into your project.
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-tool-palette.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
 
 </TabsContent>
 
 </Tabs>
-
-## Usage
-
-```tsx
-import { AgentToolkit } from "@/components/agents-ui/agent-tool-palette"
-
-const tools = [
-  {
-    id: "1",
-    name: "Web Search",
-    description: "Search the internet for information",
-    category: "data",
-    enabled: true,
-    usageCount: 42,
-    lastUsed: new Date(),
-    parameters: [
-      {
-        name: "query",
-        type: "string",
-        required: true,
-        description: "Search query"
-      }
-    ]
-  },
-  {
-    id: "2",
-    name: "Code Generator",
-    description: "Generate code in various languages",
-    category: "creative",
-    enabled: true,
-    usageCount: 156
-  }
-]
-
-export default function Example() {
-  return (
-    <AgentToolkit
-      tools={tools}
-      onToolClick={(tool) => console.log(tool)}
-      onToolToggle={(id, enabled) => console.log(id, enabled)}
-      showUsageStats
-    />
-  )
-}
-```
 
 ## API Reference
 

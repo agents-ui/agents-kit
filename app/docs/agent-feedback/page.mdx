@@ -1,8 +1,6 @@
 import AgentFeedbackBasic from "./agent-feedback-basic"
 import AgentFeedbackSimple from "./agent-feedback-simple"
 import ComponentCodePreview from "@/components/app/component-code-preview"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CodeBlock } from "@/components/prompt-kit/code-block"
 
 # Agent Feedback
 
@@ -60,34 +58,19 @@ Quick feedback with thumbs up/down only.
 
 <TabsContent value="manual">
 
-Copy and paste the following code into your project.
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-feedback.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
 
 </TabsContent>
 
 </Tabs>
-
-## Usage
-
-```tsx
-import { AgentFeedback } from "@/components/agents-ui/agent-feedback"
-
-export default function Example() {
-  return (
-    <AgentFeedback
-      onSubmit={(feedback) => {
-        console.log("Feedback:", feedback)
-        // Send to your analytics service
-      }}
-      onReport={(reason) => {
-        console.log("Report:", reason)
-        // Handle content reporting
-      }}
-      showDetailedFeedback={true}
-      showQuickActions={true}
-    />
-  )
-}
-```
 
 ## API Reference
 
