@@ -145,9 +145,33 @@ export const routes: Route[] = [
     type: "agent",
   },
   {
+    path: "/docs/agent-image-editor",
+    label: "Agent Image Editor",
+    order: 23,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-video-editor",
+    label: "Agent Video Editor",
+    order: 24,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-audio-generator",
+    label: "Agent Audio Generator",
+    order: 25,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-grammar-checker",
+    label: "Agent Grammar Checker",
+    order: 26,
+    type: "agent",
+  },
+  {
     path: "/docs/blocks",
     label: "Blocks",
-    order: 23,
+    order: 27,
     type: "block",
   },
 ]

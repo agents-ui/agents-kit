@@ -1,0 +1,137 @@
+import AgentAudioGeneratorBasic from "./agent-audio-generator-basic"
+import AgentAudioGeneratorInteractive from "./agent-audio-generator-interactive"
+import AgentAudioGeneratorChat from "./agent-audio-generator-chat"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Audio Generator
+
+A comprehensive audio generation interface with waveform visualization, voice controls, and customizable audio settings.
+
+## Features
+
+- **Waveform Display**: Visual audio representation with playback progress
+- **Voice Selection**: Multiple voice options with gender and accent choices
+- **Audio Controls**: Play, pause, seek, and time display
+- **Voice Settings**: Language, speed, tone, and voice customization
+- **Export Options**: Export audio in multiple formats (MP3, WAV, M4A)
+- **Loading States**: Visual feedback during audio generation
+- **Responsive Design**: Adapts to different screen sizes
+
+## Examples
+
+### Basic Usage
+
+Simple audio generator with standard controls.
+
+<ComponentCodePreview
+  component={<AgentAudioGeneratorBasic />}
+  filePath="app/docs/agent-audio-generator/agent-audio-generator-basic.tsx"
+  classNameComponentContainer="p-4 min-w-[900px]"
+/>
+
+### Interactive Demo
+
+Full-featured demo with voice switching and playback controls.
+
+<ComponentCodePreview
+  component={<AgentAudioGeneratorInteractive />}
+  filePath="app/docs/agent-audio-generator/agent-audio-generator-interactive.tsx"
+  classNameComponentContainer="p-4 min-w-[900px]"
+/>
+
+### Chat Integration
+
+Example of how the audio generator works within a chat conversation:
+
+<ComponentCodePreview
+  component={<AgentAudioGeneratorChat />}
+  filePath="app/docs/agent-audio-generator/agent-audio-generator-chat.tsx"
+  classNameComponentContainer="p-4"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-audio-generator.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-audio-generator.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## API Reference
+
+### AgentAudioGenerator
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| audioUrl | `string` | - | URL of the generated audio |
+| isGenerating | `boolean` | `false` | Whether audio is being generated |
+| isPlaying | `boolean` | `false` | Whether audio is currently playing |
+| currentTime | `number` | `0` | Current playback time in seconds |
+| duration | `number` | `0` | Total audio duration in seconds |
+| onPlay | `() => void` | - | Play audio callback |
+| onPause | `() => void` | - | Pause audio callback |
+| onSeek | `(time: number) => void` | - | Seek to time callback |
+| onExport | `(format?: ExportFormat) => void` | - | Export callback |
+| onCopy | `() => void` | - | Copy audio callback |
+| onEdit | `() => void` | - | Edit settings callback |
+| onRegenerateResponse | `() => void` | - | Regenerate callback |
+| onLanguageChange | `(language: string) => void` | - | Language change callback |
+| onSpeedChange | `(speed: string) => void` | - | Speed change callback |
+| onVoiceChange | `(voice: VoiceOption) => void` | - | Voice change callback |
+| onToneChange | `(tone: string) => void` | - | Tone change callback |
+| language | `string` | `"English (US)"` | Selected language |
+| speed | `string` | `"Normal"` | Playback speed |
+| voice | `VoiceOption` | - | Selected voice configuration |
+| tone | `string` | `"Friendly"` | Voice tone |
+| availableVoices | `VoiceOption[]` | `[]` | Available voice options |
+| className | `string` | - | Additional CSS classes |
+| timestamp | `string` | `"Just now"` | Display timestamp |
+
+### VoiceOption
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique voice identifier |
+| name | `string` | Yes | Voice display name |
+| gender | `"Male" \| "Female"` | Yes | Voice gender |
+| accent | `string` | No | Voice accent/region |
+
+### Export Formats
+
+```typescript
+type ExportFormat = "mp3" | "wav" | "m4a"
+```
+
+### Voice Tones
+
+The component supports multiple voice tones:
+- **Professional**: Formal, business-appropriate tone
+- **Friendly**: Warm, approachable tone
+- **Excited**: Enthusiastic, energetic tone
+- **Calm**: Relaxed, soothing tone

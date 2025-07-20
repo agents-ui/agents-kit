@@ -62,6 +62,34 @@ The sidebar clearly separates agents-ui components from the original prompt-kit 
 
 ![Sidebar Navigation](/public/screenshots/sidebar-navigation.png)
 
+## New Specialized Agent Components
+
+We've just shipped 4 powerful new agent components that handle complex media workflows. These aren't just basic UI components - they're full-featured interfaces that developers are using in production AI apps.
+
+### Image Generation & Editing Agent
+
+Handle AI-generated images with proper variation management, export controls, and editing workflows. Supports multiple formats and real-time preview updates.
+
+![Image Agent](/public/screenshots/image_agent.png)
+
+### Video Editor Agent
+
+Professional video editing interface with timeline visualization, clip management, and export controls. Perfect for AI video generation workflows.
+
+![Video Agent](/public/screenshots/video_agent.png)
+
+### Audio Generation Agent
+
+Complete audio synthesis interface with waveform visualization, voice controls, and real-time playback. Handles voice selection, speed control, and multiple export formats.
+
+![Audio Agent](/public/screenshots/audio_agent.png)
+
+### Grammar & Text Analysis Agent
+
+Smart text analysis with categorized suggestions, issue detection, and correction workflows. Shows readability scores and handles bulk text improvements.
+
+![Grammar Agent](/public/screenshots/grammar_agent.png)
+
 ## Component Libraries
 
 ### prompt-kit (Original Components)
@@ -77,15 +105,27 @@ All original prompt-kit components are preserved:
 - And more...
 
 ### agents-ui (New Components)
-New components designed for agent interfaces:
+Specialized components for agent workflows:
+
+#### Core Agent Components
 - **AgentCard** - Display agent information, capabilities, and status
+- **AgentResponse** - Handle agent messages with tool integration
+- **AgentPromptComposer** - Advanced prompt building interface
+- **AgentChatHistory** - Conversation history management
+- **AgentStatusPanel** - Real-time agent status monitoring
+- **AgentToolPalette** - Tool selection and management
+- **AgentFeedback** - User satisfaction collection
+
+#### Media Agent Components (New!)
+- **AgentImageEditor** - AI image editing with variation management and export controls
+- **AgentVideoEditor** - Professional video editing with timeline and playback controls
+- **AgentAudioGenerator** - Voice synthesis with waveform visualization and voice controls
+- **AgentGrammarChecker** - Smart text analysis with categorized suggestions and corrections
+
+#### Utility Components
 - **TaskQueue** - Visualize pending and completed agent tasks
-- **ToolCall** - Show tool/function calls made by agents
-- **AgentConversation** - Extended chat interface for agent interactions
 - **SystemPrompt** - Display and edit system prompts
-- **AgentStatus** - Real-time agent status indicators
 - **MultiAgentView** - Coordinate multiple agents
-- More components coming soon...
 
 ## Development
 

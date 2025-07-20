@@ -1,0 +1,145 @@
+import AgentGrammarCheckerBasic from "./agent-grammar-checker-basic"
+import AgentGrammarCheckerInteractive from "./agent-grammar-checker-interactive"
+import AgentGrammarCheckerChat from "./agent-grammar-checker-chat"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Grammar Checker
+
+An intelligent grammar and style checking interface that provides comprehensive text analysis with issue detection and correction suggestions.
+
+## Features
+
+- **Grammar Analysis**: Detect grammar, spelling, and punctuation errors
+- **Style Suggestions**: Improve clarity, tone, and readability
+- **Issue Management**: Accept or reject individual suggestions
+- **Text Statistics**: Word count, readability score, and issue tracking
+- **Real-time Editing**: Live text editing with instant feedback
+- **Severity Levels**: Error, warning, and info classifications
+- **Issue Categories**: Grammar, spelling, style, clarity, and punctuation
+- **Original Text Comparison**: Side-by-side before/after comparison
+
+## Examples
+
+### Basic Usage
+
+Simple grammar checker with issue detection.
+
+<ComponentCodePreview 
+  component={<AgentGrammarCheckerBasic />}
+  filePath="app/docs/agent-grammar-checker/agent-grammar-checker-basic.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Interactive Demo
+
+Full-featured demo with text analysis and correction tools.
+
+<ComponentCodePreview
+  component={<AgentGrammarCheckerInteractive />}
+  filePath="app/docs/agent-grammar-checker/agent-grammar-checker-interactive.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Chat Integration
+
+Example of how the grammar checker works within a chat conversation:
+
+<ComponentCodePreview
+  component={<AgentGrammarCheckerChat />}
+  filePath="app/docs/agent-grammar-checker/agent-grammar-checker-chat.tsx"
+  classNameComponentContainer="p-4"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-grammar-checker.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-grammar-checker.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## API Reference
+
+### AgentGrammarChecker
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| text | `string` | `""` | Current corrected text |
+| originalText | `string` | `""` | Original input text |
+| issues | `GrammarIssue[]` | `[]` | Array of detected issues |
+| stats | `GrammarStats` | - | Analysis statistics |
+| isAnalyzing | `boolean` | `false` | Whether analysis is in progress |
+| onTextChange | `(text: string) => void` | - | Text change callback |
+| onAcceptSuggestion | `(issueId: string) => void` | - | Accept suggestion callback |
+| onRejectSuggestion | `(issueId: string) => void` | - | Reject suggestion callback |
+| onCopy | `() => void` | - | Copy text callback |
+| onReanalyze | `() => void` | - | Re-analyze text callback |
+| onRegenerateResponse | `() => void` | - | Regenerate callback |
+| className | `string` | - | Additional CSS classes |
+| timestamp | `string` | `"Just now"` | Display timestamp |
+
+### GrammarIssue
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique issue identifier |
+| type | `GrammarIssueType` | Yes | Issue category |
+| message | `string` | Yes | Issue description |
+| suggestion | `string` | Yes | Correction suggestion |
+| position | `{ start: number; end: number }` | Yes | Text position |
+| severity | `"error" \| "warning" \| "info"` | Yes | Issue severity level |
+
+### GrammarIssueType
+
+```typescript
+type GrammarIssueType = "grammar" | "spelling" | "style" | "clarity" | "punctuation"
+```
+
+### GrammarStats
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| wordsCount | `number` | Yes | Total word count |
+| readabilityScore | `number` | Yes | Readability score (0-100) |
+| issuesFixed | `number` | Yes | Number of fixed issues |
+| totalIssues | `number` | Yes | Total issues detected |
+
+### Issue Severity Levels
+
+- **Error**: Critical issues that affect correctness
+- **Warning**: Important style or clarity improvements
+- **Info**: Minor suggestions for enhancement
+
+### Issue Categories
+
+- **Grammar**: Subject-verb agreement, tense consistency, etc.
+- **Spelling**: Misspelled words and typos
+- **Style**: Word choice, voice, and tone improvements
+- **Clarity**: Sentence structure and readability
+- **Punctuation**: Comma usage, capitalization, etc.

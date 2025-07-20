@@ -1,0 +1,124 @@
+import AgentImageEditorBasic from "./agent-image-editor-basic"
+import AgentImageEditorInteractive from "./agent-image-editor-interactive"
+import AgentImageEditorChat from "./agent-image-editor-chat"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Image Editor
+
+A sophisticated image editing interface for AI-generated images with variation management, export controls, and enhancement features.
+
+## Features
+
+- **Image Preview**: Full-featured image display with overlay controls
+- **Variation Management**: Create and switch between image variations
+- **Export Controls**: Export images in multiple formats (PNG, JPG, WebP)
+- **Enhancement Tools**: Adjust and enhance image quality
+- **Loading States**: Visual feedback during generation and processing
+- **Action Controls**: Copy, adjust, enhance, and regenerate options
+- **Responsive Design**: Adapts to different screen sizes
+
+## Examples
+
+### Basic Usage
+
+Simple image editor with basic controls.
+
+<ComponentCodePreview 
+  component={<AgentImageEditorBasic />}
+  filePath="app/docs/agent-image-editor/agent-image-editor-basic.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Interactive Demo
+
+Full-featured demo with variation switching and generation.
+
+<ComponentCodePreview
+  component={<AgentImageEditorInteractive />}
+  filePath="app/docs/agent-image-editor/agent-image-editor-interactive.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Chat Integration
+
+Example of how the image editor works within a chat conversation:
+
+<ComponentCodePreview
+  component={<AgentImageEditorChat />}
+  filePath="app/docs/agent-image-editor/agent-image-editor-chat.tsx"
+  classNameComponentContainer="p-4"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-image-editor.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-image-editor.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## API Reference
+
+### AgentImageEditor
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| imageUrl | `string` | - | URL of the current image |
+| variations | `ImageVariation[]` | `[]` | Array of image variations |
+| currentVariation | `string` | - | ID of currently selected variation |
+| isGenerating | `boolean` | `false` | Whether image is being generated |
+| onExport | `(format?: "png" \| "jpg" \| "webp") => void` | - | Export callback |
+| onCopy | `() => void` | - | Copy image callback |
+| onCreateVariation | `() => void` | - | Create variation callback |
+| onAdjust | `() => void` | - | Adjust image callback |
+| onEnhance | `() => void` | - | Enhance image callback |
+| onRegenerateResponse | `() => void` | - | Regenerate callback |
+| className | `string` | - | Additional CSS classes |
+| agentAvatar | `string` | - | Agent avatar URL |
+| timestamp | `string` | `"Just now"` | Display timestamp |
+
+### ImageVariation
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique variation identifier |
+| url | `string` | Yes | Image URL |
+| label | `string` | Yes | Display label |
+| timestamp | `string` | Yes | Creation timestamp |
+
+### Export Formats
+
+```typescript
+type ExportFormat = "png" | "jpg" | "webp"
+```
+
+The component supports exporting images in multiple formats:
+- **PNG**: Best for images with transparency
+- **JPG**: Smaller file size, good for photos
+- **WebP**: Modern format with excellent compression

@@ -1,0 +1,143 @@
+import AgentVideoEditorBasic from "./agent-video-editor-basic"
+import AgentVideoEditorInteractive from "./agent-video-editor-interactive"
+import AgentVideoEditorChat from "./agent-video-editor-chat"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Video Editor
+
+A professional video editing interface with timeline management, playback controls, and clip organization for AI-generated videos.
+
+## Features
+
+- **Video Preview**: Full-screen video player with overlay controls
+- **Timeline Visualization**: Visual timeline showing video clips and duration
+- **Playback Controls**: Play, pause, skip, and seek functionality
+- **Clip Management**: Add, remove, and organize video clips
+- **Export Options**: Export videos in multiple formats (MP4, MOV, AVI)
+- **Editing Tools**: Trim, cut, and arrange video segments
+- **Loading States**: Visual feedback during video processing
+- **Progress Tracking**: Real-time playback progress indication
+
+## Examples
+
+### Basic Usage
+
+Simple video editor with essential controls.
+
+<ComponentCodePreview 
+  component={<AgentVideoEditorBasic />}
+  filePath="app/docs/agent-video-editor/agent-video-editor-basic.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Interactive Demo
+
+Advanced demo with timeline management and clip controls.
+
+<ComponentCodePreview
+  component={<AgentVideoEditorInteractive />}
+  filePath="app/docs/agent-video-editor/agent-video-editor-interactive.tsx"
+  classNameComponentContainer="p-8"
+/>
+
+### Chat Integration
+
+Example of how the video editor works within a chat conversation:
+
+<ComponentCodePreview
+  component={<AgentVideoEditorChat />}
+  filePath="app/docs/agent-video-editor/agent-video-editor-chat.tsx"
+  classNameComponentContainer="p-4"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-video-editor.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-video-editor.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## API Reference
+
+### AgentVideoEditor
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| videoUrl | `string` | - | URL of the video file |
+| isGenerating | `boolean` | `false` | Whether video is being processed |
+| isPlaying | `boolean` | `false` | Whether video is currently playing |
+| currentTime | `number` | `0` | Current playback time in seconds |
+| duration | `number` | `0` | Total video duration in seconds |
+| clips | `VideoClip[]` | `[]` | Array of video clips |
+| onPlay | `() => void` | - | Play video callback |
+| onPause | `() => void` | - | Pause video callback |
+| onSeek | `(time: number) => void` | - | Seek to time callback |
+| onSkipBack | `() => void` | - | Skip backward callback |
+| onSkipForward | `() => void` | - | Skip forward callback |
+| onExport | `(format?: ExportFormat) => void` | - | Export callback |
+| onCopy | `() => void` | - | Copy video callback |
+| onEdit | `() => void` | - | Edit settings callback |
+| onTrim | `() => void` | - | Trim video callback |
+| onRegenerateResponse | `() => void` | - | Regenerate callback |
+| className | `string` | - | Additional CSS classes |
+| timestamp | `string` | `"Just now"` | Display timestamp |
+
+### VideoClip
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique clip identifier |
+| name | `string` | Yes | Clip display name |
+| duration | `number` | Yes | Clip duration in seconds |
+| startTime | `number` | Yes | Start time in timeline |
+| endTime | `number` | Yes | End time in timeline |
+| thumbnail | `string` | No | Clip thumbnail URL |
+
+### Export Formats
+
+```typescript
+type ExportFormat = "mp4" | "mov" | "avi"
+```
+
+### Timeline Features
+
+The timeline provides visual representation of video structure:
+- **Clip Visualization**: Each clip is shown as a colored segment
+- **Duration Scaling**: Clips are sized proportionally to their duration
+- **Time Ruler**: Shows total duration with time markers
+- **Interactive Selection**: Click clips to navigate or select
+
+### Keyboard Shortcuts
+
+- **Space**: Play/Pause toggle
+- **Left Arrow**: Skip backward 10 seconds
+- **Right Arrow**: Skip forward 10 seconds
+- **Home**: Jump to beginning
+- **End**: Jump to end
