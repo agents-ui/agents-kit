@@ -4,7 +4,7 @@ import * as React from "react"
 import { AgentDocScanner, DocumentInfo, ExtractedSection } from "@/components/agents-ui/agent-doc-scanner"
 
 export default function AgentDocScannerInteractive() {
-  const [document, setDocument] = React.useState<DocumentInfo | undefined>()
+  const [documentInfo, setDocumentInfo] = React.useState<DocumentInfo | undefined>()
   const [extractedSections, setExtractedSections] = React.useState<ExtractedSection[]>([])
   const [isProcessing, setIsProcessing] = React.useState(false)
   const [uploadProgress, setUploadProgress] = React.useState(0)
@@ -29,7 +29,7 @@ export default function AgentDocScannerInteractive() {
     setTimeout(() => {
       // Set document info
       const fileType = file.name.split('.').pop()?.toLowerCase() || "pdf"
-      setDocument({
+      setDocumentInfo({
         name: file.name,
         type: fileType as any,
         size: file.size,
@@ -145,7 +145,7 @@ export default function AgentDocScannerInteractive() {
     
     // Simple example of data export
     const data = {
-      document: document,
+      document: documentInfo,
       extractedData: extractedSections
     }
     
@@ -183,10 +183,10 @@ export default function AgentDocScannerInteractive() {
 
   return (
     <AgentDocScanner
-      document={document}
+      document={documentInfo}
       extractedSections={extractedSections}
       currentPage={currentPage}
-      totalPages={document?.pages || 1}
+      totalPages={documentInfo?.pages || 1}
       isProcessing={isProcessing}
       uploadProgress={uploadProgress}
       previewUrl={previewUrl}
