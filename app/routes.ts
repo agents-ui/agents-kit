@@ -169,9 +169,21 @@ export const routes: Route[] = [
     type: "agent",
   },
   {
+    path: "/docs/agent-web-search",
+    label: "Agent Web Search",
+    order: 27,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-doc-scanner",
+    label: "Agent Doc Scanner",
+    order: 28,
+    type: "agent",
+  },
+  {
     path: "/docs/blocks",
     label: "Blocks",
-    order: 27,
+    order: 29,
     type: "block",
   },
 ]

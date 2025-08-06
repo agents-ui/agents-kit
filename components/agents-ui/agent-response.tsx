@@ -149,7 +149,7 @@ export function AgentResponse({
   const [showThinking, setShowThinking] = useState(false)
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn("space-y-4 p-4", className)}>
       {/* Agent Header */}
       <div className="flex items-start gap-3">
         <div className="rounded-full bg-primary/10 p-2">

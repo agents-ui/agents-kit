@@ -295,7 +295,7 @@ export function AgentToolkit({
   }, [filteredTools, showUsageStats])
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn("space-y-4 p-4", className)}>
       {/* Header */}
       <div className="flex items-center justify-between">
         <h3 className="font-semibold text-lg">Available Tools</h3>

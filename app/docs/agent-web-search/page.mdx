@@ -1,0 +1,105 @@
+import AgentWebSearchBasic from "./agent-web-search-basic"
+import AgentWebSearchInteractive from "./agent-web-search-interactive"
+import AgentWebSearchChat from "./agent-web-search-chat"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Web Search
+
+An AI-powered web search component that displays search results with intelligent summaries, credibility scoring, and advanced filtering capabilities.
+
+## Features
+
+- **AI-Enhanced Results**: Each search result includes an AI-generated summary for quick understanding
+- **Credibility Scoring**: Visual indicators showing source reliability and content relevance
+- **Smart Filtering**: Filter by domain, date range, and relevance score
+- **Interactive Actions**: Copy links, open in new tabs, and interact with results
+- **Related Searches**: Suggested queries based on the current search context
+- **Real-time Updates**: Loading states and smooth transitions during search operations
+
+## Examples
+
+### Basic Usage
+
+<ComponentCodePreview
+  component={<AgentWebSearchBasic />}
+  filePath="app/docs/agent-web-search/agent-web-search-basic.tsx"
+/>
+
+### Interactive Demo
+
+<ComponentCodePreview
+  component={<AgentWebSearchInteractive />}
+  filePath="app/docs/agent-web-search/agent-web-search-interactive.tsx"
+/>
+
+### Chat Integration
+
+<ComponentCodePreview
+  component={<AgentWebSearchChat />}
+  filePath="app/docs/agent-web-search/agent-web-search-chat.tsx"
+  classNameComponentContainer="p-4 min-w-[900px]"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+
+```bash
+npx shadcn@latest add agents-ui-kit/agents-ui/agent-web-search
+```
+
+  </TabsContent>
+  <TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-web-search.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+  </TabsContent>
+</Tabs>
+
+## API Reference
+
+### AgentWebSearch
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| query | `string` | - | The search query to display |
+| results | `SearchResult[]` | `[]` | Array of search results to display |
+| isSearching | `boolean` | `false` | Whether a search is currently in progress |
+| selectedDomains | `string[]` | `[]` | Array of domain filters currently applied |
+| dateFilter | `"all" \| "day" \| "week" \| "month" \| "year"` | `"all"` | Date range filter for results |
+| onSearch | `(query: string) => void` | - | Callback when a new search is initiated |
+| onResultClick | `(result: SearchResult) => void` | - | Callback when a search result is clicked |
+| onCopyLink | `(url: string) => void` | - | Callback when a result link is copied |
+| onDomainFilter | `(domains: string[]) => void` | - | Callback when domain filters are updated |
+| onDateFilter | `(filter: DateFilter) => void` | - | Callback when date filter is changed |
+| onRefresh | `() => void` | - | Callback to refresh search results |
+| className | `string` | - | Additional CSS classes to apply |
+| timestamp | `string` | `"2:34 PM"` | Timestamp to display for the search |
+
+### SearchResult
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique identifier for the result |
+| title | `string` | Yes | Title of the search result |
+| url | `string` | Yes | URL of the search result |
+| domain | `string` | Yes | Domain name of the result source |
+| snippet | `string` | Yes | Brief excerpt from the content |
+| aiSummary | `string` | No | AI-generated summary of the content |
+| publishedDate | `string` | No | Publication date in ISO format |
+| credibilityScore | `number` | No | Score from 0-1 indicating source credibility |
+| relevanceScore | `number` | No | Score from 0-1 indicating result relevance |
+| imageUrl | `string` | No | Optional thumbnail image URL |

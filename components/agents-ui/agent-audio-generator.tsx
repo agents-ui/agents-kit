@@ -138,7 +138,7 @@ export function AgentAudioGenerator({
   })
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn("space-y-4 p-4", className)}>
       {/* Success Message */}
       <div className="text-sm text-foreground">
         Your audio has been successfully generated. You may further customize it or simply download it for use.

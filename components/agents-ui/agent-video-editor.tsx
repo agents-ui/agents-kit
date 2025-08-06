@@ -102,7 +102,7 @@ export function AgentVideoEditor({
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn("space-y-4 p-4", className)}>
       {/* Video Preview */}
       <div className="relative group">
         <div className="rounded-xl border bg-black overflow-hidden">

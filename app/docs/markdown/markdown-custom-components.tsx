@@ -38,7 +38,7 @@ export function MarkdownCustomComponents() {
     a: ({ children, href }) => (
       <a
         href={href}
-        className="text-purple-500 underline hover:text-purple-700"
+        className="text-blue-500 underline hover:text-blue-700"
         onClick={(e) => {
           e.preventDefault()
           setTheme((prev) => (prev === "light" ? "dark" : "light"))

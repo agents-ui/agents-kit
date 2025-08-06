@@ -63,7 +63,7 @@ const issueTypeConfig: Record<GrammarIssueType, { icon: React.ReactNode; color: 
   grammar: { icon: <BookOpen className="h-3 w-3" />, color: "bg-red-100 text-red-800", label: "Grammar" },
   spelling: { icon: <AlertCircle className="h-3 w-3" />, color: "bg-orange-100 text-orange-800", label: "Spelling" },
   style: { icon: <Lightbulb className="h-3 w-3" />, color: "bg-blue-100 text-blue-800", label: "Style" },
-  clarity: { icon: <Target className="h-3 w-3" />, color: "bg-purple-100 text-purple-800", label: "Clarity" },
+  clarity: { icon: <Target className="h-3 w-3" />, color: "bg-blue-100 text-blue-800", label: "Clarity" },
   punctuation: { icon: <FileText className="h-3 w-3" />, color: "bg-green-100 text-green-800", label: "Punctuation" },
 }
 
@@ -115,7 +115,7 @@ export function AgentGrammarChecker({
   }
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn("space-y-4 p-4", className)}>
       {/* Analysis Status */}
       {isAnalyzing ? (
         <div className="text-sm text-foreground flex items-center gap-2">

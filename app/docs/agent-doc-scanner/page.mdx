@@ -1,0 +1,118 @@
+import AgentDocScannerBasic from "./agent-doc-scanner-basic"
+import AgentDocScannerInteractive from "./agent-doc-scanner-interactive"
+import AgentDocScannerChat from "./agent-doc-scanner-chat"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Doc Scanner
+
+An AI-powered document scanning component that handles PDF, CSV, and other document uploads with intelligent extraction, analysis, and export capabilities.
+
+## Features
+
+- **Multi-Format Support**: Process PDF, CSV, DOCX, XLSX, and TXT files
+- **AI Extraction**: Automatically extract tables, metadata, and key information
+- **Document Preview**: View documents with zoom, rotate, and page navigation
+- **Confidence Scores**: See AI confidence levels for extracted data
+- **Smart Sections**: Organized extraction of different content types
+- **Export Options**: Export processed data as JSON, CSV, or TXT
+- **Drag & Drop**: Intuitive file upload with drag-and-drop support
+- **Page Navigation**: Multi-page document support with controls
+
+## Examples
+
+### Basic Usage
+
+<ComponentCodePreview
+  component={<AgentDocScannerBasic />}
+  filePath="app/docs/agent-doc-scanner/agent-doc-scanner-basic.tsx"
+/>
+
+### Interactive Demo
+
+<ComponentCodePreview
+  component={<AgentDocScannerInteractive />}
+  filePath="app/docs/agent-doc-scanner/agent-doc-scanner-interactive.tsx"
+/>
+
+### Chat Integration
+
+<ComponentCodePreview
+  component={<AgentDocScannerChat />}
+  filePath="app/docs/agent-doc-scanner/agent-doc-scanner-chat.tsx"
+  classNameComponentContainer="p-4 min-w-[1200px]"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">CLI</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+  <TabsContent value="cli">
+
+```bash
+npx shadcn@latest add agents-ui-kit/agents-ui/agent-doc-scanner
+```
+
+  </TabsContent>
+  <TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-doc-scanner.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+  </TabsContent>
+</Tabs>
+
+## API Reference
+
+### AgentDocScanner
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| document | `DocumentInfo` | - | Current document information |
+| extractedSections | `ExtractedSection[]` | `[]` | Array of extracted content sections |
+| currentPage | `number` | `1` | Current page number |
+| totalPages | `number` | `1` | Total number of pages |
+| isProcessing | `boolean` | `false` | Whether document is being processed |
+| uploadProgress | `number` | `0` | Upload progress percentage (0-100) |
+| previewUrl | `string` | - | URL for document preview |
+| onFileUpload | `(file: File) => void` | - | Callback when file is uploaded |
+| onExtract | `(sectionId: string) => void` | - | Callback to extract specific section |
+| onExport | `(format?: "json" \| "csv" \| "txt") => void` | - | Callback for data export |
+| onPageChange | `(page: number) => void` | - | Callback when changing pages |
+| onZoomIn | `() => void` | - | Callback for zoom in |
+| onZoomOut | `() => void` | - | Callback for zoom out |
+| onRotate | `() => void` | - | Callback for rotation |
+| onCopySection | `(sectionId: string) => void` | - | Callback to copy section content |
+| onHighlightSection | `(sectionId: string) => void` | - | Callback to highlight section in document |
+| className | `string` | - | Additional CSS classes |
+| timestamp | `string` | `"2:34 PM"` | Display timestamp |
+
+### DocumentInfo
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| name | `string` | Yes | Document file name |
+| type | `"pdf" \| "csv" \| "docx" \| "xlsx" \| "txt"` | Yes | Document type |
+| size | `number` | Yes | File size in bytes |
+| pages | `number` | No | Number of pages (for multi-page docs) |
+| uploadedAt | `string` | No | Upload timestamp |
+
+### ExtractedSection
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| id | `string` | Yes | Unique section identifier |
+| type | `"text" \| "table" \| "image" \| "metadata"` | Yes | Content type |
+| title | `string` | Yes | Section title |
+| content | `any` | Yes | Extracted content (varies by type) |
+| confidence | `number` | No | AI confidence score (0-1) |
+| page | `number` | No | Page number where content was found |

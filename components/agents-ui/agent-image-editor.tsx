@@ -77,7 +77,7 @@ export function AgentImageEditor({
   const currentVariationData = variations.find(v => v.id === currentVariation) || variations[0]
 
   return (
-    <div className={cn("space-y-4", className)}>
+    <div className={cn("space-y-4 p-4", className)}>
       {/* Variation Label */}
       {currentVariationData && (
         <div className="text-sm font-medium text-foreground">

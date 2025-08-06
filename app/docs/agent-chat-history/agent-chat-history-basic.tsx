@@ -48,7 +48,7 @@ export default function AgentChatHistoryBasic() {
           content: "This error typically occurs when you're trying to access a property on a value that is undefined. Let me help you debug this.",
           timestamp: new Date(Date.now() - 86300000),
           tokens: 35,
-          model: "claude-3"
+          model: "gpt-4"
         }
       ],
       createdAt: new Date(Date.now() - 86400000),
