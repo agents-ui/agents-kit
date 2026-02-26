@@ -181,9 +181,39 @@ export const routes: Route[] = [
     type: "agent",
   },
   {
+    path: "/docs/agent-task-queue",
+    label: "Agent Task Queue",
+    order: 29,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-revenue-insights",
+    label: "Agent Revenue Insights",
+    order: 30,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-workflow-planner",
+    label: "Agent Workflow Planner",
+    order: 31,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-analytics-pulse",
+    label: "Agent Analytics Pulse",
+    order: 32,
+    type: "agent",
+  },
+  {
+    path: "/docs/agent-ops-monitor",
+    label: "Agent Ops Monitor",
+    order: 33,
+    type: "agent",
+  },
+  {
     path: "/docs/blocks",
     label: "Blocks",
-    order: 29,
+    order: 34,
     type: "block",
   },
 ]

@@ -1,0 +1,182 @@
+import AgentTaskQueueBasic from "./agent-task-queue-basic"
+import AgentTaskQueueFinOps from "./agent-task-queue-finops"
+import AgentTaskQueueAnalytics from "./agent-task-queue-analytics"
+import AgentTaskQueueInteractive from "./agent-task-queue-interactive"
+import AgentTaskQueueChat from "./agent-task-queue-chat"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Task Queue
+
+Command and visualize your agent’s autonomous task pipeline with queue orchestration, execution timelines, and health metrics in a single interface.
+
+## Features
+
+- **Real-time Orchestration**: Monitor running jobs, queued work, and recent outcomes at a glance
+- **Execution Timeline**: Visual checkpoints with status chips for each stage of the active task
+- **Queue Planner**: Upcoming and paused tasks with priority badges and action controls
+- **Automation Controls**: Toggle auto-start behavior, reorder priorities, and clear completed runs
+- **Operational Metrics**: Track token usage, estimated cost, and confidence per task
+- **Chat Ready Layout**: Drop the queue directly into conversational experiences without extra styling
+
+## Examples
+
+### Product Launch Playbook
+
+Short-cycle launch workflow with compliance checks, messaging, and demo refreshes.
+
+<ComponentCodePreview
+  component={<AgentTaskQueueBasic />}
+  filePath="app/docs/agent-task-queue/agent-task-queue-basic.tsx"
+  classNameComponentContainer="mx-auto max-w-5xl p-6"
+/>
+
+### Finance Ops Sweep
+
+Budget guardrails, variance clean-up, and negotiation drafts tailored for finance agents.
+
+<ComponentCodePreview
+  component={<AgentTaskQueueFinOps />}
+  filePath="app/docs/agent-task-queue/agent-task-queue-finops.tsx"
+  classNameComponentContainer="mx-auto max-w-5xl p-6"
+/>
+
+### Analytics Command Center
+
+Pair the queue with a trend snapshot to show how insights ship each week.
+
+<ComponentCodePreview
+  component={<AgentTaskQueueAnalytics />}
+  filePath="app/docs/agent-task-queue/agent-task-queue-analytics.tsx"
+  classNameComponentContainer="mx-auto max-w-5xl p-6"
+/>
+
+### Interactive Control Room
+
+Hook into stateful handlers to simulate starting, pausing, and reordering work.
+
+<ComponentCodePreview
+  component={<AgentTaskQueueInteractive />}
+  filePath="app/docs/agent-task-queue/agent-task-queue-interactive.tsx"
+  classNameComponentContainer="mx-auto max-w-5xl p-6"
+/>
+
+### Support Chat Embedding
+
+Drop the queue into an agent conversation for instant status briefings.
+
+<ComponentCodePreview
+  component={<AgentTaskQueueChat />}
+  filePath="app/docs/agent-task-queue/agent-task-queue-chat.tsx"
+  classNameComponentContainer="mx-auto max-w-4xl p-4"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-task-queue.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-task-queue.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## API Reference
+
+### AgentTaskQueue
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| tasks | `AgentTask[]` | Pre-populated demo data | Collection of tasks to display across the queue |
+| activeTaskId | `string \| null` | - | Explicitly select the active task (falls back to the first running task) |
+| autoStart | `boolean` | `true` | Whether queued tasks should start automatically when slots are free |
+| concurrencyLimit | `number` | `1` | Number of tasks the agent can process in parallel |
+| isProcessing | `boolean` | `false` | Disable controls while backend actions are executing |
+| showTimeline | `boolean` | `true` | Toggle display of execution checkpoints for the active task |
+| timestamp | `string` | `"Updated moments ago"` | Label shown in the header badge |
+| className | `string` | - | Optional CSS class overrides |
+| onStartTask | `(taskId: string) => void` | - | Trigger when a queued task should start |
+| onPauseTask | `(taskId: string) => void` | - | Trigger when a running task should pause |
+| onResumeTask | `(taskId: string) => void` | - | Trigger when a paused task should resume |
+| onCancelTask | `(taskId: string) => void` | - | Reset or cancel a task |
+| onReorder | `(taskIds: string[]) => void` | - | Reorder queued tasks (receives ordered queue IDs) |
+| onToggleAutoStart | `(value: boolean) => void` | - | Toggle auto-start mode from the header action |
+| onClearCompleted | `() => void` | - | Clear completed tasks from the queue |
+| onAddTask | `() => void` | - | Handler for adding a new task from the header button |
+
+### AgentTask
+
+| Property | Type | Description |
+|----------|------|-------------|
+| id | `string` | Unique task identifier |
+| title | `string` | Task label shown in the queue |
+| description | `string` | Optional concise task description |
+| status | `AgentTaskStatus` | Current lifecycle state |
+| progress | `number` | Percentage progress for running tasks |
+| priority | `AgentTaskPriority` | Priority badge shown alongside the title |
+| createdAt | `string` | Optional created timestamp |
+| updatedAt | `string` | Raw timestamp when last updated |
+| updatedLabel | `string` | Human-friendly timestamp or status label |
+| estimatedDuration | `string` | Estimated time remaining for the active run |
+| tool | `string` | Tool, model, or workflow handling the task |
+| assignee | `{ name: string; avatarColor?: string; initials?: string }` | Optional human or agent assignee |
+| checkpoints | `AgentTaskTimelineEvent[]` | Timeline events for the active task |
+| relatedResources | `{ label: string; href?: string }[]` | Linked artifacts or resources |
+| metrics | `{ tokens?: number; cost?: string; confidence?: number }` | Operational metrics for the task |
+
+### AgentTaskStatus
+
+```typescript
+type AgentTaskStatus = "queued" | "running" | "completed" | "failed" | "blocked" | "paused"
+```
+
+### AgentTaskPriority
+
+```typescript
+type AgentTaskPriority = "low" | "medium" | "high"
+```
+
+### AgentTaskTimelineEvent
+
+| Property | Type | Description |
+|----------|------|-------------|
+| id | `string` | Unique event identifier |
+| title | `string` | Stage title |
+| description | `string` | Additional context for the checkpoint |
+| status | `"pending" \| "active" \| "completed"` | Checkpoint status |
+| timestamp | `string` | Optional timestamp label |
+
+### AgentTaskTimelineStatus
+
+```typescript
+type AgentTaskTimelineStatus = "pending" | "active" | "completed"
+```
+
+## Design Notes
+
+- All action buttons use the project’s standardized `Button` component for consistent sizing and focus states.
+- The timeline and queue planner rely on compound conditions to avoid rendering empty containers when hooks are missing.
+- Colors align with the established blue-first palette with semantic accents for success and errors.

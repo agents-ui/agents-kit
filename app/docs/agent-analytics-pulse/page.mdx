@@ -1,0 +1,122 @@
+import AgentAnalyticsPulseBasic from "./agent-analytics-pulse-basic"
+import AgentAnalyticsPulseInteractive from "./agent-analytics-pulse-interactive"
+import AgentAnalyticsPulseFinance from "./agent-analytics-pulse-finance"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Analytics Pulse
+
+Analytics overview designed for agent-driven growth teams. Surface metrics, attribution, and auto-generated highlights in one glance.
+
+## Features
+
+- **Segment Controls**: Switch between customer segments to update metrics and attribution
+- **Inline Charts**: SVG trend line and doughnut chart ship without extra deps
+- **Highlights Feed**: Display agent-authored insights with impact badges
+- **Drilldown Hooks**: Action button ready to open deeper analytics layers
+
+## Examples
+
+### Default Pulse
+
+<ComponentCodePreview
+  component={<AgentAnalyticsPulseBasic />}
+  filePath="app/docs/agent-analytics-pulse/agent-analytics-pulse-basic.tsx"
+  classNameComponentContainer="p-6"
+/>
+
+### Segment Explorer
+
+<ComponentCodePreview
+  component={<AgentAnalyticsPulseInteractive />}
+  filePath="app/docs/agent-analytics-pulse/agent-analytics-pulse-interactive.tsx"
+  classNameComponentContainer="p-6"
+/>
+
+### Finance View
+
+<ComponentCodePreview
+  component={<AgentAnalyticsPulseFinance />}
+  filePath="app/docs/agent-analytics-pulse/agent-analytics-pulse-finance.tsx"
+  classNameComponentContainer="p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-analytics-pulse.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-analytics-pulse.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## API Reference
+
+### AgentAnalyticsPulse
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| title | `string` | `"Growth analytics pulse"` | Header title |
+| timeframe | `string` | `"Last 30 days"` | Subtitle timing |
+| metrics | `PulseMetric[]` | Sample metrics | Key metrics row |
+| trendSeries | `number[]` | `[62, 64, 66, ...]` | Values for line chart |
+| attribution | `AttributionSlice[]` | Sample slices | Doughnut chart data |
+| highlights | `InsightHighlight[]` | Sample highlights | Insight cards |
+| segmentFilter | `string` | `"All"` | Current segment tab |
+| onSegmentChange | `(segment: string) => void` | - | Called when segment tab changes |
+| onDrilldown | `() => void` | - | Fired by drilldown button |
+| className | `string` | - | Tailwind overrides |
+
+### Types
+
+```typescript
+interface PulseMetric {
+  label: string
+  value: string
+  change: string
+  positive?: boolean
+}
+
+interface AttributionSlice {
+  channel: string
+  value: number
+  color?: string
+}
+
+interface InsightHighlight {
+  id: string
+  title: string
+  detail: string
+  impact: "high" | "medium" | "low"
+}
+```
+
+## Design Notes
+
+- Tabs automatically scroll to handle long segment labels
+- Charts rely on inline SVG to keep bundle lean and SSR safe
+- Highlights use dashed borders to maintain documentation aesthetic

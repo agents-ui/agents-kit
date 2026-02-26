@@ -1,5 +1,8 @@
 import ComponentCodePreview from "@/components/app/component-code-preview"
 import { LayoutProse } from "@/components/app/layout-prose"
+import EmailLaunchDigest from "@/components/blocks/email-launch-digest"
+import MarketingFunnelCommandCenter from "@/components/blocks/marketing-funnel-command-center"
+import SocialTrendAgent from "@/components/blocks/social-trend-agent"
 import { Button } from "@/components/ui/button"
 import { getBaseUrl } from "@/lib/utils"
 import { generateMetadata } from "../docs/utils/metadata"
@@ -24,6 +27,33 @@ export default function BlocksPage() {
         </p>
       </div>
       <LayoutProse className="flex w-full flex-col gap-12">
+        <div>
+          <h4>Marketing funnel command center</h4>
+          <ComponentCodePreview
+            component={<MarketingFunnelCommandCenter />}
+            filePath="components/blocks/marketing-funnel-command-center.tsx"
+            classNameContainer="mt-4"
+            classNameComponentContainer="p-0"
+          />
+        </div>
+        <div>
+          <h4>Email launch digest</h4>
+          <ComponentCodePreview
+            component={<EmailLaunchDigest />}
+            filePath="components/blocks/email-launch-digest.tsx"
+            classNameContainer="mt-4"
+            classNameComponentContainer="p-0"
+          />
+        </div>
+        <div>
+          <h4>Social trend agent</h4>
+          <ComponentCodePreview
+            component={<SocialTrendAgent />}
+            filePath="components/blocks/social-trend-agent.tsx"
+            classNameContainer="mt-4"
+            classNameComponentContainer="p-0"
+          />
+        </div>
         <div>
           <h4>Prompt input with actions</h4>
           <ComponentCodePreview

@@ -1,0 +1,124 @@
+import AgentOpsMonitorBasic from "./agent-ops-monitor-basic"
+import AgentOpsMonitorIncidents from "./agent-ops-monitor-incidents"
+import AgentOpsMonitorStaging from "./agent-ops-monitor-staging"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Ops Monitor
+
+Operational cockpit for monitoring autonomous agent infrastructure health, service metrics, and incident history.
+
+## Features
+
+- **Signal Feed**: Real-time alerts with escalation + acknowledgement controls
+- **Service Metrics**: Keep thresholds and trends visible next to active incidents
+- **Incident Timeline**: Show latest actions for quick war-room context
+- **Environment Aware**: Swap context (production vs staging) via props
+
+## Examples
+
+### Production Overview
+
+<ComponentCodePreview
+  component={<AgentOpsMonitorBasic />}
+  filePath="app/docs/agent-ops-monitor/agent-ops-monitor-basic.tsx"
+  classNameComponentContainer="p-6"
+/>
+
+### Incident Response
+
+<ComponentCodePreview
+  component={<AgentOpsMonitorIncidents />}
+  filePath="app/docs/agent-ops-monitor/agent-ops-monitor-incidents.tsx"
+  classNameComponentContainer="p-6"
+/>
+
+### Staging Sandbox
+
+<ComponentCodePreview
+  component={<AgentOpsMonitorStaging />}
+  filePath="app/docs/agent-ops-monitor/agent-ops-monitor-staging.tsx"
+  classNameComponentContainer="p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-ops-monitor.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-ops-monitor.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
+
+## API Reference
+
+### AgentOpsMonitor
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| environment | `string` | `"Production"` | Environment name in header |
+| uptime | `string` | `"99.97%"` | Uptime badge |
+| signals | `OpsSignal[]` | Sample signals | Live alerts feed |
+| metrics | `OpsServiceMetric[]` | Sample metrics | Service metrics cards |
+| incidents | `IncidentEvent[]` | Sample incidents | Recent incident timeline |
+| onAcknowledge | `(signal) => void` | - | Called when acknowledging a signal |
+| onEscalate | `(signal) => void` | - | Called when escalating |
+| onExportReport | `() => void` | - | Fired by export button |
+| className | `string` | - | Tailwind overrides |
+
+### Types
+
+```typescript
+interface OpsSignal {
+  id: string
+  title: string
+  status: "healthy" | "warning" | "critical"
+  detail: string
+  owner?: string
+  lastUpdated?: string
+}
+
+interface OpsServiceMetric {
+  label: string
+  value: string
+  threshold: string
+  trend: "up" | "down" | "stable"
+}
+
+interface IncidentEvent {
+  id: string
+  timestamp: string
+  summary: string
+  actionNeeded?: string
+}
+```
+
+## Design Notes
+
+- Signal list wraps in `ScrollArea` for consistent height in docs
+- Buttons follow `h-7` sizing for secondary actions
+- Status badges reuse blue/emerald/amber/red palette established across the kit

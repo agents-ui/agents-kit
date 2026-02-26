@@ -116,6 +116,15 @@ Specialized components for agent workflows:
 - **AgentToolPalette** - Tool selection and management
 - **AgentFeedback** - User satisfaction collection
 
+#### Operations & Monitoring
+- **AgentOpsMonitor** - Live signal dashboard with metrics, incidents, and escalation controls
+- **AgentTaskQueue** - Orchestrate multi-step workflows with progress, priorities, and metrics
+- **AgentWorkflowPlanner** - Guided checkpoint planner with playbooks and handoff queues
+
+#### Analytics & Finance
+- **AgentRevenueInsights** - Scenario planning surface with ARR forecasts and opportunity insights
+- **AgentAnalyticsPulse** - Growth analytics overview with segment switching and highlights
+
 #### Media Agent Components (New!)
 - **AgentImageEditor** - AI image editing with variation management and export controls
 - **AgentVideoEditor** - Professional video editing with timeline and playback controls
@@ -123,7 +132,6 @@ Specialized components for agent workflows:
 - **AgentGrammarChecker** - Smart text analysis with categorized suggestions and corrections
 
 #### Utility Components
-- **TaskQueue** - Visualize pending and completed agent tasks
 - **SystemPrompt** - Display and edit system prompts
 - **MultiAgentView** - Coordinate multiple agents
 
@@ -149,7 +157,8 @@ We welcome contributions! Please feel free to submit issues and pull requests.
 
 ## License
 
-MIT License - see [LICENSE.md](LICENSE.md) for details.
+This project is distributed under a non-commercial license. You may remix and use the components for personal or internal evaluation, but commercial usage requires written permission.  
+For commercial licenses, contact [me@abhishek.it](mailto:me@abhishek.it). See [LICENSE.md](LICENSE.md) for the full terms.
 
 ## Author
 
