@@ -64,7 +64,7 @@ The sidebar clearly separates agents-ui components from the original prompt-kit 
 
 ## New Specialized Agent Components
 
-We've just shipped 4 powerful new agent components that handle complex media workflows. These aren't just basic UI components - they're full-featured interfaces that developers are using in production AI apps.
+A growing library of 30+ specialized agent components covering orchestration, human-in-the-loop workflows, analytics dashboards, research tools, and media generation interfaces.
 
 ### Image Generation & Editing Agent
 
@@ -124,16 +124,34 @@ Specialized components for agent workflows:
 #### Analytics & Finance
 - **AgentRevenueInsights** - Scenario planning surface with ARR forecasts and opportunity insights
 - **AgentAnalyticsPulse** - Growth analytics overview with segment switching and highlights
+- **AgentDataAnalysis** - Bento grid analytics dashboard with sparklines, donut charts, and distribution bars
 
-#### Media Agent Components (New!)
+#### Orchestration & Routing
+- **AgentOrchestrator** - Multi-agent coordination dashboard with communication logs and per-agent metrics
+- **AgentParallelProcessor** - Fan-out/fan-in pipeline visualization with SVG connection lines and ring progress
+- **AgentSequentialWorkflow** - Metro/subway map pipeline with station nodes and animated data flow
+- **AgentRoutingHub** - Hub-and-spoke query routing with classification ticker and confidence gauge
+- **AgentEvaluator** - Quality assurance dashboard with radial gauge, convergence charts, and iteration timeline
+
+#### Human-in-the-Loop
+- **AgentToolApproval** - Tool execution approval flow with risk banners, parameter display, and history timeline
+- **AgentPlanBuilder** - Kanban-style plan review board with per-step approval and confidence gauge
+- **AgentInquiry** - Conversational decision interface with chat bubbles, pill selections, and star ratings
+
+#### Research & Analysis
+- **AgentSourcesCitations** - Magazine-style citation layout with masonry grid and source verification
+- **AgentCompetitorResearch** - Business intelligence view with radar chart, SWOT matrix, and dot matrix comparison
+
+#### Generators & Artifacts
+- **AgentArtifact** - IDE-style artifact viewer with macOS chrome, syntax highlighting, and version timeline
+- **AgentFormGenerator** - Drag-drop form builder aesthetic with field palette and live preview
+- **AgentCodeExecutor** - Terminal/console emulator with split panes, line numbers, and status bar
+
+#### Media Agent Components
 - **AgentImageEditor** - AI image editing with variation management and export controls
 - **AgentVideoEditor** - Professional video editing with timeline and playback controls
 - **AgentAudioGenerator** - Voice synthesis with waveform visualization and voice controls
 - **AgentGrammarChecker** - Smart text analysis with categorized suggestions and corrections
-
-#### Utility Components
-- **SystemPrompt** - Display and edit system prompts
-- **MultiAgentView** - Coordinate multiple agents
 
 ## Development
 

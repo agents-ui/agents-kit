@@ -1,0 +1,57 @@
+import AgentOrchestratorBasic from "./agent-orchestrator-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Orchestrator
+
+Visualize a main orchestrator coordinating multiple sub-agents working on different parts of a task, inspired by the Orchestrator-Worker pattern from AI SDK.
+
+## Features
+
+- **Sub-agent Grid**: Monitor each worker agent with status, progress, and metrics
+- **Communication Log**: Track messages flowing between orchestrator and sub-agents
+- **Aggregated Results**: See how individual outputs combine into the final result
+- **Live Controls**: Start, pause, or redistribute work across agents
+
+## Examples
+
+### Content Research Pipeline
+
+<ComponentCodePreview
+  component={<AgentOrchestratorBasic />}
+  filePath="app/docs/agent-orchestrator/agent-orchestrator-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-orchestrator.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-orchestrator.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>

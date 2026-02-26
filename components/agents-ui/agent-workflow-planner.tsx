@@ -194,7 +194,7 @@ export function AgentWorkflowPlanner({
                       <button
                         type="button"
                         className="flex w-full items-center justify-between text-left"
-                        onClick={() => setExpandedPlaybook(selected ? undefined : playbook.label)}
+                        onClick={() => setExpandedPlaybook(selected ? "" : playbook.label)}
                       >
                         <div>
                           <p className="text-sm font-medium text-foreground">{playbook.label}</p>

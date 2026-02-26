@@ -1,0 +1,58 @@
+import AgentFormGeneratorBasic from "./agent-form-generator-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Form Generator
+
+Watch AI dynamically generate form fields based on context with a live preview that updates as the agent builds the form.
+
+## Features
+
+- **Dynamic Fields**: AI adds, removes, and reorders fields in real time as it understands the requirements
+- **Live Preview**: Side-by-side preview that renders the form as the agent constructs it
+- **Validation Rules**: Auto-generated validation constraints for each field type
+- **Field Types**: Support for text, number, select, checkbox, date, file upload, and custom inputs
+- **Schema Export**: Export the finished form as JSON Schema or code for direct integration
+
+## Examples
+
+### Customer Onboarding Form
+
+<ComponentCodePreview
+  component={<AgentFormGeneratorBasic />}
+  filePath="app/docs/agent-form-generator/agent-form-generator-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-form-generator.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-form-generator.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>

@@ -38,7 +38,7 @@ export default function AgentWorkflowPlannerChat() {
             const isAssistant = message.role === "assistant"
             return (
               <Message key={message.id} className={isAssistant ? "justify-start" : "justify-end"}>
-                {isAssistant && <MessageAvatar alt="Workflow Agent" fallback="🗂️" />}
+                {isAssistant && <MessageAvatar src="" alt="Workflow Agent" fallback="🗂️" />}
                 <div className="max-w-[90%] flex-1">
                   {isAssistant ? (
                     <div className="space-y-3 rounded-lg bg-secondary p-3 text-foreground">

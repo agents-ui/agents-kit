@@ -1,0 +1,58 @@
+import AgentArtifactBasic from "./agent-artifact-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Artifact
+
+Display AI-generated structured artifacts such as code snippets, tables, and documents with live preview and version history.
+
+## Features
+
+- **Multi-Type Support**: Render code blocks, data tables, documents, and other structured outputs
+- **Tab Preview**: Switch between rendered preview and raw source in a tabbed interface
+- **Version History**: Browse and restore previous versions of the artifact
+- **Code Display**: Syntax-highlighted code view with copy-to-clipboard support
+- **Export Actions**: Download or share artifacts in multiple formats
+
+## Examples
+
+### Generated API Schema
+
+<ComponentCodePreview
+  component={<AgentArtifactBasic />}
+  filePath="app/docs/agent-artifact/agent-artifact-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-artifact.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-artifact.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>

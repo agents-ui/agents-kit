@@ -19,7 +19,7 @@ const tasks: AgentTask[] = [
     checkpoints: [
       { id: "l-e1", title: "Smoke test", status: "completed", timestamp: "08:05" },
       { id: "l-e2", title: "Toggle validation", status: "active", timestamp: "08:09" },
-      { id: "l-e3", title: "Final approval", status: "upcoming" },
+      { id: "l-e3", title: "Final approval", status: "pending" },
     ],
     metrics: { tokens: 780, confidence: 0.84 },
   },

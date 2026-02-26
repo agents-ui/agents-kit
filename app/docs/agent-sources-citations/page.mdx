@@ -1,0 +1,58 @@
+import AgentSourcesCitationsBasic from "./agent-sources-citations-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Sources & Citations
+
+Display AI-generated responses with inline citations linked to verifiable sources, giving users confidence in the accuracy of every claim.
+
+## Features
+
+- **Inline Citations**: Numbered reference markers within the response text link directly to their source
+- **Source Panel**: Collapsible sidebar or footer listing all referenced sources with titles, URLs, and relevance scores
+- **Active Highlighting**: Hovering a citation highlights the corresponding source and vice versa
+- **Source Verification**: Status badges indicate whether each source is verified, cached, or potentially stale
+- **Export Options**: Copy the response with or without citations, or export the full source list
+
+## Examples
+
+### Research Summary with Sources
+
+<ComponentCodePreview
+  component={<AgentSourcesCitationsBasic />}
+  filePath="app/docs/agent-sources-citations/agent-sources-citations-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-sources-citations.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-sources-citations.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>

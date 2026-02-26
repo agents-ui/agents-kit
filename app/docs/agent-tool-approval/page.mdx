@@ -1,0 +1,58 @@
+import AgentToolApprovalBasic from "./agent-tool-approval-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Tool Approval
+
+Human-in-the-loop approval interface for agent tool calls, letting users review parameters, assess risk, and approve or reject actions before execution.
+
+## Features
+
+- **Pending Approval Card**: Each tool call surfaces as a reviewable card with clear approve/reject actions
+- **Risk Assessment**: Visual risk indicator helps users gauge the potential impact of each tool invocation
+- **Parameter Preview**: Expandable parameter details so users can inspect exactly what the agent intends to do
+- **Approval History**: Scrollable log of past decisions with timestamps and outcome badges
+- **Execution Results**: After approval, see the tool's output alongside the original request
+
+## Examples
+
+### Tool Call Review
+
+<ComponentCodePreview
+  component={<AgentToolApprovalBasic />}
+  filePath="app/docs/agent-tool-approval/agent-tool-approval-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-tool-approval.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-tool-approval.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>

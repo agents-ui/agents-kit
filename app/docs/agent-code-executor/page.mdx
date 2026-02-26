@@ -1,0 +1,58 @@
+import AgentCodeExecutorBasic from "./agent-code-executor-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Code Executor
+
+Visualize AI writing and executing code in a sandboxed environment with real-time output, execution history, and security controls.
+
+## Features
+
+- **Code Display**: Syntax-highlighted editor view showing the agent's generated code
+- **Output Panel**: Live stdout, stderr, and return-value output from the sandboxed execution
+- **Execution History**: Browse previous runs with input snapshots and result diffs
+- **Security Indicators**: Visual badges showing sandbox isolation level and permission scope
+- **Sandbox Controls**: Start, stop, and restart execution with resource usage limits
+
+## Examples
+
+### Data Processing Script
+
+<ComponentCodePreview
+  component={<AgentCodeExecutorBasic />}
+  filePath="app/docs/agent-code-executor/agent-code-executor-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-code-executor.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-code-executor.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>

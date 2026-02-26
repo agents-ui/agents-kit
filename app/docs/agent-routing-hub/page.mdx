@@ -1,0 +1,58 @@
+import AgentRoutingHubBasic from "./agent-routing-hub-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Routing Hub
+
+Intelligent query routing interface that classifies user intent and dispatches requests to the most suitable specialized agent.
+
+## Features
+
+- **Intent Classification**: Incoming queries are analyzed and tagged with detected intent categories
+- **Route Matching**: Visual routing table maps intents to available specialist agents with match scores
+- **Agent Selection**: Highlighted selection shows which agent was chosen and why, with fallback options
+- **Routing History**: Scrollable log of past routing decisions with latency and outcome data
+- **Manual Override**: Users can override the automatic selection and redirect to a different agent
+
+## Examples
+
+### Support Query Router
+
+<ComponentCodePreview
+  component={<AgentRoutingHubBasic />}
+  filePath="app/docs/agent-routing-hub/agent-routing-hub-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-routing-hub.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-routing-hub.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>

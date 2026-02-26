@@ -39,7 +39,7 @@ export default function AgentRevenueInsightsChat() {
             return (
               <Message key={message.id} className={isAssistant ? "justify-start" : "justify-end"}>
                 {isAssistant && (
-                  <MessageAvatar alt="Revenue Agent" fallback="💹" />
+                  <MessageAvatar src="" alt="Revenue Agent" fallback="💹" />
                 )}
                 <div className="max-w-[90%] flex-1">
                   {isAssistant ? (

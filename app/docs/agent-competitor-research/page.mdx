@@ -1,0 +1,58 @@
+import AgentCompetitorResearchBasic from "./agent-competitor-research-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Competitor Research
+
+Present structured competitive analysis findings from AI research agents with side-by-side comparisons and threat assessments.
+
+## Features
+
+- **Competitor Cards**: Individual profile cards for each competitor with key stats and positioning
+- **Comparison Matrix**: Side-by-side feature and capability comparison across competitors
+- **Threat Assessment**: Color-coded threat levels and strategic risk indicators
+- **Key Findings**: AI-generated summary of the most critical competitive insights
+- **Research Depth**: Confidence scores and source counts reflecting analysis thoroughness
+
+## Examples
+
+### SaaS Market Landscape
+
+<ComponentCodePreview
+  component={<AgentCompetitorResearchBasic />}
+  filePath="app/docs/agent-competitor-research/agent-competitor-research-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-competitor-research.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-competitor-research.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>

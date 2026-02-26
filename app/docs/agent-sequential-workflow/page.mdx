@@ -1,0 +1,58 @@
+import AgentSequentialWorkflowBasic from "./agent-sequential-workflow-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Sequential Workflow
+
+Visualize chained agent pipelines where the output of one agent feeds directly into the next, forming a structured multi-step execution flow.
+
+## Features
+
+- **Pipeline Visualization**: End-to-end view of each agent stage in a sequential chain
+- **Data Flow Arrows**: Directional indicators showing how output moves between agents
+- **Step Expansion**: Expand individual steps to inspect intermediate inputs and outputs
+- **Duration Tracking**: Per-step and total elapsed time for the entire pipeline run
+- **Pipeline Metrics**: Aggregate token usage, latency, and success rate across all stages
+
+## Examples
+
+### Multi-Agent Content Pipeline
+
+<ComponentCodePreview
+  component={<AgentSequentialWorkflowBasic />}
+  filePath="app/docs/agent-sequential-workflow/agent-sequential-workflow-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-sequential-workflow.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-sequential-workflow.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>

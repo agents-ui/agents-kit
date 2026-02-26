@@ -1,0 +1,58 @@
+import AgentInquiryBasic from "./agent-inquiry-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Inquiry
+
+Pause agent execution to collect user input through multiple choice, text, confirmation, or scale inputs before proceeding with the task.
+
+## Features
+
+- **Multiple Input Types**: Support for multiple choice, text input, confirmation, and scale ratings
+- **Agent Context**: Shows why the agent needs input and what it's working on
+- **Progress Tracking**: Displays remaining decisions needed before the agent can continue
+- **Inquiry History**: Review previously answered questions in the current session
+- **Skip Option**: Allow users to skip non-required questions
+
+## Examples
+
+### Database Migration Decision
+
+<ComponentCodePreview
+  component={<AgentInquiryBasic />}
+  filePath="app/docs/agent-inquiry/agent-inquiry-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-inquiry.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-inquiry.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>

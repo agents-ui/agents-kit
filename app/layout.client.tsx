@@ -3,9 +3,14 @@
 import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { ThemeToggle } from "@/components/app/theme-toggle"
-import { BringToFront } from "lucide-react"
+import { BringToFront, ChevronRight } from "lucide-react"
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible"
 import {
   Sidebar,
   SidebarContent,
@@ -30,13 +35,6 @@ const coreMenuItems = routes
     url: route.path,
   }))
 
-const agentsMenuItems = routes
-  .filter((route) => route.type === "agent")
-  .map((route) => ({
-    title: route.label,
-    url: route.path,
-  }))
-
 const componentsMenuItems = routes
   .filter((route) => route.type === "component")
   .map((route) => ({
@@ -50,6 +48,91 @@ const blocksMenuItems = routes
     title: route.label,
     url: route.path,
   }))
+
+type NavItem = { title: string; url: string }
+
+const agentSubcategories: { label: string; items: NavItem[] }[] = [
+  {
+    label: "Core Agents",
+    items: [
+      "Agent Card",
+      "Agent Response",
+      "Agent Prompt Composer",
+      "Agent Chat History",
+      "Agent Status Panel",
+      "Agent Toolkit",
+      "Agent Feedback",
+    ].map((label) => {
+      const r = routes.find((route) => route.label === label)!
+      return { title: r.label, url: r.path }
+    }),
+  },
+  {
+    label: "Media & Content",
+    items: [
+      "Agent Image Editor",
+      "Agent Video Editor",
+      "Agent Audio Generator",
+      "Agent Grammar Checker",
+      "Agent Doc Scanner",
+      "Agent Web Search",
+    ].map((label) => {
+      const r = routes.find((route) => route.label === label)!
+      return { title: r.label, url: r.path }
+    }),
+  },
+  {
+    label: "Orchestration",
+    items: [
+      "Agent Orchestrator",
+      "Agent Parallel Processor",
+      "Agent Sequential Workflow",
+      "Agent Routing Hub",
+      "Agent Task Queue",
+      "Agent Workflow Planner",
+    ].map((label) => {
+      const r = routes.find((route) => route.label === label)!
+      return { title: r.label, url: r.path }
+    }),
+  },
+  {
+    label: "Human-in-the-Loop",
+    items: [
+      "Agent Tool Approval",
+      "Agent Plan Builder",
+      "Agent Inquiry",
+      "Agent Evaluator",
+    ].map((label) => {
+      const r = routes.find((route) => route.label === label)!
+      return { title: r.label, url: r.path }
+    }),
+  },
+  {
+    label: "Research & Analysis",
+    items: [
+      "Agent Competitor Research",
+      "Agent Data Analysis",
+      "Agent Sources & Citations",
+      "Agent Revenue Insights",
+      "Agent Analytics Pulse",
+      "Agent Ops Monitor",
+    ].map((label) => {
+      const r = routes.find((route) => route.label === label)!
+      return { title: r.label, url: r.path }
+    }),
+  },
+  {
+    label: "Generators",
+    items: [
+      "Agent Form Generator",
+      "Agent Code Executor",
+      "Agent Artifact",
+    ].map((label) => {
+      const r = routes.find((route) => route.label === label)!
+      return { title: r.label, url: r.path }
+    }),
+  },
+]
 
 const socialMenuItems = [
   {
@@ -68,6 +151,56 @@ const llms = [
     url: "/llms-full.txt",
   },
 ]
+
+function CollapsibleNavGroup({
+  label,
+  items,
+  currentPath,
+  defaultOpen = false,
+}: {
+  label: string
+  items: NavItem[]
+  currentPath: string
+  defaultOpen?: boolean
+}) {
+  const hasActive = items.some((item) => currentPath === item.url)
+  const [open, setOpen] = useState(defaultOpen || hasActive)
+
+  return (
+    <Collapsible open={open} onOpenChange={setOpen}>
+      <CollapsibleTrigger className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
+        <span>{label}</span>
+        <ChevronRight
+          className={cn(
+            "h-3.5 w-3.5 transition-transform duration-200",
+            open && "rotate-90"
+          )}
+        />
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <SidebarMenu className="mt-1">
+          {items.map((item) => {
+            const isActive = currentPath === item.url
+            return (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton
+                  asChild
+                  className={cn(
+                    "hover:bg-sidebar-accent/50 active:bg-sidebar-accent/50 hover:text-primary text-lg transition-all duration-150 md:text-sm",
+                    isActive &&
+                      "text-primary bg-sidebar-accent hover:bg-sidebar-accent font-medium"
+                  )}
+                >
+                  <Link href={item.url}>{item.title}</Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )
+          })}
+        </SidebarMenu>
+      </CollapsibleContent>
+    </Collapsible>
+  )
+}
 
 function AppSidebar() {
   const currentPath = usePathname()
@@ -127,26 +260,16 @@ function AppSidebar() {
               Agents UI
             </SidebarGroupLabel>
             <SidebarGroupContent>
-              <SidebarMenu>
-                {agentsMenuItems.map((item) => {
-                  const isActive = currentPath === item.url
-
-                  return (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton
-                        asChild
-                        className={cn(
-                          "hover:bg-sidebar-accent/50 active:bg-sidebar-accent/50 hover:text-primary text-lg transition-all duration-150 md:text-sm",
-                          isActive &&
-                            "text-primary bg-sidebar-accent hover:bg-sidebar-accent font-medium"
-                        )}
-                      >
-                        <Link href={item.url}>{item.title}</Link>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  )
-                })}
-              </SidebarMenu>
+              <div className="space-y-1">
+                {agentSubcategories.map((group) => (
+                  <CollapsibleNavGroup
+                    key={group.label}
+                    label={group.label}
+                    items={group.items}
+                    currentPath={currentPath}
+                  />
+                ))}
+              </div>
             </SidebarGroupContent>
             <SidebarGroupLabel className={cn("mt-8 text-lg md:text-sm")}>
               Prompt Kit

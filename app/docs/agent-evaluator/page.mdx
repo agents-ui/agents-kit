@@ -1,0 +1,58 @@
+import AgentEvaluatorBasic from "./agent-evaluator-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Evaluator
+
+Visualize evaluator-optimizer iterative improvement loops where an evaluator scores agent output and an optimizer refines it until quality thresholds are met.
+
+## Features
+
+- **Iteration Timeline**: Step through each evaluate-optimize cycle with diffs between versions
+- **Quality Scoring**: Radar or bar chart showing scores across multiple evaluation dimensions
+- **Evaluation Criteria**: Configurable rubric cards displaying pass/fail status for each criterion
+- **Convergence Tracking**: Line chart plotting quality scores over iterations to visualize improvement
+- **Threshold Controls**: Adjustable quality thresholds that determine when the loop should stop
+
+## Examples
+
+### Content Quality Loop
+
+<ComponentCodePreview
+  component={<AgentEvaluatorBasic />}
+  filePath="app/docs/agent-evaluator/agent-evaluator-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-evaluator.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-evaluator.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>

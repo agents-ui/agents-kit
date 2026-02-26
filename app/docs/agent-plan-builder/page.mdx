@@ -1,0 +1,58 @@
+import AgentPlanBuilderBasic from "./agent-plan-builder-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Plan Builder
+
+Let AI propose multi-step plans for human review, with dependency tracking, per-step approval, and confidence scoring before execution begins.
+
+## Features
+
+- **Step-by-Step Review**: Each plan step is presented as an inspectable card with description, tools, and estimated duration
+- **Dependency Tracking**: Visual dependency graph shows which steps block others and the critical path
+- **Per-Step Approval**: Approve, reject, or modify individual steps without discarding the entire plan
+- **Confidence Score**: Model confidence displayed per step so reviewers can focus on uncertain areas
+- **Global Actions**: Approve all, reject all, or request a full re-plan with a single click
+
+## Examples
+
+### Research Plan Review
+
+<ComponentCodePreview
+  component={<AgentPlanBuilderBasic />}
+  filePath="app/docs/agent-plan-builder/agent-plan-builder-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-plan-builder.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-plan-builder.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>

@@ -1,0 +1,58 @@
+import AgentParallelProcessorBasic from "./agent-parallel-processor-basic"
+import ComponentCodePreview from "@/components/app/component-code-preview"
+
+# Agent Parallel Processor
+
+Visualize fan-out/fan-in parallel execution where multiple agent tasks run simultaneously, then merge results into a unified output.
+
+## Features
+
+- **Parallel Lanes**: Each concurrent task renders in its own lane with independent status and progress
+- **Progress Tracking**: Real-time progress bars and stage indicators for every parallel branch
+- **Merge Aggregation**: Visual merge step shows how individual lane outputs combine into the final result
+- **Error Recovery**: Failed lanes surface retry controls without blocking healthy branches
+- **Token Metrics**: Per-lane and aggregate token usage, cost, and latency breakdowns
+
+## Examples
+
+### Multi-Source Data Pipeline
+
+<ComponentCodePreview
+  component={<AgentParallelProcessorBasic />}
+  filePath="app/docs/agent-parallel-processor/agent-parallel-processor-basic.tsx"
+  classNameComponentContainer="mx-auto min-w-[900px] max-w-5xl p-6"
+/>
+
+## Installation
+
+<Tabs defaultValue="cli">
+
+<TabsList>
+  <TabsTrigger value="cli">CLI</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+<CodeBlock
+  code={`npx shadcn add "https://agents-ui-kit.com/c/agent-parallel-processor.json"`}
+  language="bash"
+/>
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<CodeBlock filePath="components/agents-ui/agent-parallel-processor.tsx" language="tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</Tabs>
