@@ -13,7 +13,7 @@ import { AgentImageEditor } from "@/components/agents-ui/agent-image-editor"
 import { useState } from "react"
 
 export default function AgentImageEditorChat() {
-  const [currentVariation, setCurrentVariation] = useState("1")
+  const [currentVariation] = useState("1")
   
   const variations = [
     {
@@ -82,7 +82,7 @@ export default function AgentImageEditorChat() {
                   <MessageAvatar
                     src="/avatars/ai.png"
                     alt="AI Assistant"
-                    fallback="🎨"
+                    fallback="IM"
                   />
                 )}
                 <div className="max-w-[85%] flex-1 sm:max-w-[75%]">

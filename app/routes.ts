@@ -6,6 +6,10 @@ export type Route = {
 }
 
 export const routes: Route[] = [
+  { path: "/docs", label: "v0.2 guides", order: -4, type: "core" },
+  { path: "/components", label: "Components", order: -3, type: "core" },
+  { path: "/generative", label: "Playground", order: -2, type: "core" },
+  { path: "/v0.1", label: "v0.1 archive", order: -1, type: "core" },
   {
     path: "/",
     label: "Home",
@@ -295,8 +299,8 @@ export const routes: Route[] = [
     type: "agent",
   },
   {
-    path: "/docs/blocks",
-    label: "Blocks",
+    path: "/blocks",
+    label: "v0.1 blocks",
     order: 48,
     type: "block",
   },

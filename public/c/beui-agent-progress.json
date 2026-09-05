@@ -1,0 +1,48 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "beui-agent-progress",
+  "type": "registry:block",
+  "title": "Beui Agent Progress",
+  "description": "Agent Loading States Agent Progress",
+  "dependencies": [
+    "clsx",
+    "motion",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/beui/components/agents/loading-states/agent-progress.tsx",
+      "target": "@components/beui/components/agents/loading-states/agent-progress.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\nimport * as React from \"react\";\n\nimport { motion, useReducedMotion } from \"motion/react\";\nimport { useEffect, useState } from \"react\";\nimport { EASE_IN_OUT } from \"@/components/beui/lib/ease\";\nimport { cn } from \"@/components/beui/lib/utils\";\n\nconst GRID_CELLS = [\n  { id: \"top-left\", delay: 0 },\n  { id: \"top-center\", delay: 0.14 },\n  { id: \"top-right\", delay: 0.28 },\n  { id: \"middle-left\", delay: 0.42 },\n  { id: \"middle-center\", delay: 0.56 },\n  { id: \"middle-right\", delay: 0.7 },\n  { id: \"bottom-left\", delay: 0.84 },\n  { id: \"bottom-center\", delay: 0.98 },\n  { id: \"bottom-right\", delay: 1.12 },\n];\n\nexport interface AgentProgressProps {\n  /** Verb describing the agent's current activity. */\n  label?: string;\n  /** Controlled elapsed time in seconds. */\n  elapsedSeconds?: number;\n  /** Starting time for the internal timer, in seconds. */\n  initialSeconds?: number;\n  /** Whether the internal timer should advance. Ignored when elapsedSeconds is provided. */\n  running?: boolean;\n  className?: string;\n}\n\nfunction formatElapsed(totalSeconds: number) {\n  const safeSeconds = Math.max(0, totalSeconds);\n  const minutes = Math.floor(safeSeconds / 60);\n  const seconds = (safeSeconds % 60).toFixed(1);\n  return minutes > 0 ? `${minutes}m ${seconds}s` : `${seconds}s`;\n}\n\nexport function AgentProgress({\n  label = \"Churning\",\n  elapsedSeconds,\n  initialSeconds = 0,\n  running = true,\n  className,\n}: AgentProgressProps) {\n  const reduce = useReducedMotion() ?? false;\n  const [internalSeconds, setInternalSeconds] = useState(initialSeconds);\n\n  useEffect(() => {\n    if (elapsedSeconds !== undefined || !running) return;\n\n    const startedAt = performance.now() - initialSeconds * 1000;\n    const timer = window.setInterval(() => {\n      setInternalSeconds((performance.now() - startedAt) / 1000);\n    }, 100);\n\n    return () => window.clearInterval(timer);\n  }, [elapsedSeconds, initialSeconds, running]);\n\n  const elapsed = elapsedSeconds ?? internalSeconds;\n\n  return (\n    <span\n      role=\"status\"\n      aria-label={`${label}, in progress`}\n      className={cn(\n        \"inline-flex items-center gap-3 font-mono text-sm text-muted-foreground\",\n        className,\n      )}\n    >\n      <span\n        aria-hidden=\"true\"\n        className=\"grid size-5 shrink-0 grid-cols-3 gap-[2px]\"\n      >\n        {GRID_CELLS.map(({ id, delay }) => (\n          <motion.span\n            key={id}\n            className=\"rounded-[1px] bg-current\"\n            animate={\n              reduce\n                ? { opacity: [0.35, 0.8, 0.35] }\n                : {\n                    opacity: [0.28, 1, 0.28],\n                    scale: [0.72, 1, 0.72],\n                  }\n            }\n            transition={{\n              duration: 1.55,\n              ease: EASE_IN_OUT,\n              repeat: Infinity,\n              delay,\n            }}\n          />\n        ))}\n      </span>\n      <span className=\"font-sans font-medium\">{label}</span>\n      <span\n        aria-hidden=\"true\"\n        className=\"tabular-nums text-muted-foreground/70\"\n      >\n        {formatElapsed(elapsed)}\n      </span>\n    </span>\n  );\n}\n"
+    },
+    {
+      "path": "components/beui/lib/ease.ts",
+      "target": "@components/beui/lib/ease.ts",
+      "type": "registry:component",
+      "content": "// Shared motion tokens. Easing curves mirror the CSS custom properties in\n// globals.css; springs are the canonical physics used across components.\n// Strong custom variants — defaults like `ease-in`/`ease-out` feel weak.\n\nexport const EASE_OUT = [0.16, 1, 0.3, 1] as const;\nexport const EASE_IN_OUT = [0.77, 0, 0.175, 1] as const;\nexport const EASE_DRAWER = [0.32, 0.72, 0, 1] as const;\n\n/** CSS string form of EASE_OUT for inline style transitions. */\nexport const EASE_OUT_CSS = \"cubic-bezier(0.16, 1, 0.3, 1)\";\n\n/** Press feedback on buttons and other tappable surfaces. */\nexport const SPRING_PRESS = {\n  type: \"spring\",\n  stiffness: 500,\n  damping: 30,\n  mass: 0.6,\n} as const;\n\n/** Content swaps — label/icon slots trading places inside a control. */\nexport const SPRING_SWAP = {\n  type: \"spring\",\n  stiffness: 460,\n  damping: 30,\n  mass: 0.55,\n} as const;\n\n/** Overlay panel entrances — modals and sheets summoned by pointer. */\nexport const SPRING_PANEL = {\n  type: \"spring\",\n  stiffness: 420,\n  damping: 40,\n  mass: 0.5,\n} as const;\n\n/** Shared-layout glides — pills, indicators and panels morphing between positions. */\nexport const SPRING_LAYOUT = {\n  type: \"spring\",\n  stiffness: 360,\n  damping: 32,\n  mass: 0.6,\n} as const;\n\n/** Cursor-follow physics for decorative mouse tracking (magnetic, tilt, dock). */\nexport const SPRING_MOUSE = {\n  stiffness: 200,\n  damping: 15,\n  mass: 0.3,\n} as const;\n\n/** Dragged handles and fills (sliders) — critically damped `useSpring` config,\n * so the value follows the pointer butterily and never rebounds off an end. */\nexport const SPRING_GLIDE = {\n  stiffness: 700,\n  damping: 50,\n  mass: 0.5,\n} as const;\n"
+    },
+    {
+      "path": "components/beui/lib/utils.ts",
+      "target": "@components/beui/lib/utils.ts",
+      "type": "registry:component",
+      "content": "import { clsx, type ClassValue } from \"clsx\"\nimport { twMerge } from \"tailwind-merge\"\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n"
+    },
+    {
+      "path": "components/beui/LICENSE",
+      "target": "@components/beui/LICENSE",
+      "type": "registry:file",
+      "content": "MIT License\n\nCopyright (c) 2026 Saurabh Chauhan\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    },
+    {
+      "path": "components/beui/SOURCE.json",
+      "target": "@components/beui/SOURCE.json",
+      "type": "registry:file",
+      "content": "{\n  \"name\": \"beUI AI Agents\",\n  \"upstream\": \"https://github.com/starc007/ui-components\",\n  \"revision\": \"04d6f76e9e67e35cded996b1b8d08a5ddcebc13a\",\n  \"revisionUrl\": \"https://github.com/starc007/ui-components/tree/04d6f76e9e67e35cded996b1b8d08a5ddcebc13a\",\n  \"license\": \"MIT\",\n  \"scope\": \"Exact public dependency closure for the 19 AI agent registry slugs plus the public loader variants used by the loading-state gallery.\",\n  \"adaptation\": \"Import aliases point at the isolated components/beui tree so the public source remains portable in Agents Kit. Gallery fixtures are authored separately. BoardUI remains the host library control foundation; BeUI motion helpers are retained only where required by these AI component behaviors.\"\n}\n"
+    }
+  ],
+  "categories": [
+    "beUI"
+  ]
+}

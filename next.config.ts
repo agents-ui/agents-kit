@@ -12,13 +12,10 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  distDir: process.env.NEXT_DIST_DIR || ".next",
+  outputFileTracingExcludes: { "*": ["./vendor/**/*"] },
   output: "export" as const, // Enable static HTML export
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
-  },
   images: {
     unoptimized: true, // Required for static export
   },

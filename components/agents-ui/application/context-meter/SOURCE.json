@@ -1,0 +1,8 @@
+{
+  "name": "Vercel AI Elements context",
+  "repository": "https://github.com/vercel/ai-elements",
+  "revision": "6a9d5b1822ffb10bba4bd97175f01edd7d8651cd",
+  "license": "Apache-2.0",
+  "referenceFiles": ["packages/elements/src/context.tsx", "skills/ai-elements/references/context.md"],
+  "relationship": "Independent BoardUI implementation informed by public context usage and token-breakdown concepts; upstream source code was not copied."
+}

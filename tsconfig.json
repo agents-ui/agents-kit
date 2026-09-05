@@ -29,5 +29,5 @@
     ".next/types/**/*.ts",
     "app/docs/prompt-input/page.mdx"
   ],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "vendor"]
 }

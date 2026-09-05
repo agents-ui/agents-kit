@@ -3,7 +3,6 @@
 import {
   ChatContainerContent,
   ChatContainerRoot,
-  ChatContainerScrollAnchor,
 } from "@/components/prompt-kit/chat-container"
 import { Markdown } from "@/components/prompt-kit/markdown"
 import {

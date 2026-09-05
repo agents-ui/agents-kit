@@ -1,25 +1,39 @@
 {
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "scroll-button",
-  "type": "registry:ui",
-  "registryDependencies": [
-    "button"
-  ],
-  "dependencies": [
-    "class-variance-authority",
-    "lucide-react"
-  ],
-  "devDependencies": [],
-  "tailwind": {},
-  "cssVars": {
-    "light": {},
-    "dark": {}
-  },
+  "type": "registry:block",
+  "title": "Scroll Button",
   "description": "A floating button component that appears when users scroll up in a container, allowing them to quickly return to the bottom of the content",
+  "dependencies": [
+    "@radix-ui/react-slot",
+    "class-variance-authority",
+    "clsx",
+    "lucide-react",
+    "tailwind-merge",
+    "use-stick-to-bottom"
+  ],
+  "registryDependencies": [],
   "files": [
     {
-      "path": "scroll-button.tsx",
-      "content": "\"use client\"\n\nimport { Button, buttonVariants } from \"@/components/ui/button\"\nimport { cn } from \"@/lib/utils\"\nimport { type VariantProps } from \"class-variance-authority\"\nimport { ChevronDown } from \"lucide-react\"\nimport { useStickToBottomContext } from \"use-stick-to-bottom\"\n\nexport type ScrollButtonProps = {\n  className?: string\n  variant?: VariantProps<typeof buttonVariants>[\"variant\"]\n  size?: VariantProps<typeof buttonVariants>[\"size\"]\n} & React.ButtonHTMLAttributes<HTMLButtonElement>\n\nfunction ScrollButton({\n  className,\n  variant = \"outline\",\n  size = \"sm\",\n  ...props\n}: ScrollButtonProps) {\n  const { isAtBottom, scrollToBottom } = useStickToBottomContext()\n\n  return (\n    <Button\n      variant={variant}\n      size={size}\n      className={cn(\n        \"h-10 w-10 rounded-full transition-all duration-150 ease-out\",\n        !isAtBottom\n          ? \"translate-y-0 scale-100 opacity-100\"\n          : \"pointer-events-none translate-y-4 scale-95 opacity-0\",\n        className\n      )}\n      onClick={() => scrollToBottom()}\n      {...props}\n    >\n      <ChevronDown className=\"h-5 w-5\" />\n    </Button>\n  )\n}\n\nexport { ScrollButton }\n",
-      "type": "registry:ui"
+      "path": "components/prompt-kit/scroll-button.tsx",
+      "target": "@components/prompt-kit/scroll-button.tsx",
+      "type": "registry:component",
+      "content": "\"use client\"\n\nimport { Button, buttonVariants } from \"@/components/ui/button\"\nimport { cn } from \"@/lib/utils\"\nimport { type VariantProps } from \"class-variance-authority\"\nimport { ChevronDown } from \"lucide-react\"\nimport { useStickToBottomContext } from \"use-stick-to-bottom\"\n\nexport type ScrollButtonProps = {\n  className?: string\n  variant?: VariantProps<typeof buttonVariants>[\"variant\"]\n  size?: VariantProps<typeof buttonVariants>[\"size\"]\n} & React.ButtonHTMLAttributes<HTMLButtonElement>\n\nfunction ScrollButton({\n  className,\n  variant = \"outline\",\n  size = \"sm\",\n  ...props\n}: ScrollButtonProps) {\n  const { isAtBottom, scrollToBottom } = useStickToBottomContext()\n\n  return (\n    <Button\n      variant={variant}\n      size={size}\n      className={cn(\n        \"h-10 w-10 rounded-full transition-all duration-150 ease-out\",\n        !isAtBottom\n          ? \"translate-y-0 scale-100 opacity-100\"\n          : \"pointer-events-none translate-y-4 scale-95 opacity-0\",\n        className\n      )}\n      onClick={() => scrollToBottom()}\n      {...props}\n    >\n      <ChevronDown className=\"h-5 w-5\" />\n    </Button>\n  )\n}\n\nexport { ScrollButton }\n"
+    },
+    {
+      "path": "components/ui/button.tsx",
+      "target": "@components/ui/button.tsx",
+      "type": "registry:component",
+      "content": "import { cn } from \"@/lib/utils\"\nimport { Slot } from \"@radix-ui/react-slot\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport * as React from \"react\"\n\nconst buttonVariants = cva(\n  \"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-[color,box-shadow] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 focus-visible:ring-4 focus-visible:outline-1 aria-invalid:focus-visible:ring-0\",\n  {\n    variants: {\n      variant: {\n        default:\n          \"bg-primary text-primary-foreground shadow-sm hover:bg-primary/90\",\n        destructive:\n          \"bg-destructive text-destructive-foreground shadow-xs hover:bg-destructive/90\",\n        outline:\n          \"border border-input bg-background shadow-xs hover:bg-accent hover:text-accent-foreground\",\n        secondary:\n          \"bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80\",\n        ghost: \"hover:bg-accent hover:text-accent-foreground\",\n        link: \"text-primary underline-offset-4 hover:underline\",\n      },\n      size: {\n        default: \"h-9 px-4 py-2 has-[>svg]:px-3\",\n        sm: \"h-8 rounded-md px-3 has-[>svg]:px-2.5\",\n        lg: \"h-10 rounded-md px-6 has-[>svg]:px-4\",\n        icon: \"size-9\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"default\",\n    },\n  }\n)\n\nfunction Button({\n  className,\n  variant,\n  size,\n  asChild = false,\n  ...props\n}: React.ComponentProps<\"button\"> &\n  VariantProps<typeof buttonVariants> & {\n    asChild?: boolean\n  }) {\n  const Comp = asChild ? Slot : \"button\"\n\n  return (\n    <Comp\n      data-slot=\"button\"\n      className={cn(buttonVariants({ variant, size, className }))}\n      {...props}\n    />\n  )\n}\n\nexport { Button, buttonVariants }\n"
+    },
+    {
+      "path": "lib/utils.ts",
+      "target": "@lib/utils.ts",
+      "type": "registry:lib",
+      "content": "import { clsx, type ClassValue } from \"clsx\"\nimport { twMerge } from \"tailwind-merge\"\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n\n/**\n * Get the base URL depending on the current environment\n */\nexport function getBaseUrl() {\n  const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || \"\").replace(/\\/$/, \"\")\n  const withBasePath = (url: string) => {\n    const base = url.replace(/\\/$/, \"\")\n    return basePath && !base.endsWith(basePath) ? `${base}${basePath}` : base\n  }\n  // For server-side rendering, we need to use environment variables\n  if (typeof window === \"undefined\") {\n    // Check for Vercel-specific environment variables\n    // Production URL takes precedence if available (works in all environments)\n    if (process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL) {\n      return withBasePath(\n        `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`\n      )\n    }\n\n    // For branch deployments\n    if (process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL) {\n      return withBasePath(\n        `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`\n      )\n    }\n\n    // For regular deployments\n    if (process.env.NEXT_PUBLIC_VERCEL_URL) {\n      return withBasePath(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}`)\n    }\n\n    // Legacy support\n    if (process.env.VERCEL_URL) {\n      return withBasePath(`https://${process.env.VERCEL_URL}`)\n    }\n\n    // Fall back to explicitly set environment variables\n    if (process.env.NEXT_PUBLIC_BASE_URL) {\n      return withBasePath(process.env.NEXT_PUBLIC_BASE_URL)\n    }\n\n    // Default for development - check PORT env var first\n    const port = process.env.PORT || 3000\n    return withBasePath(\n      process.env.NODE_ENV === \"development\" ? `http://localhost:${port}` : \"\"\n    )\n  }\n\n  // For client-side, we can just use the browser's location\n  return withBasePath(window.location.origin)\n}\n"
     }
+  ],
+  "categories": [
+    "Prompt Kit"
   ]
 }

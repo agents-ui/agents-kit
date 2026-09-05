@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "../components/boardui/styles/globals.css";
+@source not "../vendor";
 /*
   ---break---
 */
@@ -14,7 +16,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
-  --font-mono: var(--font-geist-mono);
+  --font-mono: var(--font-jetbrains-mono);
 
   /* keyframes for loaders */
   @keyframes typing {
@@ -146,7 +148,7 @@
 }
 
 code {
-  font-family: var(--font-geist-mono);
+  font-family: var(--font-jetbrains-mono);
   font-feature-settings: var(--default-mono-font-feature-settings);
   font-variation-settings: var(--default-mono-font-variation-settings);
 }
@@ -343,11 +345,11 @@ html.dark {
   --shiki-token-link: var(--shiki-dark-token-link);
 }
 
-/* Ensure code blocks have transparent background */
-pre {
+/* Highlighted code uses its wrapper's background. */
+pre.shiki {
   background-color: transparent !important;
 }
 
-pre code {
+pre.shiki code {
   background-color: transparent !important;
 }

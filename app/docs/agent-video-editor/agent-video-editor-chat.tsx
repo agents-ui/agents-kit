@@ -77,7 +77,7 @@ export default function AgentVideoEditorChat() {
                   <MessageAvatar
                     src="/avatars/ai.png"
                     alt="AI Assistant"
-                    fallback="🎬"
+                    fallback="VD"
                   />
                 )}
                 <div className="max-w-[90%] flex-1">

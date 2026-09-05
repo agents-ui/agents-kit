@@ -1,0 +1,24 @@
+{
+  "name": "liquid-gooey",
+  "repository": "https://github.com/Jakubantalik/Libraries.dev",
+  "revision": "999866f33df216dab0f8956f91c8d2e918d46328",
+  "packageVersion": "0.2.1",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 Jakub",
+  "copiedPath": "upstream/",
+  "copiedFiles": [
+    "packages/liquid-gooey/src/Gooey.tsx",
+    "packages/liquid-gooey/src/GooeyItem.tsx",
+    "packages/liquid-gooey/src/LiquidItem.tsx",
+    "packages/liquid-gooey/src/context.ts",
+    "packages/liquid-gooey/src/filter.tsx",
+    "packages/liquid-gooey/src/geometry.ts",
+    "packages/liquid-gooey/src/hooks.ts",
+    "packages/liquid-gooey/src/imageMelt.tsx",
+    "packages/liquid-gooey/src/index.ts",
+    "packages/liquid-gooey/src/observer.ts",
+    "packages/liquid-gooey/src/shadow.ts",
+    "packages/liquid-gooey/src/spring.ts"
+  ],
+  "relationship": "Source-faithful copy of the pinned public React package. The top-level client facade directly re-exports the upstream Liquid API and its Morph, Move, Melt, Bend, dissolve, tuning, and advanced types."
+}

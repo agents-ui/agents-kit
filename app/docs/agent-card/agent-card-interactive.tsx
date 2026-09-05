@@ -2,7 +2,7 @@
 
 import { AgentCard } from "@/components/agents-ui/agent-card"
 import { getAssetPath } from "@/lib/assets"
-import { Bot, Brain, FileSearch, MessageSquare } from "lucide-react"
+import { Brain, FileSearch, MessageSquare } from "lucide-react"
 import { useState } from "react"
 
 export default function AgentCardInteractive() {

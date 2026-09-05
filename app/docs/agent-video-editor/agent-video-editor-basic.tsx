@@ -6,7 +6,7 @@ import { useState } from "react"
 export default function AgentVideoEditorBasic() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(12)
-  const [isGenerating, setIsGenerating] = useState(false)
+  const isGenerating = false
   
   const handleExport = async () => {
     console.log("Exporting video...")

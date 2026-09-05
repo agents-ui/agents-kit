@@ -37,7 +37,7 @@ export default function ComponentPreview({
         const newHeight = Math.max(scrollHeight, bodyHeight)
 
         iframe.style.height = `${Math.max(newHeight, 100)}px`
-      } catch (e) {
+      } catch {
         console.warn(
           "Could not access iframe content height due to CORS policy"
         )

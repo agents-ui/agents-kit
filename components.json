@@ -17,5 +17,8 @@
     "lib": "@/lib",
     "hooks": "@/hooks"
   },
-  "iconLibrary": "lucide"
+  "iconLibrary": "lucide",
+  "registries": {
+    "@agents-kit": "https://agents-ui.github.io/agents-kit/c/{name}.json"
+  }
 }

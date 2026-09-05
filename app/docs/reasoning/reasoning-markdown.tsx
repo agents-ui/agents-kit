@@ -19,9 +19,9 @@ const simulateMarkdownStream = async (
 I need to find a number that, when **multiplied by itself**, equals 144.
 
 ## Step 2: Testing Values
-- \`10² = 100\` ❌ (too small)
-- \`13² = 169\` ❌ (too large) 
-- \`12² = 144\` ✅ (perfect!)
+- \`10² = 100\`  (too small)
+- \`13² = 169\`  (too large)
+- \`12² = 144\`  (perfect!)
 
 ## Step 3: Verification
 \`\`\`

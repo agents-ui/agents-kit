@@ -89,7 +89,7 @@ export default function AgentGrammarCheckerChat() {
                   <MessageAvatar
                     src="/avatars/ai.png"
                     alt="AI Assistant"
-                    fallback="✍️"
+                    fallback="GR"
                   />
                 )}
                 <div className="max-w-[90%] flex-1">

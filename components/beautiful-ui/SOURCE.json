@@ -1,0 +1,9 @@
+{
+  "name": "Beautiful UI",
+  "repository": "https://github.com/slev12397/beautiful-ui",
+  "revision": "06557d7ff33a1eb70d5987bae9ac4c70fa0e20c4",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 Shane Levine",
+  "families": 21,
+  "adaptation": "Reauthored as controlled reusable React components using the public BoardUI foundation, Lucide icons, host theme tokens, and caller-provided data. Site fixtures, fixed timers, external media defaults, commercial icons, and upstream global CSS were excluded."
+}

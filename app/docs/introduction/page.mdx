@@ -2,51 +2,34 @@ import { generateMetadata } from "../utils/metadata"
 
 export const metadata = generateMetadata(
   "Introduction",
-  "Introduction to agents-ui-kit - Advanced AI components built on top of prompt-kit."
+  "React components for conversations, generated results, and agent interactions."
 )
 
 # Introduction
 
-**agents-ui-kit** is an advanced extension of prompt-kit, providing specialized components and utilities for building sophisticated AI agent interfaces, multi-agent systems, and autonomous assistant applications.
+Agents Kit is a React component library for conversations, generated results, and the work around them. Copy the components into your application, pass in your data, and connect the callbacks to your own services.
 
-## What is agents-ui-kit?
+## What's in v0.2
 
-agents-ui-kit builds upon the excellent foundation of [prompt-kit](https://github.com/ibelick/prompt-kit) by adding:
+- Generated results: comparisons, recommendations, documents, checklists, source briefs, audio, focus timers, flights, places, weather, stories, inboxes, notes, collections, events, and activity.
+- Conversation and work components: loading, thinking, messages, prompts, approvals, tools, tasks, citations, code, tables, and complete workspaces.
+- Runtime controls: thinking orbs, context usage, and checkpoints.
+- Optional effects: Border Beam and Gooey.
 
-- **Agent-specific Components**: Purpose-built UI components for AI agents, including agent cards, status indicators, capability displays, and more
-- **Advanced State Management**: Built-in memory bank system for managing agent state, conversation history, and context
-- **Multi-Agent Support**: Components designed to handle multiple agents working together
-- **Enhanced Interactions**: Rich interaction patterns for agent control, task management, and real-time status updates
-- **Developer Tools**: Utilities and hooks to accelerate AI interface development
+The [component catalog](/components) groups related implementations into families. Each preview links to its source. The [playground](/generative) shows how results behave in ready, loading, and error states.
 
-## Built on Solid Foundations
+## How it fits your application
 
-Like prompt-kit, agents-ui-kit follows the same design principles as shadcn/ui:
-- **Copy & Paste**: Components are designed to be copied directly into your project
-- **Customizable**: Full control over styling and behavior
-- **Accessible**: Built with accessibility in mind
-- **TypeScript First**: Full TypeScript support with proper type definitions
+Components accept props and expose callbacks. Your application owns model calls, streaming, tool execution, file uploads, permissions, and saved data. A loading animation does not run a task, and an approval button does not grant permission by itself.
 
-## Key Features
+Agents Kit is distributed as source through a shadcn-compatible registry. It is not a hosted service or an agent runtime. The documentation site uses Next.js; the components are React source that you can integrate with your own build setup.
 
-- 🤖 **Agent Components**: Specialized components for agent interfaces
-- 🧠 **Memory Bank**: Advanced state management for AI conversations
-- 🎨 **Themeable**: Full dark mode support with customizable themes
-- 📱 **Responsive**: Mobile-first design approach
-- 🔧 **Developer Friendly**: Easy to integrate and extend
-- 🚀 **Performance Focused**: Optimized for real-time AI interactions
+## v0.1 compatibility
 
-## When to Use agents-ui-kit
+The original component import paths and registry names remain available. Existing users can keep those imports while adopting v0.2 components one at a time. Browse the [v0.1 archive](/v0.1) or read the [migration guide](https://github.com/agents-ui/agents-kit/blob/main/docs/migrating-to-v0.2.md).
 
-Use agents-ui-kit when you need:
-- To build interfaces for AI agents or assistants
-- Advanced state management for conversations
-- Multi-agent coordination interfaces
-- Real-time status and progress indicators
-- Professional AI application interfaces
+## Start building
 
-This project extends prompt-kit with agent-specific functionality. We recommend using both libraries together for the best experience.
+Follow [Installation](/docs/installation), or connect a coding assistant through the [shadcn MCP server](/docs/mcp).
 
-agents-ui-kit is open source. Check out the code and contribute on [GitHub](https://github.com/agents-ui/agents-kit).
-
-Forked and extended from prompt-kit by Abhishek Gahlot.
+The collection includes copied and adapted public source. Credits and licenses are recorded in [Third-party notices](https://github.com/agents-ui/agents-kit/blob/main/THIRD_PARTY_NOTICES.md). Keep the notices with the source you copy.

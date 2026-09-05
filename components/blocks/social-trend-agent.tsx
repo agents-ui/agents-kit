@@ -67,7 +67,7 @@ const tasks: AgentTask[] = [
 const trendingTopics = [
   {
     title: "Agent-first launch playbooks",
-    summary: "Thread performing 2.1x baseline — highlight automation clips + case studies.",
+    summary: "Thread performing 2.1x baseline - highlight automation clips + case studies.",
   },
   {
     title: "Design AMA snippets",

@@ -109,9 +109,9 @@ export default function EmailLaunchDigest() {
       <AgentResponse
         className="border border-dashed"
         message={`## Summary
-- ✅ Pricing page updates deployed this morning.
-- 🚀 Lifecycle automations queued for 4pm global rollout.
-- 🤝 Sales enablement pack due tomorrow for revenue alignment.
+-  Pricing page updates deployed this morning.
+-  Lifecycle automations queued for 4pm global rollout.
+-  Sales enablement pack due tomorrow for revenue alignment.
 
 ### Key Risks
 1. Localized email copy awaiting final approval.
