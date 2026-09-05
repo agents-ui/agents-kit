@@ -73,7 +73,7 @@ const messages = [
     id: 12,
     role: "assistant",
     content:
-      "You're welcome! CSS layout systems like Flexbox and Grid have revolutionized web design, making it much easier to create responsive and complex layouts without relying on hacks or workarounds.\n\nIf you ever have more questions about CSS or web development in general, feel free to ask. Happy coding! 😊",
+      "You're welcome! CSS layout systems like Flexbox and Grid have revolutionized web design, making it much easier to create responsive and complex layouts without relying on hacks or workarounds.\n\nIf you ever have more questions about CSS or web development in general, feel free to ask. Happy coding! ",
   },
 ]
 

@@ -6,7 +6,7 @@ import { useState } from "react"
 export default function AgentAudioGeneratorBasic() {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(21)
-  const [isGenerating, setIsGenerating] = useState(false)
+  const isGenerating = false
   const [voice, setVoice] = useState<{
     id: string
     name: string

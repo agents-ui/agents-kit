@@ -10,7 +10,15 @@ const compat = new FlatCompat({
 })
 
 const eslintConfig = [
+  { ignores: ["vendor/**", "out/**", ".next/**", ".next-release/**"] },
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    files: [
+      "components/agents-ui/application/thinking-indicator/upstream/**/*.{ts,tsx}",
+      "components/effects/border-beam/upstream/**/*.{ts,tsx}",
+    ],
+    rules: { "@typescript-eslint/no-unused-vars": "off" },
+  },
 ]
 
 export default eslintConfig

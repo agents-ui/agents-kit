@@ -2,79 +2,66 @@ import { generateMetadata } from "../utils/metadata"
 
 export const metadata = generateMetadata(
   "Model Context Protocol",
-  "Use prompt-kit components directly in your AI tools through MCP."
+  "Search and inspect Agents Kit components through the shadcn MCP server."
 )
 
 # Model Context Protocol
 
-The **Model Context Protocol (MCP)** allows AI tools to access prompt-kit components directly. This enables you to browse, preview, and add components without leaving your coding environment.
+Use the standard [shadcn MCP server](https://ui.shadcn.com/docs/mcp) to let a coding assistant search and inspect Agents Kit components. It uses the same registry as the CLI. Agents Kit does not run a separate MCP server.
 
-## What is MCP?
+## Configure the registry
 
-MCP is an open protocol that standardizes how applications provide context to LLMs. Think of it as a plugin system that connects your AI tools to external data sources and tools.
+First follow [Installation](/docs/installation) to initialize shadcn in your application. Merge this namespace into the `registries` object in the application's `components.json`, keeping its other settings:
 
-Learn more about MCP:
+```json
+{
+  "registries": {
+    "@agents-kit": "https://agents-ui.github.io/agents-kit/c/{name}.json"
+  }
+}
+```
 
-- [Cursor MCP Documentation](https://docs.cursor.com/context/model-context-protocol)
-- [Official MCP Documentation](https://modelcontextprotocol.io/introduction)
+The server reads `components.json` from the application workspace. Open that folder in your coding assistant so it can discover the registry.
 
-## Setup
+## Configure your client
 
-The setup process depends on your AI tool.
+For Cursor, add the following to `.cursor/mcp.json` in your application:
 
-### Cursor
-
-1. Create a `.cursor/mcp.json` file in your project root
-2. Add the prompt-kit MCP server configuration
-
-<CodeBlock
-  language="json"
-  code={`{
-    "mcpServers": {
-        "prompt-kit": {
-        "description": "prompt-kit registry",
-        "type": "stdio",
-        "command": "npx",
-        "args": ["-y", "shadcn@canary", "registry:mcp"],
-        "env": {
-            "REGISTRY_URL": "https://www.prompt-kit.com/c/registry.json"
-            }
-        }
+```json
+{
+  "mcpServers": {
+    "shadcn": {
+      "command": "npx",
+      "args": ["-y", "shadcn@latest", "mcp"]
     }
-}`}
-/>
+  }
+}
+```
 
-3. Restart Cursor
+Restart the MCP connection after changing the configuration. Other clients use the same command and arguments in their own MCP configuration format. The [official setup guide](https://ui.shadcn.com/docs/mcp) covers supported clients, including Codex, Claude Code, and VS Code.
 
-### Other AI Tools
+The connection runs through local standard input/output. It requires Node.js, npm, and network access to fetch the registry. Follow your client's normal controls when applying files to a project.
 
-For other AI tools that support MCP, refer to their specific documentation on how to configure MCP servers. Use the same server configuration above, adapting the file location as needed.
+## Try it
 
-## Usage
+- Show the registries configured in this project.
+- Search `@agents-kit` for thinking, approvals, and generated results.
+- Inspect `@agents-kit/agent-generative-surface` and show its files and dependencies.
+- Get the install command for `@agents-kit/beui-prompt-input`.
 
-Once configured, you can start using the prompt-kit components in your AI tool's chat.
+Inspect the returned source and install command before using the component. After installation, complete the shared-style imports in the [installation guide](/docs/installation).
 
-### Browse Components
+## Check the connection
 
-<CodeBlock language="text" code="Show me all available prompt-kit components" />
+If the assistant cannot find Agents Kit, check that it is using your application's working directory and that the namespace is present in `components.json`. These public endpoints should be reachable:
 
-### Add a Specific Component
+- [Registry index](https://agents-ui.github.io/agents-kit/c/registry.json)
+- [Generated surface entry](https://agents-ui.github.io/agents-kit/c/agent-generative-surface.json)
 
-<CodeBlock
-  language="text"
-  code="Add the PromptInput component from prompt-kit to my project"
-/>
+If MCP is unavailable, use the CLI directly:
 
-### Get Component Details
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/agent-generative-surface.json
+```
 
-<CodeBlock
-  language="text"
-  code="Show me the documentation and preview for the PromptTextarea component"
-/>
-
-### Build a basic chat app
-
-<CodeBlock
-  language="text"
-  code="Build a chat app with prompt-kit using: ChatContainer with ScrollButton inside, plus Message and PromptInput"
-/>
+MCP makes component source available to a coding assistant. It does not connect your finished application to a model, execute tools for your users, or provide an Agents Kit backend.

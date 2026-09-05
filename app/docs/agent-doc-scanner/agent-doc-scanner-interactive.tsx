@@ -28,10 +28,22 @@ export default function AgentDocScannerInteractive() {
     
     setTimeout(() => {
       // Set document info
-      const fileType = file.name.split('.').pop()?.toLowerCase() || "pdf"
+      const extension = file.name.split(".").pop()?.toLowerCase() || "pdf"
+      const supportedTypes: DocumentInfo["type"][] = [
+        "pdf",
+        "csv",
+        "docx",
+        "xlsx",
+        "txt",
+      ]
+      const fileType: DocumentInfo["type"] = supportedTypes.includes(
+        extension as DocumentInfo["type"]
+      )
+        ? (extension as DocumentInfo["type"])
+        : "txt"
       setDocumentInfo({
         name: file.name,
-        type: fileType as any,
+        type: fileType,
         size: file.size,
         pages: fileType === "pdf" ? Math.floor(Math.random() * 10) + 1 : 1,
         uploadedAt: new Date().toISOString()

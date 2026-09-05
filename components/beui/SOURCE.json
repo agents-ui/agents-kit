@@ -1,0 +1,9 @@
+{
+  "name": "beUI AI Agents",
+  "upstream": "https://github.com/starc007/ui-components",
+  "revision": "04d6f76e9e67e35cded996b1b8d08a5ddcebc13a",
+  "revisionUrl": "https://github.com/starc007/ui-components/tree/04d6f76e9e67e35cded996b1b8d08a5ddcebc13a",
+  "license": "MIT",
+  "scope": "Exact public dependency closure for the 19 AI agent registry slugs plus the public loader variants used by the loading-state gallery.",
+  "adaptation": "Import aliases point at the isolated components/beui tree so the public source remains portable in Agents Kit. Gallery fixtures are authored separately. BoardUI remains the host library control foundation; BeUI motion helpers are retained only where required by these AI component behaviors."
+}

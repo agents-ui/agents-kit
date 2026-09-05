@@ -61,12 +61,13 @@ function CodeBlockCode({
   // SSR fallback: render plain code if not hydrated yet
   return highlightedHtml ? (
     <div
+      data-code-theme={theme}
       className={classNames}
       dangerouslySetInnerHTML={{ __html: highlightedHtml }}
       {...props}
     />
   ) : (
-    <div className={classNames} {...props}>
+    <div data-code-theme={theme} className={classNames} {...props}>
       <pre>
         <code>{code}</code>
       </pre>

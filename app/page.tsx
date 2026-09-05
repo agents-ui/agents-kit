@@ -1,174 +1,194 @@
-"use client"
-
-import {
-  CodeBlock,
-  CodeBlockCode,
-  CodeBlockGroup,
-} from "@/components/prompt-kit/code-block"
-import { AnimatedBackground } from "@/components/ui/animated-background"
-import { TextMorph } from "@/components/ui/text-morph"
-import { getAssetPath } from "@/lib/assets"
-import { cn } from "@/lib/utils"
-import { Github } from "lucide-react"
-import { AnimatePresence, motion } from "motion/react"
+import { GenerativeShowcase } from "@/components/gallery/generative-previews"
+import { PublicHeader } from "@/components/gallery/public-header"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
-import { useState } from "react"
-import { PromptInputChatGPT } from "./examples/chatgpt"
-import { PromptInputDeepSeek } from "./examples/deepseek"
-import { PromptInputMistralAI } from "./examples/mistralai"
-
-const CODE_SAMPLE = `import {
-  PromptInput,
-  PromptInputTextarea,
-  PromptInputAction,
-} from '@/components/ui/prompt-input';
-
-function PromptInputBasic() {
-  return (
-    <PromptInput>
-      <PromptInputTextarea placeholder='Ask prompt-kit' />
-      <PromptInputActions>
-        <PromptInputAction tooltip='Upload File'>
-          <Button>Upload File</Button>
-        </PromptInputAction>
-        <PromptInputAction tooltip='Send'>
-          <Button>Send</Button>
-        </PromptInputAction>
-      </PromptInputActions>
-    </PromptInput>
-  );
-}`
-
-const MOTION_TRANSITION = {
-  duration: 0.25,
-  type: "spring",
-  bounce: 0,
-}
 
 export default function Home() {
-  const TABS = [
-    {
-      label: "ChatGPT",
-      component: PromptInputChatGPT,
-      img: "https://agents-ui.github.io/agents-kit/openai_logo.png",
-    },
-    {
-      label: "Mistral AI",
-      component: PromptInputMistralAI,
-      img: "https://agents-ui.github.io/agents-kit/mistral_logo.png",
-    },
-    {
-      label: "DeepSeek",
-      component: PromptInputDeepSeek,
-      img: "https://agents-ui.github.io/agents-kit/deepseek_logo.png",
-    },
-  ]
-
-  const [activeTab, setActiveTab] = useState(TABS[0])
-  const [hasCopyLabel, setHasCopyLabel] = useState(false)
-
-  const onCopy = () => {
-    navigator.clipboard.writeText(CODE_SAMPLE)
-    setHasCopyLabel(true)
-
-    setTimeout(() => {
-      setHasCopyLabel(false)
-    }, 1000)
-  }
-
   return (
     <>
-      <div className="mb-12 flex flex-col items-start">
-        <div className="mb-5 flex flex-col gap-1 text-pretty">
-          <p className="text-3xl font-[450] tracking-tight text-black dark:text-white">
-            Core building blocks for AI apps.
+      <PublicHeader />
+      <main>
+        <section className="mx-auto max-w-[860px] px-5 pt-20 pb-16 text-center sm:pt-28">
+          <p className="text-text-secondary text-xs">Agents Kit v0.2</p>
+          <h1 className="mt-5 text-4xl leading-[1.08] font-semibold tracking-tight sm:text-6xl">
+            Build better
+            <br />
+            agent interfaces.
+          </h1>
+          <p className="text-text-secondary mx-auto mt-6 max-w-xl text-base leading-7">
+            Messages, tools, approvals, and results people can work with. Built
+            in React. Yours to copy and change.
           </p>
-          <p className="text-3xl font-[450] tracking-tight text-zinc-500 dark:text-zinc-400">
-            High-quality, accessible, and customizable components for AI
-            interfaces.
-          </p>
-        </div>
-        <div className="flex flex-row gap-4">
-          <Link
-            href="/docs/introduction"
-            className="inline-flex h-10 items-center justify-center rounded-full bg-black px-4 text-base text-white transition-colors hover:bg-zinc-800"
-          >
-            Get Started
-          </Link>
-          <Link
-            href="https://github.com/agents-ui/agents-kit"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex h-10 items-center justify-center rounded-full border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 px-4 text-base text-black dark:text-white transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-700"
-          >
-            <Github className="mr-2 size-4" /> Star on GitHub
-          </Link>
-        </div>
-      </div>
-      <div className="-mx-6 mb-40 flex flex-col gap-10 sm:mx-0">
-        <div className="flex min-h-[350px] w-full items-end rounded border border-zinc-200 dark:border-zinc-700 p-4 sm:p-8">
-          <AnimatePresence initial={false} mode="wait">
-            <motion.div
-              key={activeTab.label}
-              className="w-full"
-              initial={{ opacity: 0, scale: 0.95, filter: "blur(4px)" }}
-              animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
-              exit={{ opacity: 0, scale: 0.95, filter: "blur(4px)" }}
-              transition={MOTION_TRANSITION}
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Link
+              href="/components"
+              className="bg-button-primary inline-flex h-9 items-center gap-2 rounded-lg px-4 text-sm font-medium"
             >
-              {activeTab.component()}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-        <div className="flex flex-row justify-center gap-8">
-          <AnimatedBackground
-            defaultValue={activeTab.label}
-            className={cn(
-              "rounded-lg bg-zinc-100 dark:bg-zinc-800 transition-colors"
-            )}
-            transition={MOTION_TRANSITION}
-            onValueChange={(newActiveId) => {
-              const newActiveTab = TABS.find((tab) => tab.label === newActiveId)
-              if (newActiveTab) {
-                setActiveTab(newActiveTab)
-              }
-            }}
-          >
-            {TABS.map((tab) => (
-              <button
-                key={tab.label}
-                data-id={tab.label}
-                className={cn(
-                  "rounded-md px-2 py-1 text-sm text-zinc-500 dark:text-zinc-400 transition-all hover:text-black dark:hover:text-white active:scale-[0.98]",
-                  "group",
-                  activeTab.label === tab.label && "text-black dark:text-white"
-                )}
-                type="button"
+              Browse components
+              <ArrowRight className="size-4" />
+            </Link>
+            <Link
+              href="/generative"
+              className="border-border-button-default inline-flex h-9 items-center gap-2 rounded-lg border px-4 text-sm font-medium"
+            >
+              Open playground
+            </Link>
+          </div>
+          <p className="text-text-tertiary mt-6 text-xs">
+            Using v0.1?{" "}
+            <Link href="/v0.1" className="underline underline-offset-4">
+              Your collection is still available.
+            </Link>
+          </p>
+        </section>
+        <section className="border-separator-border mx-auto max-w-[1120px] border-t px-5 py-12 sm:px-8">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-text-secondary text-xs">Generated results</p>
+              <h2 className="mt-2 text-xl font-medium tracking-tight">
+                Results you can work with.
+              </h2>
+            </div>
+            <Link
+              href="/generative"
+              className="text-text-secondary hover:text-text-primary text-sm"
+            >
+              Explore all 16 outputs
+            </Link>
+          </div>
+          <GenerativeShowcase grid featured />
+          <p className="text-text-tertiary mt-6 text-xs">
+            Illustrative data. Connect each component to your own model and
+            tools.
+          </p>
+        </section>
+
+        <section className="border-separator-border mx-auto max-w-[1120px] border-t px-5 py-12 sm:px-8">
+          <p className="text-text-secondary text-xs">
+            From prompt to useful result
+          </p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+            The pieces you need, together.
+          </h2>
+          <div className="mt-8 grid gap-8 sm:grid-cols-3">
+            <div>
+              <h3 className="text-sm font-medium">Show what is happening</h3>
+              <p className="text-text-secondary mt-2 text-[13px] leading-6">
+                Thinking states, tool activity, progress, and source citations
+                keep people oriented while an agent works.
+              </p>
+              <Link
+                href="/components#thinking"
+                className="mt-4 inline-block text-xs underline underline-offset-4"
               >
-                <span className="flex flex-row items-center gap-1">
-                  <img
-                    src={tab.img}
-                    alt={`${tab.label} logo`}
-                    className="h-auto w-4"
-                  />
-                  {tab.label}
-                </span>
-              </button>
+                Explore activity components
+              </Link>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium">Ask before making changes</h3>
+              <p className="text-text-secondary mt-2 text-[13px] leading-6">
+                Review proposed changes, compare options, request approval, and
+                return to a checkpoint with explicit actions.
+              </p>
+              <Link
+                href="/components#approval-card"
+                className="mt-4 inline-block text-xs underline underline-offset-4"
+              >
+                Explore decision components
+              </Link>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium">Make results easy to use</h3>
+              <p className="text-text-secondary mt-2 text-[13px] leading-6">
+                Sixteen result types cover documents, comparisons, checklists,
+                media, inboxes, and more. Ready, loading, and error states are
+                part of the component.
+              </p>
+              <Link
+                href="/generative"
+                className="mt-4 inline-block text-xs underline underline-offset-4"
+              >
+                Try the result workflows
+              </Link>
+            </div>
+          </div>
+        </section>
+        <section className="border-separator-border mx-auto grid max-w-[1120px] gap-8 border-t px-5 py-12 sm:px-8 md:grid-cols-2">
+          <div>
+            <p className="text-text-secondary text-xs">Source you can own</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight">
+              Fits your existing app.
+            </h2>
+            <p className="text-text-secondary mt-4 text-sm leading-6">
+              Copy a component into your React project. Supply its data and
+              connect its callbacks to your own tools, persistence, and model
+              provider.
+            </p>
+            <Link
+              href="/docs"
+              className="mt-5 inline-block text-sm underline underline-offset-4"
+            >
+              Read the integration guide
+            </Link>
+          </div>
+          <div className="border-separator-border bg-background-secondary-default overflow-hidden rounded-xl border">
+            <div className="border-separator-border text-text-secondary border-b px-4 py-3 text-xs">
+              Install a generated result surface
+            </div>
+            <pre className="p-4 text-xs leading-6 break-all whitespace-pre-wrap">
+              <code>
+                npx shadcn@latest add
+                https://agents-ui.github.io/agents-kit/c/agent-generative-surface.json
+              </code>
+            </pre>
+            <p className="text-text-secondary px-4 pb-4 text-xs">
+              React · TypeScript · Tailwind CSS · Explicit source licenses
+            </p>
+          </div>
+        </section>
+        <section className="border-separator-border mx-auto max-w-[1120px] border-t px-5 py-10 sm:px-8">
+          <h2 className="text-sm font-medium">
+            Built with public open-source work.
+          </h2>
+          <p className="text-text-secondary mt-2 max-w-2xl text-[13px] leading-6">
+            Agents Kit adapts and extends these libraries. Their authors deserve
+            the credit; their source and license notices stay with the
+            components.
+          </p>
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+            {[
+              ["Beautiful UI", "https://www.beautifului.dev/"],
+              ["beUI", "https://beui.dev/"],
+              ["BoardUI", "https://github.com/BoardUI/boardui"],
+              ["Blocks.so", "https://blocks.so"],
+              [
+                "Thinking Orbs",
+                "https://github.com/Jakubantalik/thinking-orbs",
+              ],
+              ["AI Elements", "https://github.com/vercel/ai-elements"],
+              ["Prompt Kit", "https://github.com/ibelick/prompt-kit"],
+            ].map(([name, href]) => (
+              <a
+                key={name}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                className="text-text-secondary decoration-border-button-default hover:text-text-primary underline underline-offset-4"
+              >
+                {name}
+              </a>
             ))}
-          </AnimatedBackground>
-        </div>
-      </div>
-      <CodeBlock className="relative mb-20 rounded">
-        <CodeBlockGroup className="absolute top-4 right-4">
-          <button
-            onClick={onCopy}
-            className="rounded-[2px] border px-2 py-1 text-xs hover:bg-zinc-100 dark:hover:bg-zinc-800"
-          >
-            <TextMorph>{hasCopyLabel ? "Copied" : "Copy"}</TextMorph>
-          </button>
-        </CodeBlockGroup>
-        <CodeBlockCode code={CODE_SAMPLE} language="tsx" />
-      </CodeBlock>
+          </div>
+        </section>
+        <footer className="border-separator-border text-text-secondary mx-auto flex max-w-[1120px] flex-wrap items-center justify-between gap-4 border-t px-5 py-8 text-xs sm:px-8">
+          <span>Agents Kit · React · TypeScript</span>
+          <div className="flex gap-5">
+            <Link href="/docs">Documentation</Link>
+            <a href="https://github.com/agents-ui/agents-kit">GitHub</a>
+            <Link href="/v0.1">v0.1 archive</Link>
+          </div>
+        </footer>
+      </main>
     </>
   )
 }

@@ -131,7 +131,7 @@ export default function AgentTaskQueueChat() {
                   <MessageAvatar
                     src="/avatars/ai.png"
                     alt="AI Agent"
-                    fallback="🤖"
+                    fallback="AG"
                   />
                 )}
                 <div className="max-w-[90%] flex-1">

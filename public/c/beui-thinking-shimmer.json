@@ -1,0 +1,53 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "beui-thinking-shimmer",
+  "type": "registry:block",
+  "title": "Beui Thinking Shimmer",
+  "description": "Agent Loading States Thinking Shimmer",
+  "dependencies": [
+    "clsx",
+    "tailwind-merge"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/beui/components/agents/loading-states/thinking-shimmer.tsx",
+      "target": "@components/beui/components/agents/loading-states/thinking-shimmer.tsx",
+      "type": "registry:component",
+      "content": "import * as React from \"react\";\nimport type { ReactNode } from \"react\";\nimport { TextShimmer } from \"@/components/beui/components/motion/text-shimmer\";\nimport { cn } from \"@/components/beui/lib/utils\";\n\nexport interface ThinkingShimmerProps {\n  /** Loading message shown to the user. */\n  children?: ReactNode;\n  /** Seconds taken for one shimmer pass. */\n  duration?: number;\n  className?: string;\n}\n\nexport function ThinkingShimmer({\n  children = \"Thinking…\",\n  duration = 1.8,\n  className,\n}: ThinkingShimmerProps) {\n  return (\n    <TextShimmer\n      as=\"span\"\n      duration={duration}\n      className={cn(\"font-medium\", className)}\n    >\n      {children}\n    </TextShimmer>\n  );\n}\n"
+    },
+    {
+      "path": "components/beui/components/motion/text-shimmer.tsx",
+      "target": "@components/beui/components/motion/text-shimmer.tsx",
+      "type": "registry:component",
+      "content": "import * as React from \"react\";\nimport { cn } from \"@/components/beui/lib/utils\";\nimport type { ElementType, ReactNode } from \"react\";\nimport {\n  TEXT_SHIMMER_CLASS_NAME,\n  TEXT_SHIMMER_KEYFRAMES,\n  textShimmerStyle,\n} from \"@/components/beui/lib/text-shimmer\";\n\nexport interface TextShimmerProps {\n  children: ReactNode;\n  as?: ElementType;\n  duration?: number;\n  className?: string;\n}\n\nexport function TextShimmer({ children, as: Comp = \"span\", duration = 2.5, className }: TextShimmerProps) {\n  return (\n    <>\n      <style>\n        {TEXT_SHIMMER_KEYFRAMES}\n      </style>\n      <Comp\n        style={textShimmerStyle(duration)}\n        className={cn(\n          \"inline-block\",\n          TEXT_SHIMMER_CLASS_NAME,\n          className,\n        )}\n      >\n        {children}\n      </Comp>\n    </>\n  );\n}\n"
+    },
+    {
+      "path": "components/beui/lib/utils.ts",
+      "target": "@components/beui/lib/utils.ts",
+      "type": "registry:component",
+      "content": "import { clsx, type ClassValue } from \"clsx\"\nimport { twMerge } from \"tailwind-merge\"\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n"
+    },
+    {
+      "path": "components/beui/lib/text-shimmer.ts",
+      "target": "@components/beui/lib/text-shimmer.ts",
+      "type": "registry:component",
+      "content": "import type { CSSProperties } from \"react\";\n\n// The reduced-motion rule travels with the component. app/globals.css calms CSS\n// animation globally, but the registry bundles imports only, so an installed\n// copy never receives that reset.\n//\n// `!important` because the sweep is an inline style, which outranks a plain rule\n// in a media query. It selects a marker class carried by TEXT_SHIMMER_CLASS_NAME\n// so it also reaches consumers that build their own span out of these exports.\nexport const TEXT_SHIMMER_KEYFRAMES =\n  \"@keyframes beui-text-shimmer{from{background-position:200% 0}to{background-position:-200% 0}}\" +\n  \"@media (prefers-reduced-motion: reduce){.beui-text-shimmer{animation:none !important}}\";\n\nexport const TEXT_SHIMMER_CLASS_NAME =\n  \"beui-text-shimmer bg-[length:200%_100%] bg-clip-text text-transparent bg-[linear-gradient(110deg,var(--muted-foreground)_30%,var(--foreground)_50%,var(--muted-foreground)_70%)]\";\n\nexport function textShimmerStyle(duration: number): CSSProperties {\n  return {\n    animation: `beui-text-shimmer ${duration}s linear infinite`,\n  };\n}\n"
+    },
+    {
+      "path": "components/beui/LICENSE",
+      "target": "@components/beui/LICENSE",
+      "type": "registry:file",
+      "content": "MIT License\n\nCopyright (c) 2026 Saurabh Chauhan\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    },
+    {
+      "path": "components/beui/SOURCE.json",
+      "target": "@components/beui/SOURCE.json",
+      "type": "registry:file",
+      "content": "{\n  \"name\": \"beUI AI Agents\",\n  \"upstream\": \"https://github.com/starc007/ui-components\",\n  \"revision\": \"04d6f76e9e67e35cded996b1b8d08a5ddcebc13a\",\n  \"revisionUrl\": \"https://github.com/starc007/ui-components/tree/04d6f76e9e67e35cded996b1b8d08a5ddcebc13a\",\n  \"license\": \"MIT\",\n  \"scope\": \"Exact public dependency closure for the 19 AI agent registry slugs plus the public loader variants used by the loading-state gallery.\",\n  \"adaptation\": \"Import aliases point at the isolated components/beui tree so the public source remains portable in Agents Kit. Gallery fixtures are authored separately. BoardUI remains the host library control foundation; BeUI motion helpers are retained only where required by these AI component behaviors.\"\n}\n"
+    }
+  ],
+  "categories": [
+    "beUI"
+  ]
+}

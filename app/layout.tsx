@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
-import { Geist_Mono, Inter } from "next/font/google"
+import { Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
+import "../styles/agents.css"
 import Script from "next/script"
 import { LayoutClient } from "./layout.client"
 import { Providers } from "./providers"
@@ -10,15 +11,16 @@ const inter = Inter({
   subsets: ["latin"],
 })
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetBrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
 })
 
 export const metadata: Metadata = {
-  title: "agents-ui-kit",
+  metadataBase: new URL("https://agents-ui.github.io/agents-kit/"),
+  title: "Agents Kit",
   description:
-    "Advanced UI components for building AI agent interfaces. Build sophisticated agent experiences, autonomous assistants, and multi-agent systems with beautiful, customizable components.",
+    "Compact React components for generative UI, agent thinking, tools, approvals, and interactive results. Copy the source and connect your own models.",
 }
 
 export default function RootLayout({
@@ -38,7 +40,7 @@ export default function RootLayout({
         />
       ) : null}
       <body
-        className={`${inter.className} ${geistMono.variable} font-sans antialiased`}
+        className={`${inter.className} ${inter.variable} ${jetBrainsMono.variable} font-sans antialiased`}
       >
         <Providers>
           <LayoutClient>{children}</LayoutClient>

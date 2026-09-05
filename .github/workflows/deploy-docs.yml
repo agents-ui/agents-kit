@@ -31,8 +31,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Verify components
+        run: npm test && npm run typecheck && npm run lint
+
       - name: Build site
         run: npm run build:github
+
+      - name: Verify public distribution
+        run: npm run verify:distribution
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

@@ -1,22 +1,30 @@
 {
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "chat-container",
-  "type": "registry:ui",
-  "registryDependencies": [],
+  "type": "registry:block",
+  "title": "Chat Container",
+  "description": "A component for creating chat interfaces with intelligent auto-scrolling behavior, designed to provide a smooth and responsive user experience",
   "dependencies": [
+    "clsx",
+    "tailwind-merge",
     "use-stick-to-bottom"
   ],
-  "devDependencies": [],
-  "tailwind": {},
-  "cssVars": {
-    "light": {},
-    "dark": {}
-  },
-  "description": "A component for creating chat interfaces with intelligent auto-scrolling behavior, designed to provide a smooth and responsive user experience",
+  "registryDependencies": [],
   "files": [
     {
-      "path": "chat-container.tsx",
-      "content": "\"use client\"\n\nimport { cn } from \"@/lib/utils\"\nimport { StickToBottom } from \"use-stick-to-bottom\"\n\nexport type ChatContainerRootProps = {\n  children: React.ReactNode\n  className?: string\n} & React.HTMLAttributes<HTMLDivElement>\n\nexport type ChatContainerContentProps = {\n  children: React.ReactNode\n  className?: string\n} & React.HTMLAttributes<HTMLDivElement>\n\nexport type ChatContainerScrollAnchorProps = {\n  className?: string\n  ref?: React.RefObject<HTMLDivElement>\n} & React.HTMLAttributes<HTMLDivElement>\n\nfunction ChatContainerRoot({\n  children,\n  className,\n  ...props\n}: ChatContainerRootProps) {\n  return (\n    <StickToBottom\n      className={cn(\"flex overflow-y-auto\", className)}\n      resize=\"smooth\"\n      initial=\"instant\"\n      role=\"log\"\n      {...props}\n    >\n      {children}\n    </StickToBottom>\n  )\n}\n\nfunction ChatContainerContent({\n  children,\n  className,\n  ...props\n}: ChatContainerContentProps) {\n  return (\n    <StickToBottom.Content\n      className={cn(\"flex w-full flex-col\", className)}\n      {...props}\n    >\n      {children}\n    </StickToBottom.Content>\n  )\n}\n\nfunction ChatContainerScrollAnchor({\n  className,\n  ...props\n}: ChatContainerScrollAnchorProps) {\n  return (\n    <div\n      className={cn(\"h-px w-full shrink-0 scroll-mt-4\", className)}\n      aria-hidden=\"true\"\n      {...props}\n    />\n  )\n}\n\nexport { ChatContainerRoot, ChatContainerContent, ChatContainerScrollAnchor }\n",
-      "type": "registry:ui"
+      "path": "components/prompt-kit/chat-container.tsx",
+      "target": "@components/prompt-kit/chat-container.tsx",
+      "type": "registry:component",
+      "content": "\"use client\"\n\nimport { cn } from \"@/lib/utils\"\nimport { StickToBottom } from \"use-stick-to-bottom\"\n\nexport type ChatContainerRootProps = {\n  children: React.ReactNode\n  className?: string\n} & React.HTMLAttributes<HTMLDivElement>\n\nexport type ChatContainerContentProps = {\n  children: React.ReactNode\n  className?: string\n} & React.HTMLAttributes<HTMLDivElement>\n\nexport type ChatContainerScrollAnchorProps = {\n  className?: string\n  ref?: React.RefObject<HTMLDivElement>\n} & React.HTMLAttributes<HTMLDivElement>\n\nfunction ChatContainerRoot({\n  children,\n  className,\n  ...props\n}: ChatContainerRootProps) {\n  return (\n    <StickToBottom\n      className={cn(\"flex overflow-y-auto\", className)}\n      resize=\"smooth\"\n      initial=\"instant\"\n      role=\"log\"\n      {...props}\n    >\n      {children}\n    </StickToBottom>\n  )\n}\n\nfunction ChatContainerContent({\n  children,\n  className,\n  ...props\n}: ChatContainerContentProps) {\n  return (\n    <StickToBottom.Content\n      className={cn(\"flex w-full flex-col\", className)}\n      {...props}\n    >\n      {children}\n    </StickToBottom.Content>\n  )\n}\n\nfunction ChatContainerScrollAnchor({\n  className,\n  ...props\n}: ChatContainerScrollAnchorProps) {\n  return (\n    <div\n      className={cn(\"h-px w-full shrink-0 scroll-mt-4\", className)}\n      aria-hidden=\"true\"\n      {...props}\n    />\n  )\n}\n\nexport { ChatContainerRoot, ChatContainerContent, ChatContainerScrollAnchor }\n"
+    },
+    {
+      "path": "lib/utils.ts",
+      "target": "@lib/utils.ts",
+      "type": "registry:lib",
+      "content": "import { clsx, type ClassValue } from \"clsx\"\nimport { twMerge } from \"tailwind-merge\"\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n\n/**\n * Get the base URL depending on the current environment\n */\nexport function getBaseUrl() {\n  const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || \"\").replace(/\\/$/, \"\")\n  const withBasePath = (url: string) => {\n    const base = url.replace(/\\/$/, \"\")\n    return basePath && !base.endsWith(basePath) ? `${base}${basePath}` : base\n  }\n  // For server-side rendering, we need to use environment variables\n  if (typeof window === \"undefined\") {\n    // Check for Vercel-specific environment variables\n    // Production URL takes precedence if available (works in all environments)\n    if (process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL) {\n      return withBasePath(\n        `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`\n      )\n    }\n\n    // For branch deployments\n    if (process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL) {\n      return withBasePath(\n        `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`\n      )\n    }\n\n    // For regular deployments\n    if (process.env.NEXT_PUBLIC_VERCEL_URL) {\n      return withBasePath(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}`)\n    }\n\n    // Legacy support\n    if (process.env.VERCEL_URL) {\n      return withBasePath(`https://${process.env.VERCEL_URL}`)\n    }\n\n    // Fall back to explicitly set environment variables\n    if (process.env.NEXT_PUBLIC_BASE_URL) {\n      return withBasePath(process.env.NEXT_PUBLIC_BASE_URL)\n    }\n\n    // Default for development - check PORT env var first\n    const port = process.env.PORT || 3000\n    return withBasePath(\n      process.env.NODE_ENV === \"development\" ? `http://localhost:${port}` : \"\"\n    )\n  }\n\n  // For client-side, we can just use the browser's location\n  return withBasePath(window.location.origin)\n}\n"
     }
+  ],
+  "categories": [
+    "Prompt Kit"
   ]
 }

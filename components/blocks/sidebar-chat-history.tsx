@@ -11,10 +11,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarProvider,
-  SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { PlusIcon, Search } from "lucide-react"
+import { Search } from "lucide-react"
 
 const conversationHistory = [
   {

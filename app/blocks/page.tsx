@@ -8,8 +8,8 @@ import { getBaseUrl } from "@/lib/utils"
 import { generateMetadata } from "../docs/utils/metadata"
 
 export const metadata = generateMetadata(
-  "Blocks",
-  "Building blocks for AI apps. Clean, composable blocks built with shadcn/ui and prompt-kit. Use them to ship faster, works with any React framework."
+  "v0.1 Blocks",
+  "The original Agents Kit block collection, preserved for v0.1 compatibility."
 )
 
 export default function BlocksPage() {
@@ -19,11 +19,10 @@ export default function BlocksPage() {
     <div className="mb-12 flex flex-col items-start">
       <div className="mb-10 flex flex-col gap-1 text-pretty">
         <p className="text-primary text-3xl font-[450] tracking-tight">
-          Building blocks for AI apps.
+          v0.1 blocks
         </p>
         <p className="text-muted-foreground max-w-2xl text-lg font-normal">
-          Clean, composable blocks built with shadcn/ui and prompt-kit. <br />
-          Use them to ship faster, works with any React framework.
+          The original block collection remains available for existing projects.
         </p>
       </div>
       <LayoutProse className="flex w-full flex-col gap-12">
@@ -141,7 +140,7 @@ export default function BlocksPage() {
         </p>
         <Button variant="outline" asChild size="sm">
           <a
-            href="https://github.com/ibelick/prompt-kit/issues/new?title=%5BBlock+Request%5D+&labels=block&template=block_request.yml"
+            href="https://github.com/agents-ui/agents-kit/issues/new"
             target="_blank"
             rel="noreferrer"
           >

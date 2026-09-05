@@ -5,7 +5,10 @@ import { AgentDocScanner, DocumentInfo, ExtractedSection } from "@/components/ag
 import { Message, MessageAvatar, MessageContent } from "@/components/prompt-kit/message"
 
 export default function AgentDocScannerChat() {
-  const [messages, setMessages] = React.useState<any[]>([
+  const [messages, setMessages] = React.useState<Array<{
+    role: "user" | "assistant"
+    content: string
+  }>>([
     {
       role: "user",
       content: "I have an invoice PDF that I need to process and extract the key information from.",
@@ -16,15 +19,15 @@ export default function AgentDocScannerChat() {
     },
   ])
 
-  const [document, setDocument] = React.useState<DocumentInfo>({
+  const document: DocumentInfo = {
     name: "invoice-Q1-2024.pdf",
     type: "pdf",
     size: 325000,
     pages: 2,
     uploadedAt: new Date().toISOString()
-  })
+  }
 
-  const [extractedSections, setExtractedSections] = React.useState<ExtractedSection[]>([
+  const extractedSections: ExtractedSection[] = [
     {
       id: "1",
       type: "metadata",
@@ -59,7 +62,7 @@ export default function AgentDocScannerChat() {
       confidence: 0.99,
       page: 2
     }
-  ])
+  ]
 
   const handleFileUpload = (file: File) => {
     console.log(`File uploaded: ${file.name}`)

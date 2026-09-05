@@ -1,0 +1,70 @@
+:root {
+  --color-background-full: #fafafa;
+  --color-background-primary-default: #ffffff;
+  --color-background-secondary-default: #f4f4f4;
+  --color-background-primary-hover: #f0f0f0;
+  --color-text-primary: #242424;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #767676;
+  --color-border-button-default: #dedede;
+  --color-separator-border: #e5e5e5;
+  --font-mono-source: var(--font-jetbrains-mono);
+}
+
+.dark {
+  --color-background-full: #141414;
+  --color-background-primary-default: #1c1c1c;
+  --color-background-secondary-default: #181818;
+  --color-background-primary-hover: #252525;
+  --color-text-primary: #ededed;
+  --color-text-secondary: #aaaaaa;
+  --color-text-tertiary: #929292;
+  --color-border-button-default: #363636;
+  --color-separator-border: #303030;
+}
+
+:root,
+.dark {
+  --background: var(--color-background-full);
+  --foreground: var(--color-text-primary);
+  --card: var(--color-background-primary-default);
+  --card-foreground: var(--color-text-primary);
+  --popover: var(--color-background-primary-default);
+  --popover-foreground: var(--color-text-primary);
+  --primary: var(--color-text-primary);
+  --primary-foreground: var(--color-background-primary-default);
+  --secondary: var(--color-background-secondary-default);
+  --secondary-foreground: var(--color-text-primary);
+  --muted: var(--color-background-secondary-default);
+  --muted-foreground: var(--color-text-secondary);
+  --accent: var(--color-background-primary-hover);
+  --accent-foreground: var(--color-text-primary);
+  --border: var(--color-separator-border);
+  --input: var(--color-border-button-default);
+  --sidebar: var(--color-background-full);
+  --sidebar-foreground: var(--color-text-primary);
+  --sidebar-accent: var(--color-background-secondary-default);
+  --sidebar-border: var(--color-separator-border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Result layouts respond to the card, including compact grid and expanded views. */
+.generated-result {
+  container-type: inline-size;
+  container-name: result;
+}
+@container result (min-width: 440px) {
+  .result-comparison-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

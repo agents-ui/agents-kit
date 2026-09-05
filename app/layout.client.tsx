@@ -1,16 +1,16 @@
 "use client"
 
-import { cn } from "@/lib/utils"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
 import { ThemeToggle } from "@/components/app/theme-toggle"
-import { BringToFront, ChevronRight } from "lucide-react"
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
+import { cn } from "@/lib/utils"
+import { BringToFront, ChevronRight } from "lucide-react"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 import {
   Sidebar,
   SidebarContent,
@@ -37,13 +37,6 @@ const coreMenuItems = routes
 
 const componentsMenuItems = routes
   .filter((route) => route.type === "component")
-  .map((route) => ({
-    title: route.label,
-    url: route.path,
-  }))
-
-const blocksMenuItems = routes
-  .filter((route) => route.type === "block")
   .map((route) => ({
     title: route.label,
     url: route.path,
@@ -168,7 +161,7 @@ function CollapsibleNavGroup({
 
   return (
     <Collapsible open={open} onOpenChange={setOpen}>
-      <CollapsibleTrigger className="flex w-full items-center justify-between rounded-md px-2 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors">
+      <CollapsibleTrigger className="text-muted-foreground hover:text-foreground flex w-full items-center justify-between rounded-md px-2 py-1.5 text-xs font-medium transition-colors">
         <span>{label}</span>
         <ChevronRight
           className={cn(
@@ -225,7 +218,7 @@ function AppSidebar() {
                 className="flex items-center gap-2 pl-2 text-xl font-medium tracking-tighter"
               >
                 <BringToFront className="h-6 w-6" />
-                <h1 className="leading-none">agents-ui-kit</h1>
+                <h1 className="leading-none">Agents Kit</h1>
               </Link>
               <ThemeToggle />
             </div>
@@ -257,7 +250,7 @@ function AppSidebar() {
               </SidebarMenu>
             </SidebarGroupContent>
             <SidebarGroupLabel className={cn("mt-8 text-lg md:text-sm")}>
-              Agents UI
+              v0.1 agent components
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <div className="space-y-1">
@@ -272,7 +265,7 @@ function AppSidebar() {
               </div>
             </SidebarGroupContent>
             <SidebarGroupLabel className={cn("mt-8 text-lg md:text-sm")}>
-              Prompt Kit
+              v0.1 conversations
             </SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
@@ -369,10 +362,23 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
   const MOBILE_SIDEBAR_VIEWPORT_THRESHOLD = 768
   const MD_SIDEBAR_VIEWPORT_THRESHOLD = 1024
 
-  const isBlocksPage = usePathname() === "/blocks"
-  const isComponentPage = usePathname().includes("/c/")
+  const pathname = usePathname()
+  const isBlocksPage = pathname === "/blocks"
+  const isLegacyGuide = routes.some(
+    (route) =>
+      route.path === pathname &&
+      (route.type === "agent" || route.type === "component")
+  )
+  const isComponentPage = pathname.includes("/c/")
+  const isNewPublicSurface =
+    pathname === "/" ||
+    pathname === "/components" ||
+    pathname === "/workspace" ||
+    pathname === "/generative" ||
+    pathname === "/docs" ||
+    pathname === "/v0.1"
 
-  if (isComponentPage) {
+  if (isComponentPage || isNewPublicSurface) {
     return <>{children}</>
   }
 
@@ -392,7 +398,29 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
                 isBlocksPage && "lg:col-end-12"
               )}
             >
-              <main className="flex-1">{children}</main>
+              <main className="flex-1">
+                {isLegacyGuide && (
+                  <aside className="text-muted-foreground mb-8 rounded-lg border p-4 text-sm leading-6">
+                    This v0.1 component remains available for existing projects.
+                    See the{" "}
+                    <Link
+                      href="/components"
+                      className="text-foreground underline underline-offset-4"
+                    >
+                      v0.2 catalog
+                    </Link>{" "}
+                    for new components. Follow the{" "}
+                    <Link
+                      href="/docs/installation"
+                      className="text-foreground underline underline-offset-4"
+                    >
+                      installation guide
+                    </Link>{" "}
+                    to load the required styles.
+                  </aside>
+                )}
+                {children}
+              </main>
               <Footer />
             </div>
           </div>

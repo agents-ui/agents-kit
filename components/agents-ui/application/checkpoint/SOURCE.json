@@ -1,0 +1,8 @@
+{
+  "name": "Vercel AI Elements checkpoint",
+  "repository": "https://github.com/vercel/ai-elements",
+  "revision": "6a9d5b1822ffb10bba4bd97175f01edd7d8651cd",
+  "license": "Apache-2.0",
+  "referenceFiles": ["packages/elements/src/checkpoint.tsx", "skills/ai-elements/references/checkpoint.md"],
+  "relationship": "Independent BoardUI implementation informed by the public checkpoint and restore interaction; upstream source code was not copied."
+}

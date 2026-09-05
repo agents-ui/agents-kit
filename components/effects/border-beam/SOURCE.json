@@ -1,0 +1,17 @@
+{
+  "name": "border-beam",
+  "repository": "https://github.com/Jakubantalik/Libraries.dev",
+  "revision": "999866f33df216dab0f8956f91c8d2e918d46328",
+  "packageVersion": "1.4.0",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 Jakub Antalik",
+  "copiedPath": "upstream/",
+  "copiedFiles": [
+    "packages/border-beam/src/BorderBeam.tsx",
+    "packages/border-beam/src/index.ts",
+    "packages/border-beam/src/pulseDriver.ts",
+    "packages/border-beam/src/styles.ts",
+    "packages/border-beam/src/types.ts"
+  ],
+  "relationship": "Source-faithful copy of the pinned public React package. The top-level client facade retains the complete props API and sets restrained mono, automatic-theme, and 0.6-strength defaults."
+}

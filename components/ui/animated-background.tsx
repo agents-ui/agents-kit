@@ -5,6 +5,7 @@ import { AnimatePresence, motion, Transition } from "motion/react"
 import {
   Children,
   cloneElement,
+  isValidElement,
   ReactElement,
   useEffect,
   useId,
@@ -47,7 +48,17 @@ export function AnimatedBackground({
     }
   }, [defaultValue])
 
-  return Children.map(children, (child: any, index) => {
+  return Children.map(children, (child, index) => {
+    if (!isValidElement<{
+      "data-id": string
+      "data-checked"?: string
+      className?: string
+      children?: React.ReactNode
+      onClick?: () => void
+      onMouseEnter?: () => void
+      onMouseLeave?: () => void
+    }>(child))
+      return child
     const id = child.props["data-id"]
 
     const interactionProps = enableHover

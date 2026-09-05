@@ -1,0 +1,14 @@
+{
+  "name": "Blocks.so adapted compositions",
+  "upstream": "https://github.com/ephraimduncan/blocks",
+  "revision": "78cd7a3777c055415d18f2d2c69846abac94052c",
+  "license": "MIT",
+  "sourceFiles": [
+    "content/components/ai/ai-03.tsx",
+    "content/components/ai/ai-04.tsx",
+    "content/components/file-upload/file-upload-05.tsx",
+    "content/components/onboarding/onboarding-03.tsx",
+    "content/components/tables/table-02.tsx"
+  ],
+  "adaptation": "Reauthored as controlled reusable components using BoardUI controls. Removed vendor-specific chrome, demo state, timers, decorative color, and fixed viewport layout while retaining the core interaction concepts."
+}

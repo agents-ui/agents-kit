@@ -60,7 +60,7 @@ export default function AgentGrammarCheckerInteractive() {
     await new Promise(resolve => setTimeout(resolve, 2000))
     
     // Generate corrected text
-    let corrected = inputText
+    const corrected = inputText
       .replace(/gramatical/g, "grammatical")
       .replace(/need to be fix/g, "need to be fixed")
       .replace(/issues that need/g, "issues that needs")

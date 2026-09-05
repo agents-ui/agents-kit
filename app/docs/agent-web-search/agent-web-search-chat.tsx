@@ -41,7 +41,10 @@ const searchResults: SearchResult[] = [
 ]
 
 export default function AgentWebSearchChat() {
-  const [messages, setMessages] = React.useState<any[]>([
+  const [messages, setMessages] = React.useState<Array<{
+    role: "user" | "assistant"
+    content: string
+  }>>([
     {
       role: "user",
       content: "Can you search for the latest resources on building AI agent interfaces?",
@@ -83,7 +86,7 @@ export default function AgentWebSearchChat() {
           results={isSearching ? [] : searchResults}
           isSearching={isSearching}
           onResultClick={handleResultClick}
-          onSearch={(query) => {
+          onSearch={() => {
             setIsSearching(true)
             setTimeout(() => setIsSearching(false), 2000)
           }}

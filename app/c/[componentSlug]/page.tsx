@@ -5,11 +5,11 @@ import React from "react"
 
 async function importComponent(componentName: string) {
   try {
-    const module = await import(`@/components/blocks/${componentName}`)
+    const componentModule = await import(`@/components/blocks/${componentName}`)
     
     // Handle default export
-    if (module.default) {
-      return module.default
+    if (componentModule.default) {
+      return componentModule.default
     }
     
     // Handle named exports - try to find a component that matches the file name
@@ -20,17 +20,17 @@ async function importComponent(componentName: string) {
       .join('')
     
     // Try exact match first
-    if (module[pascalCase]) {
-      return module[pascalCase]
+    if (componentModule[pascalCase]) {
+      return componentModule[pascalCase]
     }
     
     // Try with "Component" suffix
-    if (module[`${pascalCase}Component`]) {
-      return module[`${pascalCase}Component`]
+    if (componentModule[`${pascalCase}Component`]) {
+      return componentModule[`${pascalCase}Component`]
     }
     
     // Fall back to first exported component
-    const exports = Object.values(module).filter(
+    const exports = Object.values(componentModule).filter(
       exp => typeof exp === 'function' && exp.prototype?.isReactComponent !== false
     )
     

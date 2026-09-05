@@ -1,0 +1,17 @@
+{
+  "source": "https://github.com/BoardUI/boardui",
+  "revision": "57793826e7897a6454379d3dc4b3c970f7689a51",
+  "license": "MIT",
+  "scope": [
+    "components/base",
+    "components/foundations",
+    "styles",
+    "utils"
+  ],
+  "adaptations": [
+    "Repository import paths point to components/boardui",
+    "Neutral primary and ghost actions, restrained feedback, and readable agent surface tokens",
+    "Focusable native actions support React Aria tooltip composition",
+    "Icon-only child SVG fallback preserves explicit leadingIcon precedence"
+  ]
+}

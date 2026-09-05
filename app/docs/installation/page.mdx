@@ -1,105 +1,95 @@
 import { generateMetadata } from "../utils/metadata"
-import { CodeBlock } from "@/components/prompt-kit/code-block"
 
 export const metadata = generateMetadata(
   "Installation",
-  "Installation guide for agents-ui-kit and prompt-kit components."
+  "Install Agents Kit source, configure styles, and connect components to your application."
 )
 
 # Installation
 
-## Prerequisites
+Agents Kit follows the shadcn copy-source model. The CLI adds component files, local dependencies, styles, and license notices to your application. There is no bundled Agents Kit runtime to install from npm.
 
-Before installing, ensure you have the following:
+## Prepare your application
 
-- [Node.js](https://nodejs.org/en/download/) version **18** or later
-- [React](https://react.dev/) version **19** or later
-- [Next.js](https://nextjs.org/) version **14** or later (recommended)
+Use React 19 and Tailwind CSS 4. Set up [shadcn/ui](https://ui.shadcn.com/docs/installation) for your framework first so your project has a `components.json` file and working import aliases. Running this repository locally uses Node.js 20 or later.
 
-## Install shadcn/ui
+Next.js is used by this documentation site. It is not required by every component. Inspect an entry's dependencies before installing it; some retained v0.1 components use Next.js.
 
-First, you'll need to install and configure shadcn/ui in your project. Follow the installation guide at [shadcn/ui documentation](https://ui.shadcn.com/docs/installation).
+## Add a component
 
-## Installing Components
-
-agents-ui-kit extends prompt-kit with additional components. You can install components from both libraries using the shadcn CLI.
-
-### Installing prompt-kit Components
-
-For base AI interface components (chat, messages, code blocks, etc.):
-
-<CodeBlock
-  language="bash"
-  code={`npx shadcn@latest add "https://prompt-kit.com/c/[COMPONENT].json"`}
-/>
-
-### Installing agents-ui Components
-
-For agent-specific components (agent cards, memory bank, etc.):
-
-<CodeBlock
-  language="bash"
-  code={`npx shadcn@latest add "https://agents-ui-kit.com/c/[COMPONENT].json"`}
-/>
-
-## Example Installation
-
-Here's how to install commonly used components:
-
-<CodeBlock
-  language="bash"
-  code={`# Install base components from prompt-kit
-npx shadcn@latest add "https://prompt-kit.com/c/prompt-input.json"
-npx shadcn@latest add "https://prompt-kit.com/c/message.json"
-npx shadcn@latest add "https://prompt-kit.com/c/chat-container.json"
-
-# Install agent components from agents-ui-kit
-npx shadcn@latest add "https://agents-ui-kit.com/c/agent-card.json"`}
-/>
-
-## Usage
-
-After installation, import and use the components in your project:
-
-<CodeBlock
-  language="tsx"
-  code={`// prompt-kit components
-import { PromptInput } from "@/components/prompt-kit/prompt-input"
-import { Message } from "@/components/prompt-kit/message"
-
-// agents-ui components
-import { AgentCard } from "@/components/agents-ui/agent-card"`}
-/>
-
-## Project Structure
-
-Components will be installed in the following structure:
-
-```
-components/
-├── ui/              # shadcn/ui base components
-├── prompt-kit/      # AI interface components
-└── agents-ui/       # Agent-specific components
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/agent-generative-surface.json
 ```
 
-## TypeScript Configuration
+The [registry index](https://agents-ui.github.io/agents-kit/c/registry.json) lists every available entry. The same URL format works for current and compatibility components:
 
-Ensure your `tsconfig.json` includes the proper path aliases:
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-thinking-state.json
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-prompt-input.json
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/agent-card.json
+```
 
-<CodeBlock
-  language="json"
-  code={`{
-  "compilerOptions": {
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+## Load the styles
+
+For components that include the shared theme, import the copied styles once from your application's global stylesheet. The paths below assume that stylesheet is at the project root and the `components` alias resolves to a root-level directory. Adjust relative paths to the files the CLI installed. For example, a stylesheet in `app/` with root-level components uses `../components/` and `../styles/`.
+
+```css
+@import "./components/boardui/styles/globals.css";
+@import "./styles/agents.css";
+```
+
+The shared stylesheet includes Tailwind CSS, the theme, and typography tokens. Keep your application's existing Tailwind and shadcn setup, and avoid importing Tailwind twice. Components without these files use the existing shadcn theme. The registry installs CSS files; it does not automatically add these imports to your stylesheet.
+
+If you keep copied components outside Tailwind's scanned source directories, add an appropriate `@source` directive to your stylesheet.
+
+## Use a component
+
+```tsx
+import { AgentGenerativeSurface } from "@/components/agents-ui/agent-generative-surface"
+
+export function WeatherAnswer() {
+  return (
+    <AgentGenerativeSurface
+      content={{
+        type: "weather",
+        location: "Madrid",
+        temperature: 24,
+        unit: "C",
+        condition: "Light rain",
+        forecast: [
+          { day: "Today", temperature: 24 },
+          { day: "Tomorrow", temperature: 25 },
+        ],
+      }}
+    />
+  )
+}
+```
+
+The `@/components` prefix above follows this repository's alias. Use the aliases configured in your own `components.json`. Components with interactive callbacks belong in a client component when using React Server Components.
+
+`AgentGenerativeSurface` supports `status="ready"`, `status="loading"`, and `status="error"`. Pass `onAction`, `onSeek`, and `onRetry` to handle user input. Your application supplies the data and performs the work; the component does not fetch weather or call a model.
+
+## Optional registry namespace
+
+Merge this entry into the `registries` object in your existing `components.json`. Keep your existing style, aliases, Tailwind settings, and other registries.
+
+```json
+{
+  "registries": {
+    "@agents-kit": "https://agents-ui.github.io/agents-kit/c/{name}.json"
   }
-}`}
-/>
+}
+```
 
-## Next Steps
+You can then use shorter install commands:
 
-1. Browse the component documentation to see all available components
-2. Check out the [Agent Card](/docs/agent-card) component for building agent interfaces
-3. Explore the Memory Bank system for advanced state management
-4. Join our community for support and updates
+```bash
+npx shadcn@latest add @agents-kit/agent-generative-surface
+```
+
+This namespace also lets the [shadcn MCP server](/docs/mcp) discover the collection.
+
+## v0.1 compatibility
+
+Existing public import paths and registry names remain available. Use the [archive](/v0.1) for the original gallery and the [migration guide](https://github.com/agents-ui/agents-kit/blob/main/docs/migrating-to-v0.2.md) for gradual adoption.
