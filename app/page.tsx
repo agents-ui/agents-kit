@@ -1,6 +1,7 @@
 import { GenerativeShowcase } from "@/components/gallery/generative-previews"
 import { PublicHeader } from "@/components/gallery/public-header"
 import { ArrowRight } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
 export default function Home() {
@@ -33,6 +34,21 @@ export default function Home() {
             >
               Open playground
             </Link>
+            <a
+              href="https://github.com/agents-ui/agents-kit"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-9 items-center rounded-lg px-2 focus-visible:outline-2 focus-visible:outline-offset-4"
+            >
+              <Image
+                src="https://img.shields.io/github/stars/agents-ui/agents-kit?style=social&label=Star%20on%20GitHub"
+                alt="Star Agents Kit on GitHub — current star count"
+                width={148}
+                height={20}
+                unoptimized
+                className="h-7 w-auto"
+              />
+            </a>
           </div>
           <p className="text-text-tertiary mt-6 text-xs">
             Using v0.1?{" "}
