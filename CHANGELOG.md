@@ -5,6 +5,7 @@ This file records user-visible changes to Agents Kit.
 ## 0.2.0
 
 Date: 2026-09-05
+Updated: 2026-09-11
 
 The generative UI release keeps v0.1 source paths and registry slugs available.
 
@@ -12,13 +13,18 @@ This release responds to a change in product shape: models increasingly return s
 
 ### Added
 
+- Restore the original public AI catalogs and documented variants across Beautiful UI, beUI, Blocks.so, Prompt Kit, AI Elements, BoardUI, and Libraries.dev.
+- Expand the install registry to 184 entries with recursive source dependencies, styles, and license notices.
+- Add the original Blocks AI 02 prompt input and animated border to the landing page, fix its base-path layout, and refresh the README screenshot.
+- Preserve compatible import paths and document local-demo adaptations and external media.
+
 - Optional Border Beam and Gooey effects with standalone source-registry entries.
 - Updated Thinking Orbs with a compact 32px size and optional color and dot controls.
 
 - Expand, edit, compare, save, share, and copy workflows for all 16 generated result types.
 
 - All 21 public Beautiful UI component families, reauthored as controlled React components.
-- All 17 public beUI AI agent families, represented by 19 installable registry slugs.
+- The public beUI AI agent collection, represented by 19 installable registry slugs.
 - A generative surface for 11 answer types: audio, focus, flight, location, weather, stories, inbox, note, collection, event, and activity.
 - Five structured work-output examples: comparison, recommendation, document, checklist, and source brief.
 - A source-faithful Thinking Orb canvas with all nine public states.

@@ -2,7 +2,7 @@
 
 ## BoardUI
 
-Base controls, foundations, utilities, and styles are adapted from [BoardUI](https://github.com/BoardUI/boardui/tree/57793826e7897a6454379d3dc4b3c970f7689a51).
+Base controls, foundations, utilities, styles, and the free Agent Thinking, Composer Loader, and Chat Starter are adapted from [BoardUI](https://github.com/BoardUI/boardui/tree/3e76e282614b147a34b9b2a510e31b97d58a3909).
 
 MIT License
 
@@ -32,7 +32,7 @@ The original Agents Kit components retain the project license in LICENSE.md. Pro
 
 ## Blocks.so
 
-The controlled composer, file queue, setup checklist, and task table adapt public [Blocks.so](https://github.com/ephraimduncan/blocks/tree/78cd7a3777c055415d18f2d2c69846abac94052c) compositions.
+Five original AI compositions and the controlled composer, file queue, setup checklist, and task table use public [Blocks.so](https://github.com/ephraimduncan/blocks/tree/e4fdf6c4b31bb95ddbccf2c919478672bc61226b) compositions.
 
 MIT License
 
@@ -58,15 +58,15 @@ SOFTWARE.
 
 ## Beautiful UI
 
-The public agent interaction collection adapts [Beautiful UI](https://github.com/slev12397/beautiful-ui) at revision `06557d7ff33a1eb70d5987bae9ac4c70fa0e20c4`. Copyright (c) 2026 Shane Levine. The complete MIT license is distributed at [components/beautiful-ui/LICENSE](components/beautiful-ui/LICENSE). Adaptations expose caller-controlled state, compact shared controls, and inline expansion.
+The public agent interaction collection adapts [Beautiful UI](https://github.com/slev12397/beautiful-ui) at revision `ff0f74d62d8be9d89bcb735b3632e31a6ccf88dc`. Copyright (c) 2026 Shane Levine. The complete MIT license is distributed at [components/beautiful-ui/LICENSE](components/beautiful-ui/LICENSE). The original 21 primitives, internal controls, CSS, and documented variants are included under `original/`; earlier controlled adapters retain their paths. Proprietary Iconists icons are replaced with Lucide equivalents.
 
 ## beUI
 
-The public AI component dependency closure is copied from [beUI](https://github.com/starc007/ui-components) at revision `04d6f76e9e67e35cded996b1b8d08a5ddcebc13a`. The full MIT license is distributed at [components/beui/LICENSE](components/beui/LICENSE). Import paths are adapted to this repository. The source is distinct from the base control library.
+The public AI component dependency closure is copied from [beUI](https://github.com/starc007/ui-components) at revision `b64c092b63b99c7340376b522325ea309156ba00`. The full MIT license is distributed at [components/beui/LICENSE](components/beui/LICENSE). Import paths are adapted to this repository. The source is distinct from the base control library.
 
 ## Thinking Orbs
 
-The original Thinking Orbs canvas implementation and engine are copied from [Libraries.dev](https://github.com/Jakubantalik/Libraries.dev/tree/999866f33df216dab0f8956f91c8d2e918d46328/packages/thinking-orbs) at revision `999866f33df216dab0f8956f91c8d2e918d46328`. The complete MIT license is included at [components/agents-ui/application/thinking-indicator/LICENSE](components/agents-ui/application/thinking-indicator/LICENSE).
+The original Thinking Orbs canvas implementation and engine are copied from [Libraries.dev](https://github.com/Jakubantalik/Libraries.dev/tree/422180dd7a5ac646c85deedc65500c4a74339127/packages/thinking-orbs) at revision `422180dd7a5ac646c85deedc65500c4a74339127`. The complete MIT license is included at [components/agents-ui/application/thinking-indicator/LICENSE](components/agents-ui/application/thinking-indicator/LICENSE).
 
 ## AI Elements interaction references
 
@@ -80,4 +80,18 @@ Some v0.1 image-editor examples still use public Unsplash images under the [Unsp
 
 ## Border Beam and Liquid Gooey
 
-[Border Beam](https://github.com/Jakubantalik/Libraries.dev/tree/999866f33df216dab0f8956f91c8d2e918d46328/packages/border-beam) and [Liquid Gooey](https://github.com/Jakubantalik/Libraries.dev/tree/999866f33df216dab0f8956f91c8d2e918d46328/packages/liquid-gooey) are copied from the public Libraries.dev repository at revision `999866f33df216dab0f8956f91c8d2e918d46328`. Their complete MIT licenses and source metadata are included alongside each package under `components/effects`.
+[Border Beam](https://github.com/Jakubantalik/Libraries.dev/tree/422180dd7a5ac646c85deedc65500c4a74339127/packages/border-beam) and [Liquid Gooey](https://github.com/Jakubantalik/Libraries.dev/tree/422180dd7a5ac646c85deedc65500c4a74339127/packages/liquid-gooey) are copied from the public Libraries.dev repository at revision `422180dd7a5ac646c85deedc65500c4a74339127`. Their complete MIT licenses and source metadata are included alongside each package under `components/effects`.
+
+## Vercel AI Elements source
+
+The 49 public components and their 84 documented examples are copied from [Vercel AI Elements](https://github.com/vercel/ai-elements/tree/6a9d5b1822ffb10bba4bd97175f01edd7d8651cd). Their Apache-2.0 license is distributed at [components/ai-elements/LICENSE](components/ai-elements/LICENSE). Local import paths and demo-only adapters are recorded alongside the source. The isolated shadcn/ui primitives retain their separate MIT license and notice under `components/ai-elements/_ui/`.
+
+Official Rive animations and voice samples remain hosted at their original public demo URLs; their binary redistribution terms are not stated in the source repository. Provider logos, sample Unsplash images, the sample GitHub avatar, and the web-preview frame also remain external. The source coverage report records these runtime asset dependencies.
+
+## Prompt Kit source
+
+All 21 public primitives and 52 documented variants are based on [Prompt Kit](https://github.com/ibelick/prompt-kit/tree/de80375967400aa0c6ebab9d3ba4f9258ab79fcc). The complete MIT license is included at [components/prompt-kit/LICENSE.md](components/prompt-kit/LICENSE.md). The two chat examples use a local demo response in place of a server-backed model call.
+
+## Metal FX and Image FX
+
+Metal FX v2 and Image FX are copied from [Libraries.dev](https://github.com/Jakubantalik/Libraries.dev/tree/422180dd7a5ac646c85deedc65500c4a74339127). The legacy Metal FX v1 source exposed by the current upstream playground comes from [metal-fx](https://github.com/Jakubantalik/metal-fx/tree/be1bf89c63056521a4e8224f368768314c9006f7). MIT licenses and pinned source metadata are distributed beside each implementation under `components/effects/`.

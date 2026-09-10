@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-elements-connection",
+  "type": "registry:block",
+  "title": "Ai Elements Connection",
+  "description": "connection",
+  "dependencies": [
+    "@xyflow/react@12.10.0",
+    "tw-animate-css@1.3.6"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ai-elements/connection.tsx",
+      "target": "@components/ai-elements/connection.tsx",
+      "type": "registry:component",
+      "content": "import type { ConnectionLineComponent } from \"@xyflow/react\"\n\nconst HALF = 0.5\n\nexport const Connection: ConnectionLineComponent = ({\n  fromX,\n  fromY,\n  toX,\n  toY,\n}) => (\n  <g>\n    <path\n      className=\"animated\"\n      d={`M${fromX},${fromY} C ${fromX + (toX - fromX) * HALF},${fromY} ${fromX + (toX - fromX) * HALF},${toY} ${toX},${toY}`}\n      fill=\"none\"\n      stroke=\"var(--color-ring)\"\n      strokeWidth={1}\n    />\n    <circle\n      cx={toX}\n      cy={toY}\n      fill=\"#fff\"\n      r={3}\n      stroke=\"var(--color-ring)\"\n      strokeWidth={1}\n    />\n  </g>\n)\n"
+    },
+    {
+      "path": "components/ai-elements/LICENSE",
+      "target": "@components/ai-elements/LICENSE",
+      "type": "registry:file",
+      "content": "Copyright 2023 Vercel, Inc.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n"
+    },
+    {
+      "path": "components/ai-elements/SOURCE.json",
+      "target": "@components/ai-elements/SOURCE.json",
+      "type": "registry:file",
+      "content": "{\n  \"name\": \"Vercel AI Elements\",\n  \"repository\": \"https://github.com/vercel/ai-elements\",\n  \"commit\": \"6a9d5b1822ffb10bba4bd97175f01edd7d8651cd\",\n  \"license\": \"Apache-2.0\",\n  \"sourceDirectories\": [\n    \"packages/elements/src\",\n    \"packages/examples/src\",\n    \"packages/shadcn-ui/components/ui\"\n  ],\n  \"changes\": [\"Rewritten local import paths\"]\n}\n"
+    },
+    {
+      "path": "styles/animations.css",
+      "target": "~/styles/animations.css",
+      "type": "registry:file",
+      "content": "@import \"tw-animate-css\";\n"
+    }
+  ],
+  "categories": [
+    "AI Elements"
+  ]
+}

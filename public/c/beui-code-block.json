@@ -5,11 +5,12 @@
   "title": "Beui Code Block",
   "description": "Code Block",
   "dependencies": [
-    "clsx",
-    "lucide-react",
-    "motion",
-    "shiki",
-    "tailwind-merge"
+    "clsx@^2.1.1",
+    "lucide-react@0.577.0",
+    "motion@12.26.2",
+    "shiki@^3.0.0",
+    "tailwind-merge@^3.0.1",
+    "tw-animate-css@1.3.6"
   ],
   "registryDependencies": [],
   "files": [
@@ -38,6 +39,12 @@
       "content": "// Shared motion tokens. Easing curves mirror the CSS custom properties in\n// globals.css; springs are the canonical physics used across components.\n// Strong custom variants — defaults like `ease-in`/`ease-out` feel weak.\n\nexport const EASE_OUT = [0.16, 1, 0.3, 1] as const;\nexport const EASE_IN_OUT = [0.77, 0, 0.175, 1] as const;\nexport const EASE_DRAWER = [0.32, 0.72, 0, 1] as const;\n\n/** CSS string form of EASE_OUT for inline style transitions. */\nexport const EASE_OUT_CSS = \"cubic-bezier(0.16, 1, 0.3, 1)\";\n\n/** Press feedback on buttons and other tappable surfaces. */\nexport const SPRING_PRESS = {\n  type: \"spring\",\n  stiffness: 500,\n  damping: 30,\n  mass: 0.6,\n} as const;\n\n/** Content swaps — label/icon slots trading places inside a control. */\nexport const SPRING_SWAP = {\n  type: \"spring\",\n  stiffness: 460,\n  damping: 30,\n  mass: 0.55,\n} as const;\n\n/** Overlay panel entrances — modals and sheets summoned by pointer. */\nexport const SPRING_PANEL = {\n  type: \"spring\",\n  stiffness: 420,\n  damping: 40,\n  mass: 0.5,\n} as const;\n\n/** Shared-layout glides — pills, indicators and panels morphing between positions. */\nexport const SPRING_LAYOUT = {\n  type: \"spring\",\n  stiffness: 360,\n  damping: 32,\n  mass: 0.6,\n} as const;\n\n/** Cursor-follow physics for decorative mouse tracking (magnetic, tilt, dock). */\nexport const SPRING_MOUSE = {\n  stiffness: 200,\n  damping: 15,\n  mass: 0.3,\n} as const;\n\n/** Dragged handles and fills (sliders) — critically damped `useSpring` config,\n * so the value follows the pointer butterily and never rebounds off an end. */\nexport const SPRING_GLIDE = {\n  stiffness: 700,\n  damping: 50,\n  mass: 0.5,\n} as const;\n"
     },
     {
+      "path": "styles/animations.css",
+      "target": "~/styles/animations.css",
+      "type": "registry:file",
+      "content": "@import \"tw-animate-css\";\n"
+    },
+    {
       "path": "components/beui/LICENSE",
       "target": "@components/beui/LICENSE",
       "type": "registry:file",
@@ -47,7 +54,7 @@
       "path": "components/beui/SOURCE.json",
       "target": "@components/beui/SOURCE.json",
       "type": "registry:file",
-      "content": "{\n  \"name\": \"beUI AI Agents\",\n  \"upstream\": \"https://github.com/starc007/ui-components\",\n  \"revision\": \"04d6f76e9e67e35cded996b1b8d08a5ddcebc13a\",\n  \"revisionUrl\": \"https://github.com/starc007/ui-components/tree/04d6f76e9e67e35cded996b1b8d08a5ddcebc13a\",\n  \"license\": \"MIT\",\n  \"scope\": \"Exact public dependency closure for the 19 AI agent registry slugs plus the public loader variants used by the loading-state gallery.\",\n  \"adaptation\": \"Import aliases point at the isolated components/beui tree so the public source remains portable in Agents Kit. Gallery fixtures are authored separately. BoardUI remains the host library control foundation; BeUI motion helpers are retained only where required by these AI component behaviors.\"\n}\n"
+      "content": "{\n  \"name\": \"beUI AI Agents\",\n  \"upstream\": \"https://github.com/starc007/ui-components\",\n  \"revision\": \"b64c092b63b99c7340376b522325ea309156ba00\",\n  \"revisionUrl\": \"https://github.com/starc007/ui-components/tree/b64c092b63b99c7340376b522325ea309156ba00\",\n  \"license\": \"MIT\",\n  \"scope\": \"Exact public dependency closure for all 16 AI agent registry entries and all 28 documented demos at the pinned revision.\",\n  \"adaptation\": \"Import aliases point at the isolated components/beui tree so the public source remains portable in Agents Kit. Gallery fixtures preserve the upstream interactions and motion while using local Fieldwork copy.\"\n}\n"
     }
   ],
   "categories": [

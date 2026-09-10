@@ -1,0 +1,71 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-elements-conversation",
+  "type": "registry:block",
+  "title": "Ai Elements Conversation",
+  "description": "conversation",
+  "dependencies": [
+    "ai@6.0.280",
+    "class-variance-authority@^0.7.1",
+    "clsx@^2.1.1",
+    "lucide-react@0.577.0",
+    "radix-ui@1.6.7",
+    "tailwind-merge@^3.0.1",
+    "tw-animate-css@1.3.6",
+    "use-stick-to-bottom@^1.1.0"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ai-elements/conversation.tsx",
+      "target": "@components/ai-elements/conversation.tsx",
+      "type": "registry:component",
+      "content": "\"use client\"\n\nimport { Button } from \"@/components/ai-elements/_ui/button\"\nimport { cn } from \"@/lib/utils\"\nimport type { UIMessage } from \"ai\"\nimport { ArrowDownIcon, DownloadIcon } from \"lucide-react\"\nimport type { ComponentProps } from \"react\"\nimport { useCallback } from \"react\"\nimport { StickToBottom, useStickToBottomContext } from \"use-stick-to-bottom\"\n\nexport type ConversationProps = ComponentProps<typeof StickToBottom>\n\nexport const Conversation = ({ className, ...props }: ConversationProps) => (\n  <StickToBottom\n    className={cn(\"relative flex-1 overflow-y-hidden\", className)}\n    initial=\"smooth\"\n    resize=\"smooth\"\n    role=\"log\"\n    {...props}\n  />\n)\n\nexport type ConversationContentProps = ComponentProps<\n  typeof StickToBottom.Content\n>\n\nexport const ConversationContent = ({\n  className,\n  ...props\n}: ConversationContentProps) => (\n  <StickToBottom.Content\n    className={cn(\"flex flex-col gap-8 p-4\", className)}\n    {...props}\n  />\n)\n\nexport type ConversationEmptyStateProps = ComponentProps<\"div\"> & {\n  title?: string\n  description?: string\n  icon?: React.ReactNode\n}\n\nexport const ConversationEmptyState = ({\n  className,\n  title = \"No messages yet\",\n  description = \"Start a conversation to see messages here\",\n  icon,\n  children,\n  ...props\n}: ConversationEmptyStateProps) => (\n  <div\n    className={cn(\n      \"flex size-full flex-col items-center justify-center gap-3 p-8 text-center\",\n      className\n    )}\n    {...props}\n  >\n    {children ?? (\n      <>\n        {icon && <div className=\"text-muted-foreground\">{icon}</div>}\n        <div className=\"space-y-1\">\n          <h3 className=\"text-sm font-medium\">{title}</h3>\n          {description && (\n            <p className=\"text-muted-foreground text-sm\">{description}</p>\n          )}\n        </div>\n      </>\n    )}\n  </div>\n)\n\nexport type ConversationScrollButtonProps = ComponentProps<typeof Button>\n\nexport const ConversationScrollButton = ({\n  className,\n  ...props\n}: ConversationScrollButtonProps) => {\n  const { isAtBottom, scrollToBottom } = useStickToBottomContext()\n\n  const handleScrollToBottom = useCallback(() => {\n    scrollToBottom()\n  }, [scrollToBottom])\n\n  return (\n    !isAtBottom && (\n      <Button\n        className={cn(\n          \"dark:bg-background dark:hover:bg-muted absolute bottom-4 left-[50%] translate-x-[-50%] rounded-full\",\n          className\n        )}\n        onClick={handleScrollToBottom}\n        size=\"icon\"\n        type=\"button\"\n        variant=\"outline\"\n        {...props}\n      >\n        <ArrowDownIcon className=\"size-4\" />\n      </Button>\n    )\n  )\n}\n\nconst getMessageText = (message: UIMessage): string =>\n  message.parts\n    .filter((part) => part.type === \"text\")\n    .map((part) => part.text)\n    .join(\"\")\n\nexport type ConversationDownloadProps = Omit<\n  ComponentProps<typeof Button>,\n  \"onClick\"\n> & {\n  messages: UIMessage[]\n  filename?: string\n  formatMessage?: (message: UIMessage, index: number) => string\n}\n\nconst defaultFormatMessage = (message: UIMessage): string => {\n  const roleLabel = message.role.charAt(0).toUpperCase() + message.role.slice(1)\n  return `**${roleLabel}:** ${getMessageText(message)}`\n}\n\nexport const messagesToMarkdown = (\n  messages: UIMessage[],\n  formatMessage: (\n    message: UIMessage,\n    index: number\n  ) => string = defaultFormatMessage\n): string => messages.map((msg, i) => formatMessage(msg, i)).join(\"\\n\\n\")\n\nexport const ConversationDownload = ({\n  messages,\n  filename = \"conversation.md\",\n  formatMessage = defaultFormatMessage,\n  className,\n  children,\n  ...props\n}: ConversationDownloadProps) => {\n  const handleDownload = useCallback(() => {\n    const markdown = messagesToMarkdown(messages, formatMessage)\n    const blob = new Blob([markdown], { type: \"text/markdown\" })\n    const url = URL.createObjectURL(blob)\n    const link = document.createElement(\"a\")\n    link.href = url\n    link.download = filename\n    document.body.append(link)\n    link.click()\n    link.remove()\n    URL.revokeObjectURL(url)\n  }, [messages, filename, formatMessage])\n\n  return (\n    <Button\n      className={cn(\n        \"dark:bg-background dark:hover:bg-muted absolute top-4 right-4 rounded-full\",\n        className\n      )}\n      onClick={handleDownload}\n      size=\"icon\"\n      type=\"button\"\n      variant=\"outline\"\n      {...props}\n    >\n      {children ?? <DownloadIcon className=\"size-4\" />}\n    </Button>\n  )\n}\n"
+    },
+    {
+      "path": "components/ai-elements/_ui/button.tsx",
+      "target": "@components/ai-elements/_ui/button.tsx",
+      "type": "registry:component",
+      "content": "import { cn } from \"@/lib/utils\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { Slot as SlotPrimitive } from \"radix-ui\"\nimport * as React from \"react\"\n\nconst buttonVariants = cva(\n  \"inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-primary text-primary-foreground hover:bg-primary/90\",\n        destructive:\n          \"bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60\",\n        outline:\n          \"border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50\",\n        secondary:\n          \"bg-secondary text-secondary-foreground hover:bg-secondary/80\",\n        ghost:\n          \"hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50\",\n        link: \"text-primary underline-offset-4 hover:underline\",\n      },\n      size: {\n        default: \"h-9 px-4 py-2 has-[>svg]:px-3\",\n        sm: \"h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5\",\n        lg: \"h-10 rounded-md px-6 has-[>svg]:px-4\",\n        icon: \"size-9\",\n        \"icon-sm\": \"size-8\",\n        \"icon-lg\": \"size-10\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n      size: \"default\",\n    },\n  }\n)\n\nfunction Button({\n  className,\n  variant,\n  size,\n  asChild = false,\n  ...props\n}: React.ComponentProps<\"button\"> &\n  VariantProps<typeof buttonVariants> & {\n    asChild?: boolean\n  }) {\n  const Comp = asChild ? SlotPrimitive.Slot : \"button\"\n\n  return (\n    <Comp\n      data-slot=\"button\"\n      className={cn(buttonVariants({ variant, size, className }))}\n      {...props}\n    />\n  )\n}\n\nexport { Button, buttonVariants }\n"
+    },
+    {
+      "path": "lib/utils.ts",
+      "target": "@lib/utils.ts",
+      "type": "registry:lib",
+      "content": "import { clsx, type ClassValue } from \"clsx\"\nimport { twMerge } from \"tailwind-merge\"\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n\nexport function getSitePathname(\n  pathname: string,\n  basePath = process.env.NEXT_PUBLIC_BASE_PATH || \"\"\n) {\n  const base = basePath.replace(/\\/+$/, \"\")\n  const path =\n    pathname === base || pathname.startsWith(`${base}/`)\n      ? pathname.slice(base.length)\n      : pathname\n  return path.replace(/\\/+$/, \"\") || \"/\"\n}\n\n/**\n * Get the base URL depending on the current environment\n */\nexport function getBaseUrl() {\n  const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || \"\").replace(/\\/$/, \"\")\n  const withBasePath = (url: string) => {\n    const base = url.replace(/\\/$/, \"\")\n    return basePath && !base.endsWith(basePath) ? `${base}${basePath}` : base\n  }\n  // For server-side rendering, we need to use environment variables\n  if (typeof window === \"undefined\") {\n    // Check for Vercel-specific environment variables\n    // Production URL takes precedence if available (works in all environments)\n    if (process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL) {\n      return withBasePath(\n        `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`\n      )\n    }\n\n    // For branch deployments\n    if (process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL) {\n      return withBasePath(\n        `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`\n      )\n    }\n\n    // For regular deployments\n    if (process.env.NEXT_PUBLIC_VERCEL_URL) {\n      return withBasePath(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}`)\n    }\n\n    // Legacy support\n    if (process.env.VERCEL_URL) {\n      return withBasePath(`https://${process.env.VERCEL_URL}`)\n    }\n\n    // Fall back to explicitly set environment variables\n    if (process.env.NEXT_PUBLIC_BASE_URL) {\n      return withBasePath(process.env.NEXT_PUBLIC_BASE_URL)\n    }\n\n    // Default for development - check PORT env var first\n    const port = process.env.PORT || 3000\n    return withBasePath(\n      process.env.NODE_ENV === \"development\" ? `http://localhost:${port}` : \"\"\n    )\n  }\n\n  // For client-side, we can just use the browser's location\n  return withBasePath(window.location.origin)\n}\n"
+    },
+    {
+      "path": "components/ai-elements/LICENSE",
+      "target": "@components/ai-elements/LICENSE",
+      "type": "registry:file",
+      "content": "Copyright 2023 Vercel, Inc.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n"
+    },
+    {
+      "path": "components/ai-elements/SOURCE.json",
+      "target": "@components/ai-elements/SOURCE.json",
+      "type": "registry:file",
+      "content": "{\n  \"name\": \"Vercel AI Elements\",\n  \"repository\": \"https://github.com/vercel/ai-elements\",\n  \"commit\": \"6a9d5b1822ffb10bba4bd97175f01edd7d8651cd\",\n  \"license\": \"Apache-2.0\",\n  \"sourceDirectories\": [\n    \"packages/elements/src\",\n    \"packages/examples/src\",\n    \"packages/shadcn-ui/components/ui\"\n  ],\n  \"changes\": [\"Rewritten local import paths\"]\n}\n"
+    },
+    {
+      "path": "styles/animations.css",
+      "target": "~/styles/animations.css",
+      "type": "registry:file",
+      "content": "@import \"tw-animate-css\";\n"
+    },
+    {
+      "path": "components/ai-elements/_ui/LICENSE",
+      "target": "@components/ai-elements/_ui/LICENSE",
+      "type": "registry:file",
+      "content": "MIT License\n\nCopyright (c) 2023 shadcn\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    },
+    {
+      "path": "components/ai-elements/_ui/NOTICE.md",
+      "target": "@components/ai-elements/_ui/NOTICE.md",
+      "type": "registry:file",
+      "content": "# shadcn/ui primitives\n\nThese local primitives are derived from shadcn/ui and retain its MIT license.\nThey were copied from the Vercel AI Elements pinned source tree so its public\ncomponents keep their documented variants, states, and styling.\n\nSource: https://github.com/shadcn-ui/ui\n"
+    }
+  ],
+  "categories": [
+    "AI Elements"
+  ]
+}

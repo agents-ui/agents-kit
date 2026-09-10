@@ -2,11 +2,25 @@ import assert from "node:assert/strict"
 import fs from "node:fs"
 import path from "node:path"
 import test from "node:test"
-import { getBaseUrl } from "../lib/utils"
+import { getBaseUrl, getSitePathname } from "../lib/utils"
 
 const read = (file: string) => fs.readFileSync(file, "utf8")
 const registry = JSON.parse(read("public/c/registry.json"))
 const version = JSON.parse(read("package.json")).version
+
+test("base-path home URLs stay on the public layout", () => {
+  assert.equal(getSitePathname("/agents-kit", "/agents-kit"), "/")
+  assert.equal(getSitePathname("/agents-kit/", "/agents-kit"), "/")
+  assert.equal(
+    getSitePathname("/agents-kit/docs/mcp/", "/agents-kit"),
+    "/docs/mcp"
+  )
+  assert.equal(getSitePathname("/components", "/agents-kit"), "/components")
+  assert.equal(
+    getSitePathname("/agents-kit-other", "/agents-kit"),
+    "/agents-kit-other"
+  )
+})
 
 test("LLM documents describe this release and expose every installable entry", () => {
   const short = read("llms.txt")
@@ -96,4 +110,24 @@ test("base URLs preserve the GitHub Pages subpath on server and browser", () => 
       Object.defineProperty(globalThis, "window", windowDescriptor)
     else Reflect.deleteProperty(globalThis, "window")
   }
+})
+
+
+test("registry installs original styles and third-party notices with their components", () => {
+  const includes = (name: string, file: string) => {
+    const item = registry.items.find((entry: { name: string }) => entry.name === name)
+    assert.ok(item, `Missing registry entry: ${name}`)
+    assert.ok(item.files.some((entry: { path: string }) => entry.path === file), `${name} must include ${file}`)
+  }
+  includes("loader", "components/prompt-kit/styles.css")
+  includes("loader", "styles/animations.css")
+  includes("agent-response", "components/prompt-kit/styles.css")
+  includes("ai-elements-message", "components/ai-elements/markdown.css")
+  includes("ai-elements-reasoning", "components/ai-elements/markdown.css")
+  includes("ai-elements-message", "components/ai-elements/_ui/LICENSE")
+  includes("beautiful-original-prompt-bar", "components/beautiful-ui/original/beautiful-ui.css")
+  includes("blocks-so-ai-02", "components/blocks-so/LICENSE.md")
+  includes("boardui-agent-chat", "components/boardui/LICENSE")
+  includes("metal-fx", "components/effects/metal-fx/PAPER_SHADERS_LICENSE")
+  includes("metal-fx", "components/effects/metal-fx/PAPER_SHADERS_NOTICE")
 })

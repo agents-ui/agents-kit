@@ -79,6 +79,7 @@ function FamilyPreview({
         {family.entries.length > 1 && (
           <div
             className="flex flex-wrap gap-1"
+            role="group"
             aria-label={`${family.name} variants`}
           >
             {family.entries.map((item) => (
@@ -95,11 +96,13 @@ function FamilyPreview({
                 )}
               >
                 {item.category}
-                {family.entries.filter(
-                  (other) => other.category === item.category
-                ).length > 1
-                  ? ` · ${item.name.replace(/^Agent /, "")}`
-                  : ""}
+                {item.variant
+                  ? ` · ${item.variant}`
+                  : family.entries.filter(
+                        (other) => other.category === item.category
+                      ).length > 1
+                    ? ` · ${item.name.replace(/^Agent /, "")}`
+                    : ""}
               </button>
             ))}
           </div>
@@ -202,6 +205,9 @@ export function Catalogue({ sources }: { sources: Record<string, string> }) {
                 "All",
                 "Beautiful UI",
                 "beUI",
+                "AI Elements",
+                "Prompt Kit",
+                "BoardUI",
                 "Generative UI",
                 "Blocks.so",
                 "Effects",

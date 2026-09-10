@@ -1,9 +1,9 @@
 {
   "name": "Beautiful UI",
   "repository": "https://github.com/slev12397/beautiful-ui",
-  "revision": "06557d7ff33a1eb70d5987bae9ac4c70fa0e20c4",
+  "revision": "ff0f74d62d8be9d89bcb735b3632e31a6ccf88dc",
   "license": "MIT",
   "copyright": "Copyright (c) 2026 Shane Levine",
   "families": 21,
-  "adaptation": "Reauthored as controlled reusable React components using the public BoardUI foundation, Lucide icons, host theme tokens, and caller-provided data. Site fixtures, fixed timers, external media defaults, commercial icons, and upstream global CSS were excluded."
+  "adaptation": "The original 21 public primitives and six internal building blocks are preserved under original/. Gallery fixtures are adapted for Agents Kit, upstream styles are isolated to .beautiful-ui-scope, and the proprietary Iconists dependency is replaced with Lucide icons. Existing controlled Agents Kit adapters remain available at the component root."
 }

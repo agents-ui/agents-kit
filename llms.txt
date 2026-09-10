@@ -20,7 +20,7 @@ Components receive data through props and return user intent through callbacks. 
 
 ## Registry catalog
 
-94 installable entries. Related source variants share a family in the visual catalog. Registry names and file paths remain explicit here.
+184 installable entries. Related source variants share a family in the visual catalog. Registry names and file paths remain explicit here.
 
 ### Generated results and runtime controls (4)
 
@@ -29,7 +29,59 @@ Components receive data through props and return user intent through callbacks. 
 - [agent-generative-surface](https://agents-ui.github.io/agents-kit/c/agent-generative-surface.json): agent generative surface
 - [agent-thinking-indicator](https://agents-ui.github.io/agents-kit/c/agent-thinking-indicator.json): agent thinking indicator
 
-### Beautiful UI (21)
+### AI Elements (49)
+
+- [ai-elements-agent](https://agents-ui.github.io/agents-kit/c/ai-elements-agent.json): agent
+- [ai-elements-artifact](https://agents-ui.github.io/agents-kit/c/ai-elements-artifact.json): artifact
+- [ai-elements-attachments](https://agents-ui.github.io/agents-kit/c/ai-elements-attachments.json): attachments
+- [ai-elements-audio-player](https://agents-ui.github.io/agents-kit/c/ai-elements-audio-player.json): audio player
+- [ai-elements-canvas](https://agents-ui.github.io/agents-kit/c/ai-elements-canvas.json): canvas
+- [ai-elements-chain-of-thought](https://agents-ui.github.io/agents-kit/c/ai-elements-chain-of-thought.json): chain of thought
+- [ai-elements-checkpoint](https://agents-ui.github.io/agents-kit/c/ai-elements-checkpoint.json): checkpoint
+- [ai-elements-code-block](https://agents-ui.github.io/agents-kit/c/ai-elements-code-block.json): code block
+- [ai-elements-commit](https://agents-ui.github.io/agents-kit/c/ai-elements-commit.json): commit
+- [ai-elements-confirmation](https://agents-ui.github.io/agents-kit/c/ai-elements-confirmation.json): confirmation
+- [ai-elements-connection](https://agents-ui.github.io/agents-kit/c/ai-elements-connection.json): connection
+- [ai-elements-context](https://agents-ui.github.io/agents-kit/c/ai-elements-context.json): context
+- [ai-elements-controls](https://agents-ui.github.io/agents-kit/c/ai-elements-controls.json): controls
+- [ai-elements-conversation](https://agents-ui.github.io/agents-kit/c/ai-elements-conversation.json): conversation
+- [ai-elements-edge](https://agents-ui.github.io/agents-kit/c/ai-elements-edge.json): edge
+- [ai-elements-environment-variables](https://agents-ui.github.io/agents-kit/c/ai-elements-environment-variables.json): environment variables
+- [ai-elements-file-tree](https://agents-ui.github.io/agents-kit/c/ai-elements-file-tree.json): file tree
+- [ai-elements-image](https://agents-ui.github.io/agents-kit/c/ai-elements-image.json): image
+- [ai-elements-inline-citation](https://agents-ui.github.io/agents-kit/c/ai-elements-inline-citation.json): inline citation
+- [ai-elements-jsx-preview](https://agents-ui.github.io/agents-kit/c/ai-elements-jsx-preview.json): jsx preview
+- [ai-elements-message](https://agents-ui.github.io/agents-kit/c/ai-elements-message.json): message
+- [ai-elements-mic-selector](https://agents-ui.github.io/agents-kit/c/ai-elements-mic-selector.json): mic selector
+- [ai-elements-model-selector](https://agents-ui.github.io/agents-kit/c/ai-elements-model-selector.json): model selector
+- [ai-elements-node](https://agents-ui.github.io/agents-kit/c/ai-elements-node.json): node
+- [ai-elements-open-in-chat](https://agents-ui.github.io/agents-kit/c/ai-elements-open-in-chat.json): open in chat
+- [ai-elements-package-info](https://agents-ui.github.io/agents-kit/c/ai-elements-package-info.json): package info
+- [ai-elements-panel](https://agents-ui.github.io/agents-kit/c/ai-elements-panel.json): panel
+- [ai-elements-persona](https://agents-ui.github.io/agents-kit/c/ai-elements-persona.json): persona
+- [ai-elements-plan](https://agents-ui.github.io/agents-kit/c/ai-elements-plan.json): plan
+- [ai-elements-prompt-input](https://agents-ui.github.io/agents-kit/c/ai-elements-prompt-input.json): prompt input
+- [ai-elements-question](https://agents-ui.github.io/agents-kit/c/ai-elements-question.json): question
+- [ai-elements-queue](https://agents-ui.github.io/agents-kit/c/ai-elements-queue.json): queue
+- [ai-elements-reasoning](https://agents-ui.github.io/agents-kit/c/ai-elements-reasoning.json): reasoning
+- [ai-elements-sandbox](https://agents-ui.github.io/agents-kit/c/ai-elements-sandbox.json): sandbox
+- [ai-elements-schema-display](https://agents-ui.github.io/agents-kit/c/ai-elements-schema-display.json): schema display
+- [ai-elements-shimmer](https://agents-ui.github.io/agents-kit/c/ai-elements-shimmer.json): shimmer
+- [ai-elements-snippet](https://agents-ui.github.io/agents-kit/c/ai-elements-snippet.json): snippet
+- [ai-elements-sources](https://agents-ui.github.io/agents-kit/c/ai-elements-sources.json): sources
+- [ai-elements-speech-input](https://agents-ui.github.io/agents-kit/c/ai-elements-speech-input.json): speech input
+- [ai-elements-stack-trace](https://agents-ui.github.io/agents-kit/c/ai-elements-stack-trace.json): stack trace
+- [ai-elements-suggestion](https://agents-ui.github.io/agents-kit/c/ai-elements-suggestion.json): suggestion
+- [ai-elements-task](https://agents-ui.github.io/agents-kit/c/ai-elements-task.json): task
+- [ai-elements-terminal](https://agents-ui.github.io/agents-kit/c/ai-elements-terminal.json): terminal
+- [ai-elements-test-results](https://agents-ui.github.io/agents-kit/c/ai-elements-test-results.json): test results
+- [ai-elements-tool](https://agents-ui.github.io/agents-kit/c/ai-elements-tool.json): tool
+- [ai-elements-toolbar](https://agents-ui.github.io/agents-kit/c/ai-elements-toolbar.json): toolbar
+- [ai-elements-transcription](https://agents-ui.github.io/agents-kit/c/ai-elements-transcription.json): transcription
+- [ai-elements-voice-selector](https://agents-ui.github.io/agents-kit/c/ai-elements-voice-selector.json): voice selector
+- [ai-elements-web-preview](https://agents-ui.github.io/agents-kit/c/ai-elements-web-preview.json): web preview
+
+### Beautiful UI (42)
 
 - [beautiful-agent-screen](https://agents-ui.github.io/agents-kit/c/beautiful-agent-screen.json): agent screen
 - [beautiful-approval-card](https://agents-ui.github.io/agents-kit/c/beautiful-approval-card.json): approval card
@@ -42,6 +94,27 @@ Components receive data through props and return user intent through callbacks. 
 - [beautiful-flowchart](https://agents-ui.github.io/agents-kit/c/beautiful-flowchart.json): flowchart
 - [beautiful-insight-cards](https://agents-ui.github.io/agents-kit/c/beautiful-insight-cards.json): insight cards
 - [beautiful-loading-state](https://agents-ui.github.io/agents-kit/c/beautiful-loading-state.json): loading state
+- [beautiful-original-agent-screen](https://agents-ui.github.io/agents-kit/c/beautiful-original-agent-screen.json): Original Beautiful UI AgentScreen
+- [beautiful-original-approval-card](https://agents-ui.github.io/agents-kit/c/beautiful-original-approval-card.json): Original Beautiful UI ApprovalCard
+- [beautiful-original-chat-composer](https://agents-ui.github.io/agents-kit/c/beautiful-original-chat-composer.json): Original Beautiful UI ChatComposer
+- [beautiful-original-code-block](https://agents-ui.github.io/agents-kit/c/beautiful-original-code-block.json): Original Beautiful UI CodeBlock
+- [beautiful-original-context-cards](https://agents-ui.github.io/agents-kit/c/beautiful-original-context-cards.json): Original Beautiful UI ContextCards
+- [beautiful-original-diff-table](https://agents-ui.github.io/agents-kit/c/beautiful-original-diff-table.json): Original Beautiful UI DiffTable
+- [beautiful-original-filter-table](https://agents-ui.github.io/agents-kit/c/beautiful-original-filter-table.json): Original Beautiful UI FilterTable
+- [beautiful-original-fine-tune-card](https://agents-ui.github.io/agents-kit/c/beautiful-original-fine-tune-card.json): Original Beautiful UI FineTuneCard
+- [beautiful-original-flowchart](https://agents-ui.github.io/agents-kit/c/beautiful-original-flowchart.json): Original Beautiful UI Flowchart
+- [beautiful-original-insight-cards](https://agents-ui.github.io/agents-kit/c/beautiful-original-insight-cards.json): Original Beautiful UI InsightCards
+- [beautiful-original-loading-state](https://agents-ui.github.io/agents-kit/c/beautiful-original-loading-state.json): Original Beautiful UI LoadingState
+- [beautiful-original-prompt-bar](https://agents-ui.github.io/agents-kit/c/beautiful-original-prompt-bar.json): Original Beautiful UI PromptBar
+- [beautiful-original-recommendation-card](https://agents-ui.github.io/agents-kit/c/beautiful-original-recommendation-card.json): Original Beautiful UI RecommendationCard
+- [beautiful-original-records-table](https://agents-ui.github.io/agents-kit/c/beautiful-original-records-table.json): Original Beautiful UI RecordsTable
+- [beautiful-original-search-list](https://agents-ui.github.io/agents-kit/c/beautiful-original-search-list.json): Original Beautiful UI SearchList
+- [beautiful-original-selection-actions](https://agents-ui.github.io/agents-kit/c/beautiful-original-selection-actions.json): Original Beautiful UI SelectionActions
+- [beautiful-original-sidebar-nav](https://agents-ui.github.io/agents-kit/c/beautiful-original-sidebar-nav.json): Original Beautiful UI SidebarNav
+- [beautiful-original-streaming-text](https://agents-ui.github.io/agents-kit/c/beautiful-original-streaming-text.json): Original Beautiful UI StreamingText
+- [beautiful-original-task-rows](https://agents-ui.github.io/agents-kit/c/beautiful-original-task-rows.json): Original Beautiful UI TaskRows
+- [beautiful-original-thinking-state](https://agents-ui.github.io/agents-kit/c/beautiful-original-thinking-state.json): Original Beautiful UI ThinkingState
+- [beautiful-original-tool-chips](https://agents-ui.github.io/agents-kit/c/beautiful-original-tool-chips.json): Original Beautiful UI ToolChips
 - [beautiful-prompt-bar](https://agents-ui.github.io/agents-kit/c/beautiful-prompt-bar.json): prompt bar
 - [beautiful-recommendation-card](https://agents-ui.github.io/agents-kit/c/beautiful-recommendation-card.json): recommendation card
 - [beautiful-records-table](https://agents-ui.github.io/agents-kit/c/beautiful-records-table.json): records table
@@ -75,19 +148,57 @@ Components receive data through props and return user intent through callbacks. 
 - [beui-tool-approval](https://agents-ui.github.io/agents-kit/c/beui-tool-approval.json): Tool Approval
 - [beui-tool-result](https://agents-ui.github.io/agents-kit/c/beui-tool-result.json): Tool Result
 
-### Libraries.dev (2)
+### Blocks.so (9)
 
-- [border-beam](https://agents-ui.github.io/agents-kit/c/border-beam.json): border beam
-- [liquid-gooey](https://agents-ui.github.io/agents-kit/c/liquid-gooey.json): liquid gooey
-
-### Blocks.so (4)
-
+- [blocks-so-ai-01](https://agents-ui.github.io/agents-kit/c/blocks-so-ai-01.json): ai 01
+- [blocks-so-ai-02](https://agents-ui.github.io/agents-kit/c/blocks-so-ai-02.json): ai 02
+- [blocks-so-ai-03](https://agents-ui.github.io/agents-kit/c/blocks-so-ai-03.json): ai 03
+- [blocks-so-ai-04](https://agents-ui.github.io/agents-kit/c/blocks-so-ai-04.json): ai 04
+- [blocks-so-ai-05](https://agents-ui.github.io/agents-kit/c/blocks-so-ai-05.json): ai 05
 - [file-queue](https://agents-ui.github.io/agents-kit/c/file-queue.json): file queue
 - [setup-checklist](https://agents-ui.github.io/agents-kit/c/setup-checklist.json): setup checklist
 - [task-table](https://agents-ui.github.io/agents-kit/c/task-table.json): task table
 - [workspace-composer](https://agents-ui.github.io/agents-kit/c/workspace-composer.json): workspace composer
 
-### v0.1 compatibility (44)
+### BoardUI (3)
+
+- [boardui-agent-chat](https://agents-ui.github.io/agents-kit/c/boardui-agent-chat.json): agent chat
+- [boardui-agent-thinking](https://agents-ui.github.io/agents-kit/c/boardui-agent-thinking.json): agent thinking
+- [boardui-composer-loader](https://agents-ui.github.io/agents-kit/c/boardui-composer-loader.json): composer loader
+
+### Libraries.dev (5)
+
+- [border-beam](https://agents-ui.github.io/agents-kit/c/border-beam.json): border beam
+- [img-fx](https://agents-ui.github.io/agents-kit/c/img-fx.json): img fx
+- [liquid-gooey](https://agents-ui.github.io/agents-kit/c/liquid-gooey.json): liquid gooey
+- [metal-fx](https://agents-ui.github.io/agents-kit/c/metal-fx.json): metal fx
+- [metal-fx-v1](https://agents-ui.github.io/agents-kit/c/metal-fx-v1.json): metal fx v1
+
+### Prompt Kit (21)
+
+- [chain-of-thought](https://agents-ui.github.io/agents-kit/c/chain-of-thought.json): A component for displaying a chain of thought process with collapsible steps and triggers.
+- [chat-container](https://agents-ui.github.io/agents-kit/c/chat-container.json): A component for creating chat interfaces with intelligent auto-scrolling behavior, designed to provide a smooth and responsive user experience
+- [code-block](https://agents-ui.github.io/agents-kit/c/code-block.json): A component for displaying code snippets with syntax highlighting and customizable styling
+- [feedback-bar](https://agents-ui.github.io/agents-kit/c/feedback-bar.json): A component to collect user feedback on AI responses.
+- [file-upload](https://agents-ui.github.io/agents-kit/c/file-upload.json): A component for creating drag-and-drop file upload interfaces with support for single or multiple files, custom triggers, and visual feedback during file dragging operations.
+- [image](https://agents-ui.github.io/agents-kit/c/image.json): A component for displaying images from base64 or Uint8Array data, with full accessibility and responsive styling. Perfect for AI-generated or user-uploaded images.
+- [jsx-preview](https://agents-ui.github.io/agents-kit/c/jsx-preview.json): A component for rendering JSX strings as React components, with support for streaming content and automatic tag completion.
+- [loader](https://agents-ui.github.io/agents-kit/c/loader.json): A component for displaying a loading indicator with multiple variants and customizable styling
+- [markdown](https://agents-ui.github.io/agents-kit/c/markdown.json): A component for rendering Markdown content with support for code blocks, GFM, and custom styling
+- [message](https://agents-ui.github.io/agents-kit/c/message.json): A component for displaying chat messages with support for avatars, markdown content, and interactive actions
+- [prompt-input](https://agents-ui.github.io/agents-kit/c/prompt-input.json): An input field designed for chat interfaces, allowing users to enter and submit text prompts to an AI model
+- [prompt-suggestion](https://agents-ui.github.io/agents-kit/c/prompt-suggestion.json): A component for implementing interactive prompt suggestions in AI interfaces. The PromptSuggestion component offers two distinct modes: Normal Mode and Highlight Mode.
+- [reasoning](https://agents-ui.github.io/agents-kit/c/reasoning.json): A collapsible component for showing AI reasoning, explanations, or logic. You can control it manually or let it auto-close when the stream ends. Markdown is supported.
+- [response-stream](https://agents-ui.github.io/agents-kit/c/response-stream.json): A component to simulate streaming text on the client side, perfect for fake responses, or any controlled progressive text display.
+- [scroll-button](https://agents-ui.github.io/agents-kit/c/scroll-button.json): A floating button component that appears when users scroll up in a container, allowing them to quickly return to the bottom of the content
+- [source](https://agents-ui.github.io/agents-kit/c/source.json): Displays website sources used by AI-generated content, showing URL details, titles, and descriptions on hover.
+- [steps](https://agents-ui.github.io/agents-kit/c/steps.json): A component for displaying a sequence of operations in a collapsible layout. Each step can include details and an optional vertical bar. Useful for showing AI steps like reasoning traces, tool calls, or process logs.
+- [system-message](https://agents-ui.github.io/agents-kit/c/system-message.json): A banner-style component for surfacing contextual information, warnings, or instructions within AI interfaces.
+- [text-shimmer](https://agents-ui.github.io/agents-kit/c/text-shimmer.json): A component for displaying a shimmer effect on text, perfect for loading states or highlighting text.
+- [thinking-bar](https://agents-ui.github.io/agents-kit/c/thinking-bar.json): A component to display the thinking state of an AI model with optional actions.
+- [tool](https://agents-ui.github.io/agents-kit/c/tool.json): Displays tool call details including input, output, status, and errors. Ideal for visualizing AI tool usage in chat UIs.
+
+### v0.1 compatibility (32)
 
 - [agent-analytics-pulse](https://agents-ui.github.io/agents-kit/c/agent-analytics-pulse.json): agent analytics pulse
 - [agent-artifact](https://agents-ui.github.io/agents-kit/c/agent-artifact.json): agent artifact
@@ -121,15 +232,3 @@ Components receive data through props and return user intent through callbacks. 
 - [agent-video-editor](https://agents-ui.github.io/agents-kit/c/agent-video-editor.json): agent video editor
 - [agent-web-search](https://agents-ui.github.io/agents-kit/c/agent-web-search.json): agent web search
 - [agent-workflow-planner](https://agents-ui.github.io/agents-kit/c/agent-workflow-planner.json): agent workflow planner
-- [chat-container](https://agents-ui.github.io/agents-kit/c/chat-container.json): A component for creating chat interfaces with intelligent auto-scrolling behavior, designed to provide a smooth and responsive user experience
-- [code-block](https://agents-ui.github.io/agents-kit/c/code-block.json): A component for displaying code snippets with syntax highlighting and customizable styling
-- [file-upload](https://agents-ui.github.io/agents-kit/c/file-upload.json): A component for creating drag-and-drop file upload interfaces with support for single or multiple files, custom triggers, and visual feedback during file dragging operations.
-- [jsx-preview](https://agents-ui.github.io/agents-kit/c/jsx-preview.json): A component for rendering JSX strings as React components, with support for streaming content and automatic tag completion.
-- [loader](https://agents-ui.github.io/agents-kit/c/loader.json): A component for displaying a loading indicator with multiple variants and customizable styling
-- [markdown](https://agents-ui.github.io/agents-kit/c/markdown.json): A component for rendering Markdown content with support for code blocks, GFM, and custom styling
-- [message](https://agents-ui.github.io/agents-kit/c/message.json): A component for displaying chat messages with support for avatars, markdown content, and interactive actions
-- [prompt-input](https://agents-ui.github.io/agents-kit/c/prompt-input.json): An input field designed for chat interfaces, allowing users to enter and submit text prompts to an AI model
-- [prompt-suggestion](https://agents-ui.github.io/agents-kit/c/prompt-suggestion.json): A component for implementing interactive prompt suggestions in AI interfaces. The PromptSuggestion component offers two distinct modes: Normal Mode and Highlight Mode.
-- [reasoning](https://agents-ui.github.io/agents-kit/c/reasoning.json): A collapsible component for showing AI reasoning, explanations, or logic. You can control it manually or let it auto-close when the stream ends. Markdown is supported.
-- [response-stream](https://agents-ui.github.io/agents-kit/c/response-stream.json): A component to simulate streaming text on the client side, perfect for fake responses, or any controlled progressive text display.
-- [scroll-button](https://agents-ui.github.io/agents-kit/c/scroll-button.json): A floating button component that appears when users scroll up in a container, allowing them to quickly return to the bottom of the content

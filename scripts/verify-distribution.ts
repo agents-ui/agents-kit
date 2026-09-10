@@ -28,6 +28,7 @@ if (fs.existsSync(exportDir)) {
 }
 const allowed = [
   "components/agents-ui/",
+  "components/ai-elements/",
   "components/boardui/",
   "components/beautiful-ui/",
   "components/beui/",

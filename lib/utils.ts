@@ -5,6 +5,18 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
+export function getSitePathname(
+  pathname: string,
+  basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""
+) {
+  const base = basePath.replace(/\/+$/, "")
+  const path =
+    pathname === base || pathname.startsWith(`${base}/`)
+      ? pathname.slice(base.length)
+      : pathname
+  return path.replace(/\/+$/, "") || "/"
+}
+
 /**
  * Get the base URL depending on the current environment
  */

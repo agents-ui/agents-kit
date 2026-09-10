@@ -1,11 +1,15 @@
 "use client"
 
 import * as React from "react"
+import { aiElementsEntries } from "./ai-elements-catalog"
 import { beautifulEntries } from "./beautiful-catalog"
 import { beuiEntries } from "./beui-catalog"
-import { GenerativeShowcase } from "./generative-previews"
-import { runtimeEntries } from "./runtime-catalog"
+import { blocksAiEntries } from "./blocks-ai-catalog"
+import { boardUiAiEntries } from "./boardui-ai-catalog"
 import { effectEntries } from "./effect-catalog"
+import { GenerativeShowcase } from "./generative-previews"
+import { promptKitEntries } from "./prompt-kit-catalog"
+import { runtimeEntries } from "./runtime-catalog"
 
 export type GalleryCategory =
   | "Beautiful UI"
@@ -13,6 +17,9 @@ export type GalleryCategory =
   | "Generative UI"
   | "Blocks.so"
   | "Effects"
+  | "AI Elements"
+  | "Prompt Kit"
+  | "BoardUI"
 export interface GalleryEntry {
   slug: string
   name: string
@@ -20,6 +27,8 @@ export interface GalleryEntry {
   source: string
   path: string
   description?: string
+  family?: string
+  variant?: string
   component: React.ComponentType<Record<string, unknown>>
   props?: Record<string, unknown>
 }
@@ -37,6 +46,10 @@ export const galleryEntries: GalleryEntry[] = [
   ...beuiEntries,
   ...runtimeEntries,
   ...effectEntries,
+  ...blocksAiEntries,
+  ...aiElementsEntries,
+  ...promptKitEntries,
+  ...boardUiAiEntries,
   {
     slug: "agent-generative-surface",
     name: "Generated results",

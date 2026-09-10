@@ -5,9 +5,10 @@
   "title": "Beui Message Scroller",
   "description": "Message Scroller",
   "dependencies": [
-    "clsx",
-    "motion",
-    "tailwind-merge"
+    "clsx@^2.1.1",
+    "motion@12.26.2",
+    "tailwind-merge@^3.0.1",
+    "tw-animate-css@1.3.6"
   ],
   "registryDependencies": [],
   "files": [
@@ -60,6 +61,12 @@
       "content": "import { clsx, type ClassValue } from \"clsx\"\nimport { twMerge } from \"tailwind-merge\"\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n"
     },
     {
+      "path": "styles/animations.css",
+      "target": "~/styles/animations.css",
+      "type": "registry:file",
+      "content": "@import \"tw-animate-css\";\n"
+    },
+    {
       "path": "components/beui/LICENSE",
       "target": "@components/beui/LICENSE",
       "type": "registry:file",
@@ -69,7 +76,7 @@
       "path": "components/beui/SOURCE.json",
       "target": "@components/beui/SOURCE.json",
       "type": "registry:file",
-      "content": "{\n  \"name\": \"beUI AI Agents\",\n  \"upstream\": \"https://github.com/starc007/ui-components\",\n  \"revision\": \"04d6f76e9e67e35cded996b1b8d08a5ddcebc13a\",\n  \"revisionUrl\": \"https://github.com/starc007/ui-components/tree/04d6f76e9e67e35cded996b1b8d08a5ddcebc13a\",\n  \"license\": \"MIT\",\n  \"scope\": \"Exact public dependency closure for the 19 AI agent registry slugs plus the public loader variants used by the loading-state gallery.\",\n  \"adaptation\": \"Import aliases point at the isolated components/beui tree so the public source remains portable in Agents Kit. Gallery fixtures are authored separately. BoardUI remains the host library control foundation; BeUI motion helpers are retained only where required by these AI component behaviors.\"\n}\n"
+      "content": "{\n  \"name\": \"beUI AI Agents\",\n  \"upstream\": \"https://github.com/starc007/ui-components\",\n  \"revision\": \"b64c092b63b99c7340376b522325ea309156ba00\",\n  \"revisionUrl\": \"https://github.com/starc007/ui-components/tree/b64c092b63b99c7340376b522325ea309156ba00\",\n  \"license\": \"MIT\",\n  \"scope\": \"Exact public dependency closure for all 16 AI agent registry entries and all 28 documented demos at the pinned revision.\",\n  \"adaptation\": \"Import aliases point at the isolated components/beui tree so the public source remains portable in Agents Kit. Gallery fixtures preserve the upstream interactions and motion while using local Fieldwork copy.\"\n}\n"
     }
   ],
   "categories": [

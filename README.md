@@ -23,15 +23,18 @@ Agent interfaces are moving beyond fixed dashboards. Models now return structure
 
 ## What v0.2 adds
 
-| Collection       | Included in v0.2                                                                                   |
-| ---------------- | -------------------------------------------------------------------------------------------------- |
-| Beautiful UI     | All 21 public component families, reauthored as controlled React components                        |
-| beUI AI Agents   | All 17 public AI agent families, distributed through 19 installable registry slugs                 |
-| Generative UI    | 11 answer shapes and five work-output shapes in one controlled surface system                      |
-| Thinking Orb     | All nine public canvas states with light, dark, paused, and reduced-motion behavior                |
-| Agent runtime    | Context usage and checkpoint controls informed by public AI Elements patterns                      |
-| Blocks.so        | Four controlled compositions for a workspace composer, file queue, setup checklist, and task table |
-| Optional effects | Border Beam and Gooey for active borders, shape changes, and moving indicators                     |
+| Collection       | Included in v0.2                                                                                                               |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Beautiful UI     | 21 original public primitives and all documented variants; existing controlled adapters retained                               |
+| beUI AI Agents   | 16 public AI agent families, 19 registry entries, and all 28 documented demos                                                  |
+| AI Elements      | All 49 public elements, 84 upstream examples, and seven workflow views                                                         |
+| Prompt Kit       | All 21 primitives, 52 documented variants, and two local chat compositions                                                     |
+| BoardUI AI       | Agent Thinking in four styles, Composer Loader, and the local Chat Starter                                                     |
+| Generative UI    | 11 answer shapes and five work-output shapes in one controlled surface system                                                  |
+| Thinking Orb     | All nine public canvas states, plus optional pointer-gravity interaction, with size, color, pause, and reduced-motion controls |
+| Agent runtime    | Context usage and checkpoint controls informed by public AI Elements patterns                                                  |
+| Blocks.so        | All five original AI compositions plus the four existing controlled compositions                                               |
+| Optional effects | Border Beam, Gooey, Metal FX v1/v2, and Image FX with their public presets                                                     |
 
 The main catalog groups equivalent implementations into families. For example, related loading, approval, prompt, message, code, and task components appear together as source variants instead of repeated, unrelated entries.
 
@@ -104,7 +107,7 @@ Agents Kit does not call a model, run a tool, upload a file, or connect to a bac
 
 ## Optional effects
 
-The Effects collection includes Border Beam and Gooey. Add them where motion helps explain a change. Existing components keep their compact defaults.
+The Effects collection includes Border Beam, Gooey, Metal FX, and Image FX. Add them where motion helps explain a change. Existing components keep their compact defaults.
 
 ```tsx
 import { BorderBeam } from "@/components/effects/border-beam"
@@ -178,21 +181,19 @@ Agents Kit preserves attribution and license notices with copied or adapted sour
 
 - [Beautiful UI](https://github.com/slev12397/beautiful-ui), MIT licensed, is the source for the 21 Beautiful UI families.
 - [beUI](https://github.com/starc007/ui-components), MIT licensed, is the source for the public AI agent component collection.
-- [Libraries.dev](https://github.com/Jakubantalik/Libraries.dev), MIT licensed, supplies Thinking Orbs, Border Beam, and Gooey.
-- [Vercel AI Elements](https://github.com/vercel/ai-elements), Apache-2.0 licensed, informed the independently implemented context and checkpoint interaction patterns.
-- [Blocks.so](https://github.com/ephraimduncan/blocks), MIT licensed, is the source for four adapted compositions.
-- [BoardUI](https://github.com/BoardUI/boardui), MIT licensed, supplies the underlying control and theme structure.
-- [Prompt Kit](https://github.com/ibelick/prompt-kit) supplies the conversational primitives retained for compatibility.
+- [Libraries.dev](https://github.com/Jakubantalik/Libraries.dev), MIT licensed, supplies Thinking Orbs, Border Beam, Gooey, Metal FX, and Image FX.
+- [Vercel AI Elements](https://github.com/vercel/ai-elements), Apache-2.0 licensed, supplies the complete AI Elements collection and informed the earlier context and checkpoint controls.
+- [Blocks.so](https://github.com/ephraimduncan/blocks), MIT licensed, supplies five original AI compositions and four adapted compositions.
+- [BoardUI](https://github.com/BoardUI/boardui), MIT licensed, supplies the underlying controls, theme, and free AI chat components.
+- [Prompt Kit](https://github.com/ibelick/prompt-kit) supplies all 21 conversational primitives and their documented examples.
+
+The [source coverage report](docs/source-coverage.md) records the catalog sweep, documented variants, and remote demo-media exceptions.
 
 Pinned revisions, source relationships, and notices are recorded in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and in source metadata beside each adapted collection. The Agents Kit project license remains in [LICENSE.md](LICENSE.md). Upstream source keeps its original license.
 
 ## Release status
 
-v0.2.0 is the generative UI release, dated 2026-09-05. The library is distributed as copyable source and registry entries. See [CHANGELOG.md](CHANGELOG.md) for release details and [Migrating to v0.2](docs/migrating-to-v0.2.md) for the compatibility path.
-
-## Also building
-
-I’m also working on [useAgent](https://useagent.org), an open-source workspace for agents that work with your tools and return finished files. Follow the project at [useagenthq/useagent](https://github.com/useagenthq/useagent).
+v0.2.0 is the generative UI release, published on 2026-09-05 and updated on 2026-09-11 with the complete public AI source sweep. The library is distributed as copyable source and registry entries. See [CHANGELOG.md](CHANGELOG.md) for release details and [Migrating to v0.2](docs/migrating-to-v0.2.md) for the compatibility path.
 
 ## Author
 

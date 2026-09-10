@@ -99,3 +99,74 @@ test("diff and records tables retain semantic changes, decisions, tags, and tota
   assert.match(records, /2 records/)
   assert.match(records, /4 links/)
 })
+
+test("full Beautiful UI primitives retain the controls removed by the compact adapters", async () => {
+  const [
+    { default: OriginalApprovalCard },
+    { default: OriginalFineTuneCard },
+    { default: OriginalFlowchart },
+    { default: OriginalRecordsTable },
+    { default: OriginalSidebarNav },
+  ] = await Promise.all([
+    import("../components/beautiful-ui/original/primitives/ApprovalCard"),
+    import("../components/beautiful-ui/original/primitives/FineTuneCard"),
+    import("../components/beautiful-ui/original/primitives/Flowchart"),
+    import("../components/beautiful-ui/original/primitives/RecordsTable"),
+    import("../components/beautiful-ui/original/primitives/SidebarNav"),
+  ])
+  const approval = render(OriginalApprovalCard, {
+    questions: [
+      { q: "Which accounts should be updated?", type: "radio", options: ["At-risk renewals", "All renewals"] },
+      { q: "Which actions are allowed?", type: "check", options: ["Create follow-ups"] },
+    ],
+  })
+  assert.match(approval, /Which accounts should be updated/)
+  assert.match(approval, /aria-label="Custom answer"/)
+  assert.match(approval, /Continue/)
+  assert.match(approval, /<span>1<\/span>[\s\S]*<span>2<\/span>/)
+
+  const records = render(OriginalRecordsTable, {
+    rows: [{ id: "northwind", name: "Northwind", tags: ["B2B"], last: "Today", strength: "strong" }],
+  })
+  assert.match(records, /aria-label="New property"/)
+  assert.match(records, /aria-label="Table options"/)
+  assert.match(records, /aria-label="Resize Company column"/)
+  assert.match(records, /Northwind/)
+
+  const fineTune = render(OriginalFineTuneCard, {})
+  assert.match(fineTune, /role="slider"/)
+  assert.match(fineTune, /aria-label="row layout"/)
+
+  const sidebar = render(OriginalSidebarNav, {})
+  assert.match(sidebar, /aria-label="Collapse sidebar"/)
+  assert.match(sidebar, /aria-label="Search chats"/)
+
+  const flow = render(OriginalFlowchart, {})
+  assert.match(flow, /Renewal risk updated/)
+  assert.match(flow, /Executive sponsor missing/)
+})
+
+test("every documented Beautiful UI variant renders its distinct state", async () => {
+  const [
+    { default: OriginalAgentScreen },
+    { default: OriginalLoadingState },
+    { default: OriginalThinkingState },
+  ] = await Promise.all([
+    import("../components/beautiful-ui/original/primitives/AgentScreen"),
+    import("../components/beautiful-ui/original/primitives/LoadingState"),
+    import("../components/beautiful-ui/original/primitives/ThinkingState"),
+  ])
+  for (const variant of ["Drive", "Dots", "Orbit"]) {
+    const html = render(OriginalLoadingState, { variant })
+    assert.match(html, /beautiful-pixel-on/, variant)
+  }
+  assert.match(render(OriginalLoadingState, { variant: "Surfer", videoSrc: "/screen.mp4" }), /<video/)
+
+  for (const variant of ["Steps", "Reasoning", "Search", "Coding"]) {
+    const html = render(OriginalThinkingState, { variant })
+    assert.match(html, new RegExp(variant === "Search" ? "Searching the web" : variant === "Coding" ? "Running tools" : "Thinking"), variant)
+  }
+
+  assert.match(render(OriginalAgentScreen, { variant: "Working" }), />Open</)
+  assert.match(render(OriginalAgentScreen, { variant: "Loading" }), /Connecting to agent&#x27;s screen/)
+})

@@ -1,0 +1,11 @@
+{
+  "name": "metal-fx",
+  "repository": "https://github.com/Jakubantalik/metal-fx",
+  "revision": "be1bf89c63056521a4e8224f368768314c9006f7",
+  "packageVersion": "1.0.4",
+  "license": "MIT",
+  "copiedPath": "upstream/",
+  "sourcePath": "src/",
+  "copiedFiles": ["src/**"],
+  "relationship": "Public v1 source still exposed by the current Libraries.dev Metal playground, with a stale WebGL context-event guard for React development remounts. The top-level client facade re-exports its complete API."
+}

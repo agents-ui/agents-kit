@@ -1,5 +1,6 @@
 import { GitHubStarButton } from "@/components/app/github-star-button"
 import { GenerativeShowcase } from "@/components/gallery/generative-previews"
+import { HomeChatPreview } from "@/components/gallery/home-chat-preview"
 import { PublicHeader } from "@/components/gallery/public-header"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
@@ -20,6 +21,7 @@ export default function Home() {
             Messages, tools, approvals, and results people can work with. Built
             in React. Yours to copy and change.
           </p>
+          <HomeChatPreview />
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               href="/components"

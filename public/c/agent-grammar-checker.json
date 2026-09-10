@@ -5,9 +5,10 @@
   "title": "Agent Grammar Checker",
   "description": "agent grammar checker",
   "dependencies": [
-    "lucide-react",
-    "react-aria-components",
-    "tailwind-merge"
+    "lucide-react@0.577.0",
+    "react-aria-components@^1.21.1",
+    "tailwind-merge@^3.0.1",
+    "tailwindcss@^4.1.7"
   ],
   "registryDependencies": [],
   "files": [
@@ -58,6 +59,12 @@
       "target": "@components/boardui/LICENSE",
       "type": "registry:file",
       "content": "MIT License\n\nCopyright (c) 2026 Mertcan Dundar Esmergul (BoardUI)\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    },
+    {
+      "path": "components/boardui/SOURCE.json",
+      "target": "@components/boardui/SOURCE.json",
+      "type": "registry:file",
+      "content": "{\n  \"source\": \"https://github.com/BoardUI/boardui\",\n  \"revision\": \"3e76e282614b147a34b9b2a510e31b97d58a3909\",\n  \"license\": \"MIT\",\n  \"scope\": [\n    \"components/application/agent-chat\",\n    \"components/application/agent-thinking\",\n    \"components/application/composer-loader\",\n    \"components/base\",\n    \"components/foundations\",\n    \"styles\",\n    \"utils\"\n  ],\n  \"adaptations\": [\n    \"Repository import paths point to components/boardui\",\n    \"Neutral primary and ghost actions, restrained feedback, and readable agent surface tokens\",\n    \"Focusable native actions support React Aria tooltip composition\",\n    \"Icon-only child SVG fallback preserves explicit leadingIcon precedence\",\n    \"The Agent Chat starter always uses the bundled local demo transport; API probing, provider keys, dashboard navigation, and Pro promotion are omitted\",\n    \"Agent Chat imports resolve through components/boardui and its account logout action closes the local menu instead of navigating to a starter-only route\",\n    \"The gallery chat uses a responsive history drawer below xl; selecting a thread, clicking outside, or pressing Escape closes it\",\n    \"The prior pinned base components are unchanged at the current revision\"\n  ]\n}\n"
     },
     {
       "path": "styles/agents.css",

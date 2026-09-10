@@ -25,10 +25,7 @@ const currentAgentEntries = new Set([
 ])
 function collection(item: RegistryItem) {
   const category = item.categories[0]
-  if (
-    category === "Prompt Kit" ||
-    (category === "Agents Kit" && !currentAgentEntries.has(item.name))
-  )
+  if (category === "Agents Kit" && !currentAgentEntries.has(item.name))
     return "v0.1 compatibility"
   return category === "Agents Kit"
     ? "Generated results and runtime controls"
@@ -86,7 +83,7 @@ for (const item of items) {
   for (const file of item.files) {
     assert.match(
       file.path,
-      /^(components\/(agents-ui|beautiful-ui|beui|blocks-so|boardui|effects|prompt-kit|ui)|hooks|lib|styles)\//
+      /^(components\/(agents-ui|ai-elements|beautiful-ui|beui|blocks-so|boardui|effects|prompt-kit|ui)|hooks|lib|styles)\//
     )
     assert.ok(!file.path.split("/").includes(".."), "Unexpected registry path")
     const resolved = fs.realpathSync(path.join(root, file.path))
@@ -126,7 +123,7 @@ const emitted = program.emit(
     const relative = path
       .relative(root, source.fileName)
       .replaceAll(path.sep, "/")
-    if (sourceFiles.has(relative)) declarations.set(relative, text.trim())
+    if (sourceFiles.has(relative)) declarations.set(relative, text.replace(/[ \t]+$/gm, "").trim())
   },
   undefined,
   true

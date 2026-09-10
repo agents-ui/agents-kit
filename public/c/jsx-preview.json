@@ -5,7 +5,8 @@
   "title": "Jsx Preview",
   "description": "A component for rendering JSX strings as React components, with support for streaming content and automatic tag completion.",
   "dependencies": [
-    "react-jsx-parser"
+    "react-jsx-parser@^2.4.0",
+    "tw-animate-css@1.3.6"
   ],
   "registryDependencies": [],
   "files": [
@@ -14,6 +15,30 @@
       "target": "@components/prompt-kit/jsx-preview.tsx",
       "type": "registry:component",
       "content": "import * as React from \"react\"\nimport JsxParser from \"react-jsx-parser\"\nimport type { TProps as JsxParserProps } from \"react-jsx-parser\"\n\nfunction matchJsxTag(code: string) {\n  if (code.trim() === \"\") {\n    return null\n  }\n\n  const tagRegex = /<\\/?([a-zA-Z][a-zA-Z0-9]*)\\s*([^>]*?)(\\/)?>/\n  const match = code.match(tagRegex)\n\n  if (!match || typeof match.index === \"undefined\") {\n    return null\n  }\n\n  const [fullMatch, tagName, attributes, selfClosing] = match\n\n  const type = selfClosing\n    ? \"self-closing\"\n    : fullMatch.startsWith(\"</\")\n      ? \"closing\"\n      : \"opening\"\n\n  return {\n    tag: fullMatch,\n    tagName,\n    type,\n    attributes: attributes.trim(),\n    startIndex: match.index,\n    endIndex: match.index + fullMatch.length,\n  }\n}\n\nfunction completeJsxTag(code: string) {\n  const stack: string[] = []\n  let result = \"\"\n  let currentPosition = 0\n\n  while (currentPosition < code.length) {\n    const match = matchJsxTag(code.slice(currentPosition))\n    if (!match) break\n    const { tagName, type, endIndex } = match\n\n    if (type === \"opening\") {\n      stack.push(tagName)\n    } else if (type === \"closing\") {\n      stack.pop()\n    }\n\n    result += code.slice(currentPosition, currentPosition + endIndex)\n    currentPosition += endIndex\n  }\n\n  return (\n    result +\n    stack\n      .reverse()\n      .map((tag) => `</${tag}>`)\n      .join(\"\")\n  )\n}\n\nexport type JSXPreviewProps = {\n  jsx: string\n  isStreaming?: boolean\n} & JsxParserProps\n\nfunction JSXPreview({ jsx, isStreaming = false, ...props }: JSXPreviewProps) {\n  const processedJsx = React.useMemo(\n    () => (isStreaming ? completeJsxTag(jsx) : jsx),\n    [jsx, isStreaming]\n  )\n\n  // Cast JsxParser to any to work around the type incompatibility\n  const Parser = JsxParser as unknown as React.ComponentType<JsxParserProps>\n\n  return <Parser jsx={processedJsx} {...props} />\n}\n\nexport { JSXPreview }\n"
+    },
+    {
+      "path": "components/prompt-kit/LICENSE.md",
+      "target": "@components/prompt-kit/LICENSE.md",
+      "type": "registry:file",
+      "content": "MIT License\n\nCopyright (c) 2025 Julien Thibeaut\n\nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. app/page.tsx\n"
+    },
+    {
+      "path": "components/prompt-kit/SOURCE.json",
+      "target": "@components/prompt-kit/SOURCE.json",
+      "type": "registry:file",
+      "content": "{\n  \"name\": \"Prompt Kit\",\n  \"upstream\": \"https://github.com/ibelick/prompt-kit\",\n  \"revision\": \"de80375967400aa0c6ebab9d3ba4f9258ab79fcc\",\n  \"license\": \"MIT\",\n  \"sourceFiles\": [\n    \"components/ui/hover-card.tsx\",\n    \"components/prompt-kit/chain-of-thought.tsx\",\n    \"components/prompt-kit/chat-container.tsx\",\n    \"components/prompt-kit/code-block.tsx\",\n    \"components/prompt-kit/feedback-bar.tsx\",\n    \"components/prompt-kit/file-upload.tsx\",\n    \"components/prompt-kit/image.tsx\",\n    \"components/prompt-kit/jsx-preview.tsx\",\n    \"components/prompt-kit/loader.tsx\",\n    \"components/prompt-kit/markdown.tsx\",\n    \"components/prompt-kit/message.tsx\",\n    \"components/prompt-kit/prompt-input.tsx\",\n    \"components/prompt-kit/prompt-suggestion.tsx\",\n    \"components/prompt-kit/reasoning.tsx\",\n    \"components/prompt-kit/response-stream.tsx\",\n    \"components/prompt-kit/scroll-button.tsx\",\n    \"components/prompt-kit/source.tsx\",\n    \"components/prompt-kit/steps.tsx\",\n    \"components/prompt-kit/system-message.tsx\",\n    \"components/prompt-kit/text-shimmer.tsx\",\n    \"components/prompt-kit/thinking-bar.tsx\",\n    \"components/prompt-kit/tool.tsx\",\n    \"app/globals.css\"\n  ],\n  \"fullStackItems\": [\n    \"components/primitives/chatbot.tsx\",\n    \"components/primitives/tool-calling.tsx\"\n  ],\n  \"adaptation\": \"Public primitives retain upstream APIs, layout, states, and motion. PromptInput preserves the host IME guard; CodeBlock preserves data-code-theme while restoring upstream theme selection. Gallery examples use local fieldwork fixtures and no backend or API key.\"\n}\n"
+    },
+    {
+      "path": "components/prompt-kit/styles.css",
+      "target": "@components/prompt-kit/styles.css",
+      "type": "registry:file",
+      "content": "@import \"../../styles/animations.css\";\n\n/* keyframes for loaders */\n@keyframes typing {\n  0%,\n  100% {\n    transform: translateY(0);\n    opacity: 0.5;\n  }\n  50% {\n    transform: translateY(-2px);\n    opacity: 1;\n  }\n}\n\n@keyframes loading-dots {\n  0%,\n  100% {\n    opacity: 0;\n  }\n  50% {\n    opacity: 1;\n  }\n}\n\n@keyframes wave {\n  0%,\n  100% {\n    transform: scaleY(1);\n  }\n  50% {\n    transform: scaleY(0.6);\n  }\n}\n\n@keyframes blink {\n  0%,\n  100% {\n    opacity: 1;\n  }\n  50% {\n    opacity: 0;\n  }\n}\n\n@keyframes text-blink {\n  0%,\n  100% {\n    color: var(--primary);\n  }\n  50% {\n    color: var(--muted-foreground);\n  }\n}\n\n@keyframes bounce-dots {\n  0%,\n  100% {\n    transform: scale(0.8);\n    opacity: 0.5;\n  }\n  50% {\n    transform: scale(1.2);\n    opacity: 1;\n  }\n}\n\n@keyframes thin-pulse {\n  0%,\n  100% {\n    transform: scale(0.95);\n    opacity: 0.8;\n  }\n  50% {\n    transform: scale(1.05);\n    opacity: 0.4;\n  }\n}\n\n@keyframes pulse-dot {\n  0%,\n  100% {\n    transform: scale(1);\n    opacity: 0.8;\n  }\n  50% {\n    transform: scale(1.5);\n    opacity: 1;\n  }\n}\n\n@keyframes shimmer-text {\n  0% {\n    background-position: 150% center;\n  }\n  100% {\n    background-position: -150% center;\n  }\n}\n\n@keyframes wave-bars {\n  0%,\n  100% {\n    transform: scaleY(1);\n    opacity: 0.5;\n  }\n  50% {\n    transform: scaleY(0.6);\n    opacity: 1;\n  }\n}\n\n@keyframes shimmer {\n  0% {\n    background-position: 200% 50%;\n  }\n  100% {\n    background-position: -200% 50%;\n  }\n}\n\n@keyframes spinner-fade {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 1;\n  }\n}\n"
+    },
+    {
+      "path": "styles/animations.css",
+      "target": "~/styles/animations.css",
+      "type": "registry:file",
+      "content": "@import \"tw-animate-css\";\n"
     }
   ],
   "categories": [

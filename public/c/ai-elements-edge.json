@@ -1,0 +1,41 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-elements-edge",
+  "type": "registry:block",
+  "title": "Ai Elements Edge",
+  "description": "edge",
+  "dependencies": [
+    "@xyflow/react@12.10.0",
+    "tw-animate-css@1.3.6"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ai-elements/edge.tsx",
+      "target": "@components/ai-elements/edge.tsx",
+      "type": "registry:component",
+      "content": "import type { EdgeProps, InternalNode, Node } from \"@xyflow/react\"\nimport {\n  BaseEdge,\n  getBezierPath,\n  getSimpleBezierPath,\n  Position,\n  useInternalNode,\n} from \"@xyflow/react\"\n\nconst Temporary = ({\n  id,\n  sourceX,\n  sourceY,\n  targetX,\n  targetY,\n  sourcePosition,\n  targetPosition,\n}: EdgeProps) => {\n  const [edgePath] = getSimpleBezierPath({\n    sourcePosition,\n    sourceX,\n    sourceY,\n    targetPosition,\n    targetX,\n    targetY,\n  })\n\n  return (\n    <BaseEdge\n      className=\"stroke-ring stroke-1\"\n      id={id}\n      path={edgePath}\n      style={{\n        strokeDasharray: \"5, 5\",\n      }}\n    />\n  )\n}\n\nconst getHandleCoordsByPosition = (\n  node: InternalNode<Node>,\n  handlePosition: Position\n) => {\n  // Choose the handle type based on position - Left is for target, Right is for source\n  const handleType = handlePosition === Position.Left ? \"target\" : \"source\"\n\n  const handle = node.internals.handleBounds?.[handleType]?.find(\n    (h) => h.position === handlePosition\n  )\n\n  if (!handle) {\n    return [0, 0] as const\n  }\n\n  let offsetX = handle.width / 2\n  let offsetY = handle.height / 2\n\n  // this is a tiny detail to make the markerEnd of an edge visible.\n  // The handle position that gets calculated has the origin top-left, so depending which side we are using, we add a little offset\n  // when the handlePosition is Position.Right for example, we need to add an offset as big as the handle itself in order to get the correct position\n  switch (handlePosition) {\n    case Position.Left: {\n      offsetX = 0\n      break\n    }\n    case Position.Right: {\n      offsetX = handle.width\n      break\n    }\n    case Position.Top: {\n      offsetY = 0\n      break\n    }\n    case Position.Bottom: {\n      offsetY = handle.height\n      break\n    }\n    default: {\n      throw new Error(`Invalid handle position: ${handlePosition}`)\n    }\n  }\n\n  const x = node.internals.positionAbsolute.x + handle.x + offsetX\n  const y = node.internals.positionAbsolute.y + handle.y + offsetY\n\n  return [x, y] as const\n}\n\nconst getEdgeParams = (\n  source: InternalNode<Node>,\n  target: InternalNode<Node>\n) => {\n  const sourcePos = Position.Right\n  const [sx, sy] = getHandleCoordsByPosition(source, sourcePos)\n  const targetPos = Position.Left\n  const [tx, ty] = getHandleCoordsByPosition(target, targetPos)\n\n  return {\n    sourcePos,\n    sx,\n    sy,\n    targetPos,\n    tx,\n    ty,\n  }\n}\n\nconst Animated = ({ id, source, target, markerEnd, style }: EdgeProps) => {\n  const sourceNode = useInternalNode(source)\n  const targetNode = useInternalNode(target)\n\n  if (!(sourceNode && targetNode)) {\n    return null\n  }\n\n  const { sx, sy, tx, ty, sourcePos, targetPos } = getEdgeParams(\n    sourceNode,\n    targetNode\n  )\n\n  const [edgePath] = getBezierPath({\n    sourcePosition: sourcePos,\n    sourceX: sx,\n    sourceY: sy,\n    targetPosition: targetPos,\n    targetX: tx,\n    targetY: ty,\n  })\n\n  return (\n    <>\n      <BaseEdge id={id} markerEnd={markerEnd} path={edgePath} style={style} />\n      <circle fill=\"var(--primary)\" r=\"4\">\n        <animateMotion dur=\"2s\" path={edgePath} repeatCount=\"indefinite\" />\n      </circle>\n    </>\n  )\n}\n\nexport const Edge = {\n  Animated,\n  Temporary,\n}\n"
+    },
+    {
+      "path": "components/ai-elements/LICENSE",
+      "target": "@components/ai-elements/LICENSE",
+      "type": "registry:file",
+      "content": "Copyright 2023 Vercel, Inc.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n"
+    },
+    {
+      "path": "components/ai-elements/SOURCE.json",
+      "target": "@components/ai-elements/SOURCE.json",
+      "type": "registry:file",
+      "content": "{\n  \"name\": \"Vercel AI Elements\",\n  \"repository\": \"https://github.com/vercel/ai-elements\",\n  \"commit\": \"6a9d5b1822ffb10bba4bd97175f01edd7d8651cd\",\n  \"license\": \"Apache-2.0\",\n  \"sourceDirectories\": [\n    \"packages/elements/src\",\n    \"packages/examples/src\",\n    \"packages/shadcn-ui/components/ui\"\n  ],\n  \"changes\": [\"Rewritten local import paths\"]\n}\n"
+    },
+    {
+      "path": "styles/animations.css",
+      "target": "~/styles/animations.css",
+      "type": "registry:file",
+      "content": "@import \"tw-animate-css\";\n"
+    }
+  ],
+  "categories": [
+    "AI Elements"
+  ]
+}

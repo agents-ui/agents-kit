@@ -59,6 +59,7 @@ test("thinking orb accepts the current customization controls during SSR", () =>
     dotSize: 0.8,
     opts: { shape: 2 },
     frame: () => ({ dots: [], lines: [] }),
+    gravity: true,
   })
 
   assert.match(html, /<canvas/)

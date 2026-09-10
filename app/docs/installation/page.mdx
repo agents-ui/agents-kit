@@ -24,7 +24,7 @@ npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/agent-generative-
 The [registry index](https://agents-ui.github.io/agents-kit/c/registry.json) lists every available entry. The same URL format works for current and compatibility components:
 
 ```bash
-npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-thinking-state.json
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-thinking-state.json
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-prompt-input.json
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/agent-card.json
 ```
@@ -41,6 +41,25 @@ For components that include the shared theme, import the copied styles once from
 The shared stylesheet includes Tailwind CSS, the theme, and typography tokens. Keep your application's existing Tailwind and shadcn setup, and avoid importing Tailwind twice. Components without these files use the existing shadcn theme. The registry installs CSS files; it does not automatically add these imports to your stylesheet.
 
 If you keep copied components outside Tailwind's scanned source directories, add an appropriate `@source` directive to your stylesheet.
+
+Original Beautiful UI entries use the `beautiful-original-` prefix. Import their copied `components/beautiful-ui/original/beautiful-ui.css` once and wrap them in an ancestor with `className="beautiful-ui-scope"`. The host's `.dark` class selects the dark palette. The earlier `beautiful-` adapters remain available at their existing paths.
+
+Collections that ship `styles/animations.css` need that import for their entrance, exit, and disclosure animations. Prompt Kit also ships its loader keyframes; import the copied stylesheet once:
+
+```css
+@import "./components/prompt-kit/styles.css";
+```
+
+AI Elements message and reasoning entries include Streamdown's code, math, diagram, and CJK plugins. Import their copied Markdown stylesheet and the shared animations:
+
+```css
+@import "./styles/animations.css";
+@import "./components/ai-elements/markdown.css";
+```
+
+`markdown.css` includes KaTeX fonts through its package stylesheet. Its `@source` paths assume `components/ai-elements` and `node_modules` are at the project root; adjust those paths if you install elsewhere. Workflow canvas entries import their XYFlow stylesheet directly.
+
+The [source coverage report](https://github.com/agents-ui/agents-kit/blob/main/docs/source-coverage.md) lists the imported catalogs, preserved variants, and remote demo-media exceptions.
 
 ## Use a component
 

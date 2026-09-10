@@ -1,0 +1,12 @@
+{
+  "name": "Vercel AI Elements",
+  "repository": "https://github.com/vercel/ai-elements",
+  "commit": "6a9d5b1822ffb10bba4bd97175f01edd7d8651cd",
+  "license": "Apache-2.0",
+  "sourceDirectories": [
+    "packages/elements/src",
+    "packages/examples/src",
+    "packages/shadcn-ui/components/ui"
+  ],
+  "changes": ["Rewritten local import paths"]
+}

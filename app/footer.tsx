@@ -1,10 +1,11 @@
+import { getSitePathname } from "@/lib/utils"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { getNavigation } from "./routes"
 
 export function Footer() {
-  const pathname = usePathname()
+  const pathname = getSitePathname(usePathname())
   const navigation = getNavigation(pathname)
 
   return (

@@ -1,0 +1,36 @@
+{
+  "name": "Prompt Kit",
+  "upstream": "https://github.com/ibelick/prompt-kit",
+  "revision": "de80375967400aa0c6ebab9d3ba4f9258ab79fcc",
+  "license": "MIT",
+  "sourceFiles": [
+    "components/ui/hover-card.tsx",
+    "components/prompt-kit/chain-of-thought.tsx",
+    "components/prompt-kit/chat-container.tsx",
+    "components/prompt-kit/code-block.tsx",
+    "components/prompt-kit/feedback-bar.tsx",
+    "components/prompt-kit/file-upload.tsx",
+    "components/prompt-kit/image.tsx",
+    "components/prompt-kit/jsx-preview.tsx",
+    "components/prompt-kit/loader.tsx",
+    "components/prompt-kit/markdown.tsx",
+    "components/prompt-kit/message.tsx",
+    "components/prompt-kit/prompt-input.tsx",
+    "components/prompt-kit/prompt-suggestion.tsx",
+    "components/prompt-kit/reasoning.tsx",
+    "components/prompt-kit/response-stream.tsx",
+    "components/prompt-kit/scroll-button.tsx",
+    "components/prompt-kit/source.tsx",
+    "components/prompt-kit/steps.tsx",
+    "components/prompt-kit/system-message.tsx",
+    "components/prompt-kit/text-shimmer.tsx",
+    "components/prompt-kit/thinking-bar.tsx",
+    "components/prompt-kit/tool.tsx",
+    "app/globals.css"
+  ],
+  "fullStackItems": [
+    "components/primitives/chatbot.tsx",
+    "components/primitives/tool-calling.tsx"
+  ],
+  "adaptation": "Public primitives retain upstream APIs, layout, states, and motion. PromptInput preserves the host IME guard; CodeBlock preserves data-code-theme while restoring upstream theme selection. Gallery examples use local fieldwork fixtures and no backend or API key."
+}

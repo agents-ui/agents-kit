@@ -1,7 +1,8 @@
 {
   "name": "thinking-orbs",
   "repository": "https://github.com/Jakubantalik/Libraries.dev",
-  "revision": "999866f33df216dab0f8956f91c8d2e918d46328",
+  "revision": "422180dd7a5ac646c85deedc65500c4a74339127",
+  "packageVersion": "0.3.1",
   "license": "MIT",
   "copiedPath": "upstream/",
   "sourcePath": "packages/thinking-orbs/src/",
@@ -10,6 +11,7 @@
     "src/types.ts",
     "src/theme.ts",
     "src/presets.ts",
+    "src/gravity.ts",
     "src/engine/**"
   ],
   "relationship": "Source-faithful copy of the pinned public React canvas implementation and engine. The surrounding ThinkingIndicator wrapper and presentation are local."

@@ -6,7 +6,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible"
-import { cn } from "@/lib/utils"
+import { cn, getSitePathname } from "@/lib/utils"
 import { BringToFront, ChevronRight } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -198,9 +198,9 @@ function CollapsibleNavGroup({
 }
 
 function AppSidebar() {
-  const currentPath = usePathname()
+  const currentPath = getSitePathname(usePathname())
   const { setOpenMobile } = useSidebar()
-  const pathname = usePathname()
+  const pathname = currentPath
 
   useEffect(() => {
     setOpenMobile(false)
@@ -364,23 +364,14 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
   const MOBILE_SIDEBAR_VIEWPORT_THRESHOLD = 768
   const MD_SIDEBAR_VIEWPORT_THRESHOLD = 1024
 
-  const pathname = usePathname()
+  const pathname = getSitePathname(usePathname())
   const isBlocksPage = pathname === "/blocks"
   const isLegacyGuide = routes.some(
     (route) =>
       route.path === pathname &&
       (route.type === "agent" || route.type === "component")
   )
-  const isComponentPage = pathname.includes("/c/")
-  const isNewPublicSurface =
-    pathname === "/" ||
-    pathname === "/components" ||
-    pathname === "/workspace" ||
-    pathname === "/generative" ||
-    pathname === "/docs" ||
-    pathname === "/v0.1"
-
-  if (isComponentPage || isNewPublicSurface) {
+  if (!pathname.startsWith("/docs/") && !isBlocksPage) {
     return <>{children}</>
   }
 

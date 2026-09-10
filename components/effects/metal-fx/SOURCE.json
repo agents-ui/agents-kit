@@ -1,0 +1,15 @@
+{
+  "name": "metal-fx",
+  "repository": "https://github.com/Jakubantalik/Libraries.dev",
+  "revision": "422180dd7a5ac646c85deedc65500c4a74339127",
+  "packageVersion": "2.0.10",
+  "license": "MIT",
+  "copiedPath": "upstream/",
+  "sourcePath": "packages/metal-fx/src/",
+  "copiedFiles": ["src/**"],
+  "thirdPartyFiles": [
+    "PAPER_SHADERS_LICENSE",
+    "PAPER_SHADERS_NOTICE"
+  ],
+  "relationship": "Source-faithful copy of the pinned public React package. The top-level client facade re-exports its complete API."
+}

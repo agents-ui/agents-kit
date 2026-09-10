@@ -70,8 +70,9 @@ test("v0.2 grouping retains every required collection entry without v0.1 busines
   )
   assert.equal(
     galleryEntries.filter((entry) => entry.category === "beUI").length,
-    17
+    28
   )
+  assert.equal(groupEntries(galleryEntries.filter((entry) => entry.category === "beUI")).length, 16)
   const families = groupEntries(galleryEntries)
   const slugs = families.flatMap((family) =>
     family.entries.map((entry) => entry.slug)
@@ -82,4 +83,25 @@ test("v0.2 grouping retains every required collection entry without v0.1 busines
   assert.ok(families.some((family) => family.name === "Generated results"))
   assert.ok(!slugs.includes("agent-competitor-research"))
   assert.ok(!slugs.includes("agent-revenue-insights"))
+})
+
+test("catalog groups capitalization variants under one stable family id", () => {
+  const base = galleryEntries[0]
+  const families = groupEntries([
+    { ...base, slug: "first", family: "Chain Of Thought" },
+    { ...base, slug: "second", family: "Chain of Thought" },
+    { ...base, slug: "third", family: "JSX Preview" },
+    { ...base, slug: "fourth", family: "Jsx Preview" },
+  ])
+  assert.equal(families.length, 2)
+  assert.deepEqual(families.map(({ id }) => id).sort(), [
+    "chain-of-thought",
+    "jsx-preview",
+  ])
+  assert.ok(families.every(({ entries }) => entries.length === 2))
+  const allFamilies = groupEntries(galleryEntries)
+  assert.equal(
+    new Set(allFamilies.map(({ id }) => id)).size,
+    allFamilies.length
+  )
 })

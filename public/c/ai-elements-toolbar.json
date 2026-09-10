@@ -1,0 +1,49 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-elements-toolbar",
+  "type": "registry:block",
+  "title": "Ai Elements Toolbar",
+  "description": "toolbar",
+  "dependencies": [
+    "@xyflow/react@12.10.0",
+    "clsx@^2.1.1",
+    "tailwind-merge@^3.0.1",
+    "tw-animate-css@1.3.6"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ai-elements/toolbar.tsx",
+      "target": "@components/ai-elements/toolbar.tsx",
+      "type": "registry:component",
+      "content": "import { cn } from \"@/lib/utils\"\nimport { NodeToolbar, Position } from \"@xyflow/react\"\nimport type { ComponentProps } from \"react\"\n\ntype ToolbarProps = ComponentProps<typeof NodeToolbar>\n\nexport const Toolbar = ({ className, ...props }: ToolbarProps) => (\n  <NodeToolbar\n    className={cn(\n      \"bg-background flex items-center gap-1 rounded-sm border p-1.5\",\n      className\n    )}\n    position={Position.Bottom}\n    {...props}\n  />\n)\n"
+    },
+    {
+      "path": "lib/utils.ts",
+      "target": "@lib/utils.ts",
+      "type": "registry:lib",
+      "content": "import { clsx, type ClassValue } from \"clsx\"\nimport { twMerge } from \"tailwind-merge\"\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n\nexport function getSitePathname(\n  pathname: string,\n  basePath = process.env.NEXT_PUBLIC_BASE_PATH || \"\"\n) {\n  const base = basePath.replace(/\\/+$/, \"\")\n  const path =\n    pathname === base || pathname.startsWith(`${base}/`)\n      ? pathname.slice(base.length)\n      : pathname\n  return path.replace(/\\/+$/, \"\") || \"/\"\n}\n\n/**\n * Get the base URL depending on the current environment\n */\nexport function getBaseUrl() {\n  const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || \"\").replace(/\\/$/, \"\")\n  const withBasePath = (url: string) => {\n    const base = url.replace(/\\/$/, \"\")\n    return basePath && !base.endsWith(basePath) ? `${base}${basePath}` : base\n  }\n  // For server-side rendering, we need to use environment variables\n  if (typeof window === \"undefined\") {\n    // Check for Vercel-specific environment variables\n    // Production URL takes precedence if available (works in all environments)\n    if (process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL) {\n      return withBasePath(\n        `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`\n      )\n    }\n\n    // For branch deployments\n    if (process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL) {\n      return withBasePath(\n        `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`\n      )\n    }\n\n    // For regular deployments\n    if (process.env.NEXT_PUBLIC_VERCEL_URL) {\n      return withBasePath(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}`)\n    }\n\n    // Legacy support\n    if (process.env.VERCEL_URL) {\n      return withBasePath(`https://${process.env.VERCEL_URL}`)\n    }\n\n    // Fall back to explicitly set environment variables\n    if (process.env.NEXT_PUBLIC_BASE_URL) {\n      return withBasePath(process.env.NEXT_PUBLIC_BASE_URL)\n    }\n\n    // Default for development - check PORT env var first\n    const port = process.env.PORT || 3000\n    return withBasePath(\n      process.env.NODE_ENV === \"development\" ? `http://localhost:${port}` : \"\"\n    )\n  }\n\n  // For client-side, we can just use the browser's location\n  return withBasePath(window.location.origin)\n}\n"
+    },
+    {
+      "path": "components/ai-elements/LICENSE",
+      "target": "@components/ai-elements/LICENSE",
+      "type": "registry:file",
+      "content": "Copyright 2023 Vercel, Inc.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n"
+    },
+    {
+      "path": "components/ai-elements/SOURCE.json",
+      "target": "@components/ai-elements/SOURCE.json",
+      "type": "registry:file",
+      "content": "{\n  \"name\": \"Vercel AI Elements\",\n  \"repository\": \"https://github.com/vercel/ai-elements\",\n  \"commit\": \"6a9d5b1822ffb10bba4bd97175f01edd7d8651cd\",\n  \"license\": \"Apache-2.0\",\n  \"sourceDirectories\": [\n    \"packages/elements/src\",\n    \"packages/examples/src\",\n    \"packages/shadcn-ui/components/ui\"\n  ],\n  \"changes\": [\"Rewritten local import paths\"]\n}\n"
+    },
+    {
+      "path": "styles/animations.css",
+      "target": "~/styles/animations.css",
+      "type": "registry:file",
+      "content": "@import \"tw-animate-css\";\n"
+    }
+  ],
+  "categories": [
+    "AI Elements"
+  ]
+}

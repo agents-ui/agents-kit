@@ -13,6 +13,7 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ""
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   distDir: process.env.NEXT_DIST_DIR || ".next",
+  outputFileTracingRoot: process.cwd(),
   outputFileTracingExcludes: { "*": ["./vendor/**/*"] },
   output: "export" as const, // Enable static HTML export
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],

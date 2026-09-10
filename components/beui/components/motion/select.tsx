@@ -220,7 +220,7 @@ export function SelectTrigger({ className, children }: SelectTriggerProps) {
       disabled={ctx.disabled}
       aria-haspopup="listbox"
       aria-expanded={ctx.open}
-      aria-controls={ctx.listId}
+      aria-controls={ctx.open ? ctx.listId : undefined}
       onClick={() => ctx.setOpen(!ctx.open)}
       // Gooey: the edge facing the panel snaps flat (panel attached) then rounds
       // back once the panel pulls away — the two pinch apart.

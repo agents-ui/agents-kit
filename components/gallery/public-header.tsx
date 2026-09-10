@@ -1,11 +1,12 @@
 "use client"
 
 import { ThemeToggle } from "@/components/app/theme-toggle"
+import { getSitePathname } from "@/lib/utils"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 
 export function PublicHeader() {
-  const pathname = usePathname()
+  const pathname = getSitePathname(usePathname())
   const router = useRouter()
   return (
     <header

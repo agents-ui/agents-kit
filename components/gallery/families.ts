@@ -96,21 +96,26 @@ export type ComponentFamily = {
 export function groupEntries(entries: GalleryEntry[]): ComponentFamily[] {
   const groups = new Map<string, ComponentFamily>()
   for (const entry of entries) {
-    const name = aliases[entry.name] ?? entry.name.replace(/^Agent /, "")
-    if (!groups.has(name))
-      groups.set(name, {
-        id: name
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, "-")
-          .replace(/-$/, ""),
+    const entryName = entry.family ?? entry.name
+    const name = aliases[entryName] ?? entryName.replace(/^Agent /, "")
+    const id = name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "")
+    if (!groups.has(id))
+      groups.set(id, {
+        id,
         name,
         entries: [],
       })
-    groups.get(name)!.entries.push(entry)
+    groups.get(id)!.entries.push(entry)
   }
   const priority = [
     "Beautiful UI",
     "beUI",
+    "AI Elements",
+    "Prompt Kit",
+    "BoardUI",
     "Generative UI",
     "Blocks.so",
     "Effects",

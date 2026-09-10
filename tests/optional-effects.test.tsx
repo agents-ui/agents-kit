@@ -1,14 +1,16 @@
 import assert from "node:assert/strict"
 import test from "node:test"
 import * as ReactRuntime from "react"
-import { createElement } from "react"
+import { createElement, type ElementType } from "react"
 import { renderToStaticMarkup } from "react-dom/server"
-
 import {
   BorderBeam,
   type BorderBeamProps,
 } from "../components/effects/border-beam"
+import { ImageGeneration } from "../components/effects/img-fx"
 import { Liquid } from "../components/effects/liquid-gooey"
+import { MetalFx } from "../components/effects/metal-fx"
+import { MetalFx as MetalFxV1 } from "../components/effects/metal-fx-v1"
 
 Object.assign(globalThis, { React: ReactRuntime })
 
@@ -17,8 +19,8 @@ test("border beam keeps content and applies restrained facade defaults", () => {
     createElement(
       BorderBeam,
       null,
-      createElement("button", { type: "button" }, "Run analysis"),
-    ),
+      createElement("button", { type: "button" }, "Run analysis")
+    )
   )
 
   assert.match(html, /Run analysis/)
@@ -56,7 +58,7 @@ test("liquid morph and move preserve crisp caller content during SSR", () => {
       createElement(
         Liquid.Item,
         { morph: { shape: true, speed: 1.25, bounce: 0.25 } },
-        createElement("span", null, "Research"),
+        createElement("span", null, "Research")
       ),
       createElement(
         Liquid.Item,
@@ -66,13 +68,43 @@ test("liquid morph and move preserve crisp caller content during SSR", () => {
           x: 24,
           y: 0,
         },
-        createElement("span", null, "Review"),
-      ),
-    ),
+        createElement("span", null, "Review")
+      )
+    )
   )
 
   assert.match(html, /Research/)
   assert.match(html, /Review/)
   assert.match(html, /data-gooey-svg=""/)
   assert.match(html, /aria-hidden="true"/)
+})
+
+test("metal and image effects preserve caller content during SSR", () => {
+  const metal = renderToStaticMarkup(
+    createElement(
+      MetalFx as ElementType,
+      { preset: "silver", variant: "circle", paused: true },
+      createElement("button", { type: "button" }, "Run")
+    )
+  )
+  const image = renderToStaticMarkup(
+    createElement(
+      ImageGeneration as ElementType,
+      { preset: "sweep-gradient", paused: true },
+      createElement("div", null, "Generating image")
+    )
+  )
+  const legacyMetal = renderToStaticMarkup(
+    createElement(
+      MetalFxV1 as ElementType,
+      { preset: "gold", variant: "button", paused: true },
+      createElement("button", { type: "button" }, "Legacy")
+    )
+  )
+
+  assert.match(metal, /Run/)
+  assert.match(legacyMetal, /Legacy/)
+  assert.match(image, /Generating image/)
+  assert.match(image, /data-preset="sweep-gradient"/)
+  assert.match(image, /data-paused="true"/)
 })

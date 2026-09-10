@@ -15,7 +15,14 @@ export type ThinkingOrbProps = UpstreamThinkingOrbProps
 export interface ThinkingIndicatorProps
   extends Pick<
     UpstreamThinkingOrbProps,
-    "theme" | "speed" | "color" | "dots" | "dotSize" | "opts" | "frame"
+    | "theme"
+    | "speed"
+    | "color"
+    | "dots"
+    | "dotSize"
+    | "opts"
+    | "frame"
+    | "gravity"
   > {
   state?: ThinkingState
   size?: ThinkingOrbSize
@@ -39,6 +46,17 @@ const labels: Record<ThinkingState, string> = {
 
 export const ThinkingOrb = UpstreamThinkingOrb
 
+export {
+  GRAVITY_DEFAULTS,
+  attachGravity,
+  getGravityConfig,
+  getGravityStatus,
+  resetGravity,
+  setGravityConfig,
+  setGravitySprite,
+} from "./upstream"
+export type { CursorSprite, GravityOptions } from "./upstream"
+
 export function ThinkingIndicator({
   state = "working",
   size = 20,
@@ -53,6 +71,7 @@ export function ThinkingIndicator({
   dotSize,
   opts,
   frame,
+  gravity,
 }: ThinkingIndicatorProps) {
   const text = label ?? labels[state]
   return (
@@ -76,6 +95,7 @@ export function ThinkingIndicator({
           dotSize={dotSize}
           opts={opts}
           frame={frame}
+          gravity={gravity}
         />
       </span>
       <span className="min-w-0">

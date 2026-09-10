@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import React, { useEffect, useState } from "react"
-import { codeToHtml } from "@/lib/shiki"
+import { codeToHtml } from "shiki"
 
 export type CodeBlockProps = {
   children?: React.ReactNode
@@ -47,11 +47,11 @@ function CodeBlockCode({
         return
       }
 
-      const html = await codeToHtml({ code, lang: language })
+      const html = await codeToHtml(code, { lang: language, theme })
       setHighlightedHtml(html)
     }
     highlight()
-  }, [code, language])
+  }, [code, language, theme])
 
   const classNames = cn(
     "w-full overflow-x-auto text-[13px] [&>pre]:px-4 [&>pre]:py-4",

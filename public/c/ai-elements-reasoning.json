@@ -1,0 +1,88 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ai-elements-reasoning",
+  "type": "registry:block",
+  "title": "Ai Elements Reasoning",
+  "description": "reasoning",
+  "dependencies": [
+    "@radix-ui/react-use-controllable-state@1.2.2",
+    "@streamdown/cjk@1.0.2",
+    "@streamdown/code@1.1.0",
+    "@streamdown/math@1.0.2",
+    "@streamdown/mermaid@1.0.2",
+    "clsx@^2.1.1",
+    "katex@0.16.28",
+    "lucide-react@0.577.0",
+    "motion@12.26.2",
+    "radix-ui@1.6.7",
+    "streamdown@2.4.0",
+    "tailwind-merge@^3.0.1",
+    "tw-animate-css@1.3.6"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ai-elements/reasoning.tsx",
+      "target": "@components/ai-elements/reasoning.tsx",
+      "type": "registry:component",
+      "content": "\"use client\"\n\nimport {\n  Collapsible,\n  CollapsibleContent,\n  CollapsibleTrigger,\n} from \"@/components/ai-elements/_ui/collapsible\"\nimport { cn } from \"@/lib/utils\"\nimport { useControllableState } from \"@radix-ui/react-use-controllable-state\"\nimport { cjk } from \"@streamdown/cjk\"\nimport { code } from \"@streamdown/code\"\nimport { math } from \"@streamdown/math\"\nimport { mermaid } from \"@streamdown/mermaid\"\nimport { BrainIcon, ChevronDownIcon } from \"lucide-react\"\nimport type { ComponentProps, ReactNode } from \"react\"\nimport {\n  createContext,\n  memo,\n  useCallback,\n  useContext,\n  useEffect,\n  useMemo,\n  useRef,\n  useState,\n} from \"react\"\nimport { Streamdown } from \"streamdown\"\nimport { Shimmer } from \"./shimmer\"\n\ninterface ReasoningContextValue {\n  isStreaming: boolean\n  isOpen: boolean\n  setIsOpen: (open: boolean) => void\n  duration: number | undefined\n}\n\nconst ReasoningContext = createContext<ReasoningContextValue | null>(null)\n\nexport const useReasoning = () => {\n  const context = useContext(ReasoningContext)\n  if (!context) {\n    throw new Error(\"Reasoning components must be used within Reasoning\")\n  }\n  return context\n}\n\nexport type ReasoningProps = ComponentProps<typeof Collapsible> & {\n  isStreaming?: boolean\n  open?: boolean\n  defaultOpen?: boolean\n  onOpenChange?: (open: boolean) => void\n  duration?: number\n}\n\nconst AUTO_CLOSE_DELAY = 1000\nconst MS_IN_S = 1000\n\nexport const Reasoning = memo(\n  ({\n    className,\n    isStreaming = false,\n    open,\n    defaultOpen,\n    onOpenChange,\n    duration: durationProp,\n    children,\n    ...props\n  }: ReasoningProps) => {\n    const resolvedDefaultOpen = defaultOpen ?? isStreaming\n    // Track if defaultOpen was explicitly set to false (to prevent auto-open)\n    const isExplicitlyClosed = defaultOpen === false\n\n    const [isOpen, setIsOpen] = useControllableState<boolean>({\n      defaultProp: resolvedDefaultOpen,\n      onChange: onOpenChange,\n      prop: open,\n    })\n    const [duration, setDuration] = useControllableState<number | undefined>({\n      defaultProp: undefined,\n      prop: durationProp,\n    })\n\n    const hasEverStreamedRef = useRef(isStreaming)\n    const [hasAutoClosed, setHasAutoClosed] = useState(false)\n    const startTimeRef = useRef<number | null>(null)\n\n    // Track when streaming starts and compute duration\n    useEffect(() => {\n      if (isStreaming) {\n        hasEverStreamedRef.current = true\n        if (startTimeRef.current === null) {\n          startTimeRef.current = Date.now()\n        }\n      } else if (startTimeRef.current !== null) {\n        setDuration(Math.ceil((Date.now() - startTimeRef.current) / MS_IN_S))\n        startTimeRef.current = null\n      }\n    }, [isStreaming, setDuration])\n\n    // Auto-open when streaming starts (unless explicitly closed)\n    useEffect(() => {\n      if (isStreaming && !isOpen && !isExplicitlyClosed) {\n        setIsOpen(true)\n      }\n    }, [isStreaming, isOpen, setIsOpen, isExplicitlyClosed])\n\n    // Auto-close when streaming ends (once only, and only if it ever streamed)\n    useEffect(() => {\n      if (\n        hasEverStreamedRef.current &&\n        !isStreaming &&\n        isOpen &&\n        !hasAutoClosed\n      ) {\n        const timer = setTimeout(() => {\n          setIsOpen(false)\n          setHasAutoClosed(true)\n        }, AUTO_CLOSE_DELAY)\n\n        return () => clearTimeout(timer)\n      }\n    }, [isStreaming, isOpen, setIsOpen, hasAutoClosed])\n\n    const handleOpenChange = useCallback(\n      (newOpen: boolean) => {\n        setIsOpen(newOpen)\n      },\n      [setIsOpen]\n    )\n\n    const contextValue = useMemo(\n      () => ({ duration, isOpen, isStreaming, setIsOpen }),\n      [duration, isOpen, isStreaming, setIsOpen]\n    )\n\n    return (\n      <ReasoningContext.Provider value={contextValue}>\n        <Collapsible\n          className={cn(\"not-prose mb-4\", className)}\n          onOpenChange={handleOpenChange}\n          open={isOpen}\n          {...props}\n        >\n          {children}\n        </Collapsible>\n      </ReasoningContext.Provider>\n    )\n  }\n)\n\nexport type ReasoningTriggerProps = ComponentProps<\n  typeof CollapsibleTrigger\n> & {\n  getThinkingMessage?: (isStreaming: boolean, duration?: number) => ReactNode\n}\n\nconst defaultGetThinkingMessage = (isStreaming: boolean, duration?: number) => {\n  if (isStreaming || duration === 0) {\n    return <Shimmer duration={1}>Thinking...</Shimmer>\n  }\n  if (duration === undefined) {\n    return <p>Thought for a few seconds</p>\n  }\n  return <p>Thought for {duration} seconds</p>\n}\n\nexport const ReasoningTrigger = memo(\n  ({\n    className,\n    children,\n    getThinkingMessage = defaultGetThinkingMessage,\n    ...props\n  }: ReasoningTriggerProps) => {\n    const { isStreaming, isOpen, duration } = useReasoning()\n\n    return (\n      <CollapsibleTrigger\n        className={cn(\n          \"text-muted-foreground hover:text-foreground flex w-full items-center gap-2 text-sm transition-colors\",\n          className\n        )}\n        {...props}\n      >\n        {children ?? (\n          <>\n            <BrainIcon className=\"size-4\" />\n            {getThinkingMessage(isStreaming, duration)}\n            <ChevronDownIcon\n              className={cn(\n                \"size-4 transition-transform\",\n                isOpen ? \"rotate-180\" : \"rotate-0\"\n              )}\n            />\n          </>\n        )}\n      </CollapsibleTrigger>\n    )\n  }\n)\n\nexport type ReasoningContentProps = ComponentProps<\n  typeof CollapsibleContent\n> & {\n  children: string\n}\n\nconst streamdownPlugins = { cjk, code, math, mermaid }\n\nexport const ReasoningContent = memo(\n  ({ className, children, ...props }: ReasoningContentProps) => (\n    <CollapsibleContent\n      className={cn(\n        \"mt-4 text-sm\",\n        \"data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-2 data-[state=open]:slide-in-from-top-2 text-muted-foreground data-[state=closed]:animate-out data-[state=open]:animate-in outline-none\",\n        className\n      )}\n      {...props}\n    >\n      <Streamdown plugins={streamdownPlugins}>{children}</Streamdown>\n    </CollapsibleContent>\n  )\n)\n\nReasoning.displayName = \"Reasoning\"\nReasoningTrigger.displayName = \"ReasoningTrigger\"\nReasoningContent.displayName = \"ReasoningContent\"\n"
+    },
+    {
+      "path": "components/ai-elements/_ui/collapsible.tsx",
+      "target": "@components/ai-elements/_ui/collapsible.tsx",
+      "type": "registry:component",
+      "content": "\"use client\"\n\nimport { Collapsible as CollapsiblePrimitive } from \"radix-ui\"\n\nfunction Collapsible({\n  ...props\n}: React.ComponentProps<typeof CollapsiblePrimitive.Root>) {\n  return <CollapsiblePrimitive.Root data-slot=\"collapsible\" {...props} />\n}\n\nfunction CollapsibleTrigger({\n  ...props\n}: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleTrigger>) {\n  return (\n    <CollapsiblePrimitive.CollapsibleTrigger\n      data-slot=\"collapsible-trigger\"\n      {...props}\n    />\n  )\n}\n\nfunction CollapsibleContent({\n  ...props\n}: React.ComponentProps<typeof CollapsiblePrimitive.CollapsibleContent>) {\n  return (\n    <CollapsiblePrimitive.CollapsibleContent\n      data-slot=\"collapsible-content\"\n      {...props}\n    />\n  )\n}\n\nexport { Collapsible, CollapsibleTrigger, CollapsibleContent }\n"
+    },
+    {
+      "path": "lib/utils.ts",
+      "target": "@lib/utils.ts",
+      "type": "registry:lib",
+      "content": "import { clsx, type ClassValue } from \"clsx\"\nimport { twMerge } from \"tailwind-merge\"\n\nexport function cn(...inputs: ClassValue[]) {\n  return twMerge(clsx(inputs))\n}\n\nexport function getSitePathname(\n  pathname: string,\n  basePath = process.env.NEXT_PUBLIC_BASE_PATH || \"\"\n) {\n  const base = basePath.replace(/\\/+$/, \"\")\n  const path =\n    pathname === base || pathname.startsWith(`${base}/`)\n      ? pathname.slice(base.length)\n      : pathname\n  return path.replace(/\\/+$/, \"\") || \"/\"\n}\n\n/**\n * Get the base URL depending on the current environment\n */\nexport function getBaseUrl() {\n  const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || \"\").replace(/\\/$/, \"\")\n  const withBasePath = (url: string) => {\n    const base = url.replace(/\\/$/, \"\")\n    return basePath && !base.endsWith(basePath) ? `${base}${basePath}` : base\n  }\n  // For server-side rendering, we need to use environment variables\n  if (typeof window === \"undefined\") {\n    // Check for Vercel-specific environment variables\n    // Production URL takes precedence if available (works in all environments)\n    if (process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL) {\n      return withBasePath(\n        `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`\n      )\n    }\n\n    // For branch deployments\n    if (process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL) {\n      return withBasePath(\n        `https://${process.env.NEXT_PUBLIC_VERCEL_BRANCH_URL}`\n      )\n    }\n\n    // For regular deployments\n    if (process.env.NEXT_PUBLIC_VERCEL_URL) {\n      return withBasePath(`https://${process.env.NEXT_PUBLIC_VERCEL_URL}`)\n    }\n\n    // Legacy support\n    if (process.env.VERCEL_URL) {\n      return withBasePath(`https://${process.env.VERCEL_URL}`)\n    }\n\n    // Fall back to explicitly set environment variables\n    if (process.env.NEXT_PUBLIC_BASE_URL) {\n      return withBasePath(process.env.NEXT_PUBLIC_BASE_URL)\n    }\n\n    // Default for development - check PORT env var first\n    const port = process.env.PORT || 3000\n    return withBasePath(\n      process.env.NODE_ENV === \"development\" ? `http://localhost:${port}` : \"\"\n    )\n  }\n\n  // For client-side, we can just use the browser's location\n  return withBasePath(window.location.origin)\n}\n"
+    },
+    {
+      "path": "components/ai-elements/shimmer.tsx",
+      "target": "@components/ai-elements/shimmer.tsx",
+      "type": "registry:component",
+      "content": "\"use client\"\n\nimport { cn } from \"@/lib/utils\"\nimport type { MotionProps } from \"motion/react\"\nimport { motion } from \"motion/react\"\nimport type { CSSProperties, ElementType, JSX } from \"react\"\nimport { memo, useMemo } from \"react\"\n\ntype MotionHTMLProps = MotionProps & Record<string, unknown>\n\n// Cache motion components at module level to avoid creating during render\nconst motionComponentCache = new Map<\n  keyof JSX.IntrinsicElements,\n  React.ComponentType<MotionHTMLProps>\n>()\n\nconst getMotionComponent = (element: keyof JSX.IntrinsicElements) => {\n  let component = motionComponentCache.get(element)\n  if (!component) {\n    component = motion.create(element)\n    motionComponentCache.set(element, component)\n  }\n  return component\n}\n\nexport interface TextShimmerProps {\n  children: string\n  as?: ElementType\n  className?: string\n  duration?: number\n  spread?: number\n}\n\nconst ShimmerComponent = ({\n  children,\n  as: Component = \"p\",\n  className,\n  duration = 2,\n  spread = 2,\n}: TextShimmerProps) => {\n  const MotionComponent = getMotionComponent(\n    Component as keyof JSX.IntrinsicElements\n  )\n\n  const dynamicSpread = useMemo(\n    () => (children?.length ?? 0) * spread,\n    [children, spread]\n  )\n\n  return (\n    <MotionComponent\n      animate={{ backgroundPosition: \"0% center\" }}\n      className={cn(\n        \"relative inline-block bg-[length:250%_100%,auto] bg-clip-text text-transparent\",\n        \"[background-repeat:no-repeat,padding-box] [--bg:linear-gradient(90deg,#0000_calc(50%-var(--spread)),var(--color-background),#0000_calc(50%+var(--spread)))]\",\n        className\n      )}\n      initial={{ backgroundPosition: \"100% center\" }}\n      style={\n        {\n          \"--spread\": `${dynamicSpread}px`,\n          backgroundImage:\n            \"var(--bg), linear-gradient(var(--color-muted-foreground), var(--color-muted-foreground))\",\n        } as CSSProperties\n      }\n      transition={{\n        duration,\n        ease: \"linear\",\n        repeat: Number.POSITIVE_INFINITY,\n      }}\n    >\n      {children}\n    </MotionComponent>\n  )\n}\n\nexport const Shimmer = memo(ShimmerComponent)\n"
+    },
+    {
+      "path": "components/ai-elements/LICENSE",
+      "target": "@components/ai-elements/LICENSE",
+      "type": "registry:file",
+      "content": "Copyright 2023 Vercel, Inc.\n\nLicensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n    http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n"
+    },
+    {
+      "path": "components/ai-elements/SOURCE.json",
+      "target": "@components/ai-elements/SOURCE.json",
+      "type": "registry:file",
+      "content": "{\n  \"name\": \"Vercel AI Elements\",\n  \"repository\": \"https://github.com/vercel/ai-elements\",\n  \"commit\": \"6a9d5b1822ffb10bba4bd97175f01edd7d8651cd\",\n  \"license\": \"Apache-2.0\",\n  \"sourceDirectories\": [\n    \"packages/elements/src\",\n    \"packages/examples/src\",\n    \"packages/shadcn-ui/components/ui\"\n  ],\n  \"changes\": [\"Rewritten local import paths\"]\n}\n"
+    },
+    {
+      "path": "styles/animations.css",
+      "target": "~/styles/animations.css",
+      "type": "registry:file",
+      "content": "@import \"tw-animate-css\";\n"
+    },
+    {
+      "path": "components/ai-elements/markdown.css",
+      "target": "@components/ai-elements/markdown.css",
+      "type": "registry:file",
+      "content": "@import \"streamdown/styles.css\";\n@import \"katex/dist/katex.min.css\";\n\n@source \"../../node_modules/streamdown/dist\";\n@source \"../../node_modules/@streamdown/code/dist\";\n@source \"../../node_modules/@streamdown/cjk/dist\";\n@source \"../../node_modules/@streamdown/math/dist\";\n@source \"../../node_modules/@streamdown/mermaid/dist\";\n"
+    },
+    {
+      "path": "components/ai-elements/_ui/LICENSE",
+      "target": "@components/ai-elements/_ui/LICENSE",
+      "type": "registry:file",
+      "content": "MIT License\n\nCopyright (c) 2023 shadcn\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+    },
+    {
+      "path": "components/ai-elements/_ui/NOTICE.md",
+      "target": "@components/ai-elements/_ui/NOTICE.md",
+      "type": "registry:file",
+      "content": "# shadcn/ui primitives\n\nThese local primitives are derived from shadcn/ui and retain its MIT license.\nThey were copied from the Vercel AI Elements pinned source tree so its public\ncomponents keep their documented variants, states, and styling.\n\nSource: https://github.com/shadcn-ui/ui\n"
+    }
+  ],
+  "categories": [
+    "AI Elements"
+  ]
+}

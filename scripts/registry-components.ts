@@ -93,120 +93,6 @@ export const components: ComponentDefinition[] = [
       "A component for displaying a loading indicator with multiple variants and customizable styling",
     path: path.join(__dirname, "../components/prompt-kit/loader.tsx"),
     registryDependencies: ["button"],
-    tailwind: {
-      config: {
-        theme: {
-          keyframes: {
-            typing: {
-              "0%, 100%": {
-                transform: "translateY(0)",
-                opacity: "0.5",
-              },
-              "50%": {
-                transform: "translateY(-2px)",
-                opacity: "1",
-              },
-            },
-            ["loading-dots"]: {
-              "0%, 100%": {
-                opacity: "0",
-              },
-              "50%": {
-                opacity: "1",
-              },
-            },
-            wave: {
-              "0%, 100%": {
-                transform: "scaleY(1)",
-              },
-              "50%": {
-                transform: "scaleY(0.6)",
-              },
-            },
-            blink: {
-              "0%, 100%": {
-                opacity: "1",
-              },
-              "50%": {
-                opacity: "0",
-              },
-            },
-          },
-          ["text-blink"]: {
-            "0%, 100%": {
-              color: "var(--primary)",
-            },
-            "50%": {
-              color: "var(--muted-foreground)",
-            },
-          },
-          ["bounce-dots"]: {
-            "0%, 100%": {
-              transform: "scale(0.8)",
-              opacity: "0.5",
-            },
-            "50%": {
-              transform: "scale(1.2)",
-              opacity: "1",
-            },
-          },
-          ["thin-pulse"]: {
-            "0%, 100%": {
-              transform: "scale(0.95)",
-              opacity: "0.8",
-            },
-            "50%": {
-              transform: "scale(1.05)",
-              opacity: "0.4",
-            },
-          },
-          ["pulse-dot"]: {
-            "0%, 100%": {
-              transform: "scale(1)",
-              opacity: "0.8",
-            },
-            "50%": {
-              transform: "scale(1.5)",
-              opacity: "1",
-            },
-          },
-          ["shimmer-text"]: {
-            "0%": {
-              backgroundPosition: "150% center",
-            },
-            "100%": {
-              backgroundPosition: "-150% center",
-            },
-          },
-          ["wave-bars"]: {
-            "0%, 100%": {
-              transform: "scaleY(1)",
-              opacity: "0.5",
-            },
-            "50%": {
-              transform: "scaleY(0.6)",
-              opacity: "1",
-            },
-          },
-          ["shimmer"]: {
-            "0%": {
-              backgroundPosition: "200% 50%",
-            },
-            "100%": {
-              backgroundPosition: "-200% 50%",
-            },
-          },
-          ["spinner-fade"]: {
-            "0%": {
-              opacity: "0",
-            },
-            "100%": {
-              opacity: "1",
-            },
-          },
-        },
-      },
-    },
   },
   {
     name: "prompt-suggestion",
@@ -256,5 +142,89 @@ export const components: ComponentDefinition[] = [
       "A component for rendering JSX strings as React components, with support for streaming content and automatic tag completion.",
     path: path.join(__dirname, "../components/prompt-kit/jsx-preview.tsx"),
     dependencies: ["react-jsx-parser"],
+  },
+  {
+    name: "tool",
+    description:
+      "Displays tool call details including input, output, status, and errors. Ideal for visualizing AI tool usage in chat UIs.",
+    path: path.join(__dirname, "../components/prompt-kit/tool.tsx"),
+    dependencies: ["lucide-react"],
+    registryDependencies: ["collapsible", "button"],
+  },
+  {
+    name: "source",
+    description:
+      "Displays website sources used by AI-generated content, showing URL details, titles, and descriptions on hover.",
+    path: path.join(__dirname, "../components/prompt-kit/source.tsx"),
+    dependencies: ["@radix-ui/react-hover-card"],
+    files: [
+      {
+        name: "hover-card.tsx",
+        path: path.join(
+          __dirname,
+          "../components/prompt-kit/_ui/hover-card.tsx"
+        ),
+      },
+    ],
+  },
+  {
+    name: "image",
+    description:
+      "A component for displaying images from base64 or Uint8Array data, with full accessibility and responsive styling. Perfect for AI-generated or user-uploaded images.",
+    path: path.join(__dirname, "../components/prompt-kit/image.tsx"),
+  },
+  {
+    name: "steps",
+    description:
+      "A component for displaying a sequence of operations in a collapsible layout. Each step can include details and an optional vertical bar. Useful for showing AI steps like reasoning traces, tool calls, or process logs.",
+    path: path.join(__dirname, "../components/prompt-kit/steps.tsx"),
+    registryDependencies: ["collapsible"],
+  },
+  {
+    name: "system-message",
+    description:
+      "A banner-style component for surfacing contextual information, warnings, or instructions within AI interfaces.",
+    path: path.join(__dirname, "../components/prompt-kit/system-message.tsx"),
+    registryDependencies: ["button"],
+  },
+  {
+    name: "chain-of-thought",
+    description:
+      "A component for displaying a chain of thought process with collapsible steps and triggers.",
+    path: path.join(__dirname, "../components/prompt-kit/chain-of-thought.tsx"),
+    registryDependencies: ["collapsible"],
+    dependencies: ["lucide-react"],
+  },
+  {
+    name: "text-shimmer",
+    description:
+      "A component for displaying a shimmer effect on text, perfect for loading states or highlighting text.",
+    path: path.join(__dirname, "../components/prompt-kit/text-shimmer.tsx"),
+    tailwind: {
+      config: {
+        theme: {
+          keyframes: {
+            shimmer: {
+              "0%": { backgroundPosition: "200% 50%" },
+              "100%": { backgroundPosition: "-200% 50%" },
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    name: "thinking-bar",
+    description:
+      "A component to display the thinking state of an AI model with optional actions.",
+    path: path.join(__dirname, "../components/prompt-kit/thinking-bar.tsx"),
+    dependencies: ["lucide-react"],
+    registryDependencies: ["text-shimmer"],
+  },
+  {
+    name: "feedback-bar",
+    description: "A component to collect user feedback on AI responses.",
+    path: path.join(__dirname, "../components/prompt-kit/feedback-bar.tsx"),
+    dependencies: ["lucide-react"],
   },
 ]

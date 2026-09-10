@@ -12,6 +12,8 @@ export async function readGallerySources() {
     "components/beautiful-ui",
     "components/beui",
     "components/effects",
+    "components/ai-elements",
+    "components/boardui",
   ]
   const allowed = directories.map(
     (directory) => path.resolve(root, directory) + path.sep

@@ -5,10 +5,11 @@
   "title": "Beui Message",
   "description": "Message",
   "dependencies": [
-    "clsx",
-    "lucide-react",
-    "motion",
-    "tailwind-merge"
+    "clsx@^2.1.1",
+    "lucide-react@0.577.0",
+    "motion@12.26.2",
+    "tailwind-merge@^3.0.1",
+    "tw-animate-css@1.3.6"
   ],
   "registryDependencies": [],
   "files": [
@@ -79,6 +80,12 @@
       "content": "\"use client\";\n\nimport { useMemo, useRef } from \"react\";\n\n/** What a pointerdown recorded, read back by the click that ends its gesture. */\nexport interface TapRecord<S> {\n  /** Which input started the gesture. */\n  pointerType: string;\n  /** What the surface was showing when it started. */\n  state: S;\n}\n\nexport interface TapGesture<S> {\n  /** Record the gesture a pointerdown starts, with the state it starts in. */\n  start: (event: { pointerType: string }, state: S) => void;\n  /** Read the record and clear it. `null` when no pointer is behind this click. */\n  take: () => TapRecord<S> | null;\n  /** Drop the record: this gesture will never spend it on a click. */\n  drop: () => void;\n}\n\n/**\n * The pointer gesture behind a click, recorded where the click cannot report\n * it. A `click` carries no `pointerType` in the engines that matter, so the\n * `pointerdown` before it is the only thing that says which input activated\n * the control — and whether one did at all, since keyboard activation\n * synthesizes a click with no pointer behind it.\n *\n * State goes in with the record because a click reports that no better: a\n * browser that focuses a control on contact can open the very panel the tap\n * was meant to open, and reading \"is it open\" at click time then undoes it.\n * What the gesture started against is what it acts on.\n *\n * The record is spent by one click and dropped by everything else, because a\n * record that outlives its gesture is worse than none:\n *\n * - A scroll or an OS gesture takes the touch away — `pointercancel`, no click\n *   ever — and the finger would sit in the record until some later click.\n * - That later click is often `Enter` on a keyboard, which arrives with no\n *   pointerdown of its own and would inherit the abandoned finger. A keydown\n *   is the start of a keyboard activation and never part of a tap, so it drops\n *   the record too.\n *\n * Both ends have to be wired by the surface: `drop` on `onPointerCancel` and\n * on `onKeyDown`.\n */\nexport function useTapGesture<S>(): TapGesture<S> {\n  const record = useRef<TapRecord<S> | null>(null);\n\n  return useMemo(\n    () => ({\n      start: (event, state) => {\n        record.current = { pointerType: event.pointerType, state };\n      },\n      take: () => {\n        const spent = record.current;\n        record.current = null;\n        return spent;\n      },\n      drop: () => {\n        record.current = null;\n      },\n    }),\n    [],\n  );\n}\n"
     },
     {
+      "path": "styles/animations.css",
+      "target": "~/styles/animations.css",
+      "type": "registry:file",
+      "content": "@import \"tw-animate-css\";\n"
+    },
+    {
       "path": "components/beui/LICENSE",
       "target": "@components/beui/LICENSE",
       "type": "registry:file",
@@ -88,7 +95,7 @@
       "path": "components/beui/SOURCE.json",
       "target": "@components/beui/SOURCE.json",
       "type": "registry:file",
-      "content": "{\n  \"name\": \"beUI AI Agents\",\n  \"upstream\": \"https://github.com/starc007/ui-components\",\n  \"revision\": \"04d6f76e9e67e35cded996b1b8d08a5ddcebc13a\",\n  \"revisionUrl\": \"https://github.com/starc007/ui-components/tree/04d6f76e9e67e35cded996b1b8d08a5ddcebc13a\",\n  \"license\": \"MIT\",\n  \"scope\": \"Exact public dependency closure for the 19 AI agent registry slugs plus the public loader variants used by the loading-state gallery.\",\n  \"adaptation\": \"Import aliases point at the isolated components/beui tree so the public source remains portable in Agents Kit. Gallery fixtures are authored separately. BoardUI remains the host library control foundation; BeUI motion helpers are retained only where required by these AI component behaviors.\"\n}\n"
+      "content": "{\n  \"name\": \"beUI AI Agents\",\n  \"upstream\": \"https://github.com/starc007/ui-components\",\n  \"revision\": \"b64c092b63b99c7340376b522325ea309156ba00\",\n  \"revisionUrl\": \"https://github.com/starc007/ui-components/tree/b64c092b63b99c7340376b522325ea309156ba00\",\n  \"license\": \"MIT\",\n  \"scope\": \"Exact public dependency closure for all 16 AI agent registry entries and all 28 documented demos at the pinned revision.\",\n  \"adaptation\": \"Import aliases point at the isolated components/beui tree so the public source remains portable in Agents Kit. Gallery fixtures preserve the upstream interactions and motion while using local Fieldwork copy.\"\n}\n"
     }
   ],
   "categories": [

@@ -1,0 +1,8 @@
+@import "streamdown/styles.css";
+@import "katex/dist/katex.min.css";
+
+@source "../../node_modules/streamdown/dist";
+@source "../../node_modules/@streamdown/code/dist";
+@source "../../node_modules/@streamdown/cjk/dist";
+@source "../../node_modules/@streamdown/math/dist";
+@source "../../node_modules/@streamdown/mermaid/dist";

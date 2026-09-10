@@ -5,9 +5,11 @@
   "title": "Workspace Composer",
   "description": "workspace composer",
   "dependencies": [
-    "lucide-react",
-    "react-aria-components",
-    "tailwind-merge"
+    "lucide-react@0.577.0",
+    "react-aria-components@^1.21.1",
+    "tailwind-merge@^3.0.1",
+    "tailwindcss@^4.1.7",
+    "tw-animate-css@1.3.6"
   ],
   "registryDependencies": [],
   "files": [
@@ -84,10 +86,28 @@
       "content": "MIT License\n\nCopyright (c) 2026 Mertcan Dundar Esmergul (BoardUI)\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
     },
     {
+      "path": "components/boardui/SOURCE.json",
+      "target": "@components/boardui/SOURCE.json",
+      "type": "registry:file",
+      "content": "{\n  \"source\": \"https://github.com/BoardUI/boardui\",\n  \"revision\": \"3e76e282614b147a34b9b2a510e31b97d58a3909\",\n  \"license\": \"MIT\",\n  \"scope\": [\n    \"components/application/agent-chat\",\n    \"components/application/agent-thinking\",\n    \"components/application/composer-loader\",\n    \"components/base\",\n    \"components/foundations\",\n    \"styles\",\n    \"utils\"\n  ],\n  \"adaptations\": [\n    \"Repository import paths point to components/boardui\",\n    \"Neutral primary and ghost actions, restrained feedback, and readable agent surface tokens\",\n    \"Focusable native actions support React Aria tooltip composition\",\n    \"Icon-only child SVG fallback preserves explicit leadingIcon precedence\",\n    \"The Agent Chat starter always uses the bundled local demo transport; API probing, provider keys, dashboard navigation, and Pro promotion are omitted\",\n    \"Agent Chat imports resolve through components/boardui and its account logout action closes the local menu instead of navigating to a starter-only route\",\n    \"The gallery chat uses a responsive history drawer below xl; selecting a thread, clicking outside, or pressing Escape closes it\",\n    \"The prior pinned base components are unchanged at the current revision\"\n  ]\n}\n"
+    },
+    {
       "path": "styles/agents.css",
       "target": "~/styles/agents.css",
       "type": "registry:file",
       "content": ":root {\n  --color-background-full: #fafafa;\n  --color-background-primary-default: #ffffff;\n  --color-background-secondary-default: #f4f4f4;\n  --color-background-primary-hover: #f0f0f0;\n  --color-text-primary: #242424;\n  --color-text-secondary: #666666;\n  --color-text-tertiary: #767676;\n  --color-border-button-default: #dedede;\n  --color-separator-border: #e5e5e5;\n  --font-mono-source: var(--font-jetbrains-mono);\n}\n\n.dark {\n  --color-background-full: #141414;\n  --color-background-primary-default: #1c1c1c;\n  --color-background-secondary-default: #181818;\n  --color-background-primary-hover: #252525;\n  --color-text-primary: #ededed;\n  --color-text-secondary: #aaaaaa;\n  --color-text-tertiary: #929292;\n  --color-border-button-default: #363636;\n  --color-separator-border: #303030;\n}\n\n:root,\n.dark {\n  --color-border-focus-ring: var(--color-text-primary);\n  --color-tab-count-selected-background: var(--color-background-secondary-default);\n  --background: var(--color-background-full);\n  --foreground: var(--color-text-primary);\n  --card: var(--color-background-primary-default);\n  --card-foreground: var(--color-text-primary);\n  --popover: var(--color-background-primary-default);\n  --popover-foreground: var(--color-text-primary);\n  --primary: var(--color-text-primary);\n  --primary-foreground: var(--color-background-primary-default);\n  --secondary: var(--color-background-secondary-default);\n  --secondary-foreground: var(--color-text-primary);\n  --muted: var(--color-background-secondary-default);\n  --muted-foreground: var(--color-text-secondary);\n  --accent: var(--color-background-primary-hover);\n  --accent-foreground: var(--color-text-primary);\n  --border: var(--color-separator-border);\n  --input: var(--color-border-button-default);\n  --sidebar: var(--color-background-full);\n  --sidebar-foreground: var(--color-text-primary);\n  --sidebar-accent: var(--color-background-secondary-default);\n  --sidebar-border: var(--color-separator-border);\n}\n\n@media (prefers-reduced-motion: reduce) {\n  *,\n  *::before,\n  *::after {\n    animation-duration: 0.01ms !important;\n    animation-iteration-count: 1 !important;\n    transition-duration: 0.01ms !important;\n    scroll-behavior: auto !important;\n  }\n}\n\n/* Result layouts respond to the card, including compact grid and expanded views. */\n.generated-result {\n  container-type: inline-size;\n  container-name: result;\n}\n@container result (min-width: 440px) {\n  .result-comparison-grid {\n    grid-template-columns: repeat(2, minmax(0, 1fr));\n  }\n}\n"
+    },
+    {
+      "path": "styles/animations.css",
+      "target": "~/styles/animations.css",
+      "type": "registry:file",
+      "content": "@import \"tw-animate-css\";\n"
+    },
+    {
+      "path": "components/blocks-so/SOURCE.json",
+      "target": "@components/blocks-so/SOURCE.json",
+      "type": "registry:file",
+      "content": "{\n  \"name\": \"Blocks.so adapted compositions\",\n  \"upstream\": \"https://github.com/ephraimduncan/blocks\",\n  \"revision\": \"e4fdf6c4b31bb95ddbccf2c919478672bc61226b\",\n  \"license\": \"MIT\",\n  \"sourceFiles\": [\n    \"content/components/ai/ai-01.tsx\",\n    \"content/components/ai/ai-02.tsx\",\n    \"content/components/ai/ai-03.tsx\",\n    \"content/components/ai/ai-04.tsx\",\n    \"content/components/ai/ai-05.tsx\",\n    \"components/ai-elements/conversation.tsx\",\n    \"components/ai-elements/message.tsx\",\n    \"components/ai-elements/prompt-input.tsx\",\n    \"content/components/file-upload/file-upload-05.tsx\",\n    \"content/components/onboarding/onboarding-03.tsx\",\n    \"content/components/tables/table-02.tsx\"\n  ],\n  \"adaptation\": \"Public AI blocks retain upstream layouts, controls, interaction states, transitions, attachment handling, and response animation. Import paths, host theme tokens, reusable callbacks, and demo fixture copy were adapted for Agents Kit. Existing application compositions remain controlled adaptations.\"\n}\n"
     },
     {
       "path": "components/blocks-so/LICENSE.md",
