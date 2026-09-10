@@ -6724,12 +6724,12 @@ import type { TabListProps as AriaTabListProps, TabPanelProps as AriaTabPanelPro
  * Figma source: Board UI → Tab (node 3793:2942).
  *
  * Underline tabs. The tab strip sits on a 1px border/button/default baseline;
- * the active tab paints a 2px color/blue/600 underline over it.
+ * the active tab paints a 2px foreground underline over it.
  *   tab       px 10, py 8, gap 10 (label ↔ count), Body 1 (14/20)
- *     active     text color/blue/600, Medium weight, 2px blue underline
+ *     active     text/primary, Medium weight, 2px foreground underline
  *     inactive   text/primary, Regular weight, transparent underline
  *   count     radius/sm, px 4, py 1, Caption 1/Medium (12/16)
- *     active     bg color/blue/100, text color/blue/600
+ *     active     selected count background, text/primary
  *     inactive   bg black/10 @ 50% opacity, text/primary
  *   icon      optional 16px leading glyph, inherits the label color
  *

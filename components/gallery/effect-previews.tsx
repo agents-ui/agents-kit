@@ -10,6 +10,7 @@ import { useTheme } from "next-themes"
 import * as React from "react"
 
 export function BorderBeamPreview() {
+  const reduced = useReducedMotion()
   const [active, setActive] = React.useState(true)
   const [style, setStyle] = React.useState<"line" | "md" | "pulse-inner">(
     "line"
@@ -19,11 +20,11 @@ export function BorderBeamPreview() {
     <div className="mx-auto w-full max-w-[440px]">
       <div className="flex min-h-52 items-center justify-center p-3">
         <BorderBeam
-          active={active}
+          active={active && !reduced}
           size={style}
           theme={resolvedTheme === "dark" ? "dark" : "light"}
-          colorVariant="mono"
-          strength={0.6}
+          colorVariant="ocean"
+          strength={0.9}
           className="w-full"
         >
           <div className="border-separator-border bg-background-primary-default rounded-xl border p-4">
@@ -36,7 +37,7 @@ export function BorderBeamPreview() {
                 Preparing your brief
               </span>
               <span className="text-text-secondary text-xs">
-                {active ? "Working" : "Paused"}
+                {reduced ? "Motion reduced" : active ? "Working" : "Paused"}
               </span>
             </div>
             <p className="text-text-secondary mt-3 text-xs leading-5">
@@ -63,8 +64,17 @@ export function BorderBeamPreview() {
             {label}
           </Button>
         ))}
-        <Button size="xs" variant="ghost" onClick={() => setActive(!active)}>
-          {active ? "Pause effect" : "Resume effect"}
+        <Button
+          size="xs"
+          variant="ghost"
+          disabled={Boolean(reduced)}
+          onClick={() => setActive(!active)}
+        >
+          {reduced
+            ? "Motion reduced"
+            : active
+              ? "Pause effect"
+              : "Resume effect"}
         </Button>
       </div>
     </div>

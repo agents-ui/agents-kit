@@ -25,6 +25,8 @@
 
 :root,
 .dark {
+  --color-border-focus-ring: var(--color-text-primary);
+  --color-tab-count-selected-background: var(--color-background-secondary-default);
   --background: var(--color-background-full);
   --foreground: var(--color-text-primary);
   --card: var(--color-background-primary-default);

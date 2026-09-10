@@ -79,7 +79,7 @@ export function SetupChecklist({
                 disabled={step.disabled}
                 onClick={() => onStepComplete?.(step.id, !step.completed)}
                 aria-label={`${step.completed ? "Mark incomplete" : "Mark complete"}: ${step.title}`}
-                className="focus:ring-border-focus-ring mt-0.5 flex size-5 items-center justify-center rounded-full outline-none focus:ring-2"
+                className="focus-visible:ring-border-focus-ring focus-visible:ring-offset-background mt-0.5 flex size-6 items-center justify-center rounded-full outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
               >
                 {step.completed ? (
                   <Check className="size-4 text-green-600" />
@@ -91,7 +91,7 @@ export function SetupChecklist({
                 type="button"
                 disabled={step.disabled}
                 onClick={() => onSelectStep?.(step.id)}
-                className="focus:ring-border-focus-ring text-left outline-none focus:ring-2"
+                className="focus-visible:ring-border-focus-ring focus-visible:ring-offset-background rounded-md text-left outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
               >
                 <span
                   className={cx(

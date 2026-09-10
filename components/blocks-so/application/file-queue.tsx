@@ -79,7 +79,7 @@ export function FileQueue({
           if (!disabled) onFilesSelected(Array.from(e.dataTransfer.files))
         }}
         onDragOver={(e) => e.preventDefault()}
-        className="border-separator-border text-text-secondary hover:bg-background-secondary-default focus:ring-border-focus-ring mt-4 flex min-h-28 w-full items-center justify-center gap-3 rounded-lg border border-dashed px-5 text-sm outline-none focus:ring-2 disabled:opacity-50"
+        className="border-separator-border text-text-secondary hover:bg-background-secondary-default focus-visible:ring-border-focus-ring focus-visible:ring-offset-background mt-4 flex min-h-28 w-full items-center justify-center gap-3 rounded-lg border border-dashed px-5 text-sm outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50"
       >
         <Upload className="size-5" />
         <span>Drop files here or choose files</span>

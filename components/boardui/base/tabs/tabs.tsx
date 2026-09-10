@@ -22,12 +22,12 @@ const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffec
  * Figma source: Board UI → Tab (node 3793:2942).
  *
  * Underline tabs. The tab strip sits on a 1px border/button/default baseline;
- * the active tab paints a 2px color/blue/600 underline over it.
+ * the active tab paints a 2px foreground underline over it.
  *   tab       px 10, py 8, gap 10 (label ↔ count), Body 1 (14/20)
- *     active     text color/blue/600, Medium weight, 2px blue underline
+ *     active     text/primary, Medium weight, 2px foreground underline
  *     inactive   text/primary, Regular weight, transparent underline
  *   count     radius/sm, px 4, py 1, Caption 1/Medium (12/16)
- *     active     bg color/blue/100, text color/blue/600
+ *     active     selected count background, text/primary
  *     inactive   bg black/10 @ 50% opacity, text/primary
  *   icon      optional 16px leading glyph, inherits the label color
  *
@@ -106,7 +106,7 @@ export function TabList<T extends object>({ className, ref, ...props }: TabListP
       {underline && (
         <span
           aria-hidden
-          className="pointer-events-none absolute bottom-0 left-0 h-0.5 bg-accent-600 transition-[transform,width] duration-200 ease"
+          className="pointer-events-none absolute bottom-0 left-0 h-0.5 bg-text-primary transition-[transform,width] duration-200 ease"
           style={{
             transform: `translateX(${underline.left}px)`,
             width: underline.width,
@@ -147,7 +147,7 @@ export function Tab({ className, children, icon: Icon, count, ref, ...props }: T
             className={cx(
               "inline-flex items-center gap-1.5",
               isSelected
-                ? "text-body-medium text-accent-600"
+                ? "text-body-medium text-text-primary"
                 : "text-body-regular text-text-primary",
             )}
           >
@@ -159,7 +159,7 @@ export function Tab({ className, children, icon: Icon, count, ref, ...props }: T
               className={cx(
                 "inline-flex items-center justify-center rounded-sm px-1 py-px text-caption-1-medium whitespace-nowrap",
                 isSelected
-                  ? "bg-tab-count-selected-background text-accent-600"
+                  ? "bg-tab-count-selected-background text-text-primary"
                   : "bg-black/10 text-text-primary opacity-50",
               )}
             >
