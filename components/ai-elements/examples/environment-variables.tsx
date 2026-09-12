@@ -30,7 +30,7 @@ const handleCopy = () => {
 }
 
 const Example = () => (
-  <EnvironmentVariables defaultShowValues={false}>
+  <EnvironmentVariables className="w-full min-w-0 max-w-2xl" defaultShowValues={false}>
     <EnvironmentVariablesHeader>
       <EnvironmentVariablesTitle />
       <EnvironmentVariablesToggle />

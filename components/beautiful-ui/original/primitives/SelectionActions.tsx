@@ -37,6 +37,34 @@ const PICKED =
   "Churn it first thing Saturday so the batch has time to firm up before the afternoon rush.";
 const REWRITE =
   "Churn pistachio first thing Saturday so the batch has time to fully firm before the afternoon rush.";
+const TOOLBAR_GUTTER = 10;
+
+export function isCompactToolbar(hostWidth: number) {
+  return hostWidth < 390;
+}
+
+export function clampToolbarCenter(
+  desiredX: number,
+  toolbarWidth: number,
+  hostLeft: number,
+  hostWidth: number,
+  viewportWidth: number,
+) {
+  const halfWidth = toolbarWidth / 2;
+  const viewportLeft = TOOLBAR_GUTTER;
+  const viewportRight = viewportWidth - TOOLBAR_GUTTER;
+  const localLeft = Math.max(hostLeft, viewportLeft);
+  const localRight = Math.min(hostLeft + hostWidth, viewportRight);
+  const fitsLocally = localRight - localLeft >= toolbarWidth;
+  const left = fitsLocally ? localLeft : viewportLeft;
+  const right = fitsLocally ? localRight : viewportRight;
+  const center = Math.min(
+    Math.max(hostLeft + desiredX, left + halfWidth),
+    right - halfWidth,
+  );
+
+  return Math.round(center - hostLeft);
+}
 
 /* The passage: lead-in text, the selected `original`, and the streamed `rewrite`. */
 export type SelectionText = {
@@ -155,6 +183,7 @@ export default function SelectionActions({
   const [expanded, setExpanded] = useState(false);
   const [anchor, setAnchor] = useState({ x: 0, y: 0 });
   const [positioned, setPositioned] = useState(false);
+  const [compact, setCompact] = useState(false);
 
   const hostRef = useRef<HTMLDivElement>(null);
   const selectionRef = useRef<HTMLSpanElement>(null);
@@ -192,11 +221,22 @@ export default function SelectionActions({
       if (!lastLine) return;
 
       const hostBounds = host.getBoundingClientRect();
+      const toolbarWidth = barRef.current?.getBoundingClientRect().width ?? 0;
+      const nextCompact = isCompactToolbar(hostBounds.width);
       const next = {
-        x: Math.round(bounds.left - hostBounds.left + bounds.width / 2),
+        x: nextCompact
+          ? 0
+          : clampToolbarCenter(
+              bounds.left - hostBounds.left + bounds.width / 2,
+              toolbarWidth,
+              hostBounds.left,
+              hostBounds.width,
+              window.innerWidth,
+            ),
         y: Math.round(lastLine.bottom - hostBounds.top + 8),
       };
 
+      setCompact(nextCompact);
       setAnchor((current) =>
         current.x === next.x && current.y === next.y ? current : next,
       );
@@ -213,6 +253,7 @@ export default function SelectionActions({
     if (!host) return;
     const observer = new ResizeObserver(place);
     observer.observe(host);
+    if (barRef.current) observer.observe(barRef.current);
     window.addEventListener("resize", place);
     return () => {
       observer.disconnect();
@@ -232,6 +273,13 @@ export default function SelectionActions({
     const nextWidth = Math.ceil(content.getBoundingClientRect().width) + 8;
     const previousWidth =
       lastWidthRef.current || Math.ceil(bar.getBoundingClientRect().width);
+
+    if (compact) {
+      widthAnimationRef.current?.cancel();
+      lastWidthRef.current = Math.ceil(bar.getBoundingClientRect().width);
+      previousModeRef.current = mode;
+      return;
+    }
 
     if (
       previousModeRef.current !== mode &&
@@ -258,7 +306,7 @@ export default function SelectionActions({
     }
 
     previousModeRef.current = mode;
-  }, [mode]);
+  }, [compact, mode]);
 
   useEffect(() => {
     const content = contentRef.current;
@@ -302,7 +350,10 @@ export default function SelectionActions({
 
   return (
     <div className="w-full max-w-[460px]">
-      <div ref={hostRef} className="relative select-none pb-12">
+      <div
+        ref={hostRef}
+        className={`relative select-none ${compact ? (expanded ? "pb-28" : "pb-24") : "pb-12"}`}
+      >
         <p className="text-[13px] leading-relaxed text-ink">
           {passage.lead}
           <span
@@ -326,7 +377,10 @@ export default function SelectionActions({
         <div
           className="absolute top-0 left-0 z-10"
           style={{
-            transform: `translate3d(${anchor.x}px, ${anchor.y}px, 0) translateX(-50%)`,
+            width: compact ? "100%" : undefined,
+            transform: compact
+              ? `translate3d(0, ${anchor.y}px, 0)`
+              : `translate3d(${anchor.x}px, ${anchor.y}px, 0) translateX(-50%)`,
             transition:
               "transform 320ms cubic-bezier(0.77,0,0.175,1), opacity 180ms ease-out",
             opacity: visible ? 1 : 0,
@@ -338,10 +392,14 @@ export default function SelectionActions({
               resolve to a 14px radius, preserving the concentric curve. */}
           <div
             ref={barRef}
-            className="flex h-9 w-fit max-w-[calc(100vw-48px)] items-center justify-center gap-0.5 overflow-hidden rounded-full bg-surface p-1 font-sans font-normal text-ink shadow-overlay"
+            className={`flex items-center justify-center gap-0.5 overflow-hidden bg-surface p-1 font-sans font-normal text-ink shadow-overlay ${
+              compact
+                ? "h-auto w-full max-w-none rounded-card"
+                : "h-9 w-fit max-w-[calc(100vw-20px)] rounded-full"
+            }`}
             style={{
               width:
-                mode === "idle" && hasPrompt && typingWidth
+                !compact && mode === "idle" && hasPrompt && typingWidth
                   ? typingWidth
                   : undefined,
               ...(visible
@@ -354,10 +412,14 @@ export default function SelectionActions({
           >
             <div
               ref={contentRef}
-              className="flex w-fit shrink-0 items-center justify-center gap-0.5"
+              className={
+                compact && mode === "idle"
+                  ? "grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-0.5"
+                  : "flex w-fit shrink-0 items-center justify-center gap-0.5"
+              }
               style={{
                 width:
-                  mode === "idle" && hasPrompt && typingWidth
+                  !compact && mode === "idle" && hasPrompt && typingWidth
                     ? typingWidth - 8
                     : undefined,
               }}
@@ -407,23 +469,33 @@ export default function SelectionActions({
             {mode === "idle" && (
               <>
                 <div
-                  className="flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,transform] duration-400"
+                  className={`flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,transform] duration-400 ${
+                    compact ? "col-start-1 row-start-1 w-full" : ""
+                  }`}
                   style={{
-                    maxWidth: expanded
-                      ? 0
-                      : hasPrompt && typingWidth
-                        ? typingWidth - 40
-                        : 145,
+                    display: compact && expanded ? "none" : undefined,
+                    maxWidth: compact
+                      ? expanded
+                        ? 0
+                        : "none"
+                      : expanded
+                        ? 0
+                        : hasPrompt && typingWidth
+                          ? typingWidth - 40
+                          : 145,
                     opacity: expanded ? 0 : 1,
                     transform: expanded ? "translateX(-8px)" : "translateX(0)",
                     transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)",
                   }}
                 >
                   <form
-                    className="flex h-7 shrink-0 items-center transition-[width] duration-400"
+                    className={`flex h-7 shrink-0 items-center transition-[width] duration-400 ${compact ? "w-full" : ""}`}
                     style={{
-                      width:
-                        hasPrompt && typingWidth ? typingWidth - 40 : 145,
+                      width: compact
+                        ? undefined
+                        : hasPrompt && typingWidth
+                          ? typingWidth - 40
+                          : 145,
                       transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)",
                     }}
                     onSubmit={(event) => {
@@ -455,15 +527,27 @@ export default function SelectionActions({
                 </div>
 
                 <div
-                  className="flex min-w-0 items-center gap-0.5 overflow-hidden transition-[max-width,opacity,transform] duration-400"
+                  className={`flex min-w-0 items-center gap-0.5 overflow-hidden transition-[max-width,opacity,transform] duration-400 ${
+                    compact
+                      ? expanded
+                        ? "col-span-2 row-start-1 w-full flex-wrap justify-center"
+                        : "col-span-2 row-start-2 w-full flex-wrap justify-center border-t border-line pt-1"
+                      : ""
+                  }`}
                   style={{
-                    maxWidth: hasPrompt ? 0 : expanded ? 462 : 224,
+                    maxWidth: hasPrompt
+                      ? 0
+                      : compact
+                        ? "none"
+                        : expanded
+                          ? 462
+                          : 224,
                     opacity: hasPrompt ? 0 : 1,
                     transform: hasPrompt ? "translateX(-8px)" : "translateX(0)",
                     transitionTimingFunction: "cubic-bezier(0.23,1,0.32,1)",
                   }}
                 >
-                  {!expanded && (
+                  {!expanded && !compact && (
                     <span className="mx-1 h-4 w-px shrink-0 bg-line-strong" />
                   )}
                   {actions.primary.map((item) => (
@@ -483,6 +567,7 @@ export default function SelectionActions({
                   <div
                     className="flex min-w-0 items-center gap-0.5 overflow-hidden transition-[max-width,opacity,margin] duration-400"
                     style={{
+                      display: compact && expanded ? "contents" : undefined,
                       maxWidth: expanded ? 262 : 0,
                       opacity: expanded ? 1 : 0,
                       marginLeft: expanded ? 2 : 0,
@@ -525,8 +610,11 @@ export default function SelectionActions({
                 </div>
 
                 <div
-                  className="flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,transform] duration-400"
+                  className={`flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,transform] duration-400 ${
+                    compact ? "col-start-2 row-start-1" : ""
+                  }`}
                   style={{
+                    display: compact && expanded ? "none" : undefined,
                     maxWidth: hasPrompt ? 30 : 0,
                     opacity: hasPrompt ? 1 : 0,
                     transform: hasPrompt ? "scale(1)" : "scale(0.88)",

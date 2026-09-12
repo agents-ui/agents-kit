@@ -117,17 +117,17 @@ export function BlocksAi04({ className, onAction, onFilesChange, onSubmit }: Blo
   return (
     <div className={cn("mx-auto flex w-full flex-col gap-4", className)} data-blocks-ai="ai-04">
       <div>
-        <h2 className="text-balance text-center text-[29px] font-semibold tracking-tighter sm:text-[32px] md:text-[46px]">
+        <h2 className="text-balance text-center text-xl font-medium tracking-tight">
           Collect. Compare. Report.
         </h2>
-        <p className="mt-1 text-balance text-center text-lg text-muted-foreground">
+        <p className="mt-1 text-balance text-center text-sm text-muted-foreground">
           Turn field evidence into a working brief.
         </p>
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-2xl flex-col">
         <form
-          className="relative overflow-visible rounded-xl border p-2 transition-[border-color,box-shadow] duration-200 focus-within:border-ring focus-within:shadow-sm"
+          className="relative overflow-visible rounded-xl border border-input bg-card p-2 shadow-sm transition-[border-color,box-shadow] duration-200 focus-within:border-ring"
           onDragLeave={(event) => {
             event.preventDefault()
             setDragOver(false)

@@ -238,7 +238,7 @@ export function AIElementsPreview({
 }) {
   const Preview = previews[preview]
   return (
-    <div className="ai-elements-preview bg-background text-foreground relative isolate flex min-h-64 w-full items-center justify-start overflow-x-auto rounded-xl p-5 sm:justify-center">
+    <div className="ai-elements-preview bg-background text-foreground relative isolate flex w-full items-center justify-center-safe overflow-x-auto p-2 sm:p-3">
       <Suspense
         fallback={
           <p className="text-muted-foreground text-sm">Loading preview</p>

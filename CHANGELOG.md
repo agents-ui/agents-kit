@@ -5,7 +5,7 @@ This file records user-visible changes to Agents Kit.
 ## 0.2.0
 
 Date: 2026-09-05
-Updated: 2026-09-11
+Updated: 2026-09-12
 
 The generative UI release keeps v0.1 source paths and registry slugs available.
 
@@ -33,6 +33,13 @@ This release responds to a change in product shape: models increasingly return s
 - A focused v0.2 component catalog, a generative UI showcase, and a v0.1 archive gallery.
 
 ### Changed
+
+- Compile the shared Beautiful UI theme through Tailwind so surfaces, muted text, fonts, and corner utilities render correctly.
+- Align collection typography, card/control radii, gallery spacing, and narrow-screen navigation; document the shared rules in `DESIGN.md`.
+- Fix mobile Plan, environment-variable, audio-player, selection-toolbar, and tool-approval layouts.
+- Restore readable dark-mode code, Markdown, and status text, and replace the unavailable Web Preview page with a local fixture.
+- Give the file-attachment composer a distinct surface and input border in both themes.
+- Include the shared design foundation and notices in every registry entry, and refresh the landing-page screenshot.
 
 - Regenerate `llms.txt` and `llms-full.txt` from the current registry, guides, and TypeScript APIs during builds.
 - Configure component discovery through the current shadcn MCP server and the `@agents-kit` registry namespace.

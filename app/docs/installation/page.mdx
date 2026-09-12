@@ -31,18 +31,20 @@ npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/agent-card.json
 
 ## Load the styles
 
-For components that include the shared theme, import the copied styles once from your application's global stylesheet. The paths below assume that stylesheet is at the project root and the `components` alias resolves to a root-level directory. Adjust relative paths to the files the CLI installed. For example, a stylesheet in `app/` with root-level components uses `../components/` and `../styles/`.
+Every registry entry includes the shared Agents Kit typography and semantic theme. Import its copied styles once from your application's global stylesheet. The paths below assume that stylesheet is at the project root and the `components` alias resolves to a root-level directory. Adjust relative paths to the files the CLI installed. For example, a stylesheet in `app/` with root-level components uses `../components/` and `../styles/`.
 
 ```css
 @import "./components/boardui/styles/globals.css";
 @import "./styles/agents.css";
 ```
 
-The shared stylesheet includes Tailwind CSS, the theme, and typography tokens. Keep your application's existing Tailwind and shadcn setup, and avoid importing Tailwind twice. Components without these files use the existing shadcn theme. The registry installs CSS files; it does not automatically add these imports to your stylesheet.
+BoardUI's shared stylesheet includes Tailwind CSS, the base theme, and typography tokens. Import it when the registry entry includes BoardUI controls; otherwise retain your existing Tailwind and shadcn setup. Import `styles/agents.css` after the base styles. Avoid importing Tailwind twice. The registry installs CSS files; it does not automatically add these imports to your stylesheet.
 
 If you keep copied components outside Tailwind's scanned source directories, add an appropriate `@source` directive to your stylesheet.
 
-Original Beautiful UI entries use the `beautiful-original-` prefix. Import their copied `components/beautiful-ui/original/beautiful-ui.css` once and wrap them in an ancestor with `className="beautiful-ui-scope"`. The host's `.dark` class selects the dark palette. The earlier `beautiful-` adapters remain available at their existing paths.
+Original Beautiful UI entries use the `beautiful-original-` prefix. Import their copied `components/beautiful-ui/original/beautiful-ui.css` through the same global CSS file that imports Tailwind, then wrap them in an ancestor with `className="beautiful-ui-scope"`. Load this stylesheet before `styles/agents.css`. Do not load it from a JavaScript component: its `@theme` definitions must participate in Tailwind compilation. The host's `.dark` class selects the dark palette. The earlier `beautiful-` adapters remain available at their existing paths.
+
+Load Inter and JetBrains Mono with your framework or font provider, and expose them as `--font-inter` and `--font-jetbrains-mono` on the application root. The shared UI baseline is 14px with a 1.5 line height, tight tracking, and Inter's `cv11` / `ss01` features. Mobile form controls use 16px. Card corners, borders, and muted text follow the same semantic tokens across collections. The [design contract](https://github.com/agents-ui/agents-kit/blob/main/DESIGN.md) records the complete typography, spacing, shape, and accessibility rules.
 
 Collections that ship `styles/animations.css` need that import for their entrance, exit, and disclosure animations. Prompt Kit also ships its loader keyframes; import the copied stylesheet once:
 

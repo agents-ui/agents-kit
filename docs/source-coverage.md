@@ -19,7 +19,7 @@ The install registry includes local imports recursively, npm dependencies with c
 - Existing public component paths and registry names remain available. Full Beautiful UI sources use new `beautiful-original-*` registry names.
 - Demonstrations use local sample state and callbacks. Prompt Kit's two server-backed examples, AI Elements' speech fallback, and BoardUI Chat Starter run without model credentials or a backend.
 - Beautiful UI's proprietary Iconists icon package is replaced by Lucide equivalents. Its loading video uses local Fieldwork demonstration media.
-- External AI Elements Rive and voice binaries remain at official demo URLs because the repository does not state their redistribution terms. Provider logos, Unsplash sample images, a GitHub avatar, and the web-preview iframe remain external. They were checked for successful responses during the sweep.
+- External AI Elements Rive and voice binaries remain at official demo URLs because the repository does not state their redistribution terms. Provider logos, Unsplash sample images, and a GitHub avatar remain external. The Web Preview uses a local static HTML fixture. They were checked for successful responses during the sweep.
 - A stale WebGL-context callback in the original Metal FX v1 source is guarded so a previous canvas cannot stop a newly mounted renderer. Other import, lint, and accessibility adaptations are recorded with the source.
 
 ## Scope boundary

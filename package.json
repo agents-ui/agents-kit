@@ -31,7 +31,8 @@
     "components/effects",
     "llms.txt",
     "llms-full.txt",
-    "components/ai-elements"
+    "components/ai-elements",
+    "DESIGN.md"
   ],
   "scripts": {
     "dev": "next dev",

@@ -74,18 +74,20 @@ npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/agent-card.json
 
 ### Load the styles
 
-For components that include the shared theme, import the copied styles once from your application's global stylesheet. The paths below assume that stylesheet is at the project root and the `components` alias resolves to a root-level directory. Adjust relative paths to the files the CLI installed. For example, a stylesheet in `app/` with root-level components uses `../components/` and `../styles/`.
+Every registry entry includes the shared Agents Kit typography and semantic theme. Import its copied styles once from your application's global stylesheet. The paths below assume that stylesheet is at the project root and the `components` alias resolves to a root-level directory. Adjust relative paths to the files the CLI installed. For example, a stylesheet in `app/` with root-level components uses `../components/` and `../styles/`.
 
 ```css
 @import "./components/boardui/styles/globals.css";
 @import "./styles/agents.css";
 ```
 
-The shared stylesheet includes Tailwind CSS, the theme, and typography tokens. Keep your application's existing Tailwind and shadcn setup, and avoid importing Tailwind twice. Components without these files use the existing shadcn theme. The registry installs CSS files; it does not automatically add these imports to your stylesheet.
+BoardUI's shared stylesheet includes Tailwind CSS, the base theme, and typography tokens. Import it when the registry entry includes BoardUI controls; otherwise retain your existing Tailwind and shadcn setup. Import `styles/agents.css` after the base styles. Avoid importing Tailwind twice. The registry installs CSS files; it does not automatically add these imports to your stylesheet.
 
 If you keep copied components outside Tailwind's scanned source directories, add an appropriate `@source` directive to your stylesheet.
 
-Original Beautiful UI entries use the `beautiful-original-` prefix. Import their copied `components/beautiful-ui/original/beautiful-ui.css` once and wrap them in an ancestor with `className="beautiful-ui-scope"`. The host's `.dark` class selects the dark palette. The earlier `beautiful-` adapters remain available at their existing paths.
+Original Beautiful UI entries use the `beautiful-original-` prefix. Import their copied `components/beautiful-ui/original/beautiful-ui.css` through the same global CSS file that imports Tailwind, then wrap them in an ancestor with `className="beautiful-ui-scope"`. Load this stylesheet before `styles/agents.css`. Do not load it from a JavaScript component: its `@theme` definitions must participate in Tailwind compilation. The host's `.dark` class selects the dark palette. The earlier `beautiful-` adapters remain available at their existing paths.
+
+Load Inter and JetBrains Mono with your framework or font provider, and expose them as `--font-inter` and `--font-jetbrains-mono` on the application root. The shared UI baseline is 14px with a 1.5 line height, tight tracking, and Inter's `cv11` / `ss01` features. Mobile form controls use 16px. Card corners, borders, and muted text follow the same semantic tokens across collections. The [design contract](https://github.com/agents-ui/agents-kit/blob/main/DESIGN.md) records the complete typography, spacing, shape, and accessibility rules.
 
 Collections that ship `styles/animations.css` need that import for their entrance, exit, and disclosure animations. Prompt Kit also ships its loader keyframes; import the copied stylesheet once:
 
@@ -285,7 +287,7 @@ agent
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-agent.json
 - Entry source: [components/ai-elements/agent.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/agent.tsx)
 - Import path (default alias): `@/components/ai-elements/agent`
-- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-agent.json
@@ -298,7 +300,7 @@ artifact
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-artifact.json
 - Entry source: [components/ai-elements/artifact.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/artifact.tsx)
 - Import path (default alias): `@/components/ai-elements/artifact`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-artifact.json
@@ -311,7 +313,7 @@ attachments
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-attachments.json
 - Entry source: [components/ai-elements/attachments.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/attachments.tsx)
 - Import path (default alias): `@/components/ai-elements/attachments`
-- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-attachments.json
@@ -324,7 +326,7 @@ audio player
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-audio-player.json
 - Entry source: [components/ai-elements/audio-player.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/audio-player.tsx)
 - Import path (default alias): `@/components/ai-elements/audio-player`
-- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `media-chrome@4.17.2`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `media-chrome@4.17.2`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-audio-player.json
@@ -337,7 +339,7 @@ canvas
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-canvas.json
 - Entry source: [components/ai-elements/canvas.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/canvas.tsx)
 - Import path (default alias): `@/components/ai-elements/canvas`
-- Dependencies: `@xyflow/react@12.10.0`, `tw-animate-css@1.3.6`
+- Dependencies: `@xyflow/react@12.10.0`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-canvas.json
@@ -350,7 +352,7 @@ chain of thought
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-chain-of-thought.json
 - Entry source: [components/ai-elements/chain-of-thought.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/chain-of-thought.tsx)
 - Import path (default alias): `@/components/ai-elements/chain-of-thought`
-- Dependencies: `@radix-ui/react-use-controllable-state@1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-use-controllable-state@1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-chain-of-thought.json
@@ -363,7 +365,7 @@ checkpoint
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-checkpoint.json
 - Entry source: [components/ai-elements/checkpoint.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/checkpoint.tsx)
 - Import path (default alias): `@/components/ai-elements/checkpoint`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-checkpoint.json
@@ -376,7 +378,7 @@ code block
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-code-block.json
 - Entry source: [components/ai-elements/code-block.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/code-block.tsx)
 - Import path (default alias): `@/components/ai-elements/code-block`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-code-block.json
@@ -389,7 +391,7 @@ commit
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-commit.json
 - Entry source: [components/ai-elements/commit.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/commit.tsx)
 - Import path (default alias): `@/components/ai-elements/commit`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-commit.json
@@ -402,7 +404,7 @@ confirmation
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-confirmation.json
 - Entry source: [components/ai-elements/confirmation.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/confirmation.tsx)
 - Import path (default alias): `@/components/ai-elements/confirmation`
-- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-confirmation.json
@@ -415,7 +417,7 @@ connection
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-connection.json
 - Entry source: [components/ai-elements/connection.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/connection.tsx)
 - Import path (default alias): `@/components/ai-elements/connection`
-- Dependencies: `@xyflow/react@12.10.0`, `tw-animate-css@1.3.6`
+- Dependencies: `@xyflow/react@12.10.0`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-connection.json
@@ -428,7 +430,7 @@ context
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-context.json
 - Entry source: [components/ai-elements/context.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/context.tsx)
 - Import path (default alias): `@/components/ai-elements/context`
-- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tokenlens@1.3.1`, `tw-animate-css@1.3.6`
+- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tokenlens@1.3.1`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-context.json
@@ -441,7 +443,7 @@ controls
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-controls.json
 - Entry source: [components/ai-elements/controls.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/controls.tsx)
 - Import path (default alias): `@/components/ai-elements/controls`
-- Dependencies: `@xyflow/react@12.10.0`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@xyflow/react@12.10.0`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-controls.json
@@ -454,7 +456,7 @@ conversation
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-conversation.json
 - Entry source: [components/ai-elements/conversation.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/conversation.tsx)
 - Import path (default alias): `@/components/ai-elements/conversation`
-- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`, `use-stick-to-bottom@^1.1.0`
+- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`, `use-stick-to-bottom@^1.1.0`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-conversation.json
@@ -467,7 +469,7 @@ edge
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-edge.json
 - Entry source: [components/ai-elements/edge.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/edge.tsx)
 - Import path (default alias): `@/components/ai-elements/edge`
-- Dependencies: `@xyflow/react@12.10.0`, `tw-animate-css@1.3.6`
+- Dependencies: `@xyflow/react@12.10.0`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-edge.json
@@ -480,7 +482,7 @@ environment variables
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-environment-variables.json
 - Entry source: [components/ai-elements/environment-variables.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/environment-variables.tsx)
 - Import path (default alias): `@/components/ai-elements/environment-variables`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-environment-variables.json
@@ -493,7 +495,7 @@ file tree
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-file-tree.json
 - Entry source: [components/ai-elements/file-tree.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/file-tree.tsx)
 - Import path (default alias): `@/components/ai-elements/file-tree`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-file-tree.json
@@ -506,7 +508,7 @@ image
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-image.json
 - Entry source: [components/ai-elements/image.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/image.tsx)
 - Import path (default alias): `@/components/ai-elements/image`
-- Dependencies: `ai@6.0.280`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `ai@6.0.280`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-image.json
@@ -519,7 +521,7 @@ inline citation
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-inline-citation.json
 - Entry source: [components/ai-elements/inline-citation.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/inline-citation.tsx)
 - Import path (default alias): `@/components/ai-elements/inline-citation`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `embla-carousel-react@8.6.0`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `embla-carousel-react@8.6.0`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-inline-citation.json
@@ -532,7 +534,7 @@ jsx preview
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-jsx-preview.json
 - Entry source: [components/ai-elements/jsx-preview.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/jsx-preview.tsx)
 - Import path (default alias): `@/components/ai-elements/jsx-preview`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `react-jsx-parser@^2.4.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `react-jsx-parser@^2.4.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-jsx-preview.json
@@ -545,7 +547,7 @@ message
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-message.json
 - Entry source: [components/ai-elements/message.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/message.tsx)
 - Import path (default alias): `@/components/ai-elements/message`
-- Dependencies: `@streamdown/cjk@1.0.2`, `@streamdown/code@1.1.0`, `@streamdown/math@1.0.2`, `@streamdown/mermaid@1.0.2`, `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `katex@0.16.28`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `streamdown@2.4.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@streamdown/cjk@1.0.2`, `@streamdown/code@1.1.0`, `@streamdown/math@1.0.2`, `@streamdown/mermaid@1.0.2`, `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `katex@0.16.28`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `streamdown@2.4.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-message.json
@@ -558,7 +560,7 @@ mic selector
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-mic-selector.json
 - Entry source: [components/ai-elements/mic-selector.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/mic-selector.tsx)
 - Import path (default alias): `@/components/ai-elements/mic-selector`
-- Dependencies: `@radix-ui/react-use-controllable-state@1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `cmdk@1.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-use-controllable-state@1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `cmdk@1.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-mic-selector.json
@@ -571,7 +573,7 @@ model selector
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-model-selector.json
 - Entry source: [components/ai-elements/model-selector.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/model-selector.tsx)
 - Import path (default alias): `@/components/ai-elements/model-selector`
-- Dependencies: `clsx@^2.1.1`, `cmdk@1.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `cmdk@1.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-model-selector.json
@@ -584,7 +586,7 @@ node
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-node.json
 - Entry source: [components/ai-elements/node.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/node.tsx)
 - Import path (default alias): `@/components/ai-elements/node`
-- Dependencies: `@xyflow/react@12.10.0`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@xyflow/react@12.10.0`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-node.json
@@ -597,7 +599,7 @@ open in chat
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-open-in-chat.json
 - Entry source: [components/ai-elements/open-in-chat.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/open-in-chat.tsx)
 - Import path (default alias): `@/components/ai-elements/open-in-chat`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-open-in-chat.json
@@ -610,7 +612,7 @@ package info
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-package-info.json
 - Entry source: [components/ai-elements/package-info.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/package-info.tsx)
 - Import path (default alias): `@/components/ai-elements/package-info`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-package-info.json
@@ -623,7 +625,7 @@ panel
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-panel.json
 - Entry source: [components/ai-elements/panel.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/panel.tsx)
 - Import path (default alias): `@/components/ai-elements/panel`
-- Dependencies: `@xyflow/react@12.10.0`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@xyflow/react@12.10.0`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-panel.json
@@ -636,7 +638,7 @@ persona
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-persona.json
 - Entry source: [components/ai-elements/persona.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/persona.tsx)
 - Import path (default alias): `@/components/ai-elements/persona`
-- Dependencies: `@rive-app/react-webgl2@4.26.1`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@rive-app/react-webgl2@4.26.1`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-persona.json
@@ -649,7 +651,7 @@ plan
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-plan.json
 - Entry source: [components/ai-elements/plan.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/plan.tsx)
 - Import path (default alias): `@/components/ai-elements/plan`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-plan.json
@@ -662,7 +664,7 @@ prompt input
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-prompt-input.json
 - Entry source: [components/ai-elements/prompt-input.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/prompt-input.tsx)
 - Import path (default alias): `@/components/ai-elements/prompt-input`
-- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `cmdk@1.1.1`, `lucide-react@0.577.0`, `nanoid@5.1.16`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `cmdk@1.1.1`, `lucide-react@0.577.0`, `nanoid@5.1.16`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-prompt-input.json
@@ -675,7 +677,7 @@ question
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-question.json
 - Entry source: [components/ai-elements/question.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/question.tsx)
 - Import path (default alias): `@/components/ai-elements/question`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-question.json
@@ -688,7 +690,7 @@ queue
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-queue.json
 - Entry source: [components/ai-elements/queue.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/queue.tsx)
 - Import path (default alias): `@/components/ai-elements/queue`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-queue.json
@@ -701,7 +703,7 @@ reasoning
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-reasoning.json
 - Entry source: [components/ai-elements/reasoning.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/reasoning.tsx)
 - Import path (default alias): `@/components/ai-elements/reasoning`
-- Dependencies: `@radix-ui/react-use-controllable-state@1.2.2`, `@streamdown/cjk@1.0.2`, `@streamdown/code@1.1.0`, `@streamdown/math@1.0.2`, `@streamdown/mermaid@1.0.2`, `clsx@^2.1.1`, `katex@0.16.28`, `lucide-react@0.577.0`, `motion@12.26.2`, `radix-ui@1.6.7`, `streamdown@2.4.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-use-controllable-state@1.2.2`, `@streamdown/cjk@1.0.2`, `@streamdown/code@1.1.0`, `@streamdown/math@1.0.2`, `@streamdown/mermaid@1.0.2`, `clsx@^2.1.1`, `katex@0.16.28`, `lucide-react@0.577.0`, `motion@12.26.2`, `radix-ui@1.6.7`, `streamdown@2.4.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-reasoning.json
@@ -714,7 +716,7 @@ sandbox
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-sandbox.json
 - Entry source: [components/ai-elements/sandbox.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/sandbox.tsx)
 - Import path (default alias): `@/components/ai-elements/sandbox`
-- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-sandbox.json
@@ -727,7 +729,7 @@ schema display
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-schema-display.json
 - Entry source: [components/ai-elements/schema-display.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/schema-display.tsx)
 - Import path (default alias): `@/components/ai-elements/schema-display`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-schema-display.json
@@ -740,7 +742,7 @@ shimmer
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-shimmer.json
 - Entry source: [components/ai-elements/shimmer.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/shimmer.tsx)
 - Import path (default alias): `@/components/ai-elements/shimmer`
-- Dependencies: `clsx@^2.1.1`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-shimmer.json
@@ -753,7 +755,7 @@ snippet
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-snippet.json
 - Entry source: [components/ai-elements/snippet.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/snippet.tsx)
 - Import path (default alias): `@/components/ai-elements/snippet`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-snippet.json
@@ -766,7 +768,7 @@ sources
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-sources.json
 - Entry source: [components/ai-elements/sources.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/sources.tsx)
 - Import path (default alias): `@/components/ai-elements/sources`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-sources.json
@@ -779,7 +781,7 @@ speech input
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-speech-input.json
 - Entry source: [components/ai-elements/speech-input.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/speech-input.tsx)
 - Import path (default alias): `@/components/ai-elements/speech-input`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-speech-input.json
@@ -792,7 +794,7 @@ stack trace
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-stack-trace.json
 - Entry source: [components/ai-elements/stack-trace.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/stack-trace.tsx)
 - Import path (default alias): `@/components/ai-elements/stack-trace`
-- Dependencies: `@radix-ui/react-use-controllable-state@1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-use-controllable-state@1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-stack-trace.json
@@ -805,7 +807,7 @@ suggestion
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-suggestion.json
 - Entry source: [components/ai-elements/suggestion.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/suggestion.tsx)
 - Import path (default alias): `@/components/ai-elements/suggestion`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-suggestion.json
@@ -818,7 +820,7 @@ task
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-task.json
 - Entry source: [components/ai-elements/task.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/task.tsx)
 - Import path (default alias): `@/components/ai-elements/task`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-task.json
@@ -831,7 +833,7 @@ terminal
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-terminal.json
 - Entry source: [components/ai-elements/terminal.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/terminal.tsx)
 - Import path (default alias): `@/components/ai-elements/terminal`
-- Dependencies: `ansi-to-react@6.2.6`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `ansi-to-react@6.2.6`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-terminal.json
@@ -844,7 +846,7 @@ test results
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-test-results.json
 - Entry source: [components/ai-elements/test-results.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/test-results.tsx)
 - Import path (default alias): `@/components/ai-elements/test-results`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-test-results.json
@@ -857,7 +859,7 @@ tool
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-tool.json
 - Entry source: [components/ai-elements/tool.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/tool.tsx)
 - Import path (default alias): `@/components/ai-elements/tool`
-- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `ai@6.0.280`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-tool.json
@@ -870,7 +872,7 @@ toolbar
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-toolbar.json
 - Entry source: [components/ai-elements/toolbar.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/toolbar.tsx)
 - Import path (default alias): `@/components/ai-elements/toolbar`
-- Dependencies: `@xyflow/react@12.10.0`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@xyflow/react@12.10.0`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-toolbar.json
@@ -883,7 +885,7 @@ transcription
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-transcription.json
 - Entry source: [components/ai-elements/transcription.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/transcription.tsx)
 - Import path (default alias): `@/components/ai-elements/transcription`
-- Dependencies: `@radix-ui/react-use-controllable-state@1.2.2`, `ai@6.0.280`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-use-controllable-state@1.2.2`, `ai@6.0.280`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-transcription.json
@@ -896,7 +898,7 @@ voice selector
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-voice-selector.json
 - Entry source: [components/ai-elements/voice-selector.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/voice-selector.tsx)
 - Import path (default alias): `@/components/ai-elements/voice-selector`
-- Dependencies: `@radix-ui/react-use-controllable-state@1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `cmdk@1.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-use-controllable-state@1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `cmdk@1.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-voice-selector.json
@@ -909,7 +911,7 @@ web preview
 - Registry: https://agents-ui.github.io/agents-kit/c/ai-elements-web-preview.json
 - Entry source: [components/ai-elements/web-preview.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/ai-elements/web-preview.tsx)
 - Import path (default alias): `@/components/ai-elements/web-preview`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/ai-elements-web-preview.json
@@ -1068,7 +1070,7 @@ Original Beautiful UI AgentScreen
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-agent-screen.json
 - Entry source: [components/beautiful-ui/original/primitives/AgentScreen.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/AgentScreen.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/AgentScreen`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-agent-screen.json
@@ -1081,7 +1083,7 @@ Original Beautiful UI ApprovalCard
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-approval-card.json
 - Entry source: [components/beautiful-ui/original/primitives/ApprovalCard.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/ApprovalCard.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/ApprovalCard`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-approval-card.json
@@ -1094,7 +1096,7 @@ Original Beautiful UI ChatComposer
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-chat-composer.json
 - Entry source: [components/beautiful-ui/original/primitives/ChatComposer.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/ChatComposer.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/ChatComposer`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-chat-composer.json
@@ -1107,7 +1109,7 @@ Original Beautiful UI CodeBlock
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-code-block.json
 - Entry source: [components/beautiful-ui/original/primitives/CodeBlock.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/CodeBlock.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/CodeBlock`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-code-block.json
@@ -1120,7 +1122,7 @@ Original Beautiful UI ContextCards
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-context-cards.json
 - Entry source: [components/beautiful-ui/original/primitives/ContextCards.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/ContextCards.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/ContextCards`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-context-cards.json
@@ -1133,7 +1135,7 @@ Original Beautiful UI DiffTable
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-diff-table.json
 - Entry source: [components/beautiful-ui/original/primitives/DiffTable.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/DiffTable.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/DiffTable`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-diff-table.json
@@ -1146,7 +1148,7 @@ Original Beautiful UI FilterTable
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-filter-table.json
 - Entry source: [components/beautiful-ui/original/primitives/FilterTable.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/FilterTable.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/FilterTable`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-filter-table.json
@@ -1159,7 +1161,7 @@ Original Beautiful UI FineTuneCard
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-fine-tune-card.json
 - Entry source: [components/beautiful-ui/original/primitives/FineTuneCard.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/FineTuneCard.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/FineTuneCard`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-fine-tune-card.json
@@ -1172,7 +1174,7 @@ Original Beautiful UI Flowchart
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-flowchart.json
 - Entry source: [components/beautiful-ui/original/primitives/Flowchart.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/Flowchart.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/Flowchart`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-flowchart.json
@@ -1185,7 +1187,7 @@ Original Beautiful UI InsightCards
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-insight-cards.json
 - Entry source: [components/beautiful-ui/original/primitives/InsightCards.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/InsightCards.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/InsightCards`
-- Dependencies: `liveline@0.0.7`
+- Dependencies: `liveline@0.0.7`, `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-insight-cards.json
@@ -1198,7 +1200,7 @@ Original Beautiful UI LoadingState
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-loading-state.json
 - Entry source: [components/beautiful-ui/original/primitives/LoadingState.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/LoadingState.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/LoadingState`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-loading-state.json
@@ -1211,7 +1213,7 @@ Original Beautiful UI PromptBar
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-prompt-bar.json
 - Entry source: [components/beautiful-ui/original/primitives/PromptBar.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/PromptBar.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/PromptBar`
-- Dependencies: `glimm@0.3.0`
+- Dependencies: `glimm@0.3.0`, `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-prompt-bar.json
@@ -1224,7 +1226,7 @@ Original Beautiful UI RecommendationCard
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-recommendation-card.json
 - Entry source: [components/beautiful-ui/original/primitives/RecommendationCard.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/RecommendationCard.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/RecommendationCard`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-recommendation-card.json
@@ -1237,7 +1239,7 @@ Original Beautiful UI RecordsTable
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-records-table.json
 - Entry source: [components/beautiful-ui/original/primitives/RecordsTable.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/RecordsTable.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/RecordsTable`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-records-table.json
@@ -1250,7 +1252,7 @@ Original Beautiful UI SearchList
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-search-list.json
 - Entry source: [components/beautiful-ui/original/primitives/SearchList.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/SearchList.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/SearchList`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-search-list.json
@@ -1263,7 +1265,7 @@ Original Beautiful UI SelectionActions
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-selection-actions.json
 - Entry source: [components/beautiful-ui/original/primitives/SelectionActions.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/SelectionActions.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/SelectionActions`
-- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-selection-actions.json
@@ -1276,7 +1278,7 @@ Original Beautiful UI SidebarNav
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-sidebar-nav.json
 - Entry source: [components/beautiful-ui/original/primitives/SidebarNav.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/SidebarNav.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/SidebarNav`
-- Dependencies: `lucide-react@0.577.0`
+- Dependencies: `lucide-react@0.577.0`, `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-sidebar-nav.json
@@ -1289,7 +1291,7 @@ Original Beautiful UI StreamingText
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-streaming-text.json
 - Entry source: [components/beautiful-ui/original/primitives/StreamingText.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/StreamingText.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/StreamingText`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-streaming-text.json
@@ -1302,7 +1304,7 @@ Original Beautiful UI TaskRows
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-task-rows.json
 - Entry source: [components/beautiful-ui/original/primitives/TaskRows.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/TaskRows.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/TaskRows`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-task-rows.json
@@ -1315,7 +1317,7 @@ Original Beautiful UI ThinkingState
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-thinking-state.json
 - Entry source: [components/beautiful-ui/original/primitives/ThinkingState.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/ThinkingState.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/ThinkingState`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-thinking-state.json
@@ -1328,7 +1330,7 @@ Original Beautiful UI ToolChips
 - Registry: https://agents-ui.github.io/agents-kit/c/beautiful-original-tool-chips.json
 - Entry source: [components/beautiful-ui/original/primitives/ToolChips.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beautiful-ui/original/primitives/ToolChips.tsx)
 - Import path (default alias): `@/components/beautiful-ui/original/primitives/ToolChips`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beautiful-original-tool-chips.json
@@ -1474,7 +1476,7 @@ Agent Activity
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-agent-activity.json
 - Entry source: [components/beui/components/agents/agent-activity/index.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/agent-activity/index.tsx)
 - Import path (default alias): `@/components/beui/components/agents/agent-activity/index`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-agent-activity.json
@@ -1487,7 +1489,7 @@ Agent Loading States Agent Progress
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-agent-progress.json
 - Entry source: [components/beui/components/agents/loading-states/agent-progress.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/loading-states/agent-progress.tsx)
 - Import path (default alias): `@/components/beui/components/agents/loading-states/agent-progress`
-- Dependencies: `clsx@^2.1.1`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-agent-progress.json
@@ -1500,7 +1502,7 @@ AI Sidebar
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-ai-sidebar.json
 - Entry source: [components/beui/components/agents/ai-sidebar.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/ai-sidebar.tsx)
 - Import path (default alias): `@/components/beui/components/agents/ai-sidebar`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-ai-sidebar.json
@@ -1513,7 +1515,7 @@ Approval Card
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-approval-card.json
 - Entry source: [components/beui/components/agents/approval-card/index.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/approval-card/index.tsx)
 - Import path (default alias): `@/components/beui/components/agents/approval-card/index`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-approval-card.json
@@ -1526,7 +1528,7 @@ Chat App
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-chat-app.json
 - Entry source: [components/beui/components/agents/chat-app.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/chat-app.tsx)
 - Import path (default alias): `@/components/beui/components/agents/chat-app`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-chat-app.json
@@ -1539,7 +1541,7 @@ Citations
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-citations.json
 - Entry source: [components/beui/components/agents/citations.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/citations.tsx)
 - Import path (default alias): `@/components/beui/components/agents/citations`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-citations.json
@@ -1552,7 +1554,7 @@ Code Block
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-code-block.json
 - Entry source: [components/beui/components/agents/code-block.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/code-block.tsx)
 - Import path (default alias): `@/components/beui/components/agents/code-block`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-code-block.json
@@ -1565,7 +1567,7 @@ File Diff
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-file-diff.json
 - Entry source: [components/beui/components/agents/file-diff.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/file-diff.tsx)
 - Import path (default alias): `@/components/beui/components/agents/file-diff`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-file-diff.json
@@ -1578,7 +1580,7 @@ Image Generation
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-image-generation.json
 - Entry source: [components/beui/components/agents/image-generation.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/image-generation.tsx)
 - Import path (default alias): `@/components/beui/components/agents/image-generation`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-image-generation.json
@@ -1591,7 +1593,7 @@ Message
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-message.json
 - Entry source: [components/beui/components/agents/message.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/message.tsx)
 - Import path (default alias): `@/components/beui/components/agents/message`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-message.json
@@ -1604,7 +1606,7 @@ Message Bubble
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-message-bubble.json
 - Entry source: [components/beui/components/agents/message-bubble.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/message-bubble.tsx)
 - Import path (default alias): `@/components/beui/components/agents/message-bubble`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-message-bubble.json
@@ -1617,7 +1619,7 @@ Message Scroller
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-message-scroller.json
 - Entry source: [components/beui/components/agents/message-scroller.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/message-scroller.tsx)
 - Import path (default alias): `@/components/beui/components/agents/message-scroller`
-- Dependencies: `clsx@^2.1.1`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-message-scroller.json
@@ -1630,7 +1632,7 @@ Prompt Input
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-prompt-input.json
 - Entry source: [components/beui/components/agents/prompt-input.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/prompt-input.tsx)
 - Import path (default alias): `@/components/beui/components/agents/prompt-input`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-prompt-input.json
@@ -1643,7 +1645,7 @@ Agent Loading States Reasoning Text
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-reasoning-text.json
 - Entry source: [components/beui/components/agents/loading-states/reasoning-text.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/loading-states/reasoning-text.tsx)
 - Import path (default alias): `@/components/beui/components/agents/loading-states/reasoning-text`
-- Dependencies: `clsx@^2.1.1`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-reasoning-text.json
@@ -1656,7 +1658,7 @@ Streaming Response
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-streaming-response.json
 - Entry source: [components/beui/components/agents/streaming-response.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/streaming-response.tsx)
 - Import path (default alias): `@/components/beui/components/agents/streaming-response`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-streaming-response.json
@@ -1669,7 +1671,7 @@ Agent Loading States Thinking Shimmer
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-thinking-shimmer.json
 - Entry source: [components/beui/components/agents/loading-states/thinking-shimmer.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/loading-states/thinking-shimmer.tsx)
 - Import path (default alias): `@/components/beui/components/agents/loading-states/thinking-shimmer`
-- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-thinking-shimmer.json
@@ -1682,7 +1684,7 @@ Todo List
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-todo-list.json
 - Entry source: [components/beui/components/agents/todo-list.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/todo-list.tsx)
 - Import path (default alias): `@/components/beui/components/agents/todo-list`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-todo-list.json
@@ -1695,7 +1697,7 @@ Tool Approval
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-tool-approval.json
 - Entry source: [components/beui/components/agents/tool-approval.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/tool-approval.tsx)
 - Import path (default alias): `@/components/beui/components/agents/tool-approval`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-tool-approval.json
@@ -1708,7 +1710,7 @@ Tool Result
 - Registry: https://agents-ui.github.io/agents-kit/c/beui-tool-result.json
 - Entry source: [components/beui/components/agents/tool-result.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/beui/components/agents/tool-result.tsx)
 - Import path (default alias): `@/components/beui/components/agents/tool-result`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/beui-tool-result.json
@@ -1724,7 +1726,7 @@ ai 01
 - Registry: https://agents-ui.github.io/agents-kit/c/blocks-so-ai-01.json
 - Entry source: [components/blocks-so/ai-01.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/blocks-so/ai-01.tsx)
 - Import path (default alias): `@/components/blocks-so/ai-01`
-- Dependencies: `@radix-ui/react-dropdown-menu@^2.1.14`, `@radix-ui/react-slot@^1.2.2`, `@tabler/icons-react@3.34.1`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-dropdown-menu@^2.1.14`, `@radix-ui/react-slot@^1.2.2`, `@tabler/icons-react@3.34.1`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/blocks-so-ai-01.json
@@ -1737,7 +1739,7 @@ ai 02
 - Registry: https://agents-ui.github.io/agents-kit/c/blocks-so-ai-02.json
 - Entry source: [components/blocks-so/ai-02.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/blocks-so/ai-02.tsx)
 - Import path (default alias): `@/components/blocks-so/ai-02`
-- Dependencies: `@base-ui/react@1.6.0`, `@radix-ui/react-slot@^1.2.2`, `@tabler/icons-react@3.34.1`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@base-ui/react@1.6.0`, `@radix-ui/react-slot@^1.2.2`, `@tabler/icons-react@3.34.1`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/blocks-so-ai-02.json
@@ -1750,7 +1752,7 @@ ai 03
 - Registry: https://agents-ui.github.io/agents-kit/c/blocks-so-ai-03.json
 - Entry source: [components/blocks-so/ai-03.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/blocks-so/ai-03.tsx)
 - Import path (default alias): `@/components/blocks-so/ai-03`
-- Dependencies: `@radix-ui/react-dropdown-menu@^2.1.14`, `@radix-ui/react-slot@^1.2.2`, `@tabler/icons-react@3.34.1`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-dropdown-menu@^2.1.14`, `@radix-ui/react-slot@^1.2.2`, `@tabler/icons-react@3.34.1`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/blocks-so-ai-03.json
@@ -1763,7 +1765,7 @@ ai 04
 - Registry: https://agents-ui.github.io/agents-kit/c/blocks-so-ai-04.json
 - Entry source: [components/blocks-so/ai-04.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/blocks-so/ai-04.tsx)
 - Import path (default alias): `@/components/blocks-so/ai-04`
-- Dependencies: `@base-ui/react@1.6.0`, `@radix-ui/react-dropdown-menu@^2.1.14`, `@radix-ui/react-label@^2.1.6`, `@radix-ui/react-slot@^1.2.2`, `@tabler/icons-react@3.34.1`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `next@15.5.25`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@base-ui/react@1.6.0`, `@radix-ui/react-dropdown-menu@^2.1.14`, `@radix-ui/react-label@^2.1.6`, `@radix-ui/react-slot@^1.2.2`, `@tabler/icons-react@3.34.1`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `next@15.5.25`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/blocks-so-ai-04.json
@@ -1776,7 +1778,7 @@ ai 05
 - Registry: https://agents-ui.github.io/agents-kit/c/blocks-so-ai-05.json
 - Entry source: [components/blocks-so/ai-05.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/blocks-so/ai-05.tsx)
 - Import path (default alias): `@/components/blocks-so/ai-05`
-- Dependencies: `@radix-ui/react-slot@^1.2.2`, `@tabler/icons-react@3.34.1`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `react-markdown@^10.1.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-slot@^1.2.2`, `@tabler/icons-react@3.34.1`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `react-markdown@^10.1.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/blocks-so-ai-05.json
@@ -1886,7 +1888,7 @@ border beam
 - Registry: https://agents-ui.github.io/agents-kit/c/border-beam.json
 - Entry source: [components/effects/border-beam.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/effects/border-beam.tsx)
 - Import path (default alias): `@/components/effects/border-beam`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/border-beam.json
@@ -1899,7 +1901,7 @@ img fx
 - Registry: https://agents-ui.github.io/agents-kit/c/img-fx.json
 - Entry source: [components/effects/img-fx.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/effects/img-fx.tsx)
 - Import path (default alias): `@/components/effects/img-fx`
-- Dependencies: `three@0.149.0`
+- Dependencies: `tailwindcss@^4.1.7`, `three@0.149.0`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/img-fx.json
@@ -1912,7 +1914,7 @@ liquid gooey
 - Registry: https://agents-ui.github.io/agents-kit/c/liquid-gooey.json
 - Entry source: [components/effects/liquid-gooey.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/effects/liquid-gooey.tsx)
 - Import path (default alias): `@/components/effects/liquid-gooey`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/liquid-gooey.json
@@ -1925,7 +1927,7 @@ metal fx
 - Registry: https://agents-ui.github.io/agents-kit/c/metal-fx.json
 - Entry source: [components/effects/metal-fx.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/effects/metal-fx.tsx)
 - Import path (default alias): `@/components/effects/metal-fx`
-- Dependencies: `@paper-design/shaders@0.0.80`
+- Dependencies: `@paper-design/shaders@0.0.80`, `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/metal-fx.json
@@ -1938,7 +1940,7 @@ metal fx v1
 - Registry: https://agents-ui.github.io/agents-kit/c/metal-fx-v1.json
 - Entry source: [components/effects/metal-fx-v1.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/effects/metal-fx-v1.tsx)
 - Import path (default alias): `@/components/effects/metal-fx-v1`
-- Dependencies: No additional npm dependencies.
+- Dependencies: `tailwindcss@^4.1.7`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/metal-fx-v1.json
@@ -1954,7 +1956,7 @@ A component for displaying a chain of thought process with collapsible steps and
 - Registry: https://agents-ui.github.io/agents-kit/c/chain-of-thought.json
 - Entry source: [components/prompt-kit/chain-of-thought.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/chain-of-thought.tsx)
 - Import path (default alias): `@/components/prompt-kit/chain-of-thought`
-- Dependencies: `@radix-ui/react-collapsible@^1.1.10`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-collapsible@^1.1.10`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/chain-of-thought.json
@@ -1967,7 +1969,7 @@ A component for creating chat interfaces with intelligent auto-scrolling behavio
 - Registry: https://agents-ui.github.io/agents-kit/c/chat-container.json
 - Entry source: [components/prompt-kit/chat-container.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/chat-container.tsx)
 - Import path (default alias): `@/components/prompt-kit/chat-container`
-- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`, `use-stick-to-bottom@^1.1.0`
+- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`, `use-stick-to-bottom@^1.1.0`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/chat-container.json
@@ -1980,7 +1982,7 @@ A component for displaying code snippets with syntax highlighting and customizab
 - Registry: https://agents-ui.github.io/agents-kit/c/code-block.json
 - Entry source: [components/prompt-kit/code-block.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/code-block.tsx)
 - Import path (default alias): `@/components/prompt-kit/code-block`
-- Dependencies: `clsx@^2.1.1`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/code-block.json
@@ -1993,7 +1995,7 @@ A component to collect user feedback on AI responses.
 - Registry: https://agents-ui.github.io/agents-kit/c/feedback-bar.json
 - Entry source: [components/prompt-kit/feedback-bar.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/feedback-bar.tsx)
 - Import path (default alias): `@/components/prompt-kit/feedback-bar`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/feedback-bar.json
@@ -2006,7 +2008,7 @@ A component for creating drag-and-drop file upload interfaces with support for s
 - Registry: https://agents-ui.github.io/agents-kit/c/file-upload.json
 - Entry source: [components/prompt-kit/file-upload.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/file-upload.tsx)
 - Import path (default alias): `@/components/prompt-kit/file-upload`
-- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/file-upload.json
@@ -2019,7 +2021,7 @@ A component for displaying images from base64 or Uint8Array data, with full acce
 - Registry: https://agents-ui.github.io/agents-kit/c/image.json
 - Entry source: [components/prompt-kit/image.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/image.tsx)
 - Import path (default alias): `@/components/prompt-kit/image`
-- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/image.json
@@ -2032,7 +2034,7 @@ A component for rendering JSX strings as React components, with support for stre
 - Registry: https://agents-ui.github.io/agents-kit/c/jsx-preview.json
 - Entry source: [components/prompt-kit/jsx-preview.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/jsx-preview.tsx)
 - Import path (default alias): `@/components/prompt-kit/jsx-preview`
-- Dependencies: `react-jsx-parser@^2.4.0`, `tw-animate-css@1.3.6`
+- Dependencies: `react-jsx-parser@^2.4.0`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/jsx-preview.json
@@ -2045,7 +2047,7 @@ A component for displaying a loading indicator with multiple variants and custom
 - Registry: https://agents-ui.github.io/agents-kit/c/loader.json
 - Entry source: [components/prompt-kit/loader.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/loader.tsx)
 - Import path (default alias): `@/components/prompt-kit/loader`
-- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/loader.json
@@ -2058,7 +2060,7 @@ A component for rendering Markdown content with support for code blocks, GFM, an
 - Registry: https://agents-ui.github.io/agents-kit/c/markdown.json
 - Entry source: [components/prompt-kit/markdown.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/markdown.tsx)
 - Import path (default alias): `@/components/prompt-kit/markdown`
-- Dependencies: `clsx@^2.1.1`, `marked@^15.0.7`, `react-markdown@^10.1.0`, `remark-breaks@^4.0.0`, `remark-gfm@^4.0.1`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `marked@^15.0.7`, `react-markdown@^10.1.0`, `remark-breaks@^4.0.0`, `remark-gfm@^4.0.1`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/markdown.json
@@ -2071,7 +2073,7 @@ A component for displaying chat messages with support for avatars, markdown cont
 - Registry: https://agents-ui.github.io/agents-kit/c/message.json
 - Entry source: [components/prompt-kit/message.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/message.tsx)
 - Import path (default alias): `@/components/prompt-kit/message`
-- Dependencies: `@radix-ui/react-avatar@^1.1.3`, `@radix-ui/react-tooltip@^1.2.6`, `clsx@^2.1.1`, `marked@^15.0.7`, `react-markdown@^10.1.0`, `remark-breaks@^4.0.0`, `remark-gfm@^4.0.1`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-avatar@^1.1.3`, `@radix-ui/react-tooltip@^1.2.6`, `clsx@^2.1.1`, `marked@^15.0.7`, `react-markdown@^10.1.0`, `remark-breaks@^4.0.0`, `remark-gfm@^4.0.1`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/message.json
@@ -2084,7 +2086,7 @@ An input field designed for chat interfaces, allowing users to enter and submit 
 - Registry: https://agents-ui.github.io/agents-kit/c/prompt-input.json
 - Entry source: [components/prompt-kit/prompt-input.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/prompt-input.tsx)
 - Import path (default alias): `@/components/prompt-kit/prompt-input`
-- Dependencies: `@radix-ui/react-tooltip@^1.2.6`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-tooltip@^1.2.6`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/prompt-input.json
@@ -2097,7 +2099,7 @@ A component for implementing interactive prompt suggestions in AI interfaces. Th
 - Registry: https://agents-ui.github.io/agents-kit/c/prompt-suggestion.json
 - Entry source: [components/prompt-kit/prompt-suggestion.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/prompt-suggestion.tsx)
 - Import path (default alias): `@/components/prompt-kit/prompt-suggestion`
-- Dependencies: `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/prompt-suggestion.json
@@ -2110,7 +2112,7 @@ A collapsible component for showing AI reasoning, explanations, or logic. You ca
 - Registry: https://agents-ui.github.io/agents-kit/c/reasoning.json
 - Entry source: [components/prompt-kit/reasoning.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/reasoning.tsx)
 - Import path (default alias): `@/components/prompt-kit/reasoning`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `marked@^15.0.7`, `react-markdown@^10.1.0`, `remark-breaks@^4.0.0`, `remark-gfm@^4.0.1`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `marked@^15.0.7`, `react-markdown@^10.1.0`, `remark-breaks@^4.0.0`, `remark-gfm@^4.0.1`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/reasoning.json
@@ -2123,7 +2125,7 @@ A component to simulate streaming text on the client side, perfect for fake resp
 - Registry: https://agents-ui.github.io/agents-kit/c/response-stream.json
 - Entry source: [components/prompt-kit/response-stream.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/response-stream.tsx)
 - Import path (default alias): `@/components/prompt-kit/response-stream`
-- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/response-stream.json
@@ -2136,7 +2138,7 @@ A floating button component that appears when users scroll up in a container, al
 - Registry: https://agents-ui.github.io/agents-kit/c/scroll-button.json
 - Entry source: [components/prompt-kit/scroll-button.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/scroll-button.tsx)
 - Import path (default alias): `@/components/prompt-kit/scroll-button`
-- Dependencies: `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`, `use-stick-to-bottom@^1.1.0`
+- Dependencies: `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`, `use-stick-to-bottom@^1.1.0`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/scroll-button.json
@@ -2149,7 +2151,7 @@ Displays website sources used by AI-generated content, showing URL details, titl
 - Registry: https://agents-ui.github.io/agents-kit/c/source.json
 - Entry source: [components/prompt-kit/source.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/source.tsx)
 - Import path (default alias): `@/components/prompt-kit/source`
-- Dependencies: `@radix-ui/react-hover-card@1.1.14`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-hover-card@1.1.14`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/source.json
@@ -2162,7 +2164,7 @@ A component for displaying a sequence of operations in a collapsible layout. Eac
 - Registry: https://agents-ui.github.io/agents-kit/c/steps.json
 - Entry source: [components/prompt-kit/steps.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/steps.tsx)
 - Import path (default alias): `@/components/prompt-kit/steps`
-- Dependencies: `@radix-ui/react-collapsible@^1.1.10`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-collapsible@^1.1.10`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/steps.json
@@ -2175,7 +2177,7 @@ A banner-style component for surfacing contextual information, warnings, or inst
 - Registry: https://agents-ui.github.io/agents-kit/c/system-message.json
 - Entry source: [components/prompt-kit/system-message.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/system-message.tsx)
 - Import path (default alias): `@/components/prompt-kit/system-message`
-- Dependencies: `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/system-message.json
@@ -2188,7 +2190,7 @@ A component for displaying a shimmer effect on text, perfect for loading states 
 - Registry: https://agents-ui.github.io/agents-kit/c/text-shimmer.json
 - Entry source: [components/prompt-kit/text-shimmer.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/text-shimmer.tsx)
 - Import path (default alias): `@/components/prompt-kit/text-shimmer`
-- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/text-shimmer.json
@@ -2201,7 +2203,7 @@ A component to display the thinking state of an AI model with optional actions.
 - Registry: https://agents-ui.github.io/agents-kit/c/thinking-bar.json
 - Entry source: [components/prompt-kit/thinking-bar.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/thinking-bar.tsx)
 - Import path (default alias): `@/components/prompt-kit/thinking-bar`
-- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/thinking-bar.json
@@ -2214,7 +2216,7 @@ Displays tool call details including input, output, status, and errors. Ideal fo
 - Registry: https://agents-ui.github.io/agents-kit/c/tool.json
 - Entry source: [components/prompt-kit/tool.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/tool.tsx)
 - Import path (default alias): `@/components/prompt-kit/tool`
-- Dependencies: `@radix-ui/react-collapsible@^1.1.10`, `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tw-animate-css@1.3.6`
+- Dependencies: `@radix-ui/react-collapsible@^1.1.10`, `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/tool.json
@@ -5496,7 +5498,7 @@ import type { Experimental_SpeechResult as SpeechResult } from "ai";
 import { MediaControlBar, MediaController, MediaDurationDisplay, MediaMuteButton, MediaPlayButton, MediaSeekBackwardButton, MediaSeekForwardButton, MediaTimeDisplay, MediaTimeRange, MediaVolumeRange } from "media-chrome/react";
 import type { ComponentProps } from "react";
 export type AudioPlayerProps = Omit<ComponentProps<typeof MediaController>, "audio">;
-export declare const AudioPlayer: ({ children, style, ...props }: AudioPlayerProps) => import("react").JSX.Element;
+export declare const AudioPlayer: ({ className, children, style, ...props }: AudioPlayerProps) => import("react").JSX.Element;
 export type AudioPlayerElementProps = Omit<ComponentProps<"audio">, "src"> & ({
     data: SpeechResult["audio"];
 } | {
@@ -5504,7 +5506,7 @@ export type AudioPlayerElementProps = Omit<ComponentProps<"audio">, "src"> & ({
 });
 export declare const AudioPlayerElement: ({ ...props }: AudioPlayerElementProps) => import("react").JSX.Element;
 export type AudioPlayerControlBarProps = ComponentProps<typeof MediaControlBar>;
-export declare const AudioPlayerControlBar: ({ children, ...props }: AudioPlayerControlBarProps) => import("react").JSX.Element;
+export declare const AudioPlayerControlBar: ({ className, children, ...props }: AudioPlayerControlBarProps) => import("react").JSX.Element;
 export type AudioPlayerPlayButtonProps = ComponentProps<typeof MediaPlayButton>;
 export declare const AudioPlayerPlayButton: ({ className, ...props }: AudioPlayerPlayButtonProps) => import("react").JSX.Element;
 export type AudioPlayerSeekBackwardButtonProps = ComponentProps<typeof MediaSeekBackwardButton>;
@@ -8063,6 +8065,8 @@ export default function SearchList({ items, labels, }?: {
 
 ```ts
 import { type ReactNode } from "react";
+export declare function isCompactToolbar(hostWidth: number): boolean;
+export declare function clampToolbarCenter(desiredX: number, toolbarWidth: number, hostLeft: number, hostWidth: number, viewportWidth: number): number;
 export type SelectionText = {
     lead: string;
     original: string;

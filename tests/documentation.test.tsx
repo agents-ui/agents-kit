@@ -112,12 +112,23 @@ test("base URLs preserve the GitHub Pages subpath on server and browser", () => 
   }
 })
 
-
 test("registry installs original styles and third-party notices with their components", () => {
+  for (const item of registry.items)
+    assert.ok(
+      item.files.some(
+        (file: { path: string }) => file.path === "styles/agents.css"
+      ),
+      `${item.name} is missing the shared design foundation`
+    )
   const includes = (name: string, file: string) => {
-    const item = registry.items.find((entry: { name: string }) => entry.name === name)
+    const item = registry.items.find(
+      (entry: { name: string }) => entry.name === name
+    )
     assert.ok(item, `Missing registry entry: ${name}`)
-    assert.ok(item.files.some((entry: { path: string }) => entry.path === file), `${name} must include ${file}`)
+    assert.ok(
+      item.files.some((entry: { path: string }) => entry.path === file),
+      `${name} must include ${file}`
+    )
   }
   includes("loader", "components/prompt-kit/styles.css")
   includes("loader", "styles/animations.css")
@@ -125,7 +136,10 @@ test("registry installs original styles and third-party notices with their compo
   includes("ai-elements-message", "components/ai-elements/markdown.css")
   includes("ai-elements-reasoning", "components/ai-elements/markdown.css")
   includes("ai-elements-message", "components/ai-elements/_ui/LICENSE")
-  includes("beautiful-original-prompt-bar", "components/beautiful-ui/original/beautiful-ui.css")
+  includes(
+    "beautiful-original-prompt-bar",
+    "components/beautiful-ui/original/beautiful-ui.css"
+  )
   includes("blocks-so-ai-02", "components/blocks-so/LICENSE.md")
   includes("boardui-agent-chat", "components/boardui/LICENSE")
   includes("metal-fx", "components/effects/metal-fx/PAPER_SHADERS_LICENSE")

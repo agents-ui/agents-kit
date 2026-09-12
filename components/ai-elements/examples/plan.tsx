@@ -14,7 +14,7 @@ import {
 import { FileText } from "lucide-react"
 
 const Example = () => (
-  <Plan defaultOpen={false}>
+  <Plan className="w-full max-w-2xl" defaultOpen={false}>
     <PlanHeader>
       <div>
         <div className="mb-4 flex items-center gap-2">

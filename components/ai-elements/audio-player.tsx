@@ -27,12 +27,14 @@ export type AudioPlayerProps = Omit<
 >
 
 export const AudioPlayer = ({
+  className,
   children,
   style,
   ...props
 }: AudioPlayerProps) => (
   <MediaController
     audio
+    className={cn("w-full min-w-0", className)}
     data-slot="audio-player"
     style={
       {
@@ -92,11 +94,18 @@ export const AudioPlayerElement = ({ ...props }: AudioPlayerElementProps) => (
 export type AudioPlayerControlBarProps = ComponentProps<typeof MediaControlBar>
 
 export const AudioPlayerControlBar = ({
+  className,
   children,
   ...props
 }: AudioPlayerControlBarProps) => (
-  <MediaControlBar data-slot="audio-player-control-bar" {...props}>
-    <ButtonGroup orientation="horizontal">{children}</ButtonGroup>
+  <MediaControlBar
+    className={cn("w-full min-w-0", className)}
+    data-slot="audio-player-control-bar"
+    {...props}
+  >
+    <ButtonGroup className="w-full min-w-0" orientation="horizontal">
+      {children}
+    </ButtonGroup>
   </MediaControlBar>
 )
 
@@ -174,7 +183,7 @@ export const AudioPlayerTimeRange = ({
 }: AudioPlayerTimeRangeProps) => (
   <ButtonGroupText asChild className="bg-transparent">
     <MediaTimeRange
-      className={cn("", className)}
+      className={cn("min-w-0 flex-1", className)}
       data-slot="audio-player-time-range"
       {...props}
     />
@@ -223,7 +232,7 @@ export const AudioPlayerVolumeRange = ({
 }: AudioPlayerVolumeRangeProps) => (
   <ButtonGroupText asChild className="bg-transparent">
     <MediaVolumeRange
-      className={cn("", className)}
+      className={cn("min-w-0 flex-1", className)}
       data-slot="audio-player-volume-range"
       {...props}
     />

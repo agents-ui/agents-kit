@@ -48,12 +48,12 @@ export function FileQueue({
   return (
     <section
       className={cx(
-        "border-separator-border bg-background-primary-default w-full max-w-[620px] rounded-xl border p-5",
+        "border-separator-border bg-background-primary-default w-full max-w-[620px] rounded-xl border p-4",
         className
       )}
     >
       <header>
-        <h2 className="text-lg font-semibold">Files</h2>
+        <h2 className="text-sm font-medium">Files</h2>
         <p className="text-text-secondary mt-1 text-sm">
           Add supporting documents to this workspace.
         </p>
@@ -158,7 +158,7 @@ export function FileQueue({
           No files selected.
         </p>
       )}
-      <div className="mt-5 flex justify-end">
+      <div className="mt-4 flex justify-end">
         <Button
           onClick={onUpload}
           disabled={

@@ -32,5 +32,5 @@
     "components/primitives/chatbot.tsx",
     "components/primitives/tool-calling.tsx"
   ],
-  "adaptation": "Public primitives retain upstream APIs, layout, states, and motion. PromptInput preserves the host IME guard; CodeBlock preserves data-code-theme while restoring upstream theme selection. Gallery examples use local fieldwork fixtures and no backend or API key."
+  "adaptation": "Public primitives retain upstream APIs, layout, states, and motion. PromptInput preserves the host IME guard; CodeBlock preserves data-code-theme while restoring upstream theme selection. Gallery examples use local fieldwork fixtures and no backend or API key. The gallery code themes follow the host theme unless explicitly selected; Markdown prose and status messages have readable dark-mode styling."
 }

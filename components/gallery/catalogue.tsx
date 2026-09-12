@@ -36,7 +36,7 @@ function LivePreview({ entry }: { entry: GalleryEntry }) {
   }, [])
   const Preview = entry.component
   return (
-    <div ref={root} className="mx-auto min-h-32 w-full max-w-[600px] *:mx-auto">
+    <div ref={root} className="min-h-32 w-full *:mx-auto">
       {visible ? (
         <React.Suspense
           fallback={
@@ -68,10 +68,13 @@ function FamilyPreview({
   const entry =
     family.entries.find((item) => item.slug === selected) ?? family.entries[0]
   return (
-    <section id={family.id} className="scroll-mt-24">
-      <header className="mb-4 flex flex-wrap items-end justify-between gap-3">
+    <section
+      id={family.id}
+      className="border-separator-border scroll-mt-28 border-b border-dashed pb-6 min-[440px]:scroll-mt-24"
+    >
+      <header className="mb-2.5 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h2 className="text-base font-medium tracking-tight">
+          <h2 className="text-[13px] font-semibold tracking-tight">
             {family.name}
           </h2>
           <p className="text-text-secondary mt-1 text-xs">{entry.source}</p>
@@ -108,20 +111,23 @@ function FamilyPreview({
           </div>
         )}
       </header>
-      <div className="border-separator-border overflow-hidden rounded-2xl border">
-        <Tabs key={entry.slug} defaultSelectedKey="preview">
-          <TabList className="border-separator-border border-b px-4">
+      <div>
+        <Tabs key={entry.slug} defaultSelectedKey="preview" className="gap-2">
+          <TabList>
             <Tab id="preview">Preview</Tab>
             <Tab id="source">Source</Tab>
           </TabList>
           <TabPanel
             id="preview"
-            className="bg-background-secondary-default relative isolate overflow-auto p-4 [contain:layout_paint] sm:p-6"
+            className="border-separator-border bg-background-secondary-default relative isolate overflow-x-auto rounded-[14px] border p-3 [contain:layout_paint] sm:p-4"
           >
             <LivePreview entry={entry} />
           </TabPanel>
-          <TabPanel id="source">
-            <pre className="max-h-[520px] overflow-auto p-5 text-xs leading-5">
+          <TabPanel
+            id="source"
+            className="border-separator-border bg-background-secondary-default overflow-hidden rounded-[14px] border"
+          >
+            <pre className="max-h-[520px] overflow-auto p-4 text-xs leading-5">
               <code>{source[entry.path] ?? "Source is being prepared."}</code>
             </pre>
           </TabPanel>
@@ -173,8 +179,8 @@ export function Catalogue({ sources }: { sources: Record<string, string> }) {
     history.replaceState(null, "", `#${slug}`)
   }
   return (
-    <div className="mx-auto grid max-w-[1120px] lg:grid-cols-[224px_minmax(0,1fr)]">
-      <aside className="border-separator-border border-b p-5 lg:sticky lg:top-16 lg:h-[calc(100dvh-4rem)] lg:overflow-auto lg:border-r lg:border-b-0">
+    <div className="mx-auto grid max-w-[1080px] lg:grid-cols-[208px_minmax(0,1fr)]">
+      <aside className="border-separator-border border-b p-4 lg:sticky lg:top-16 lg:h-[calc(100dvh-4rem)] lg:overflow-auto lg:border-r lg:border-b-0">
         <label className="bg-background-secondary-default focus-within:border-border-focus-ring flex h-10 items-center gap-2 rounded-lg border border-transparent px-3">
           <Search className="text-text-secondary size-4" />
           <input
@@ -236,13 +242,13 @@ export function Catalogue({ sources }: { sources: Record<string, string> }) {
           ))}
         </nav>
       </aside>
-      <main className="min-w-0 px-5 py-8 sm:px-8 lg:px-8">
-        <header className="mb-12 max-w-2xl">
+      <main className="min-w-0 px-4 py-6 sm:px-6 lg:px-8">
+        <header className="mb-8 max-w-2xl">
           <p className="text-text-secondary text-sm">Components</p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight">
+          <h1 className="mt-2 text-2xl font-semibold tracking-tight">
             An interface for every part of agent work.
           </h1>
-          <p className="text-text-secondary mt-4 text-sm leading-6">
+          <p className="text-text-secondary mt-3 text-sm leading-6">
             From the first prompt to the final result. Explore thinking, tools,
             decisions, and generated interfaces in one consistent collection.
           </p>
@@ -251,7 +257,7 @@ export function Catalogue({ sources }: { sources: Record<string, string> }) {
             Synthetic examples
           </p>
         </header>
-        <div className="space-y-12">
+        <div className="space-y-6">
           {families.map((family) => (
             <FamilyPreview
               key={family.id}

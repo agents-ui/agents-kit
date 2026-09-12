@@ -94,7 +94,7 @@ function ComparisonContent({
   return (
     <div>
       <header className="mb-5">
-        <h3 className="text-[15px] font-semibold tracking-tight">
+        <h3 className="text-sm font-medium tracking-tight">
           {content.title}
         </h3>
         {content.description && (
@@ -111,7 +111,7 @@ function ComparisonContent({
               aria-pressed={selected}
               onClick={() => onAction?.("select", option.id)}
               className={cx(
-                "min-w-0 rounded-xl border p-4 text-left transition-colors",
+                "min-w-0 rounded-card border p-3 text-left transition-colors",
                 selected
                   ? "border-border-focus-ring bg-background-secondary-default"
                   : "border-separator-border hover:bg-background-secondary-hover"
@@ -171,7 +171,7 @@ function RecommendationContent({
           <p className="text-text-secondary text-xs font-medium">
             Recommendation
           </p>
-          <h3 className="mt-1 text-[15px] font-semibold tracking-tight">
+          <h3 className="mt-1 text-sm font-medium tracking-tight">
             {content.title}
           </h3>
         </div>
@@ -239,7 +239,7 @@ function DocumentContent({
           className="text-text-secondary mt-0.5 size-5 shrink-0"
         />
         <div className="min-w-0 flex-1">
-          <h3 className="text-[15px] font-semibold tracking-tight break-words">
+          <h3 className="text-sm font-medium tracking-tight break-words">
             {content.title}
           </h3>
           <p className="text-text-secondary mt-1 text-xs leading-5">
@@ -289,7 +289,7 @@ function ChecklistContent({
     <div>
       <header className="mb-4 flex items-start justify-between gap-3">
         <div>
-          <h3 className="text-[15px] font-semibold tracking-tight">
+          <h3 className="text-sm font-medium tracking-tight">
             {content.title}
           </h3>
           {content.description && (
@@ -357,7 +357,7 @@ function SourceBriefContent({
     <div>
       <header>
         <p className="text-text-secondary text-xs font-medium">Source brief</p>
-        <h3 className="mt-1 text-[15px] font-semibold tracking-tight">
+        <h3 className="mt-1 text-sm font-medium tracking-tight">
           {content.title}
         </h3>
       </header>

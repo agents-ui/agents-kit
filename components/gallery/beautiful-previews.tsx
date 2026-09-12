@@ -1,7 +1,5 @@
 "use client"
 
-import "@/components/beautiful-ui/original/beautiful-ui.css"
-
 import AgentScreen from "@/components/beautiful-ui/original/primitives/AgentScreen"
 import ApprovalCard from "@/components/beautiful-ui/original/primitives/ApprovalCard"
 import ChatComposer from "@/components/beautiful-ui/original/primitives/ChatComposer"
@@ -29,7 +27,7 @@ const publicBase = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "")
 
 function Frame({ children, wide = false }: { children: React.ReactNode; wide?: boolean }) {
   return (
-    <div className="beautiful-ui-scope flex min-h-[300px] w-full items-center justify-center overflow-auto rounded-xl bg-canvas p-5 text-ink">
+    <div className="beautiful-ui-scope w-full overflow-x-auto text-ink">
       <div className={wide ? "w-full min-w-[680px]" : "flex w-full justify-center"}>{children}</div>
     </div>
   )
@@ -38,9 +36,9 @@ function Frame({ children, wide = false }: { children: React.ReactNode; wide?: b
 function Variants({ values, children, wide }: { values: readonly string[]; children: (variant: string) => React.ReactNode; wide?: boolean }) {
   const [variant, setVariant] = React.useState(values[0])
   return (
-    <div className="beautiful-ui-scope flex min-h-[340px] w-full flex-col rounded-xl bg-canvas p-5 text-ink">
-      <div className={`flex min-h-0 flex-1 items-center justify-center overflow-auto ${wide ? "min-w-[680px]" : ""}`}>{children(variant)}</div>
-      <div className="mt-4 flex flex-wrap justify-center gap-1" aria-label="Variants">
+    <div className="beautiful-ui-scope w-full text-ink">
+      <div className={`overflow-x-auto ${wide ? "min-w-[680px]" : "flex justify-center"}`}>{children(variant)}</div>
+      <div className="mt-3 flex flex-wrap justify-center gap-1" aria-label="Variants">
         {values.map((value) => (
           <button key={value} type="button" aria-pressed={variant === value} onClick={() => setVariant(value)} className={`h-7 rounded-full px-3 text-xs transition-colors ${variant === value ? "bg-ink text-canvas" : "bg-surface text-ink-2 shadow-btn hover:bg-hover"}`}>
             {value}

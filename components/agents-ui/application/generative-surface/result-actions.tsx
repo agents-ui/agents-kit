@@ -40,6 +40,7 @@ export function ResultActions({
   return (
     <div
       className={cx("flex flex-wrap items-center gap-1", className)}
+      role="group"
       aria-label="Result actions"
     >
       <Button

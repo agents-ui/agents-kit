@@ -1,30 +1,39 @@
-:root {
-  --color-background-full: #fafafa;
-  --color-background-primary-default: #ffffff;
-  --color-background-secondary-default: #f4f4f4;
-  --color-background-primary-hover: #f0f0f0;
-  --color-text-primary: #242424;
-  --color-text-secondary: #666666;
-  --color-text-tertiary: #767676;
-  --color-border-button-default: #dedede;
-  --color-separator-border: #e5e5e5;
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, "SF Mono", monospace;
+  --radius-chip: 6px;
+  --radius-control: 8px;
+  --radius-card: 10px;
+  --radius-window: 14px;
+}
+
+html:root {
+  --color-background-full: oklch(0.985 0.001 286.376);
+  --color-background-primary-default: oklch(1 0 0);
+  --color-background-secondary-default: oklch(0.961 0.002 247.84);
+  --color-background-primary-hover: oklch(0.97 0.002 247.839);
+  --color-text-primary: oklch(0.247 0.006 258.361);
+  --color-text-secondary: oklch(0.506 0.01 264.477);
+  --color-text-tertiary: oklch(0.54 0.01 264.484);
+  --color-border-button-default: oklch(0.912 0.005 258.326);
+  --color-separator-border: oklch(0.946 0.003 264.542);
   --font-mono-source: var(--font-jetbrains-mono);
 }
 
-.dark {
-  --color-background-full: #141414;
-  --color-background-primary-default: #1c1c1c;
-  --color-background-secondary-default: #181818;
-  --color-background-primary-hover: #252525;
-  --color-text-primary: #ededed;
-  --color-text-secondary: #aaaaaa;
-  --color-text-tertiary: #929292;
-  --color-border-button-default: #363636;
-  --color-separator-border: #303030;
+html.dark {
+  --color-background-full: oklch(0.209 0.004 264.477);
+  --color-background-primary-default: oklch(0.26 0.006 271.191);
+  --color-background-secondary-default: oklch(0.231 0.004 264.487);
+  --color-background-primary-hover: oklch(0.289 0.006 271.22);
+  --color-text-primary: oklch(0.964 0.002 247.839);
+  --color-text-secondary: oklch(0.731 0.008 260.731);
+  --color-text-tertiary: oklch(0.7 0.008 260.731);
+  --color-border-button-default: oklch(0.356 0.007 264.474);
+  --color-separator-border: oklch(0.308 0.006 258.354);
 }
 
-:root,
-.dark {
+html:root,
+html.dark {
   --color-border-focus-ring: var(--color-text-primary);
   --color-tab-count-selected-background: var(--color-background-secondary-default);
   --background: var(--color-background-full);
@@ -47,6 +56,24 @@
   --sidebar-foreground: var(--color-text-primary);
   --sidebar-accent: var(--color-background-secondary-default);
   --sidebar-border: var(--color-separator-border);
+  --radius: 10px;
+}
+
+body {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  font-feature-settings: "cv11", "ss01";
+  text-rendering: optimizeLegibility;
+}
+
+@media (max-width: 639px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

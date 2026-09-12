@@ -2,6 +2,8 @@
 @import "../components/prompt-kit/styles.css";
 @import "../components/ai-elements/markdown.css";
 @import "../components/boardui/styles/globals.css";
+@import "../components/beautiful-ui/original/beautiful-ui.css";
+@import "../styles/agents.css";
 @source not "../vendor";
 /*
   ---break---
@@ -17,8 +19,6 @@
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-jetbrains-mono);
 }
 
 code {
@@ -217,13 +217,4 @@ html.dark {
   --shiki-token-string-expression: var(--shiki-dark-token-string-expression);
   --shiki-token-punctuation: var(--shiki-dark-token-punctuation);
   --shiki-token-link: var(--shiki-dark-token-link);
-}
-
-/* Highlighted code uses its wrapper's background. */
-pre.shiki {
-  background-color: transparent !important;
-}
-
-pre.shiki code {
-  background-color: transparent !important;
 }

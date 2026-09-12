@@ -5,5 +5,5 @@
   "license": "MIT",
   "copyright": "Copyright (c) 2026 Shane Levine",
   "families": 21,
-  "adaptation": "The original 21 public primitives and six internal building blocks are preserved under original/. Gallery fixtures are adapted for Agents Kit, upstream styles are isolated to .beautiful-ui-scope, and the proprietary Iconists dependency is replaced with Lucide icons. Existing controlled Agents Kit adapters remain available at the component root."
+  "adaptation": "Original primitives and internal building blocks retain their APIs and interactions. The gallery uses Agents Kit fixtures; Beautiful UI theme utilities compile through the main Tailwind stylesheet. Shared semantic colors, readable tertiary text, neutral focus, and Inter/JetBrains Mono typography follow the Agents Kit design contract. Proprietary Iconists icons use Lucide equivalents. Existing root adapters remain available. Selection Actions uses a contained two-row toolbar on narrow hosts, while retaining the desktop floating toolbar."
 }

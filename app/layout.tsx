@@ -1,7 +1,6 @@
 import type { Metadata } from "next"
 import { Inter, JetBrains_Mono } from "next/font/google"
 import "./globals.css"
-import "../styles/agents.css"
 import Script from "next/script"
 import { LayoutClient } from "./layout.client"
 import { Providers } from "./providers"

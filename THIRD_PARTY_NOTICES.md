@@ -86,7 +86,7 @@ Some v0.1 image-editor examples still use public Unsplash images under the [Unsp
 
 The 49 public components and their 84 documented examples are copied from [Vercel AI Elements](https://github.com/vercel/ai-elements/tree/6a9d5b1822ffb10bba4bd97175f01edd7d8651cd). Their Apache-2.0 license is distributed at [components/ai-elements/LICENSE](components/ai-elements/LICENSE). Local import paths and demo-only adapters are recorded alongside the source. The isolated shadcn/ui primitives retain their separate MIT license and notice under `components/ai-elements/_ui/`.
 
-Official Rive animations and voice samples remain hosted at their original public demo URLs; their binary redistribution terms are not stated in the source repository. Provider logos, sample Unsplash images, the sample GitHub avatar, and the web-preview frame also remain external. The source coverage report records these runtime asset dependencies.
+Official Rive animations and voice samples remain hosted at their original public demo URLs; their binary redistribution terms are not stated in the source repository. Provider logos, sample Unsplash images, and the sample GitHub avatar also remain external. The web-preview example uses a local HTML fixture. The source coverage report records these runtime asset dependencies.
 
 ## Prompt Kit source
 

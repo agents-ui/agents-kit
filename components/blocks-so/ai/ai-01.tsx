@@ -54,7 +54,7 @@ export function BlocksAi01({
 
   return (
     <div className={cn("w-full", className)} data-blocks-ai="ai-01">
-      <h2 className="mx-auto mb-6 max-w-2xl text-balance text-center text-3xl leading-tight font-semibold tracking-tight">
+      <h2 className="mx-auto mb-4 max-w-2xl text-balance text-center text-xl leading-tight font-medium tracking-tight">
         {title}
       </h2>
       <form

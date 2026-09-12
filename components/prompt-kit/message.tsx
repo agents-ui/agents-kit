@@ -58,7 +58,7 @@ const MessageContent = ({
   ...props
 }: MessageContentProps) => {
   const classNames = cn(
-    "rounded-lg p-2 text-foreground bg-secondary prose break-words whitespace-normal",
+    "prose prose-sm dark:prose-invert rounded-lg bg-secondary p-2 text-foreground break-words whitespace-normal",
     className
   )
 

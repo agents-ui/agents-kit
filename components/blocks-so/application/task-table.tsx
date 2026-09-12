@@ -67,7 +67,7 @@ export function TaskTable({
       )}
     >
       <header className="border-separator-border border-b p-4">
-        <h2 className="text-lg font-semibold">Tasks</h2>
+        <h2 className="text-sm font-medium">Tasks</h2>
         <p className="text-text-secondary mt-1 text-xs">{tasks.length} items</p>
       </header>
       <div className="overflow-x-auto">

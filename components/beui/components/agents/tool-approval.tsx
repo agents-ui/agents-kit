@@ -148,7 +148,7 @@ export function ToolApproval({
       data-state={status}
       aria-busy={busy}
       className={cn(
-        "w-full overflow-hidden rounded-2xl border border-border/60 bg-muted/20 text-sm",
+        "w-full overflow-hidden rounded-lg border border-border/60 bg-muted/20 text-sm",
         className,
       )}
     >
@@ -156,7 +156,7 @@ export function ToolApproval({
         <span
           aria-hidden="true"
           className={cn(
-            "mt-0.5 grid size-8 shrink-0 place-items-center rounded-xl border border-border/60 bg-background text-muted-foreground",
+            "mt-0.5 grid size-8 shrink-0 place-items-center rounded-md border border-border/60 bg-background text-muted-foreground",
             error && "text-destructive",
           )}
         >
@@ -219,7 +219,7 @@ export function ToolApproval({
         id={detailsId}
         open={currentOpen}
       >
-        <dl className="mx-4 mb-4 grid gap-2 rounded-xl border border-border/50 bg-background/70 p-3">
+        <dl className="mx-4 mb-4 grid gap-2 rounded-lg border border-border/50 bg-background/70 p-3">
           {parameters.map((parameter) => (
             <div
               key={parameter.id}
@@ -248,7 +248,7 @@ export function ToolApproval({
               onClick={onApprove}
               whileTap={reduce ? undefined : { scale: 0.97 }}
               transition={SPRING_PRESS}
-              className="rounded-xl bg-foreground px-3 py-1.5 text-xs font-medium text-background outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="rounded-md bg-foreground px-3 py-1.5 text-xs font-medium text-background outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Allow once
             </motion.button>
@@ -258,7 +258,7 @@ export function ToolApproval({
                 onClick={onAlwaysAllow}
                 whileTap={reduce ? undefined : { scale: 0.97 }}
                 transition={SPRING_PRESS}
-                className="rounded-xl border border-border/60 bg-background px-3 py-1.5 text-xs font-medium text-foreground outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+                className="rounded-md border border-border/60 bg-background px-3 py-1.5 text-xs font-medium text-foreground outline-none transition-colors hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
               >
                 Always allow
               </motion.button>
@@ -266,7 +266,7 @@ export function ToolApproval({
             <button
               type="button"
               onClick={onDeny}
-              className="rounded-xl px-3 py-1.5 text-xs font-medium text-muted-foreground outline-none transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+              className="rounded-md px-3 py-1.5 text-xs font-medium text-muted-foreground outline-none transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
             >
               Deny
             </button>

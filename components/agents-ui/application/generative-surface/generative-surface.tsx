@@ -641,7 +641,7 @@ export function AgentGenerativeSurface({
       transition={{ layout: { type: "spring", stiffness: 350, damping: 38 } }}
       aria-busy={status === "loading"}
       className={cx(
-        "generated-result border-separator-border bg-background-primary-default text-text-primary w-full min-w-0 overflow-hidden rounded-3xl border p-5 shadow-[0_2px_6px_rgb(0_0_0/0.025)]",
+        "generated-result border-separator-border bg-background-primary-default text-text-primary w-full min-w-0 overflow-hidden rounded-window border p-4 shadow-sm",
         status === "ready" &&
           content.type === "focus" &&
           "border-transparent bg-[#202a3a] text-white",

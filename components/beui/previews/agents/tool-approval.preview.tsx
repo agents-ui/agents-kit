@@ -43,7 +43,7 @@ export function ToolApprovalPreview() {
   }
 
   return (
-    <div className="relative h-[360px] w-full max-w-lg">
+    <div className="flex min-h-[360px] w-full max-w-lg flex-col">
       <ToolApproval
         tool="terminal.run"
         title={
@@ -73,7 +73,7 @@ export function ToolApprovalPreview() {
       <button
         type="button"
         onClick={replay}
-        className="text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:ring-ring absolute bottom-0 left-0 inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-colors outline-none focus-visible:ring-2"
+        className="text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:ring-ring mt-auto inline-flex w-fit items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-colors outline-none focus-visible:ring-2"
       >
         <RotateCcw className="size-3" />
         Replay

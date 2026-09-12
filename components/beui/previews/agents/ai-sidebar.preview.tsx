@@ -134,7 +134,7 @@ export function AISidebarPreview() {
     <div className="w-full px-0 py-2 sm:p-3">
       <AnimatedSidebarProvider
         style={{ "--sidebar-width": "16rem" }}
-        className="border-foreground/[0.08] bg-background h-[720px] min-h-0 w-full overflow-hidden rounded-2xl border"
+        className="border-foreground/[0.08] bg-background h-[720px] min-h-0 w-full overflow-hidden rounded-xl border"
       >
         <AnimatedSidebar
           ariaLabel="Workspace resources"

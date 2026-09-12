@@ -11,21 +11,21 @@
 
 .beautiful-ui-scope {
   /* surfaces — cool, blue-tinted neutrals */
-  --page: oklch(0.985 0.001 286.376);
-  --canvas: oklch(0.961 0.002 247.84);
-  --surface: oklch(1 0 0);
+  --page: var(--color-background-full);
+  --canvas: var(--color-background-secondary-default);
+  --surface: var(--color-background-primary-default);
   --inset: oklch(0.979 0.002 247.839);
-  --hover: oklch(0.97 0.002 247.839);
+  --hover: var(--color-background-primary-hover);
   --hover-2: oklch(0.933 0.003 247.86);
 
   /* ink ramp */
-  --ink: oklch(0.247 0.006 258.361);
-  --ink-2: oklch(0.506 0.01 264.477);
-  --ink-3: oklch(0.695 0.009 264.505);
+  --ink: var(--color-text-primary);
+  --ink-2: var(--color-text-secondary);
+  --ink-3: var(--color-text-tertiary);
 
   /* borders — solid and crisp, not alpha */
-  --line: oklch(0.946 0.003 264.542);
-  --line-strong: oklch(0.912 0.005 258.326);
+  --line: var(--color-separator-border);
+  --line-strong: var(--color-border-button-default);
   --line-soft: oklch(0.966 0.002 264.542);
   --grid-line: color-mix(in srgb, var(--line) 78%, transparent);
   --field: oklch(0.961 0.001 286.375);
@@ -71,7 +71,7 @@
 }
 
 .beautiful-ui-scope :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--ink);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -81,19 +81,19 @@
 }
 
 .dark .beautiful-ui-scope {
-  --page: oklch(0.209 0.004 264.477);
-  --canvas: oklch(0.231 0.004 264.487);
-  --surface: oklch(0.26 0.006 271.191);
+  --page: var(--color-background-full);
+  --canvas: var(--color-background-secondary-default);
+  --surface: var(--color-background-primary-default);
   --inset: oklch(0.243 0.004 264.492);
-  --hover: oklch(0.289 0.006 271.22);
+  --hover: var(--color-background-primary-hover);
   --hover-2: oklch(0.318 0.007 274.747);
 
-  --ink: oklch(0.964 0.002 247.839);
-  --ink-2: oklch(0.731 0.008 260.731);
-  --ink-3: oklch(0.541 0.01 264.484);
+  --ink: var(--color-text-primary);
+  --ink-2: var(--color-text-secondary);
+  --ink-3: var(--color-text-tertiary);
 
-  --line: oklch(0.308 0.006 258.354);
-  --line-strong: oklch(0.356 0.007 264.474);
+  --line: var(--color-separator-border);
+  --line-strong: var(--color-border-button-default);
   --line-soft: oklch(0.278 0.006 258.354);
   --field: oklch(0.293 0.006 271.223);
   --stripe: oklch(1 0 0 / 0.055);
@@ -162,16 +162,6 @@
   --shadow-card: var(--shadow-card);
   --shadow-raised: var(--shadow-raised);
   --shadow-overlay: var(--shadow-overlay);
-
-  /* type */
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-mono-face), ui-monospace, "SF Mono", monospace;
-
-  /* radii — chips 6, controls 8, cards 10, windows 14, pills 999 */
-  --radius-chip: 6px;
-  --radius-control: 8px;
-  --radius-card: 10px;
-  --radius-window: 14px;
 
   /* easing — strong curves; built-ins are too weak */
   --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1);

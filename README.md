@@ -38,6 +38,10 @@ Agent interfaces are moving beyond fixed dashboards. Models now return structure
 
 The main catalog groups equivalent implementations into families. For example, related loading, approval, prompt, message, code, and task components appear together as source variants instead of repeated, unrelated entries.
 
+## Design system
+
+All collections share a compact foundation based on Beautiful UI: Inter and JetBrains Mono, consistent spacing, cool neutral surfaces, hairline borders, and explicit chip/control/card/window radii. Component-specific states and interactions remain intact. The [design contract](DESIGN.md) and [installation guide](https://agents-ui.github.io/agents-kit/docs/installation) document the typography, theme, and required CSS pipeline.
+
 ## Generative UI
 
 [![Generated results with selectable content types and ready, loading, and error states](public/screenshots/generated-results-v02.png)](https://agents-ui.github.io/agents-kit/generative)
@@ -193,7 +197,7 @@ Pinned revisions, source relationships, and notices are recorded in [THIRD_PARTY
 
 ## Release status
 
-v0.2.0 is the generative UI release, published on 2026-09-05 and updated on 2026-09-11 with the complete public AI source sweep. The library is distributed as copyable source and registry entries. See [CHANGELOG.md](CHANGELOG.md) for release details and [Migrating to v0.2](docs/migrating-to-v0.2.md) for the compatibility path.
+v0.2.0 is the generative UI release, published on 2026-09-05 and updated on 2026-09-12 with the public AI source sweep and shared design foundation. The library is distributed as copyable source and registry entries. See [CHANGELOG.md](CHANGELOG.md) for release details and [Migrating to v0.2](docs/migrating-to-v0.2.md) for the compatibility path.
 
 ## Author
 

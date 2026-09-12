@@ -296,6 +296,13 @@ const items = definitions.map((definition) => {
   const files = new Map<string, RegistryFile>()
   const dependencies = new Set(definition.dependencies)
   collect(definition.path, files, dependencies)
+  // Every collection uses the same typography and semantic theme aliases.
+  for (const file of [
+    "styles/agents.css",
+    "components/beautiful-ui/LICENSE",
+    "components/boardui/LICENSE",
+  ])
+    collect(path.join(root, file), files, dependencies)
   if (
     [...files.keys()].some((file) => file.startsWith("components/boardui/"))
   ) {

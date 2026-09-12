@@ -6,10 +6,10 @@ export default function GenerativePage() {
   return (
     <>
       <PublicHeader />
-      <main className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8">
-        <header className="mb-12 max-w-2xl">
+      <main className="mx-auto max-w-[1120px] px-5 py-10 sm:px-8">
+        <header className="mb-8 max-w-2xl">
           <p className="text-text-secondary text-sm">Playground</p>
-          <h1 className="mt-3 text-4xl font-semibold tracking-tight">
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight">
             Useful answers, thoughtfully shaped.
           </h1>
           <p className="text-text-secondary mt-4 text-base leading-7">
@@ -23,13 +23,13 @@ export default function GenerativePage() {
         </header>
         <section
           aria-label="Interactive generated surface"
-          className="border-separator-border bg-background-secondary-default rounded-3xl border p-4 sm:p-8"
+          className="border-separator-border bg-background-secondary-default rounded-window border p-3 sm:p-4"
         >
           <GenerativeShowcase />
         </section>
-        <section className="mt-16">
-          <div className="mb-8 flex items-center justify-between gap-4">
-            <h2 className="text-xl font-semibold tracking-tight">
+        <section className="mt-10">
+          <div className="mb-5 flex items-center justify-between gap-4">
+            <h2 className="text-base font-medium tracking-tight">
               The complete surface collection
             </h2>
             <Link

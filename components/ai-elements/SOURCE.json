@@ -8,5 +8,10 @@
     "packages/examples/src",
     "packages/shadcn-ui/components/ui"
   ],
-  "changes": ["Rewritten local import paths"]
+  "changes": [
+    "Rewritten local import paths",
+    "Constrained the Plan and Environment Variables gallery examples to the available preview width",
+    "Allowed Environment Variables values and audio ranges to shrink on narrow screens",
+    "Replaced the remote Web Preview example page with an equivalent local srcDoc fixture"
+  ]
 }

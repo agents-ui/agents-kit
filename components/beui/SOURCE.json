@@ -5,5 +5,5 @@
   "revisionUrl": "https://github.com/starc007/ui-components/tree/b64c092b63b99c7340376b522325ea309156ba00",
   "license": "MIT",
   "scope": "Exact public dependency closure for all 16 AI agent registry entries and all 28 documented demos at the pinned revision.",
-  "adaptation": "Import aliases point at the isolated components/beui tree so the public source remains portable in Agents Kit. Gallery fixtures preserve the upstream interactions and motion while using local Fieldwork copy."
+  "adaptation": "Import aliases point at the isolated components/beui tree so the public source remains portable in Agents Kit. Gallery fixtures preserve the upstream interactions and motion while using local Fieldwork copy. Class-only adaptations align ordinary cards, controls, and app windows with the shared Agents Kit radius scale while preserving component APIs, message bubbles, status pills, media, semantic colors, and motion."
 }

@@ -38,14 +38,14 @@ export function SetupChecklist({
   return (
     <section
       className={cx(
-        "border-separator-border bg-background-primary-default w-full max-w-[620px] rounded-xl border p-5",
+        "border-separator-border bg-background-primary-default w-full max-w-[620px] rounded-xl border p-4",
         className
       )}
     >
       <header>
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-lg font-semibold">{title}</h2>
+            <h2 className="text-sm font-medium">{title}</h2>
             {description && (
               <p className="text-text-secondary mt-1 text-sm">{description}</p>
             )}
@@ -63,14 +63,14 @@ export function SetupChecklist({
           />
         </div>
       </header>
-      <ol className="divide-separator-border border-separator-border mt-5 divide-y border-y">
+      <ol className="divide-separator-border border-separator-border mt-4 divide-y border-y">
         {steps.map((step, index) => {
           const active = step.id === selected?.id
           return (
             <li
               key={step.id}
               className={cx(
-                "grid grid-cols-[24px_1fr_auto] gap-3 py-4",
+                "grid grid-cols-[24px_1fr_auto] gap-3 py-3",
                 active && "bg-background-secondary-default"
               )}
             >

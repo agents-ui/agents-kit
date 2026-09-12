@@ -157,7 +157,7 @@ export const EnvironmentVariableGroup = ({
   children,
   ...props
 }: EnvironmentVariableGroupProps) => (
-  <div className={cn("flex items-center gap-2", className)} {...props}>
+  <div className={cn("flex min-w-0 items-center gap-2", className)} {...props}>
     {children}
   </div>
 )
@@ -172,7 +172,7 @@ export const EnvironmentVariableName = ({
   const { name } = useContext(EnvironmentVariableContext)
 
   return (
-    <span className={cn("font-mono text-sm", className)} {...props}>
+    <span className={cn("truncate font-mono text-sm", className)} {...props}>
       {children ?? name}
     </span>
   )
@@ -195,7 +195,7 @@ export const EnvironmentVariableValue = ({
   return (
     <span
       className={cn(
-        "text-muted-foreground font-mono text-sm",
+        "text-muted-foreground truncate font-mono text-sm",
         !showValues && "select-none",
         className
       )}
@@ -224,7 +224,7 @@ export const EnvironmentVariable = ({
     <EnvironmentVariableContext.Provider value={envVarContextValue}>
       <div
         className={cn(
-          "flex items-center justify-between gap-4 px-4 py-3",
+          "flex min-w-0 items-center justify-between gap-4 px-4 py-3",
           className
         )}
         {...props}

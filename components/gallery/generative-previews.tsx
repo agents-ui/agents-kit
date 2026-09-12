@@ -420,7 +420,7 @@ function EditPanel({
   const labels = fields(item)
   return (
     <form
-      className="border-separator-border bg-background-primary-default mt-3 space-y-3 rounded-2xl border p-4"
+      className="border-separator-border bg-background-primary-default rounded-window mt-3 space-y-3 border p-4"
       onSubmit={(event) => {
         event.preventDefault()
         onApply()
@@ -467,7 +467,7 @@ function ComparePanel({
   current: GeneratedContent
 }) {
   return (
-    <section className="border-separator-border bg-background-primary-default mt-3 grid gap-3 rounded-2xl border p-4 sm:grid-cols-2">
+    <section className="border-separator-border bg-background-primary-default rounded-window mt-3 grid gap-3 border p-4 sm:grid-cols-2">
       <div>
         <h3 className="text-text-secondary text-xs font-medium">Original</h3>
         <p className="mt-2 text-[13px] leading-5 whitespace-pre-wrap">
@@ -693,6 +693,7 @@ export function GenerativeShowcase({
       <>
         <div className="mt-2 flex justify-center">
           <ResultActions
+            className={mode === "view" ? "grid grid-cols-3" : undefined}
             state={mode}
             saved={saved.includes(item.type)}
             onExpand={() => setMode(item.type, "expanded")}
@@ -779,7 +780,8 @@ export function GenerativeShowcase({
       {!grid && (
         <>
           <div
-            className="mb-8 flex flex-wrap justify-center gap-1"
+            className="mb-5 flex flex-wrap justify-center gap-1"
+            role="group"
             aria-label="Generated content types"
           >
             {items.map((item, index) => (
@@ -792,7 +794,7 @@ export function GenerativeShowcase({
                 }}
                 aria-pressed={selected === index}
                 className={cx(
-                  "min-h-9 rounded-lg px-3 text-[13px] focus-visible:outline-2 focus-visible:outline-offset-2",
+                  "rounded-control min-h-8 px-2.5 text-xs focus-visible:outline-2 focus-visible:outline-offset-2",
                   selected === index
                     ? "bg-background-primary-default font-medium shadow-sm"
                     : "text-text-secondary hover:text-text-primary"
@@ -802,7 +804,7 @@ export function GenerativeShowcase({
               </button>
             ))}
           </div>
-          <div className="flex min-h-[440px] items-start justify-center">
+          <div className="flex min-h-[320px] items-start justify-center">
             {card(items[selected], selected, true)}
           </div>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-2">

@@ -12,8 +12,8 @@ const systemMessageVariants = cva(
     variants: {
       variant: {
         action: "text-zinc-700 dark:text-zinc-300",
-        error: "text-red-700 dark:text-red-800",
-        warning: "text-amber-700 dark:text-amber-700",
+        error: "text-red-700 dark:text-red-400",
+        warning: "text-amber-700 dark:text-amber-400",
       },
       fill: {
         true: "bg-background",

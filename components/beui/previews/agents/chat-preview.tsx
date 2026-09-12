@@ -199,7 +199,7 @@ export function ChatPreview({
   return (
     <div
       className={cn(
-        "border-border/70 bg-background flex h-[440px] w-full max-w-xl flex-col overflow-hidden rounded-2xl border",
+        "border-border/70 bg-background flex h-[440px] w-full max-w-xl flex-col overflow-hidden rounded-xl border",
         className
       )}
     >

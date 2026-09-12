@@ -493,7 +493,7 @@ function ResourceRow({
       onDragOver={(event) => onDragOver(event, row)}
       onDrop={onDrop}
       className={cn(
-        "group/resource relative flex min-h-9 min-w-0 cursor-pointer items-center gap-2.5 rounded-xl pr-3 text-sm outline-none",
+        "group/resource relative flex min-h-9 min-w-0 cursor-pointer items-center gap-2.5 rounded-md pr-3 text-sm outline-none",
         "text-muted-foreground transition-colors hover:bg-muted hover:text-foreground",
         "focus-visible:bg-muted/70 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-inset",
         "data-[menu-open=true]:bg-muted data-[menu-open=true]:text-foreground",

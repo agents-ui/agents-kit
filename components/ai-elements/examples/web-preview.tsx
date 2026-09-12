@@ -60,6 +60,8 @@ const exampleLogs = [
   },
 ]
 
+const fieldworkPreview = `<!doctype html><html><body style="margin:0;background:#f7f8fa;color:#20242c;font:14px/1.5 system-ui,sans-serif"><main style="padding:24px"><section style="max-width:520px;margin:auto;background:white;border:1px solid #e1e4e8;border-radius:10px;padding:20px"><p style="margin:0 0 6px;color:#667085;font-size:12px">Fieldwork summary</p><h1 style="margin:0 0 12px;font-size:18px">River station R-14</h1><p style="margin:0">Twelve readings checked. Ten are verified and two need review.</p></section></main></body></html>`
+
 const Example = () => {
   const [, setFullscreen] = useState(false)
 
@@ -70,7 +72,7 @@ const Example = () => {
 
   return (
     <WebPreview
-      defaultUrl="/"
+      defaultUrl="fieldwork.local/summary"
       onUrlChange={handleUrlChange}
       style={{ height: "400px" }}
     >
@@ -105,7 +107,7 @@ const Example = () => {
         </WebPreviewNavigationButton>
       </WebPreviewNavigation>
 
-      <WebPreviewBody src="https://preview-v0me-kzml7zc6fkcvbyhzrf47.vusercontent.net/" />
+      <WebPreviewBody srcDoc={fieldworkPreview} />
 
       <WebPreviewConsole logs={exampleLogs} />
     </WebPreview>

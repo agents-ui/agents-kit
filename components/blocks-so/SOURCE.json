@@ -16,5 +16,5 @@
     "content/components/onboarding/onboarding-03.tsx",
     "content/components/tables/table-02.tsx"
   ],
-  "adaptation": "Public AI blocks retain upstream layouts, controls, interaction states, transitions, attachment handling, and response animation. Import paths, host theme tokens, reusable callbacks, and demo fixture copy were adapted for Agents Kit. Existing application compositions remain controlled adaptations."
+  "adaptation": "Public AI blocks retain upstream layouts, controls, interaction states, transitions, attachment handling, and response animation. Import paths, host theme tokens, reusable callbacks, and demo fixture copy were adapted for Agents Kit. Existing application compositions remain controlled adaptations. Card insets and AI starter headings follow the shared compact Agents Kit design system."
 }

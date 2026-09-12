@@ -210,7 +210,7 @@ export function FileDiff({
         open={currentOpen}
       >
         <div className="pl-6 pt-1.5">
-          <div className="overflow-hidden rounded-xl bg-muted/80">
+          <div className="overflow-hidden rounded-lg bg-muted/80">
             <div
               ref={viewportRef}
               data-slot="file-diff-viewport"

@@ -170,3 +170,18 @@ test("every documented Beautiful UI variant renders its distinct state", async (
   assert.match(render(OriginalAgentScreen, { variant: "Working" }), />Open</)
   assert.match(render(OriginalAgentScreen, { variant: "Loading" }), /Connecting to agent&#x27;s screen/)
 })
+
+test("selection actions toolbar stays inside its host or viewport", async () => {
+  const { clampToolbarCenter, isCompactToolbar } = await import(
+    "../components/beautiful-ui/original/primitives/SelectionActions"
+  )
+
+  assert.equal(isCompactToolbar(262), true)
+  assert.equal(isCompactToolbar(332), true)
+  assert.equal(isCompactToolbar(460), false)
+  assert.equal(clampToolbarCenter(20, 370, 32, 326, 390), 163)
+  assert.equal(clampToolbarCenter(306, 370, 32, 326, 390), 163)
+  assert.equal(clampToolbarCenter(20, 370, 200, 460, 1200), 185)
+  assert.equal(clampToolbarCenter(230, 370, 200, 460, 1200), 230)
+  assert.equal(clampToolbarCenter(440, 370, 200, 460, 1200), 275)
+})

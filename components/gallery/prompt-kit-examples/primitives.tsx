@@ -43,13 +43,14 @@ import { ThinkingBar } from "@/components/prompt-kit/thinking-bar"
 import { Tool, type ToolPart } from "@/components/prompt-kit/tool"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
+import { useTheme } from "next-themes"
 
 const fieldImage = "PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMTYwIDEwMCI+PHJlY3Qgd2lkdGg9IjE2MCIgaGVpZ2h0PSIxMDAiIHJ4PSIxOCIgZmlsbD0iIzE0MjUxYyIvPjxwYXRoIGQ9Ik0yMCA3MGMyMC0zMiAzNC04IDUyLTI4czI4IDEwIDQ4LTE0IDE4IDE4IDIwIDMwIiBmaWxsPSJub25lIiBzdHJva2U9IiM3NmQ4OWEiIHN0cm9rZS13aWR0aD0iNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PGNpcmNsZSBjeD0iMTIwIiBjeT0iMjgiIHI9IjciIGZpbGw9IiNkOGYzZGYiLz48L3N2Zz4="
 
 export type PromptKitExampleProps = { family: string; variant: string }
 
 const Frame = ({ children, className }: { children: React.ReactNode; className?: string }) => (
-  <div className={cn("mx-auto w-full max-w-2xl p-4", className)} data-prompt-kit-example="">{children}</div>
+  <div className={cn("mx-auto w-full max-w-2xl p-2 sm:p-3", className)} data-prompt-kit-example="">{children}</div>
 )
 
 function ChainExample({ advanced }: { advanced: boolean }) {
@@ -64,8 +65,9 @@ function ChatContainerExample({ custom }: { custom: boolean }) {
 }
 
 function CodeExample({ variant }: { variant: string }) {
+  const { resolvedTheme } = useTheme()
   const language = variant.includes("python") ? "python" : variant.includes("css") ? "css" : "tsx"
-  const theme = variant.includes("nord") ? "nord" : variant.includes("themed") ? "github-dark" : "github-light"
+  const theme = variant.includes("nord") ? "nord" : variant.includes("themed") || resolvedTheme === "dark" ? "github-dark" : "github-light"
   const code = language === "python" ? "def summarize(notes):\n    return [note for note in notes if note.verified]" : language === "css" ? ".field-note {\n  border-left: 2px solid currentColor;\n}" : "export function Finding() {\n  return <p>Reading verified</p>\n}"
   return <Frame><CodeBlock>{variant.includes("header") && <CodeBlockGroup className="border-b px-4 py-2 text-xs text-muted-foreground"><span>fieldwork.{language}</span><Button aria-label="Copy code" size="sm" variant="ghost"><Copy className="size-3.5" /></Button></CodeBlockGroup>}<CodeBlockCode code={code} language={language} theme={theme} /></CodeBlock></Frame>
 }

@@ -19,7 +19,7 @@ export function BoardUiAgentThinkingPreview({
     infinity: "Running the workflow",
   }
   return (
-    <div className="bg-background-secondary-default flex min-h-64 w-full items-center justify-center rounded-xl p-6">
+    <div className="bg-background-secondary-default flex min-h-40 w-full items-center justify-center rounded-xl p-4">
       <AgentThinking variant={variant} label={labels[variant]} />
     </div>
   )
@@ -27,7 +27,7 @@ export function BoardUiAgentThinkingPreview({
 
 export function BoardUiComposerLoaderPreview() {
   return (
-    <div className="bg-background-secondary-default flex min-h-64 w-full items-center justify-center rounded-xl p-6">
+    <div className="bg-background-secondary-default flex min-h-40 w-full items-center justify-center rounded-xl p-4">
       <ComposerLoader className="w-full max-w-xl">
         <div className="text-body-regular text-text-secondary flex h-[52px] items-center rounded-full bg-transparent px-5">
           Preparing your response…
