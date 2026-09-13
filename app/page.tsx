@@ -1,6 +1,7 @@
 import { GitHubStarButton } from "@/components/app/github-star-button"
 import { GenerativeShowcase } from "@/components/gallery/generative-previews"
 import { HomeChatPreview } from "@/components/gallery/home-chat-preview"
+import { HomeVoicePreview } from "@/components/gallery/home-voice-preview"
 import { PublicHeader } from "@/components/gallery/public-header"
 import { ArrowRight } from "lucide-react"
 import Link from "next/link"
@@ -11,15 +12,21 @@ export default function Home() {
       <PublicHeader />
       <main>
         <section className="mx-auto max-w-[860px] px-5 pt-20 pb-16 text-center sm:pt-28">
-          <p className="text-text-secondary text-xs">Agents Kit v0.2</p>
+          <Link
+            href="#voice"
+            className="text-text-secondary hover:text-text-primary inline-flex items-center gap-2 text-xs"
+          >
+            New in v0.3 · Voice agents
+            <ArrowRight className="size-3" aria-hidden="true" />
+          </Link>
           <h1 className="mt-5 text-4xl leading-[1.08] font-semibold tracking-tight sm:text-6xl">
             Build better
             <br />
             agent interfaces.
           </h1>
           <p className="text-text-secondary mx-auto mt-6 max-w-xl text-base leading-7">
-            Messages, tools, approvals, and results people can work with. Built
-            in React. Yours to copy and change.
+            Chat, voice, tools, approvals, and results people can work with.
+            Built in React. Yours to copy and change.
           </p>
           <HomeChatPreview />
           <div className="mt-8 flex flex-wrap justify-center gap-3">
@@ -31,10 +38,10 @@ export default function Home() {
               <ArrowRight className="size-4" />
             </Link>
             <Link
-              href="/generative"
+              href="/voice"
               className="border-border-button-default inline-flex h-9 items-center gap-2 rounded-lg border px-4 text-sm font-medium"
             >
-              Open playground
+              Explore voice
             </Link>
             <GitHubStarButton />
           </div>
@@ -44,6 +51,66 @@ export default function Home() {
               Your collection is still available.
             </Link>
           </p>
+        </section>
+        <section
+          id="voice"
+          className="border-separator-border mx-auto max-w-[1120px] scroll-mt-20 border-t px-5 py-12 sm:px-8"
+        >
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-text-secondary text-xs">New in v0.3</p>
+              <h2 className="mt-2 text-xl font-medium tracking-tight">
+                Interfaces for voice agents.
+              </h2>
+              <p className="text-text-secondary mt-3 max-w-xl text-sm leading-6">
+                37 new entries for conversations people can hear, follow, and
+                control.
+              </p>
+            </div>
+            <Link
+              href="/voice"
+              className="text-text-secondary hover:text-text-primary inline-flex items-center gap-2 text-sm"
+            >
+              Explore all 37 voice entries
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+          <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.8fr]">
+            <div>
+              <dl className="space-y-6">
+                <div>
+                  <dt className="text-sm font-medium">LiveKit</dt>
+                  <dd className="text-text-secondary mt-2 text-[13px] leading-6">
+                    15 entries for call controls, transcripts, complete
+                    sessions, and popups.
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-sm font-medium">ElevenLabs</dt>
+                  <dd className="text-text-secondary mt-2 text-[13px] leading-6">
+                    17 families for voice input, playback, waveforms, and voice
+                    selection.
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-sm font-medium">OrbKit</dt>
+                  <dd className="text-text-secondary mt-2 text-[13px] leading-6">
+                    Four animated shader styles: Hydrogen, Ion, Dither, and
+                    Nimbus.
+                  </dd>
+                </div>
+              </dl>
+              <Link
+                href="/docs/voice-agents"
+                className="mt-6 inline-block text-xs underline underline-offset-4"
+              >
+                Build your first voice interface
+              </Link>
+            </div>
+            <div className="min-h-[480px] min-w-0">
+              <HomeVoicePreview />
+            </div>
+          </div>
         </section>
         <section className="border-separator-border mx-auto max-w-[1120px] border-t px-5 py-12 sm:px-8">
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
@@ -171,6 +238,9 @@ export default function Home() {
               ],
               ["AI Elements", "https://github.com/vercel/ai-elements"],
               ["Prompt Kit", "https://github.com/ibelick/prompt-kit"],
+              ["LiveKit", "https://github.com/livekit/components-js"],
+              ["ElevenLabs UI", "https://github.com/elevenlabs/ui"],
+              ["OrbKit", "https://github.com/zzzzshawn/orbkit"],
             ].map(([name, href]) => (
               <a
                 key={name}

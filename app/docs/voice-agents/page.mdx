@@ -1,0 +1,73 @@
+import { generateMetadata } from "../utils/metadata"
+
+export const metadata = generateMetadata("Voice agents", "LiveKit and ElevenLabs components, previews, and provider integration.")
+
+# Voice agents
+
+Agents Kit v0.3 brings LiveKit and ElevenLabs UI into the same component library. Browse the dedicated [Voice section](/voice) for visualizers, session controls, conversations, transcripts, playback, and voice selection.
+
+The gallery uses sample data and manual audio levels. It does not connect to an agent, request microphone permission, or call a model. Playback starts only when you press Play. The bundled four-second audio fixture is a generated tone, not a speech recording.
+
+## Install
+
+Registry installation includes local source dependencies, the shared design foundation, and applicable license notices.
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/voice-agent-session.json
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-bar.json
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-orb.json
+```
+
+Follow the shared [stylesheet and font setup](/docs/installation). Voice components use the same Inter typography, compact controls, neutral surfaces, spacing, and corner scale as the rest of the kit.
+
+## Combine both libraries
+
+`VoiceAgentSession` combines LiveKit's transcript and media toggles with ElevenLabs' Orb. Pass controlled state, messages, microphone/speaker state, and audio levels. Handle its callbacks in your application.
+
+```tsx
+import { VoiceAgentSession } from "@/components/voice-agents/session"
+
+<VoiceAgentSession
+  name="Support assistant"
+  state={agentState}
+  messages={messages}
+  microphoneEnabled={microphoneEnabled}
+  speakerEnabled={speakerEnabled}
+  inputLevel={inputLevel}
+  outputLevel={outputLevel}
+  onMicrophoneChange={setMicrophoneEnabled}
+  onSpeakerChange={setSpeakerEnabled}
+  onConnect={connect}
+  onDisconnect={disconnect}
+/>
+```
+
+The callbacks express user intent. This composition does not open a room, capture audio, or start a provider session. Your application owns the real connection and error recovery.
+
+## LiveKit
+
+The collection includes four visualizers (Bar, Radial, Grid, Wave), transcript and thinking indicators, track controls, a control bar, disconnect and audio-start controls, session context, and session/popup blocks.
+
+Visualizers accept explicit state and audio levels, so they can render without a connected room. Room-bound components use the official `AgentSessionProvider`. The packages are pinned to `@livekit/components-react@2.9.24` and `livekit-client@2.22.3`.
+
+Use the [LiveKit frontend documentation](https://docs.livekit.io/frontends/) to configure your host application and token source. Generate access tokens on your server. Keep private API secrets out of browser code and the static gallery.
+
+The upstream Aura shader is excluded: its file carries a separate PolyForm Non-Resale notice whose linked license text was unavailable when reviewed. ElevenLabs' MIT Orb supplies the spherical visualizer in the combined session. The other imported LiveKit sources retain their Apache-2.0 and file-level MIT notices.
+
+## ElevenLabs
+
+All 17 UI families are included: Audio Player, Bar Visualizer, Conversation Bar, Conversation, Live Waveform, Matrix, Message, Mic Selector, Orb, Response, Scrub Bar, Shimmering Text, Speech Input, Transcript Viewer, Voice Button, Voice Picker, and Waveform.
+
+Orb preserves the upstream shaders and public state/volume API while using the kit's existing Three.js renderer. It does not introduce Fiber, Drei, or a global Three.js upgrade. Continuous effects respect reduced motion; microphone visualizations become live only when the host explicitly enables capture.
+
+Conversation Bar requires the official ElevenLabs React provider and an Agent ID. Speech Input requires a server-issued Scribe token. The disconnected gallery examples request neither credentials nor microphone access. Packages are pinned to `@elevenlabs/react@1.6.0` and `@elevenlabs/client@1.7.0`.
+
+See the [ElevenLabs UI documentation](https://ui.elevenlabs.io/docs/components) for provider setup. Handle permission denial, disconnects, and provider errors in your host application.
+
+## Compatibility and attribution
+
+OrbKit adds four MIT-licensed shader styles: Hydrogen (`orbkit-shdr-11`), Ion (`orbkit-shdr-13`), Dither (`orbkit-shdr-14`), and Nimbus (`orbkit-shdr-21`). They use React and WebGL directly, with `idle`, `thinking`, and `speaking` states, optional audio-volume inputs, offscreen pausing, and reduced-motion support. Nineteen upstream XorDev ports carry non-commercial restrictions and are excluded.
+
+Existing v0.1 and v0.2 import paths and registry names remain available. New sources live under `components/voice-agents/`; install names use the `livekit-`, `elevenlabs-`, and `orbkit-` prefixes, plus `voice-agent-session` for the combined composition.
+
+Each collection includes a pinned revision, license, and adaptation record. See [Third-party notices](https://github.com/agents-ui/agents-kit/blob/main/THIRD_PARTY_NOTICES.md) and the copied `SOURCE.json` files. The Orb's Perlin-noise texture remains at its upstream public URL; remote asset availability is separate from source installation.

@@ -1,6 +1,6 @@
-# Agents Kit 0.2.0
+# Agents Kit 0.3.0
 
-> React components for conversations, generated results, and agent interactions. Copy source into your application through the shadcn-compatible registry.
+> React components for voice agents, conversations, generated results, and agent interactions. Copy source into your application through the shadcn-compatible registry.
 
 Components receive data through props and return user intent through callbacks. Your application owns model calls, streaming, tool execution, permissions, and persistence. This library does not supply an agent backend.
 
@@ -9,6 +9,8 @@ Components receive data through props and return user intent through callbacks. 
 - [Overview](https://agents-ui.github.io/agents-kit/docs/introduction)
 - [Installation and required styles](https://agents-ui.github.io/agents-kit/docs/installation)
 - [Component catalog](https://agents-ui.github.io/agents-kit/components)
+- [Voice agents](https://agents-ui.github.io/agents-kit/voice)
+- [Voice integration guide](https://agents-ui.github.io/agents-kit/docs/voice-agents)
 - [Generative playground](https://agents-ui.github.io/agents-kit/generative)
 - [MCP setup](https://agents-ui.github.io/agents-kit/docs/mcp): use the standard shadcn MCP server with the @agents-kit registry namespace.
 - [Registry index](https://agents-ui.github.io/agents-kit/c/registry.json)
@@ -20,7 +22,7 @@ Components receive data through props and return user intent through callbacks. 
 
 ## Registry catalog
 
-184 installable entries. Related source variants share a family in the visual catalog. Registry names and file paths remain explicit here.
+221 installable entries. Related source variants share a family in the visual catalog. Registry names and file paths remain explicit here.
 
 ### Generated results and runtime controls (4)
 
@@ -198,7 +200,52 @@ Components receive data through props and return user intent through callbacks. 
 - [thinking-bar](https://agents-ui.github.io/agents-kit/c/thinking-bar.json): A component to display the thinking state of an AI model with optional actions.
 - [tool](https://agents-ui.github.io/agents-kit/c/tool.json): Displays tool call details including input, output, status, and errors. Ideal for visualizing AI tool usage in chat UIs.
 
-### v0.1 compatibility (32)
+### ElevenLabs (17)
+
+- [elevenlabs-audio-player](https://agents-ui.github.io/agents-kit/c/elevenlabs-audio-player.json): Audio Player
+- [elevenlabs-bar-visualizer](https://agents-ui.github.io/agents-kit/c/elevenlabs-bar-visualizer.json): Bar Visualizer
+- [elevenlabs-conversation](https://agents-ui.github.io/agents-kit/c/elevenlabs-conversation.json): Conversation
+- [elevenlabs-conversation-bar](https://agents-ui.github.io/agents-kit/c/elevenlabs-conversation-bar.json): Conversation Bar
+- [elevenlabs-live-waveform](https://agents-ui.github.io/agents-kit/c/elevenlabs-live-waveform.json): Live Waveform
+- [elevenlabs-matrix](https://agents-ui.github.io/agents-kit/c/elevenlabs-matrix.json): Matrix
+- [elevenlabs-message](https://agents-ui.github.io/agents-kit/c/elevenlabs-message.json): Message
+- [elevenlabs-mic-selector](https://agents-ui.github.io/agents-kit/c/elevenlabs-mic-selector.json): Mic Selector
+- [elevenlabs-orb](https://agents-ui.github.io/agents-kit/c/elevenlabs-orb.json): Orb
+- [elevenlabs-response](https://agents-ui.github.io/agents-kit/c/elevenlabs-response.json): Response
+- [elevenlabs-scrub-bar](https://agents-ui.github.io/agents-kit/c/elevenlabs-scrub-bar.json): Scrub Bar
+- [elevenlabs-shimmering-text](https://agents-ui.github.io/agents-kit/c/elevenlabs-shimmering-text.json): Shimmering Text
+- [elevenlabs-speech-input](https://agents-ui.github.io/agents-kit/c/elevenlabs-speech-input.json): Speech Input
+- [elevenlabs-transcript-viewer](https://agents-ui.github.io/agents-kit/c/elevenlabs-transcript-viewer.json): Transcript Viewer
+- [elevenlabs-voice-button](https://agents-ui.github.io/agents-kit/c/elevenlabs-voice-button.json): Voice Button
+- [elevenlabs-voice-picker](https://agents-ui.github.io/agents-kit/c/elevenlabs-voice-picker.json): Voice Picker
+- [elevenlabs-waveform](https://agents-ui.github.io/agents-kit/c/elevenlabs-waveform.json): Waveform
+
+### LiveKit (15)
+
+- [livekit-agent-audio-visualizer-bar](https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-bar.json): Agent Audio Visualizer Bar
+- [livekit-agent-audio-visualizer-grid](https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-grid.json): Agent Audio Visualizer Grid
+- [livekit-agent-audio-visualizer-radial](https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-radial.json): Agent Audio Visualizer Radial
+- [livekit-agent-audio-visualizer-wave](https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-wave.json): Agent Audio Visualizer Wave
+- [livekit-agent-chat-indicator](https://agents-ui.github.io/agents-kit/c/livekit-agent-chat-indicator.json): Agent Chat Indicator
+- [livekit-agent-chat-transcript](https://agents-ui.github.io/agents-kit/c/livekit-agent-chat-transcript.json): Agent Chat Transcript
+- [livekit-agent-control-bar](https://agents-ui.github.io/agents-kit/c/livekit-agent-control-bar.json): Agent Control Bar
+- [livekit-agent-disconnect-button](https://agents-ui.github.io/agents-kit/c/livekit-agent-disconnect-button.json): Agent Disconnect Button
+- [livekit-agent-popup-01](https://agents-ui.github.io/agents-kit/c/livekit-agent-popup-01.json): Agent Popup
+- [livekit-agent-session-provider](https://agents-ui.github.io/agents-kit/c/livekit-agent-session-provider.json): Agent Session Provider
+- [livekit-agent-session-view-01](https://agents-ui.github.io/agents-kit/c/livekit-agent-session-view-01.json): Agent Session View
+- [livekit-agent-track-control](https://agents-ui.github.io/agents-kit/c/livekit-agent-track-control.json): Agent Track Control
+- [livekit-agent-track-toggle](https://agents-ui.github.io/agents-kit/c/livekit-agent-track-toggle.json): Agent Track Toggle
+- [livekit-react-shader-toy](https://agents-ui.github.io/agents-kit/c/livekit-react-shader-toy.json): React Shader Toy
+- [livekit-start-audio-button](https://agents-ui.github.io/agents-kit/c/livekit-start-audio-button.json): Start Audio Button
+
+### OrbKit (4)
+
+- [orbkit-shdr-11](https://agents-ui.github.io/agents-kit/c/orbkit-shdr-11.json): Hydrogen
+- [orbkit-shdr-13](https://agents-ui.github.io/agents-kit/c/orbkit-shdr-13.json): Ion
+- [orbkit-shdr-14](https://agents-ui.github.io/agents-kit/c/orbkit-shdr-14.json): Dither
+- [orbkit-shdr-21](https://agents-ui.github.io/agents-kit/c/orbkit-shdr-21.json): Nimbus
+
+### v0.1 compatibility (33)
 
 - [agent-analytics-pulse](https://agents-ui.github.io/agents-kit/c/agent-analytics-pulse.json): agent analytics pulse
 - [agent-artifact](https://agents-ui.github.io/agents-kit/c/agent-artifact.json): agent artifact
@@ -232,3 +279,4 @@ Components receive data through props and return user intent through callbacks. 
 - [agent-video-editor](https://agents-ui.github.io/agents-kit/c/agent-video-editor.json): agent video editor
 - [agent-web-search](https://agents-ui.github.io/agents-kit/c/agent-web-search.json): agent web search
 - [agent-workflow-planner](https://agents-ui.github.io/agents-kit/c/agent-workflow-planner.json): agent workflow planner
+- [voice-agent-session](https://agents-ui.github.io/agents-kit/c/voice-agent-session.json): Controlled voice session combining LiveKit media controls and transcript with the ElevenLabs Orb.

@@ -10,6 +10,7 @@ import { effectEntries } from "./effect-catalog"
 import { GenerativeShowcase } from "./generative-previews"
 import { promptKitEntries } from "./prompt-kit-catalog"
 import { runtimeEntries } from "./runtime-catalog"
+import { voiceEntries } from "./voice-catalog"
 
 export type GalleryCategory =
   | "Beautiful UI"
@@ -20,6 +21,7 @@ export type GalleryCategory =
   | "AI Elements"
   | "Prompt Kit"
   | "BoardUI"
+  | "Voice Agents"
 export interface GalleryEntry {
   slug: string
   name: string
@@ -50,6 +52,7 @@ export const galleryEntries: GalleryEntry[] = [
   ...aiElementsEntries,
   ...promptKitEntries,
   ...boardUiAiEntries,
+  ...voiceEntries,
   {
     slug: "agent-generative-surface",
     name: "Generated results",

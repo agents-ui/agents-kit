@@ -36,6 +36,7 @@ const allowed = [
   "components/blocks-so/",
   "components/prompt-kit/",
   "components/ui/",
+  "components/voice-agents/",
   "hooks/",
   "lib/",
   "styles/",

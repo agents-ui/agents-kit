@@ -1,4 +1,4 @@
-import { Catalogue } from "@/components/gallery/catalogue"
+import { DefaultCatalogue } from "@/components/gallery/default-catalogue"
 import { PublicHeader } from "@/components/gallery/public-header"
 import { readGallerySources } from "@/components/gallery/source"
 
@@ -7,7 +7,7 @@ export default async function ComponentsPage() {
   return (
     <>
       <PublicHeader />
-      <Catalogue sources={sources} />
+      <DefaultCatalogue sources={sources} />
     </>
   )
 }

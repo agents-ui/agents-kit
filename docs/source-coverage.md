@@ -1,5 +1,22 @@
 # Public AI source coverage
 
+## v0.3 voice collection
+
+Added September 13, 2026. The dedicated `/voice` page exposes all 37 entries, with an optional grouped-family view. The original collections below remain available.
+
+| Collection | Public source | Gallery |
+| --- | --- | --- |
+| LiveKit | 15 registry entries: four audio visualizers, media/transcript controls, session context, shader helper, and session/popup blocks | Manual visualizer states and actual disconnected SDK components; no usable token or automatic capture |
+| ElevenLabs | All 17 UI families and dependency closure; MIT Orb shaders run on the existing Three.js version | Manual Orb/waveform data, all seven waveform exports, user-initiated tone playback, and disabled provider/microphone controls |
+| OrbKit | Four MIT shaders and their shared WebGL core, pinned to `35e42484560fd35e8502703ba58fa99541d8c686` | Hydrogen, Ion, Dither, and Nimbus with idle/thinking/speaking states; 19 non-commercial ports excluded |
+| Agents Kit | Controlled `VoiceAgentSession` combining both sources | Listening, thinking, speaking, ended, and failed states with local callbacks |
+
+LiveKit is pinned to `20aa613fcab699385fe7385d0bf31a9262210421`; ElevenLabs is pinned to `88a5342ee74632a3f66f3cf9a75cbe87f97007f9`. Their licenses, notices, source entries, and adaptations are shipped with the install registry. LiveKit Aura is excluded because its file-specific PolyForm Non-Resale license text could not be verified. The ElevenLabs Orb supplies the spherical visualizer instead.
+
+The Orb’s Perlin-noise texture remains externally hosted at the upstream URL, with a deterministic local fallback while it loads. The four-second WAV is an original generated tone. Orb UI was reviewed as a motion and signal-control reference; no Orb UI source was copied.
+
+## Existing collections
+
 The September 11, 2026 sweep includes the public AI component catalogs below. Source revisions and adaptations are recorded in each collection's `SOURCE.json`; original licenses travel with registry payloads. Counts refer to the pinned sources, not future upstream additions.
 
 | Collection         | Imported public scope                                                                                   | Gallery coverage                                                                 |

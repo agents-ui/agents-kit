@@ -1,6 +1,6 @@
-# Agents Kit 0.2.0
+# Agents Kit 0.3.0
 
-> React components for conversations, generated results, and agent interactions. Copy source into your application through the shadcn-compatible registry.
+> React components for voice agents, conversations, generated results, and agent interactions. Copy source into your application through the shadcn-compatible registry.
 
 Components receive data through props and return user intent through callbacks. Your application owns model calls, streaming, tool execution, permissions, and persistence. This library does not supply an agent backend.
 
@@ -9,6 +9,8 @@ Components receive data through props and return user intent through callbacks. 
 - [Overview](https://agents-ui.github.io/agents-kit/docs/introduction)
 - [Installation and required styles](https://agents-ui.github.io/agents-kit/docs/installation)
 - [Component catalog](https://agents-ui.github.io/agents-kit/components)
+- [Voice agents](https://agents-ui.github.io/agents-kit/voice)
+- [Voice integration guide](https://agents-ui.github.io/agents-kit/docs/voice-agents)
 - [Generative playground](https://agents-ui.github.io/agents-kit/generative)
 - [MCP setup](https://agents-ui.github.io/agents-kit/docs/mcp): use the standard shadcn MCP server with the @agents-kit registry namespace.
 - [Registry index](https://agents-ui.github.io/agents-kit/c/registry.json)
@@ -20,9 +22,11 @@ Components receive data through props and return user intent through callbacks. 
 
 ## Introduction
 
-Agents Kit is a React component library for conversations, generated results, and the work around them. Copy the components into your application, pass in your data, and connect the callbacks to your own services.
+Agents Kit is a React component library for voice agents, conversations, generated results, and the work around them. Copy the components into your application, pass in your data, and connect the callbacks to your own services.
 
-### What's in v0.2
+### What's in v0.3
+
+- Voice agents: LiveKit and ElevenLabs visualizers, session controls, playback, voice selection, and transcripts in a dedicated [Voice section](https://agents-ui.github.io/agents-kit/voice).
 
 - Generated results: comparisons, recommendations, documents, checklists, source briefs, audio, focus timers, flights, places, weather, stories, inboxes, notes, collections, events, and activity.
 - Conversation and work components: loading, thinking, messages, prompts, approvals, tools, tasks, citations, code, tables, and complete workspaces.
@@ -40,7 +44,7 @@ Agents Kit is distributed as source through a shadcn-compatible registry. It is 
 
 ### v0.1 compatibility
 
-The original component import paths and registry names remain available. Existing users can keep those imports while adopting v0.2 components one at a time. Browse the [v0.1 archive](https://agents-ui.github.io/agents-kit/v0.1) or read the [migration guide](https://github.com/agents-ui/agents-kit/blob/main/docs/migrating-to-v0.2.md).
+The original component import paths and registry names remain available. Existing users can keep those imports while adopting newer components one at a time. Browse the [v0.1 archive](https://agents-ui.github.io/agents-kit/v0.1) or read the [migration guide](https://github.com/agents-ui/agents-kit/blob/main/docs/migrating-to-v0.2.md).
 
 ### Start building
 
@@ -219,9 +223,79 @@ npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/agent-generative-
 
 MCP makes component source available to a coding assistant. It does not connect your finished application to a model, execute tools for your users, or provide an Agents Kit backend.
 
+## Voice agents
+
+Agents Kit v0.3 brings LiveKit and ElevenLabs UI into the same component library. Browse the dedicated [Voice section](https://agents-ui.github.io/agents-kit/voice) for visualizers, session controls, conversations, transcripts, playback, and voice selection.
+
+The gallery uses sample data and manual audio levels. It does not connect to an agent, request microphone permission, or call a model. Playback starts only when you press Play. The bundled four-second audio fixture is a generated tone, not a speech recording.
+
+### Install
+
+Registry installation includes local source dependencies, the shared design foundation, and applicable license notices.
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/voice-agent-session.json
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-bar.json
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-orb.json
+```
+
+Follow the shared [stylesheet and font setup](https://agents-ui.github.io/agents-kit/docs/installation). Voice components use the same Inter typography, compact controls, neutral surfaces, spacing, and corner scale as the rest of the kit.
+
+### Combine both libraries
+
+`VoiceAgentSession` combines LiveKit's transcript and media toggles with ElevenLabs' Orb. Pass controlled state, messages, microphone/speaker state, and audio levels. Handle its callbacks in your application.
+
+```tsx
+import { VoiceAgentSession } from "@/components/voice-agents/session"
+
+<VoiceAgentSession
+  name="Support assistant"
+  state={agentState}
+  messages={messages}
+  microphoneEnabled={microphoneEnabled}
+  speakerEnabled={speakerEnabled}
+  inputLevel={inputLevel}
+  outputLevel={outputLevel}
+  onMicrophoneChange={setMicrophoneEnabled}
+  onSpeakerChange={setSpeakerEnabled}
+  onConnect={connect}
+  onDisconnect={disconnect}
+/>
+```
+
+The callbacks express user intent. This composition does not open a room, capture audio, or start a provider session. Your application owns the real connection and error recovery.
+
+### LiveKit
+
+The collection includes four visualizers (Bar, Radial, Grid, Wave), transcript and thinking indicators, track controls, a control bar, disconnect and audio-start controls, session context, and session/popup blocks.
+
+Visualizers accept explicit state and audio levels, so they can render without a connected room. Room-bound components use the official `AgentSessionProvider`. The packages are pinned to `@livekit/components-react@2.9.24` and `livekit-client@2.22.3`.
+
+Use the [LiveKit frontend documentation](https://docs.livekit.io/frontends/) to configure your host application and token source. Generate access tokens on your server. Keep private API secrets out of browser code and the static gallery.
+
+The upstream Aura shader is excluded: its file carries a separate PolyForm Non-Resale notice whose linked license text was unavailable when reviewed. ElevenLabs' MIT Orb supplies the spherical visualizer in the combined session. The other imported LiveKit sources retain their Apache-2.0 and file-level MIT notices.
+
+### ElevenLabs
+
+All 17 UI families are included: Audio Player, Bar Visualizer, Conversation Bar, Conversation, Live Waveform, Matrix, Message, Mic Selector, Orb, Response, Scrub Bar, Shimmering Text, Speech Input, Transcript Viewer, Voice Button, Voice Picker, and Waveform.
+
+Orb preserves the upstream shaders and public state/volume API while using the kit's existing Three.js renderer. It does not introduce Fiber, Drei, or a global Three.js upgrade. Continuous effects respect reduced motion; microphone visualizations become live only when the host explicitly enables capture.
+
+Conversation Bar requires the official ElevenLabs React provider and an Agent ID. Speech Input requires a server-issued Scribe token. The disconnected gallery examples request neither credentials nor microphone access. Packages are pinned to `@elevenlabs/react@1.6.0` and `@elevenlabs/client@1.7.0`.
+
+See the [ElevenLabs UI documentation](https://ui.elevenlabs.io/docs/components) for provider setup. Handle permission denial, disconnects, and provider errors in your host application.
+
+### Compatibility and attribution
+
+OrbKit adds four MIT-licensed shader styles: Hydrogen (`orbkit-shdr-11`), Ion (`orbkit-shdr-13`), Dither (`orbkit-shdr-14`), and Nimbus (`orbkit-shdr-21`). They use React and WebGL directly, with `idle`, `thinking`, and `speaking` states, optional audio-volume inputs, offscreen pausing, and reduced-motion support. Nineteen upstream XorDev ports carry non-commercial restrictions and are excluded.
+
+Existing v0.1 and v0.2 import paths and registry names remain available. New sources live under `components/voice-agents/`; install names use the `livekit-`, `elevenlabs-`, and `orbkit-` prefixes, plus `voice-agent-session` for the combined composition.
+
+Each collection includes a pinned revision, license, and adaptation record. See [Third-party notices](https://github.com/agents-ui/agents-kit/blob/main/THIRD_PARTY_NOTICES.md) and the copied `SOURCE.json` files. The Orb's Perlin-noise texture remains at its upstream public URL; remote asset availability is separate from source installation.
+
 ## Registry catalog
 
-184 installable entries. Related source variants share a family in the visual catalog. Registry names and file paths remain explicit here.
+221 installable entries. Related source variants share a family in the visual catalog. Registry names and file paths remain explicit here.
 
 ### Generated results and runtime controls (4)
 
@@ -2223,7 +2297,484 @@ npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/tool.json
 ```
 
 
-### v0.1 compatibility (32)
+### ElevenLabs (17)
+
+#### elevenlabs-audio-player
+
+Audio Player
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-audio-player.json
+- Entry source: [components/voice-agents/elevenlabs/audio-player.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/audio-player.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/audio-player`
+- Dependencies: `@radix-ui/react-dropdown-menu@^2.1.14`, `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-audio-player.json
+```
+
+#### elevenlabs-bar-visualizer
+
+Bar Visualizer
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-bar-visualizer.json
+- Entry source: [components/voice-agents/elevenlabs/bar-visualizer.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/bar-visualizer.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/bar-visualizer`
+- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-bar-visualizer.json
+```
+
+#### elevenlabs-conversation
+
+Conversation
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-conversation.json
+- Entry source: [components/voice-agents/elevenlabs/conversation.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/conversation.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/conversation`
+- Dependencies: `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `use-stick-to-bottom@^1.1.0`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-conversation.json
+```
+
+#### elevenlabs-conversation-bar
+
+Conversation Bar
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-conversation-bar.json
+- Entry source: [components/voice-agents/elevenlabs/conversation-bar.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/conversation-bar.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/conversation-bar`
+- Dependencies: `@elevenlabs/react@1.6.0`, `@radix-ui/react-separator@^1.1.6`, `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-conversation-bar.json
+```
+
+#### elevenlabs-live-waveform
+
+Live Waveform
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-live-waveform.json
+- Entry source: [components/voice-agents/elevenlabs/live-waveform.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/live-waveform.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/live-waveform`
+- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-live-waveform.json
+```
+
+#### elevenlabs-matrix
+
+Matrix
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-matrix.json
+- Entry source: [components/voice-agents/elevenlabs/matrix.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/matrix.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/matrix`
+- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-matrix.json
+```
+
+#### elevenlabs-message
+
+Message
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-message.json
+- Entry source: [components/voice-agents/elevenlabs/message.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/message.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/message`
+- Dependencies: `@radix-ui/react-avatar@^1.1.3`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-message.json
+```
+
+#### elevenlabs-mic-selector
+
+Mic Selector
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-mic-selector.json
+- Entry source: [components/voice-agents/elevenlabs/mic-selector.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/mic-selector.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/mic-selector`
+- Dependencies: `@radix-ui/react-dropdown-menu@^2.1.14`, `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-mic-selector.json
+```
+
+#### elevenlabs-orb
+
+Orb
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-orb.json
+- Entry source: [components/voice-agents/elevenlabs/orb.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/orb.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/orb`
+- Dependencies: `tailwindcss@^4.1.7`, `three@0.149.0`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-orb.json
+```
+
+#### elevenlabs-response
+
+Response
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-response.json
+- Entry source: [components/voice-agents/elevenlabs/response.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/response.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/response`
+- Dependencies: `clsx@^2.1.1`, `streamdown@2.4.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-response.json
+```
+
+#### elevenlabs-scrub-bar
+
+Scrub Bar
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-scrub-bar.json
+- Entry source: [components/voice-agents/elevenlabs/scrub-bar.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/scrub-bar.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/scrub-bar`
+- Dependencies: `@radix-ui/react-progress@^1.1.7`, `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-scrub-bar.json
+```
+
+#### elevenlabs-shimmering-text
+
+Shimmering Text
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-shimmering-text.json
+- Entry source: [components/voice-agents/elevenlabs/shimmering-text.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/shimmering-text.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/shimmering-text`
+- Dependencies: `clsx@^2.1.1`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-shimmering-text.json
+```
+
+#### elevenlabs-speech-input
+
+Speech Input
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-speech-input.json
+- Entry source: [components/voice-agents/elevenlabs/speech-input.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/speech-input.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/speech-input`
+- Dependencies: `@elevenlabs/client@1.7.0`, `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-speech-input.json
+```
+
+#### elevenlabs-transcript-viewer
+
+Transcript Viewer
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-transcript-viewer.json
+- Entry source: [components/voice-agents/elevenlabs/transcript-viewer.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/transcript-viewer.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/transcript-viewer`
+- Dependencies: `@radix-ui/react-progress@^1.1.7`, `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-transcript-viewer.json
+```
+
+#### elevenlabs-voice-button
+
+Voice Button
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-voice-button.json
+- Entry source: [components/voice-agents/elevenlabs/voice-button.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/voice-button.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/voice-button`
+- Dependencies: `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-voice-button.json
+```
+
+#### elevenlabs-voice-picker
+
+Voice Picker
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-voice-picker.json
+- Entry source: [components/voice-agents/elevenlabs/voice-picker.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/voice-picker.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/voice-picker`
+- Dependencies: `@radix-ui/react-dropdown-menu@^2.1.14`, `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `cmdk@1.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `three@0.149.0`, `tw-animate-css@1.3.6`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-voice-picker.json
+```
+
+#### elevenlabs-waveform
+
+Waveform
+
+- Registry: https://agents-ui.github.io/agents-kit/c/elevenlabs-waveform.json
+- Entry source: [components/voice-agents/elevenlabs/waveform.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/waveform.tsx)
+- Import path (default alias): `@/components/voice-agents/elevenlabs/waveform`
+- Dependencies: `clsx@^2.1.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-waveform.json
+```
+
+
+### LiveKit (15)
+
+#### livekit-agent-audio-visualizer-bar
+
+Agent Audio Visualizer Bar
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-bar.json
+- Entry source: [components/voice-agents/livekit/agent-audio-visualizer-bar.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-audio-visualizer-bar.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/agent-audio-visualizer-bar`
+- Dependencies: `@livekit/components-react@2.9.24`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-bar.json
+```
+
+#### livekit-agent-audio-visualizer-grid
+
+Agent Audio Visualizer Grid
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-grid.json
+- Entry source: [components/voice-agents/livekit/agent-audio-visualizer-grid.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-audio-visualizer-grid.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/agent-audio-visualizer-grid`
+- Dependencies: `@livekit/components-react@2.9.24`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-grid.json
+```
+
+#### livekit-agent-audio-visualizer-radial
+
+Agent Audio Visualizer Radial
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-radial.json
+- Entry source: [components/voice-agents/livekit/agent-audio-visualizer-radial.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-audio-visualizer-radial.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/agent-audio-visualizer-radial`
+- Dependencies: `@livekit/components-react@2.9.24`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-radial.json
+```
+
+#### livekit-agent-audio-visualizer-wave
+
+Agent Audio Visualizer Wave
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-wave.json
+- Entry source: [components/voice-agents/livekit/agent-audio-visualizer-wave.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-audio-visualizer-wave.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/agent-audio-visualizer-wave`
+- Dependencies: `@livekit/components-react@2.9.24`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-audio-visualizer-wave.json
+```
+
+#### livekit-agent-chat-indicator
+
+Agent Chat Indicator
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-chat-indicator.json
+- Entry source: [components/voice-agents/livekit/agent-chat-indicator.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-chat-indicator.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/agent-chat-indicator`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `motion@12.26.2`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-chat-indicator.json
+```
+
+#### livekit-agent-chat-transcript
+
+Agent Chat Transcript
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-chat-transcript.json
+- Entry source: [components/voice-agents/livekit/agent-chat-transcript.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-chat-transcript.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/agent-chat-transcript`
+- Dependencies: `@livekit/components-react@2.9.24`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `motion@12.26.2`, `radix-ui@1.6.7`, `streamdown@2.4.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-chat-transcript.json
+```
+
+#### livekit-agent-control-bar
+
+Agent Control Bar
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-control-bar.json
+- Entry source: [components/voice-agents/livekit/agent-control-bar.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-control-bar.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/agent-control-bar`
+- Dependencies: `@livekit/components-react@2.9.24`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `lucide-react@0.577.0`, `motion@12.26.2`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-control-bar.json
+```
+
+#### livekit-agent-disconnect-button
+
+Agent Disconnect Button
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-disconnect-button.json
+- Entry source: [components/voice-agents/livekit/agent-disconnect-button.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-disconnect-button.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/agent-disconnect-button`
+- Dependencies: `@livekit/components-react@2.9.24`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-disconnect-button.json
+```
+
+#### livekit-agent-popup-01
+
+Agent Popup
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-popup-01.json
+- Entry source: [components/voice-agents/livekit/blocks/agent-popup-01/components/agent-popup-block.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/blocks/agent-popup-01/components/agent-popup-block.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/blocks/agent-popup-01/components/agent-popup-block`
+- Dependencies: `@livekit/components-react@2.9.24`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `lucide-react@0.577.0`, `motion@12.26.2`, `radix-ui@1.6.7`, `streamdown@2.4.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-popup-01.json
+```
+
+#### livekit-agent-session-provider
+
+Agent Session Provider
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-session-provider.json
+- Entry source: [components/voice-agents/livekit/agent-session-provider.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-session-provider.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/agent-session-provider`
+- Dependencies: `@livekit/components-react@2.9.24`, `livekit-client@2.22.3`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-session-provider.json
+```
+
+#### livekit-agent-session-view-01
+
+Agent Session View
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-session-view-01.json
+- Entry source: [components/voice-agents/livekit/blocks/agent-session-view-01/components/agent-session-block.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/blocks/agent-session-view-01/components/agent-session-block.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/blocks/agent-session-view-01/components/agent-session-block`
+- Dependencies: `@livekit/components-react@2.9.24`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `lucide-react@0.577.0`, `motion@12.26.2`, `radix-ui@1.6.7`, `streamdown@2.4.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-session-view-01.json
+```
+
+#### livekit-agent-track-control
+
+Agent Track Control
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-track-control.json
+- Entry source: [components/voice-agents/livekit/agent-track-control.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-track-control.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/agent-track-control`
+- Dependencies: `@livekit/components-react@2.9.24`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `lucide-react@0.577.0`, `motion@12.26.2`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-track-control.json
+```
+
+#### livekit-agent-track-toggle
+
+Agent Track Toggle
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-agent-track-toggle.json
+- Entry source: [components/voice-agents/livekit/agent-track-toggle.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-track-toggle.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/agent-track-toggle`
+- Dependencies: `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-agent-track-toggle.json
+```
+
+#### livekit-react-shader-toy
+
+React Shader Toy
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-react-shader-toy.json
+- Entry source: [components/voice-agents/livekit/react-shader-toy.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/react-shader-toy.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/react-shader-toy`
+- Dependencies: `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-react-shader-toy.json
+```
+
+#### livekit-start-audio-button
+
+Start Audio Button
+
+- Registry: https://agents-ui.github.io/agents-kit/c/livekit-start-audio-button.json
+- Entry source: [components/voice-agents/livekit/start-audio-button.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/start-audio-button.tsx)
+- Import path (default alias): `@/components/voice-agents/livekit/start-audio-button`
+- Dependencies: `@livekit/components-react@2.9.24`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `radix-ui@1.6.7`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/livekit-start-audio-button.json
+```
+
+
+### OrbKit (4)
+
+#### orbkit-shdr-11
+
+Hydrogen
+
+- Registry: https://agents-ui.github.io/agents-kit/c/orbkit-shdr-11.json
+- Entry source: [components/voice-agents/orbkit/shdr-11.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/orbkit/shdr-11.tsx)
+- Import path (default alias): `@/components/voice-agents/orbkit/shdr-11`
+- Dependencies: `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/orbkit-shdr-11.json
+```
+
+#### orbkit-shdr-13
+
+Ion
+
+- Registry: https://agents-ui.github.io/agents-kit/c/orbkit-shdr-13.json
+- Entry source: [components/voice-agents/orbkit/shdr-13.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/orbkit/shdr-13.tsx)
+- Import path (default alias): `@/components/voice-agents/orbkit/shdr-13`
+- Dependencies: `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/orbkit-shdr-13.json
+```
+
+#### orbkit-shdr-14
+
+Dither
+
+- Registry: https://agents-ui.github.io/agents-kit/c/orbkit-shdr-14.json
+- Entry source: [components/voice-agents/orbkit/shdr-14.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/orbkit/shdr-14.tsx)
+- Import path (default alias): `@/components/voice-agents/orbkit/shdr-14`
+- Dependencies: `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/orbkit-shdr-14.json
+```
+
+#### orbkit-shdr-21
+
+Nimbus
+
+- Registry: https://agents-ui.github.io/agents-kit/c/orbkit-shdr-21.json
+- Entry source: [components/voice-agents/orbkit/shdr-21.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/orbkit/shdr-21.tsx)
+- Import path (default alias): `@/components/voice-agents/orbkit/shdr-21`
+- Dependencies: `tailwindcss@^4.1.7`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/orbkit-shdr-21.json
+```
+
+
+### v0.1 compatibility (33)
 
 #### agent-analytics-pulse
 
@@ -2639,6 +3190,19 @@ agent workflow planner
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/agent-workflow-planner.json
+```
+
+#### voice-agent-session
+
+Controlled voice session combining LiveKit media controls and transcript with the ElevenLabs Orb.
+
+- Registry: https://agents-ui.github.io/agents-kit/c/voice-agent-session.json
+- Entry source: [components/voice-agents/session.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/session.tsx)
+- Import path (default alias): `@/components/voice-agents/session`
+- Dependencies: `@livekit/components-react@2.9.24`, `@radix-ui/react-slot@^1.2.2`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `lucide-react@0.577.0`, `motion@12.26.2`, `radix-ui@1.6.7`, `streamdown@2.4.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `three@0.149.0`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/voice-agent-session.json
 ```
 
 
@@ -5049,7 +5613,7 @@ export { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, buttonGroupVariants
 import { type VariantProps } from "class-variance-authority";
 import * as React from "react";
 declare const buttonVariants: (props?: ({
-    variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | null | undefined;
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined;
     size?: "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 declare function Button({ className, variant, size, asChild, ...props }: React.ComponentProps<"button"> & VariantProps<typeof buttonVariants> & {
@@ -5218,7 +5782,7 @@ declare const inputGroupAddonVariants: (props?: ({
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 declare function InputGroupAddon({ className, align, ...props }: React.ComponentProps<"div"> & VariantProps<typeof inputGroupAddonVariants>): React.JSX.Element;
 declare const inputGroupButtonVariants: (props?: ({
-    size?: "sm" | "xs" | "icon-sm" | "icon-xs" | null | undefined;
+    size?: "sm" | "xs" | "icon-xs" | "icon-sm" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 declare function InputGroupButton({ className, type, variant, size, ...props }: Omit<React.ComponentProps<typeof Button>, "size"> & VariantProps<typeof inputGroupButtonVariants>): React.JSX.Element;
 declare function InputGroupText({ className, ...props }: React.ComponentProps<"span">): React.JSX.Element;
@@ -7572,8 +8136,8 @@ export declare function LoadingState({ variant, label, elapsed, elapsedSeconds, 
 import { ButtonHTMLAttributes } from "react";
 import { type VariantProps } from "class-variance-authority";
 export declare const buttonVariants: (props?: ({
-    variant?: "secondary" | "ghost" | "accent" | "primary" | "success" | "quiet" | null | undefined;
-    size?: "md" | "sm" | "xs" | null | undefined;
+    variant?: "secondary" | "ghost" | "success" | "accent" | "primary" | "quiet" | null | undefined;
+    size?: "sm" | "xs" | "md" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 export type ButtonVariant = NonNullable<VariantProps<typeof buttonVariants>["variant"]>;
 export declare function Button({ variant, size, className, ...props }: ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof buttonVariants>): import("react").JSX.Element;
@@ -13772,8 +14336,8 @@ export declare function GooeyItem(props: GooeyItemProps): import("react").JSX.El
 [Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/effects/liquid-gooey/upstream/hooks.ts)
 
 ```ts
-import { useLayoutEffect } from 'react';
-export declare const useIsoLayoutEffect: typeof useLayoutEffect;
+import { useEffect } from 'react';
+export declare const useIsoLayoutEffect: typeof useEffect;
 export declare function useReducedMotion(): boolean;
 ```
 
@@ -17068,7 +17632,7 @@ export declare function Steps({ defaultOpen, className, ...props }: StepsProps):
 import { type VariantProps } from "class-variance-authority";
 import React from "react";
 declare const systemMessageVariants: (props?: ({
-    variant?: "action" | "error" | "warning" | null | undefined;
+    variant?: "error" | "action" | "warning" | null | undefined;
     fill?: boolean | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 export type SystemMessageProps = React.ComponentProps<"div"> & VariantProps<typeof systemMessageVariants> & {
@@ -17173,7 +17737,7 @@ export { Badge, badgeVariants };
 import { type VariantProps } from "class-variance-authority";
 import * as React from "react";
 declare const buttonVariants: (props?: ({
-    variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | null | undefined;
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined;
     size?: "default" | "sm" | "lg" | "icon" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 declare function Button({ className, variant, size, asChild, ...props }: React.ComponentProps<"button"> & VariantProps<typeof buttonVariants> & {
@@ -17237,6 +17801,37 @@ declare function Label({ className, ...props }: React.ComponentProps<typeof Labe
 export { Label };
 ```
 
+### components/ui/progress.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/ui/progress.tsx)
+
+```ts
+import * as React from "react";
+import * as ProgressPrimitive from "@radix-ui/react-progress";
+declare const Progress: React.ForwardRefExoticComponent<Omit<ProgressPrimitive.ProgressProps & React.RefAttributes<HTMLDivElement>, "ref"> & React.RefAttributes<HTMLDivElement>>;
+export { Progress };
+```
+
+### components/ui/separator.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/ui/separator.tsx)
+
+```ts
+import * as SeparatorPrimitive from "@radix-ui/react-separator";
+import * as React from "react";
+declare function Separator({ className, orientation, decorative, ...props }: React.ComponentProps<typeof SeparatorPrimitive.Root>): React.JSX.Element;
+export { Separator };
+```
+
+### components/ui/skeleton.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/ui/skeleton.tsx)
+
+```ts
+declare function Skeleton({ className, ...props }: React.ComponentProps<"div">): import("react").JSX.Element;
+export { Skeleton };
+```
+
 ### components/ui/textarea.tsx
 
 [Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/ui/textarea.tsx)
@@ -17259,6 +17854,2696 @@ declare function Tooltip({ ...props }: React.ComponentProps<typeof TooltipPrimit
 declare function TooltipTrigger({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Trigger>): React.JSX.Element;
 declare function TooltipContent({ className, sideOffset, children, ...props }: React.ComponentProps<typeof TooltipPrimitive.Content>): React.JSX.Element;
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
+```
+
+### components/voice-agents/elevenlabs/audio-player.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/audio-player.tsx)
+
+```ts
+import { Button } from "@/components/ui/button";
+import { Slider as SliderPrimitive } from "radix-ui";
+import { ComponentProps, HTMLProps, ReactNode, RefObject } from "react";
+interface AudioPlayerItem<TData = unknown> {
+    id: string | number;
+    src: string;
+    data?: TData;
+}
+interface AudioPlayerApi<TData = unknown> {
+    ref: RefObject<HTMLAudioElement | null>;
+    activeItem: AudioPlayerItem<TData> | null;
+    duration: number | undefined;
+    error: MediaError | null;
+    isPlaying: boolean;
+    isBuffering: boolean;
+    playbackRate: number;
+    isItemActive: (id: string | number | null) => boolean;
+    setActiveItem: (item: AudioPlayerItem<TData> | null) => Promise<void>;
+    play: (item?: AudioPlayerItem<TData> | null) => Promise<void>;
+    pause: () => void;
+    seek: (time: number) => void;
+    setPlaybackRate: (rate: number) => void;
+}
+export declare function useAudioPlayer<TData = unknown>(): AudioPlayerApi<TData>;
+export declare const useAudioPlayerTime: () => number;
+export declare function AudioPlayerProvider<TData = unknown>({ children, }: {
+    children: ReactNode;
+}): import("react").JSX.Element;
+export declare const AudioPlayerProgress: ({ ...otherProps }: Omit<ComponentProps<typeof SliderPrimitive.Root>, "min" | "max" | "value">) => import("react").JSX.Element;
+export declare const AudioPlayerTime: ({ className, ...otherProps }: HTMLProps<HTMLSpanElement>) => import("react").JSX.Element;
+export declare const AudioPlayerDuration: ({ className, ...otherProps }: HTMLProps<HTMLSpanElement>) => import("react").JSX.Element;
+export interface AudioPlayerButtonProps<TData = unknown> extends React.ComponentProps<typeof Button> {
+    item?: AudioPlayerItem<TData>;
+}
+export declare function AudioPlayerButton<TData = unknown>({ item, ...otherProps }: AudioPlayerButtonProps<TData>): import("react").JSX.Element;
+export interface AudioPlayerSpeedProps extends React.ComponentProps<typeof Button> {
+    speeds?: readonly number[];
+}
+export declare function AudioPlayerSpeed({ speeds, className, variant, size, ...props }: AudioPlayerSpeedProps): import("react").JSX.Element;
+export interface AudioPlayerSpeedButtonGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
+    speeds?: readonly number[];
+}
+export declare function AudioPlayerSpeedButtonGroup({ speeds, className, ...props }: AudioPlayerSpeedButtonGroupProps): import("react").JSX.Element;
+export declare const exampleTracks: {
+    id: string;
+    name: string;
+    url: string;
+}[];
+export {};
+```
+
+### components/voice-agents/elevenlabs/bar-visualizer.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/bar-visualizer.tsx)
+
+```ts
+import { type HTMLAttributes } from "react";
+export interface AudioAnalyserOptions {
+    fftSize?: number;
+    smoothingTimeConstant?: number;
+    minDecibels?: number;
+    maxDecibels?: number;
+}
+/**
+ * Hook for tracking the volume of an audio stream using the Web Audio API.
+ * @param mediaStream - The MediaStream to analyze
+ * @param options - Audio analyser options
+ * @returns The current volume level (0-1)
+ */
+export declare function useAudioVolume(mediaStream?: MediaStream | null, options?: AudioAnalyserOptions): number;
+export interface MultiBandVolumeOptions {
+    bands?: number;
+    loPass?: number;
+    hiPass?: number;
+    updateInterval?: number;
+    analyserOptions?: AudioAnalyserOptions;
+}
+/**
+ * Hook for tracking volume across multiple frequency bands
+ * @param mediaStream - The MediaStream to analyze
+ * @param options - Multiband options
+ * @returns Array of volume levels for each frequency band
+ */
+export declare function useMultibandVolume(mediaStream?: MediaStream | null, options?: MultiBandVolumeOptions): number[];
+type AnimationState = "connecting" | "initializing" | "listening" | "speaking" | "thinking" | undefined;
+export declare const useBarAnimator: (state: AnimationState, columns: number, interval: number) => number[];
+export type AgentState = "connecting" | "initializing" | "listening" | "speaking" | "thinking";
+export interface BarVisualizerProps extends HTMLAttributes<HTMLDivElement> {
+    /** Voice assistant state */
+    state?: AgentState;
+    /** Number of bars to display */
+    barCount?: number;
+    /** Audio source */
+    mediaStream?: MediaStream | null;
+    /** Min/max height as percentage */
+    minHeight?: number;
+    maxHeight?: number;
+    /** Enable demo mode with fake audio data */
+    demo?: boolean;
+    /** Align bars from center instead of bottom */
+    centerAlign?: boolean;
+}
+declare const BarVisualizer: import("react").NamedExoticComponent<BarVisualizerProps & import("react").RefAttributes<HTMLDivElement>>;
+export { BarVisualizer };
+```
+
+### components/voice-agents/elevenlabs/conversation-bar.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/conversation-bar.tsx)
+
+```ts
+import * as React from "react";
+export interface ConversationBarProps {
+    /**
+     * ElevenLabs Agent ID to connect to
+     */
+    agentId: string;
+    /**
+     * Custom className for the container
+     */
+    className?: string;
+    /**
+     * Custom className for the waveform
+     */
+    waveformClassName?: string;
+    /**
+     * Callback when user sends a message
+     */
+    onSendMessage?: (message: string) => void;
+    /** Disable every control and prevent media/session acquisition. */
+    disabled?: boolean;
+}
+export declare const ConversationBar: React.ForwardRefExoticComponent<ConversationBarProps & React.RefAttributes<HTMLDivElement>>;
+```
+
+### components/voice-agents/elevenlabs/conversation.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/conversation.tsx)
+
+```ts
+import { Button } from "@/components/ui/button";
+import type { ComponentProps } from "react";
+import { StickToBottom } from "use-stick-to-bottom";
+export type ConversationProps = ComponentProps<typeof StickToBottom>;
+export declare const Conversation: ({ className, ...props }: ConversationProps) => import("react").JSX.Element;
+export type ConversationContentProps = ComponentProps<typeof StickToBottom.Content>;
+export declare const ConversationContent: ({ className, ...props }: ConversationContentProps) => import("react").JSX.Element;
+export type ConversationEmptyStateProps = Omit<ComponentProps<"div">, "title"> & {
+    title?: React.ReactNode;
+    description?: React.ReactNode;
+    icon?: React.ReactNode;
+};
+export declare const ConversationEmptyState: ({ className, title, description, icon, children, ...props }: ConversationEmptyStateProps) => import("react").JSX.Element;
+export type ConversationScrollButtonProps = ComponentProps<typeof Button>;
+export declare const ConversationScrollButton: ({ className, ...props }: ConversationScrollButtonProps) => false | import("react").JSX.Element;
+```
+
+### components/voice-agents/elevenlabs/live-waveform.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/live-waveform.tsx)
+
+```ts
+import { type HTMLAttributes } from "react";
+export type LiveWaveformProps = HTMLAttributes<HTMLDivElement> & {
+    active?: boolean;
+    processing?: boolean;
+    deviceId?: string;
+    barWidth?: number;
+    barHeight?: number;
+    barGap?: number;
+    barRadius?: number;
+    barColor?: string;
+    fadeEdges?: boolean;
+    fadeWidth?: number;
+    height?: string | number;
+    sensitivity?: number;
+    smoothingTimeConstant?: number;
+    fftSize?: number;
+    historySize?: number;
+    updateRate?: number;
+    mode?: "scrolling" | "static";
+    onError?: (error: Error) => void;
+    onStreamReady?: (stream: MediaStream) => void;
+    onStreamEnd?: () => void;
+};
+export declare const LiveWaveform: ({ active, processing, deviceId, barWidth, barGap, barRadius, barColor, fadeEdges, fadeWidth, barHeight: baseBarHeight, height, sensitivity, smoothingTimeConstant, fftSize, historySize, updateRate, mode, onError, onStreamReady, onStreamEnd, className, ...props }: LiveWaveformProps) => import("react").JSX.Element;
+```
+
+### components/voice-agents/elevenlabs/matrix.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/matrix.tsx)
+
+```ts
+import * as React from "react";
+export type Frame = number[][];
+type MatrixMode = "default" | "vu";
+interface MatrixProps extends React.HTMLAttributes<HTMLDivElement> {
+    rows: number;
+    cols: number;
+    pattern?: Frame;
+    frames?: Frame[];
+    fps?: number;
+    autoplay?: boolean;
+    loop?: boolean;
+    size?: number;
+    gap?: number;
+    palette?: {
+        on: string;
+        off: string;
+    };
+    brightness?: number;
+    ariaLabel?: string;
+    onFrame?: (index: number) => void;
+    mode?: MatrixMode;
+    levels?: number[];
+}
+export declare const digits: Frame[];
+export declare const chevronLeft: Frame;
+export declare const chevronRight: Frame;
+export declare const loader: Frame[];
+export declare const pulse: Frame[];
+export declare function vu(columns: number, levels: number[]): Frame;
+export declare const wave: Frame[];
+export declare const snake: Frame[];
+export declare const Matrix: React.ForwardRefExoticComponent<MatrixProps & React.RefAttributes<HTMLDivElement>>;
+export {};
+```
+
+### components/voice-agents/elevenlabs/media.ts
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/media.ts)
+
+```ts
+export declare function acquireMediaStream(constraints: MediaStreamConstraints, cancelled: () => boolean): Promise<MediaStream | null>;
+```
+
+### components/voice-agents/elevenlabs/message.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/message.tsx)
+
+```ts
+import { Avatar } from "@/components/ui/avatar";
+import { type VariantProps } from "class-variance-authority";
+import type { ComponentProps, HTMLAttributes } from "react";
+export type MessageProps = HTMLAttributes<HTMLDivElement> & {
+    from: "user" | "assistant";
+};
+export declare const Message: ({ className, from, ...props }: MessageProps) => import("react").JSX.Element;
+declare const messageContentVariants: (props?: ({
+    variant?: "flat" | "contained" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+export type MessageContentProps = HTMLAttributes<HTMLDivElement> & VariantProps<typeof messageContentVariants>;
+export declare const MessageContent: ({ children, className, variant, ...props }: MessageContentProps) => import("react").JSX.Element;
+export type MessageAvatarProps = ComponentProps<typeof Avatar> & {
+    src: string;
+    name?: string;
+};
+export declare const MessageAvatar: ({ src, name, className, ...props }: MessageAvatarProps) => import("react").JSX.Element;
+export {};
+```
+
+### components/voice-agents/elevenlabs/mic-selector.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/mic-selector.tsx)
+
+```ts
+export interface AudioDevice {
+    deviceId: string;
+    label: string;
+    groupId: string;
+}
+export interface MicSelectorProps {
+    value?: string;
+    onValueChange?: (deviceId: string) => void;
+    muted?: boolean;
+    onMutedChange?: (muted: boolean) => void;
+    disabled?: boolean;
+    className?: string;
+}
+export declare function MicSelector({ value, onValueChange, muted, onMutedChange, disabled, className, }: MicSelectorProps): import("react").JSX.Element;
+export declare function useAudioDevices(): {
+    devices: AudioDevice[];
+    loading: boolean;
+    error: string | null;
+    hasPermission: boolean;
+    loadDevices: () => Promise<void>;
+};
+```
+
+### components/voice-agents/elevenlabs/orb.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/orb.tsx)
+
+```ts
+import { type RefObject } from "react";
+export type AgentState = null | "thinking" | "listening" | "talking";
+export type OrbProps = {
+    colors?: [string, string];
+    colorsRef?: RefObject<[string, string]>;
+    resizeDebounce?: number;
+    seed?: number;
+    agentState?: AgentState;
+    volumeMode?: "auto" | "manual";
+    manualInput?: number;
+    manualOutput?: number;
+    inputVolumeRef?: RefObject<number>;
+    outputVolumeRef?: RefObject<number>;
+    getInputVolume?: () => number;
+    getOutputVolume?: () => number;
+    className?: string;
+};
+export declare function Orb({ colors, colorsRef, resizeDebounce, seed, agentState, volumeMode, manualInput, manualOutput, inputVolumeRef, outputVolumeRef, getInputVolume, getOutputVolume, className, }: OrbProps): import("react").JSX.Element;
+```
+
+### components/voice-agents/elevenlabs/response.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/response.tsx)
+
+```ts
+import { type ComponentProps } from "react";
+import { Streamdown } from "streamdown";
+type ResponseProps = ComponentProps<typeof Streamdown>;
+export declare const Response: import("react").MemoExoticComponent<({ className, ...props }: ResponseProps) => import("react").JSX.Element>;
+export {};
+```
+
+### components/voice-agents/elevenlabs/scrub-bar.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/scrub-bar.tsx)
+
+```ts
+import { Progress } from "@/components/ui/progress";
+import * as React from "react";
+import { type ComponentProps, type HTMLAttributes } from "react";
+interface ScrubBarContainerProps extends HTMLAttributes<HTMLDivElement> {
+    duration: number;
+    value: number;
+    onScrub?: (time: number) => void;
+    onScrubStart?: () => void;
+    onScrubEnd?: () => void;
+}
+declare function ScrubBarContainer({ duration, value, onScrub, onScrubStart, onScrubEnd, children, className, ...props }: ScrubBarContainerProps): React.JSX.Element;
+declare namespace ScrubBarContainer {
+    var displayName: string;
+}
+type ScrubBarTrackProps = HTMLAttributes<HTMLDivElement>;
+declare function ScrubBarTrack({ className, children, ...props }: ScrubBarTrackProps): React.JSX.Element;
+declare namespace ScrubBarTrack {
+    var displayName: string;
+}
+type ScrubBarProgressProps = Omit<ComponentProps<typeof Progress>, "value">;
+declare function ScrubBarProgress({ className, ...props }: ScrubBarProgressProps): React.JSX.Element;
+declare namespace ScrubBarProgress {
+    var displayName: string;
+}
+type ScrubBarThumbProps = HTMLAttributes<HTMLDivElement>;
+declare function ScrubBarThumb({ className, children, ...props }: ScrubBarThumbProps): React.JSX.Element;
+declare namespace ScrubBarThumb {
+    var displayName: string;
+}
+interface ScrubBarTimeLabelProps extends HTMLAttributes<HTMLSpanElement> {
+    time: number;
+    format?: (time: number) => string;
+}
+declare function ScrubBarTimeLabel({ className, time, format, ...props }: ScrubBarTimeLabelProps): React.JSX.Element;
+declare namespace ScrubBarTimeLabel {
+    var displayName: string;
+}
+export { ScrubBarContainer, ScrubBarTrack, ScrubBarProgress, ScrubBarThumb, ScrubBarTimeLabel, };
+```
+
+### components/voice-agents/elevenlabs/shimmering-text.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/shimmering-text.tsx)
+
+```ts
+import { UseInViewOptions } from "motion/react";
+import React from "react";
+interface ShimmeringTextProps {
+    /** Text to display with shimmer effect */
+    text: string;
+    /** Animation duration in seconds */
+    duration?: number;
+    /** Delay before starting animation */
+    delay?: number;
+    /** Whether to repeat the animation */
+    repeat?: boolean;
+    /** Pause duration between repeats in seconds */
+    repeatDelay?: number;
+    /** Custom className */
+    className?: string;
+    /** Whether to start animation when component enters viewport */
+    startOnView?: boolean;
+    /** Whether to animate only once */
+    once?: boolean;
+    /** Margin for in-view detection (rootMargin) */
+    inViewMargin?: UseInViewOptions["margin"];
+    /** Shimmer spread multiplier */
+    spread?: number;
+    /** Base text color */
+    color?: string;
+    /** Shimmer gradient color */
+    shimmerColor?: string;
+}
+export declare function ShimmeringText({ text, duration, delay, repeat, repeatDelay, className, startOnView, once, inViewMargin, spread, color, shimmerColor, }: ShimmeringTextProps): React.JSX.Element;
+export {};
+```
+
+### components/voice-agents/elevenlabs/speech-input.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/speech-input.tsx)
+
+```ts
+import { Button } from "@/components/ui/button";
+import { type AudioFormat, type CommitStrategy } from "@/components/voice-agents/elevenlabs/use-scribe";
+import { type VariantProps } from "class-variance-authority";
+import * as React from "react";
+declare const buttonVariants: (props?: ({
+    size?: "default" | "sm" | "lg" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+type ButtonSize = VariantProps<typeof buttonVariants>["size"];
+export interface SpeechInputData {
+    /** The current partial (in-progress) transcript */
+    partialTranscript: string;
+    /** Array of all committed (finalized) transcripts */
+    committedTranscripts: string[];
+    /** Full transcript combining committed and partial transcripts */
+    transcript: string;
+}
+interface SpeechInputContextValue {
+    isConnected: boolean;
+    isConnecting: boolean;
+    transcript: string;
+    partialTranscript: string;
+    committedTranscripts: string[];
+    error: string | null;
+    start: () => Promise<void>;
+    stop: () => void;
+    cancel: () => void;
+    size: ButtonSize;
+}
+declare function useSpeechInput(): SpeechInputContextValue;
+export interface SpeechInputProps {
+    children: React.ReactNode;
+    /**
+     * Function that returns a token for authenticating with the speech service.
+     * This should be an async function that fetches a token from your backend.
+     */
+    getToken: () => Promise<string>;
+    /**
+     * Called whenever the transcript changes (partial or committed)
+     */
+    onChange?: (data: SpeechInputData) => void;
+    /**
+     * Called when recording is cancelled
+     */
+    onCancel?: (data: SpeechInputData) => void;
+    /**
+     * Called when recording starts
+     */
+    onStart?: (data: SpeechInputData) => void;
+    /**
+     * Called when recording stops
+     */
+    onStop?: (data: SpeechInputData) => void;
+    /**
+     * Additional CSS classes for the root container
+     */
+    className?: string;
+    /**
+     * Size variant for the component buttons
+     * @default "default"
+     */
+    size?: ButtonSize;
+    /**
+     * Model ID for the speech recognition service
+     * @default "scribe_v2_realtime"
+     */
+    modelId?: string;
+    /**
+     * Base URI for the speech recognition service
+     */
+    baseUri?: string;
+    /**
+     * Strategy for committing transcripts
+     */
+    commitStrategy?: CommitStrategy;
+    /**
+     * Silence threshold in seconds for VAD
+     */
+    vadSilenceThresholdSecs?: number;
+    /**
+     * VAD threshold value
+     */
+    vadThreshold?: number;
+    /**
+     * Minimum speech duration in milliseconds
+     */
+    minSpeechDurationMs?: number;
+    /**
+     * Minimum silence duration in milliseconds
+     */
+    minSilenceDurationMs?: number;
+    /**
+     * Language code for transcription (e.g., "en", "es", "fr")
+     */
+    languageCode?: string;
+    /**
+     * Microphone configuration options
+     */
+    microphone?: {
+        deviceId?: string;
+        echoCancellation?: boolean;
+        noiseSuppression?: boolean;
+        autoGainControl?: boolean;
+        channelCount?: number;
+    };
+    /**
+     * Audio format for manual audio mode
+     */
+    audioFormat?: AudioFormat;
+    /**
+     * Sample rate for manual audio mode
+     */
+    sampleRate?: number;
+    /**
+     * Called when an error occurs
+     */
+    onError?: (error: Error | Event) => void;
+    /**
+     * Called when an authentication error occurs
+     */
+    onAuthError?: (data: {
+        error: string;
+    }) => void;
+    /**
+     * Called when a quota exceeded error occurs
+     */
+    onQuotaExceededError?: (data: {
+        error: string;
+    }) => void;
+}
+declare const SpeechInput: React.ForwardRefExoticComponent<SpeechInputProps & React.RefAttributes<HTMLDivElement>>;
+export type SpeechInputRecordButtonProps = Omit<React.ComponentPropsWithoutRef<typeof Button>, "size">;
+/**
+ * Toggle button for starting/stopping speech recording.
+ * Shows a microphone icon when idle and a stop icon when recording.
+ */
+declare const SpeechInputRecordButton: React.ForwardRefExoticComponent<SpeechInputRecordButtonProps & React.RefAttributes<HTMLButtonElement>>;
+export interface SpeechInputPreviewProps extends React.ComponentPropsWithoutRef<"div"> {
+    /**
+     * Text to show when no transcript is available
+     * @default "Listening..."
+     */
+    placeholder?: string;
+}
+/**
+ * Displays the current transcript with a placeholder when empty.
+ * Only visible when actively recording.
+ */
+declare const SpeechInputPreview: React.ForwardRefExoticComponent<SpeechInputPreviewProps & React.RefAttributes<HTMLDivElement>>;
+export type SpeechInputCancelButtonProps = Omit<React.ComponentPropsWithoutRef<typeof Button>, "size">;
+/**
+ * Button to cancel the current recording and discard the transcript.
+ * Only visible when actively recording.
+ */
+declare const SpeechInputCancelButton: React.ForwardRefExoticComponent<SpeechInputCancelButtonProps & React.RefAttributes<HTMLButtonElement>>;
+export { SpeechInput, SpeechInputRecordButton, SpeechInputPreview, SpeechInputCancelButton, useSpeechInput, };
+```
+
+### components/voice-agents/elevenlabs/transcript-viewer.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/transcript-viewer.tsx)
+
+```ts
+import { Button } from "@/components/ui/button";
+import { ScrubBarContainer } from "@/components/voice-agents/elevenlabs/scrub-bar";
+import type { CharacterAlignmentResponseModel } from "@/components/voice-agents/elevenlabs/types";
+import { useTranscriptViewer, type SegmentComposer, type TranscriptSegment, type TranscriptWord as TranscriptWordType, type UseTranscriptViewerResult } from "@/components/voice-agents/elevenlabs/use-transcript-viewer";
+import { type ComponentPropsWithoutRef, type ComponentPropsWithRef, type HTMLAttributes, type ReactNode } from "react";
+type TranscriptGap = Extract<TranscriptSegment, {
+    kind: "gap";
+}>;
+type TranscriptViewerContextValue = UseTranscriptViewerResult & {
+    audioProps: Omit<ComponentPropsWithRef<"audio">, "children" | "src">;
+};
+declare function useTranscriptViewerContext(): TranscriptViewerContextValue;
+type TranscriptViewerProviderProps = {
+    value: TranscriptViewerContextValue;
+    children: ReactNode;
+};
+declare function TranscriptViewerProvider({ value, children, }: TranscriptViewerProviderProps): import("react").JSX.Element;
+type AudioType = "audio/mpeg" | "audio/wav" | "audio/ogg" | "audio/mp3" | "audio/m4a" | "audio/aac" | "audio/webm";
+type TranscriptViewerContainerProps = {
+    audioSrc: string;
+    audioType: AudioType;
+    alignment: CharacterAlignmentResponseModel;
+    segmentComposer?: SegmentComposer;
+    hideAudioTags?: boolean;
+    children?: ReactNode;
+} & Omit<ComponentPropsWithoutRef<"div">, "children"> & Pick<Parameters<typeof useTranscriptViewer>[0], "onPlay" | "onPause" | "onTimeUpdate" | "onEnded" | "onDurationChange">;
+declare function TranscriptViewerContainer({ audioSrc, audioType, alignment, segmentComposer, hideAudioTags, children, className, onPlay, onPause, onTimeUpdate, onEnded, onDurationChange, ...props }: TranscriptViewerContainerProps): import("react").JSX.Element;
+type TranscriptViewerWordStatus = "spoken" | "unspoken" | "current";
+interface TranscriptViewerWordProps extends Omit<HTMLAttributes<HTMLSpanElement>, "children"> {
+    word: TranscriptWordType;
+    status: TranscriptViewerWordStatus;
+    children?: ReactNode;
+}
+declare function TranscriptViewerWord({ word, status, className, children, ...props }: TranscriptViewerWordProps): import("react").JSX.Element;
+interface TranscriptViewerWordsProps extends HTMLAttributes<HTMLDivElement> {
+    renderWord?: (props: {
+        word: TranscriptWordType;
+        status: TranscriptViewerWordStatus;
+    }) => ReactNode;
+    renderGap?: (props: {
+        segment: TranscriptGap;
+        status: TranscriptViewerWordStatus;
+    }) => ReactNode;
+    wordClassNames?: string;
+    gapClassNames?: string;
+}
+declare function TranscriptViewerWords({ className, renderWord, renderGap, wordClassNames, gapClassNames, ...props }: TranscriptViewerWordsProps): import("react").JSX.Element;
+declare function TranscriptViewerAudio({ ...props }: ComponentPropsWithoutRef<"audio">): import("react").JSX.Element;
+type RenderChildren = (state: {
+    isPlaying: boolean;
+}) => ReactNode;
+type TranscriptViewerPlayPauseButtonProps = Omit<ComponentPropsWithoutRef<typeof Button>, "children"> & {
+    children?: ReactNode | RenderChildren;
+};
+declare function TranscriptViewerPlayPauseButton({ className, children, onClick, ...props }: TranscriptViewerPlayPauseButtonProps): import("react").JSX.Element;
+type TranscriptViewerScrubBarProps = Omit<ComponentPropsWithoutRef<typeof ScrubBarContainer>, "duration" | "value" | "onScrub" | "onScrubStart" | "onScrubEnd"> & {
+    showTimeLabels?: boolean;
+    labelsClassName?: string;
+    trackClassName?: string;
+    progressClassName?: string;
+    thumbClassName?: string;
+};
+/**
+ * A context-aware implementation of the scrub bar specific to the transcript viewer.
+ */
+declare function TranscriptViewerScrubBar({ className, showTimeLabels, labelsClassName, trackClassName, progressClassName, thumbClassName, ...props }: TranscriptViewerScrubBarProps): import("react").JSX.Element;
+export { TranscriptViewerContainer, TranscriptViewerWords, TranscriptViewerWord, TranscriptViewerAudio, TranscriptViewerPlayPauseButton, TranscriptViewerScrubBar, TranscriptViewerProvider, useTranscriptViewerContext, };
+export type { CharacterAlignmentResponseModel };
+```
+
+### components/voice-agents/elevenlabs/types.ts
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/types.ts)
+
+```ts
+export interface CharacterAlignmentResponseModel {
+    characters: string[];
+    characterStartTimesSeconds: number[];
+    characterEndTimesSeconds: number[];
+}
+export interface ElevenLabsVoice {
+    voiceId?: string;
+    name?: string;
+    previewUrl?: string;
+    labels?: Record<string, string | undefined>;
+}
+```
+
+### components/voice-agents/elevenlabs/use-scribe.ts
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/use-scribe.ts)
+
+```ts
+import type { AudioFormat, CommitStrategy, RealtimeConnection } from "@elevenlabs/client";
+export type ScribeStatus = "disconnected" | "connecting" | "connected" | "transcribing" | "error";
+export interface TranscriptSegment {
+    id: string;
+    text: string;
+    timestamp: number;
+    isFinal: boolean;
+}
+export interface ScribeCallbacks {
+    onSessionStarted?: () => void;
+    onPartialTranscript?: (data: {
+        text: string;
+    }) => void;
+    onCommittedTranscript?: (data: {
+        text: string;
+    }) => void;
+    onCommittedTranscriptWithTimestamps?: (data: {
+        text: string;
+        timestamps?: {
+            start: number;
+            end: number;
+        }[];
+    }) => void;
+    /** Called for any error (also called when specific error callbacks fire) */
+    onError?: (error: Error | Event) => void;
+    onAuthError?: (data: {
+        error: string;
+    }) => void;
+    onQuotaExceededError?: (data: {
+        error: string;
+    }) => void;
+    onCommitThrottledError?: (data: {
+        error: string;
+    }) => void;
+    onTranscriberError?: (data: {
+        error: string;
+    }) => void;
+    onUnacceptedTermsError?: (data: {
+        error: string;
+    }) => void;
+    onRateLimitedError?: (data: {
+        error: string;
+    }) => void;
+    onInputError?: (data: {
+        error: string;
+    }) => void;
+    onQueueOverflowError?: (data: {
+        error: string;
+    }) => void;
+    onResourceExhaustedError?: (data: {
+        error: string;
+    }) => void;
+    onSessionTimeLimitExceededError?: (data: {
+        error: string;
+    }) => void;
+    onChunkSizeExceededError?: (data: {
+        error: string;
+    }) => void;
+    onInsufficientAudioActivityError?: (data: {
+        error: string;
+    }) => void;
+    onConnect?: () => void;
+    onDisconnect?: () => void;
+}
+export interface ScribeHookOptions extends ScribeCallbacks {
+    token?: string;
+    modelId?: string;
+    baseUri?: string;
+    commitStrategy?: CommitStrategy;
+    vadSilenceThresholdSecs?: number;
+    vadThreshold?: number;
+    minSpeechDurationMs?: number;
+    minSilenceDurationMs?: number;
+    languageCode?: string;
+    microphone?: {
+        deviceId?: string;
+        echoCancellation?: boolean;
+        noiseSuppression?: boolean;
+        autoGainControl?: boolean;
+        channelCount?: number;
+    };
+    audioFormat?: AudioFormat;
+    sampleRate?: number;
+    autoConnect?: boolean;
+    includeTimestamps?: boolean;
+}
+export interface UseScribeReturn {
+    status: ScribeStatus;
+    isConnected: boolean;
+    isTranscribing: boolean;
+    partialTranscript: string;
+    committedTranscripts: TranscriptSegment[];
+    error: string | null;
+    connect: (options?: Partial<ScribeHookOptions>) => Promise<void>;
+    disconnect: () => void;
+    sendAudio: (audioBase64: string, options?: {
+        commit?: boolean;
+        sampleRate?: number;
+        previousText?: string;
+    }) => void;
+    commit: () => void;
+    clearTranscripts: () => void;
+    getConnection: () => RealtimeConnection | null;
+}
+export declare function useScribe(options?: ScribeHookOptions): UseScribeReturn;
+export { AudioFormat, CommitStrategy, RealtimeEvents } from "@elevenlabs/client";
+export type { RealtimeConnection } from "@elevenlabs/client";
+```
+
+### components/voice-agents/elevenlabs/use-transcript-viewer.ts
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/use-transcript-viewer.ts)
+
+```ts
+import type { CharacterAlignmentResponseModel } from "@/components/voice-agents/elevenlabs/types";
+import { type RefObject } from "react";
+type ComposeSegmentsOptions = {
+    hideAudioTags?: boolean;
+};
+type BaseSegment = {
+    segmentIndex: number;
+    text: string;
+};
+type TranscriptWord = BaseSegment & {
+    kind: "word";
+    wordIndex: number;
+    startTime: number;
+    endTime: number;
+};
+type GapSegment = BaseSegment & {
+    kind: "gap";
+};
+type TranscriptSegment = TranscriptWord | GapSegment;
+type ComposeSegmentsResult = {
+    segments: TranscriptSegment[];
+    words: TranscriptWord[];
+};
+type SegmentComposer = (alignment: CharacterAlignmentResponseModel) => ComposeSegmentsResult;
+type UseTranscriptViewerProps = {
+    alignment: CharacterAlignmentResponseModel;
+    segmentComposer?: SegmentComposer;
+    hideAudioTags?: boolean;
+    onPlay?: () => void;
+    onPause?: () => void;
+    onTimeUpdate?: (time: number) => void;
+    onEnded?: () => void;
+    onDurationChange?: (duration: number) => void;
+};
+type UseTranscriptViewerResult = {
+    segments: TranscriptSegment[];
+    words: TranscriptWord[];
+    spokenSegments: TranscriptSegment[];
+    unspokenSegments: TranscriptSegment[];
+    currentWord: TranscriptWord | null;
+    currentSegmentIndex: number;
+    currentWordIndex: number;
+    seekToTime: (time: number) => void;
+    seekToWord: (word: number | TranscriptWord) => void;
+    audioRef: RefObject<HTMLAudioElement | null>;
+    isPlaying: boolean;
+    isScrubbing: boolean;
+    duration: number;
+    currentTime: number;
+    play: () => void;
+    pause: () => void;
+    startScrubbing: () => void;
+    endScrubbing: () => void;
+};
+declare function useTranscriptViewer({ alignment, hideAudioTags, segmentComposer, onPlay, onPause, onTimeUpdate, onEnded, onDurationChange, }: UseTranscriptViewerProps): UseTranscriptViewerResult;
+export { useTranscriptViewer };
+export type { UseTranscriptViewerProps, UseTranscriptViewerResult, ComposeSegmentsOptions, ComposeSegmentsResult, SegmentComposer, TranscriptSegment, TranscriptWord, CharacterAlignmentResponseModel, };
+```
+
+### components/voice-agents/elevenlabs/voice-button.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/voice-button.tsx)
+
+```ts
+import * as React from "react";
+export type VoiceButtonState = "idle" | "recording" | "processing" | "success" | "error";
+export interface VoiceButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onError"> {
+    /**
+     * Current state of the voice button
+     * @default "idle"
+     */
+    state?: VoiceButtonState;
+    /**
+     * Callback when button is clicked
+     */
+    onPress?: () => void;
+    /**
+     * Content to display on the left side (label)
+     * Can be a string or ReactNode for custom components
+     */
+    label?: React.ReactNode;
+    /**
+     * Content to display on the right side (e.g., keyboard shortcut)
+     * Can be a string or ReactNode for custom components
+     * @example "⌥Space" or <kbd>⌘K</kbd>
+     */
+    trailing?: React.ReactNode;
+    /**
+     * Icon to display in the center when idle (for icon size buttons)
+     */
+    icon?: React.ReactNode;
+    /**
+     * Custom variant for the button
+     * @default "outline"
+     */
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+    /**
+     * Size of the button
+     * @default "default"
+     */
+    size?: "default" | "sm" | "lg" | "icon";
+    /**
+     * Custom className for the button
+     */
+    className?: string;
+    /**
+     * Custom className for the waveform container
+     */
+    waveformClassName?: string;
+    /**
+     * Duration in ms to show success/error states
+     * @default 1500
+     */
+    feedbackDuration?: number;
+    /**
+     * Disable the button
+     */
+    disabled?: boolean;
+}
+export declare function shouldCaptureVoiceButton(state: VoiceButtonState, disabled?: boolean): boolean;
+export declare const VoiceButton: React.ForwardRefExoticComponent<VoiceButtonProps & React.RefAttributes<HTMLButtonElement>>;
+```
+
+### components/voice-agents/elevenlabs/voice-picker.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/voice-picker.tsx)
+
+```ts
+import type { ElevenLabsVoice } from "@/components/voice-agents/elevenlabs/types";
+import * as React from "react";
+interface VoicePickerProps {
+    voices: ElevenLabsVoice[];
+    value?: string;
+    onValueChange?: (value: string) => void;
+    placeholder?: string;
+    className?: string;
+    open?: boolean;
+    onOpenChange?: (open: boolean) => void;
+}
+declare function VoicePicker({ voices, value, onValueChange, placeholder, className, open, onOpenChange, }: VoicePickerProps): React.JSX.Element;
+interface VoicePickerItemProps {
+    voice: ElevenLabsVoice;
+    isSelected: boolean;
+    onSelect: () => void;
+}
+declare function VoicePickerItem({ voice, isSelected, onSelect, }: VoicePickerItemProps): React.JSX.Element;
+export { VoicePicker, VoicePickerItem };
+```
+
+### components/voice-agents/elevenlabs/waveform.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/elevenlabs/waveform.tsx)
+
+```ts
+import { type HTMLAttributes } from "react";
+export type WaveformProps = HTMLAttributes<HTMLDivElement> & {
+    data?: number[];
+    barWidth?: number;
+    barHeight?: number;
+    barGap?: number;
+    barRadius?: number;
+    barColor?: string;
+    fadeEdges?: boolean;
+    fadeWidth?: number;
+    height?: string | number;
+    active?: boolean;
+    onBarClick?: (index: number, value: number) => void;
+};
+export declare const Waveform: ({ data, barWidth, barHeight: baseBarHeight, barGap, barRadius, barColor, fadeEdges, fadeWidth, height, onBarClick, className, ...props }: WaveformProps) => import("react").JSX.Element;
+export type ScrollingWaveformProps = Omit<WaveformProps, "data" | "onBarClick"> & {
+    speed?: number;
+    barCount?: number;
+    data?: number[];
+};
+export declare const ScrollingWaveform: ({ speed, barCount, barWidth, barHeight: baseBarHeight, barGap, barRadius, barColor, fadeEdges, fadeWidth, height, data, className, ...props }: ScrollingWaveformProps) => import("react").JSX.Element;
+export type AudioScrubberProps = WaveformProps & {
+    currentTime?: number;
+    duration?: number;
+    onSeek?: (time: number) => void;
+    showHandle?: boolean;
+};
+export declare const AudioScrubber: ({ data, currentTime, duration, onSeek, showHandle, barWidth, barHeight, barGap, barRadius, barColor, height, className, ...props }: AudioScrubberProps) => import("react").JSX.Element;
+export type MicrophoneWaveformProps = WaveformProps & {
+    active?: boolean;
+    processing?: boolean;
+    fftSize?: number;
+    smoothingTimeConstant?: number;
+    sensitivity?: number;
+    onError?: (error: Error) => void;
+};
+export declare const MicrophoneWaveform: ({ active, processing, fftSize, smoothingTimeConstant, sensitivity, onError, ...props }: MicrophoneWaveformProps) => import("react").JSX.Element;
+export type StaticWaveformProps = WaveformProps & {
+    bars?: number;
+    seed?: number;
+};
+export declare const StaticWaveform: ({ bars, seed, ...props }: StaticWaveformProps) => import("react").JSX.Element;
+export type LiveMicrophoneWaveformProps = Omit<ScrollingWaveformProps, "barCount"> & {
+    active?: boolean;
+    fftSize?: number;
+    smoothingTimeConstant?: number;
+    sensitivity?: number;
+    onError?: (error: Error) => void;
+    historySize?: number;
+    updateRate?: number;
+    savedHistoryRef?: React.MutableRefObject<number[]>;
+    dragOffset?: number;
+    setDragOffset?: (offset: number) => void;
+    enableAudioPlayback?: boolean;
+    playbackRate?: number;
+};
+export declare const LiveMicrophoneWaveform: ({ active, fftSize, smoothingTimeConstant, sensitivity, onError, historySize, updateRate, barWidth, barHeight: baseBarHeight, barGap, barRadius, barColor, fadeEdges, fadeWidth, height, className, savedHistoryRef, dragOffset: externalDragOffset, setDragOffset: externalSetDragOffset, enableAudioPlayback, playbackRate, ...props }: LiveMicrophoneWaveformProps) => import("react").JSX.Element;
+export type RecordingWaveformProps = Omit<WaveformProps, "data" | "onBarClick"> & {
+    recording?: boolean;
+    fftSize?: number;
+    smoothingTimeConstant?: number;
+    sensitivity?: number;
+    onError?: (error: Error) => void;
+    onRecordingComplete?: (data: number[]) => void;
+    updateRate?: number;
+    showHandle?: boolean;
+};
+export declare const RecordingWaveform: ({ recording, fftSize, smoothingTimeConstant, sensitivity, onError, onRecordingComplete, updateRate, showHandle, barWidth, barHeight: baseBarHeight, barGap, barRadius, barColor, height, className, ...props }: RecordingWaveformProps) => import("react").JSX.Element;
+```
+
+### components/voice-agents/livekit/_ui/bubble.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/_ui/bubble.tsx)
+
+```ts
+import { type VariantProps } from "class-variance-authority";
+import * as React from "react";
+declare function BubbleGroup({ className, ...props }: React.ComponentProps<"div">): React.JSX.Element;
+declare const bubbleVariants: (props?: ({
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "muted" | "tinted" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+declare function Bubble({ variant, align, className, ...props }: React.ComponentProps<"div"> & VariantProps<typeof bubbleVariants> & {
+    align?: "start" | "end";
+}): React.JSX.Element;
+declare function BubbleContent({ asChild, className, ...props }: React.ComponentProps<"div"> & {
+    asChild?: boolean;
+}): React.JSX.Element;
+declare function BubbleReactions({ side, align, className, ...props }: React.ComponentProps<"div"> & {
+    align?: "start" | "end";
+    side?: "top" | "bottom";
+}): React.JSX.Element;
+export { BubbleGroup, Bubble, BubbleContent, BubbleReactions };
+```
+
+### components/voice-agents/livekit/_ui/button.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/_ui/button.tsx)
+
+```ts
+import { type VariantProps } from "class-variance-authority";
+import * as React from "react";
+declare const buttonVariants: (props?: ({
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined;
+    size?: "default" | "sm" | "lg" | "icon" | "xs" | "icon-xs" | "icon-sm" | "icon-lg" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+declare function Button({ className, variant, size, asChild, ...props }: React.ComponentProps<"button"> & VariantProps<typeof buttonVariants> & {
+    asChild?: boolean;
+}): React.JSX.Element;
+export { Button, buttonVariants };
+```
+
+### components/voice-agents/livekit/_ui/marker.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/_ui/marker.tsx)
+
+```ts
+import { type VariantProps } from "class-variance-authority";
+import * as React from "react";
+declare const markerVariants: (props?: ({
+    variant?: "default" | "separator" | "border" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+declare function Marker({ className, variant, asChild, ...props }: React.ComponentProps<"div"> & VariantProps<typeof markerVariants> & {
+    asChild?: boolean;
+}): React.JSX.Element;
+declare function MarkerIcon({ className, ...props }: React.ComponentProps<"span">): React.JSX.Element;
+declare function MarkerContent({ className, ...props }: React.ComponentProps<"span">): React.JSX.Element;
+export { Marker, MarkerIcon, MarkerContent, markerVariants };
+```
+
+### components/voice-agents/livekit/_ui/message-scroller.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/_ui/message-scroller.tsx)
+
+```ts
+import * as React from "react";
+import { Button } from "./button";
+export interface MessageScrollerProviderProps {
+    children?: React.ReactNode;
+    autoScroll?: boolean;
+    scrollMargin?: number;
+    defaultScrollPosition?: "first" | "last" | "last-anchor";
+    scrollEdgeThreshold?: number;
+    scrollPreviousItemPeek?: number;
+}
+declare function MessageScrollerProvider({ children, autoScroll, defaultScrollPosition, scrollEdgeThreshold, scrollMargin, scrollPreviousItemPeek, }: MessageScrollerProviderProps): React.JSX.Element;
+declare function MessageScroller({ className, ...props }: React.ComponentProps<"div">): React.JSX.Element;
+declare function MessageScrollerViewport({ className, preserveScrollOnPrepend, onScroll, style, ...props }: React.ComponentProps<"div"> & {
+    preserveScrollOnPrepend?: boolean;
+}): React.JSX.Element;
+declare function MessageScrollerContent({ className, spacerClassName, children, ...props }: React.ComponentProps<"div"> & {
+    spacerClassName?: string;
+}): React.JSX.Element;
+declare function MessageScrollerItem({ className, messageId, scrollAnchor, ...props }: React.ComponentProps<"div"> & {
+    messageId?: string;
+    scrollAnchor?: boolean;
+}): React.JSX.Element;
+export interface MessageScrollerButtonProps extends Omit<React.ComponentProps<typeof Button>, "children"> {
+    behavior?: ScrollBehavior;
+    direction?: "start" | "end";
+    render?: React.ReactElement;
+    children?: React.ReactNode;
+}
+declare function MessageScrollerButton({ behavior, direction, className, children, render, onClick, ...props }: MessageScrollerButtonProps): React.JSX.Element;
+export { MessageScroller, MessageScrollerButton, MessageScrollerContent, MessageScrollerItem, MessageScrollerProvider, MessageScrollerViewport, };
+```
+
+### components/voice-agents/livekit/_ui/message.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/_ui/message.tsx)
+
+```ts
+import * as React from "react";
+declare function MessageGroup({ className, ...props }: React.ComponentProps<"div">): React.JSX.Element;
+declare function Message({ className, align, ...props }: React.ComponentProps<"div"> & {
+    align?: "start" | "end";
+}): React.JSX.Element;
+declare function MessageAvatar({ className, ...props }: React.ComponentProps<"div">): React.JSX.Element;
+declare function MessageContent({ className, ...props }: React.ComponentProps<"div">): React.JSX.Element;
+declare function MessageHeader({ className, ...props }: React.ComponentProps<"div">): React.JSX.Element;
+declare function MessageFooter({ className, ...props }: React.ComponentProps<"div">): React.JSX.Element;
+export { MessageGroup, Message, MessageAvatar, MessageContent, MessageFooter, MessageHeader, };
+```
+
+### components/voice-agents/livekit/_ui/select.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/_ui/select.tsx)
+
+```ts
+import { Select as SelectPrimitive } from "radix-ui";
+import * as React from "react";
+declare function Select({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>): React.JSX.Element;
+declare function SelectGroup({ ...props }: React.ComponentProps<typeof SelectPrimitive.Group>): React.JSX.Element;
+declare function SelectValue({ ...props }: React.ComponentProps<typeof SelectPrimitive.Value>): React.JSX.Element;
+declare function SelectTrigger({ className, size, children, ...props }: React.ComponentProps<typeof SelectPrimitive.Trigger> & {
+    size?: "sm" | "default";
+}): React.JSX.Element;
+declare function SelectContent({ className, children, position, align, ...props }: React.ComponentProps<typeof SelectPrimitive.Content>): React.JSX.Element;
+declare function SelectLabel({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Label>): React.JSX.Element;
+declare function SelectItem({ className, children, ...props }: React.ComponentProps<typeof SelectPrimitive.Item>): React.JSX.Element;
+declare function SelectSeparator({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Separator>): React.JSX.Element;
+declare function SelectScrollUpButton({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ScrollUpButton>): React.JSX.Element;
+declare function SelectScrollDownButton({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ScrollDownButton>): React.JSX.Element;
+export { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectScrollDownButton, SelectScrollUpButton, SelectSeparator, SelectTrigger, SelectValue, };
+```
+
+### components/voice-agents/livekit/_ui/toggle.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/_ui/toggle.tsx)
+
+```ts
+import { type VariantProps } from "class-variance-authority";
+import { Toggle as TogglePrimitive } from "radix-ui";
+import * as React from "react";
+declare const toggleVariants: (props?: ({
+    variant?: "default" | "outline" | null | undefined;
+    size?: "default" | "sm" | "lg" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+declare function Toggle({ className, variant, size, ...props }: React.ComponentProps<typeof TogglePrimitive.Root> & VariantProps<typeof toggleVariants>): React.JSX.Element;
+export { Toggle, toggleVariants };
+```
+
+### components/voice-agents/livekit/agent-audio-visualizer-bar.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-audio-visualizer-bar.tsx)
+
+```ts
+import { type AgentState, type TrackReferenceOrPlaceholder } from "@livekit/components-react";
+import { type VariantProps } from "class-variance-authority";
+import { type LocalAudioTrack, type RemoteAudioTrack } from "livekit-client";
+import React, { type ComponentProps, type ReactNode } from "react";
+/**
+ * Resizes an array of per-band volume values to exactly `count` entries.
+ * Excess values are trimmed from the end; if there are too few, the last
+ * value is duplicated to fill the remainder. An empty array is padded with 0s.
+ */
+export declare function normalizeVolumeBands(bands: number[], count: number): number[];
+export declare const AgentAudioVisualizerBarElementVariants: (props?: ({
+    size?: "sm" | "lg" | "icon" | "md" | "xl" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+export declare const AgentAudioVisualizerBarVariants: (props?: ({
+    size?: "sm" | "lg" | "icon" | "md" | "xl" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+/**
+ * Props for the AgentAudioVisualizerBar component.
+ */
+export interface AgentAudioVisualizerBarProps {
+    /**
+     * The size of the visualizer.
+     * @defaultValue 'md'
+     */
+    size?: "icon" | "sm" | "md" | "lg" | "xl";
+    /**
+     * The current state of the agent. Determines the animation pattern.
+     * @defaultValue 'connecting'
+     */
+    state?: AgentState;
+    /**
+     * The color of the bars in hexidecimal format.
+     */
+    color?: `#${string}`;
+    /**
+     * The number of bars to display in the visualizer.
+     * If not provided, defaults based on size: 3 for 'icon'/'sm', 5 for others.
+     */
+    barCount?: number;
+    /**
+     * The audio track to visualize. Can be a local/remote audio track or a track reference.
+     */
+    audioTrack?: LocalAudioTrack | RemoteAudioTrack | TrackReferenceOrPlaceholder;
+    /**
+     * Volume values (0-1) to use instead of the values computed from the audioTrack.
+     * The volumeBands.length should match barCount.
+     */
+    volumeBands?: number[];
+    /**
+     * Additional CSS class names to apply to the container.
+     */
+    className?: string;
+    /**
+     * Custom div element to render as grid cells. Each child receives data-lk-index,
+     * data-lk-highlighted props and style props for height. Must be a single div element.
+     */
+    children?: ReactNode;
+}
+/**
+ * A bar-style audio visualizer that responds to agent state and audio levels.
+ * Displays animated bars that react to the current agent state (connecting, thinking, speaking, etc.)
+ * and audio volume when speaking.
+ *
+ * @extends ComponentProps<'div'>
+ *
+ * @example
+ * ```tsx
+ * <AgentAudioVisualizerBar
+ *   size="md"
+ *   state="speaking"
+ *   audioTrack={agentAudioTrack}
+ * />
+ * ```
+ */
+export declare function AgentAudioVisualizerBar({ size, state, color, barCount, audioTrack, volumeBands, className, children, style, ...props }: AgentAudioVisualizerBarProps & VariantProps<typeof AgentAudioVisualizerBarVariants> & ComponentProps<"div">): React.JSX.Element;
+```
+
+### components/voice-agents/livekit/agent-audio-visualizer-grid.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-audio-visualizer-grid.tsx)
+
+```ts
+import { type AgentState, type TrackReferenceOrPlaceholder } from "@livekit/components-react";
+import { type VariantProps } from "class-variance-authority";
+import type { LocalAudioTrack, RemoteAudioTrack } from "livekit-client";
+import React, { type ComponentProps, type ReactNode } from "react";
+/**
+ * Resizes an array of per-band volume values to exactly `count` entries.
+ * Excess values are trimmed from the end; if there are too few, the last
+ * value is duplicated to fill the remainder. An empty array is padded with 0s.
+ */
+export declare function normalizeVolumeBands(bands: number[], count: number): number[];
+export declare const AgentAudioVisualizerGridCellVariants: (props?: ({
+    size?: "sm" | "lg" | "icon" | "md" | "xl" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+export declare const AgentAudioVisualizerGridVariants: (props?: ({
+    size?: "sm" | "lg" | "icon" | "md" | "xl" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+/**
+ * Configuration options for the grid visualizer.
+ */
+export interface GridOptions {
+    /**
+     * The radius for the animation spread effect.
+     */
+    radius?: number;
+    /**
+     * The interval in milliseconds between animation frames.
+     * @defaultValue 100
+     */
+    interval?: number;
+    /**
+     * The number of rows in the grid.
+     * @defaultValue 5
+     */
+    rowCount?: number;
+    /**
+     * The number of columns in the grid.
+     * @defaultValue 5
+     */
+    columnCount?: number;
+    /**
+     * Additional CSS class names to apply to the container.
+     */
+    className?: string;
+}
+/**
+ * Props for the AgentAudioVisualizerGrid component.
+ */
+export type AgentAudioVisualizerGridProps = GridOptions & {
+    /**
+     * The size of the visualizer.
+     * @defaultValue 'md'
+     */
+    size?: "icon" | "sm" | "md" | "lg" | "xl";
+    /**
+     * The current state of the agent. Determines the animation pattern.
+     * @defaultValue 'connecting'
+     */
+    state?: AgentState;
+    /**
+     * The color of the grid cells in hexidecimal format.
+     */
+    color?: `#${string}`;
+    /**
+     * The audio track to visualize. Can be a local/remote audio track or a track reference.
+     */
+    audioTrack?: LocalAudioTrack | RemoteAudioTrack | TrackReferenceOrPlaceholder;
+    /**
+     * Volume values (0-1) to use instead of the values computed from the audioTrack.
+     * The volumeBands.length should match columnCount.
+     */
+    volumeBands?: number[];
+    /**
+     * Additional CSS class names to apply to the container.
+     */
+    className?: string;
+    /**
+     * Custom element to render as grid cells. Each child receives data-lk-index
+     * and data-lk-highlighted props.
+     */
+    children?: ReactNode;
+} & VariantProps<typeof AgentAudioVisualizerGridVariants>;
+/**
+ * A grid-style audio visualizer that responds to agent state and audio levels.
+ * Displays an animated grid of cells that react to the current agent state
+ * and audio volume when speaking.
+ *
+ * @extends ComponentProps<'div'>
+ *
+ * @example
+ * ```tsx
+ * <AgentAudioVisualizerGrid
+ *   size="md"
+ *   state="speaking"
+ *   rowCount={5}
+ *   columnCount={5}
+ *   audioTrack={agentAudioTrack}
+ * />
+ * ```
+ */
+export declare function AgentAudioVisualizerGrid({ size, state, radius, color, rowCount: _rowCount, columnCount: _columnCount, interval, className, children, audioTrack, volumeBands, style, ...props }: AgentAudioVisualizerGridProps & ComponentProps<"div">): React.JSX.Element;
+```
+
+### components/voice-agents/livekit/agent-audio-visualizer-radial.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-audio-visualizer-radial.tsx)
+
+```ts
+import { type AgentState, type TrackReferenceOrPlaceholder } from "@livekit/components-react";
+import { type VariantProps } from "class-variance-authority";
+import { type LocalAudioTrack, type RemoteAudioTrack } from "livekit-client";
+import { type ComponentProps } from "react";
+/**
+ * Resizes an array of per-band volume values to exactly `count` entries.
+ * Excess values are trimmed from the end; if there are too few, the last
+ * value is duplicated to fill the remainder. An empty array is padded with 0s.
+ */
+export declare function normalizeVolumeBands(bands: number[], count: number): number[];
+export declare const AgentAudioVisualizerRadialVariants: (props?: ({
+    size?: "sm" | "lg" | "icon" | "md" | "xl" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+/**
+ * Props for the AgentAudioVisualizerRadial component.
+ */
+export interface AgentAudioVisualizerRadialProps {
+    /**
+     * The size of the visualizer.
+     * @defaultValue 'md'
+     */
+    size?: "icon" | "sm" | "md" | "lg" | "xl";
+    /**
+     * The current state of the agent. Determines the animation pattern.
+     * @defaultValue 'connecting'
+     */
+    state?: AgentState;
+    /**
+     * The color of the radial bars in hexidecimal format.
+     */
+    color?: `#${string}`;
+    /**
+     * The radius (distance from center) for the radial bars.
+     * If not provided, defaults based on size.
+     */
+    radius?: number;
+    /**
+     * The number of bars to display around the circle.
+     * Should be divisible by 4 for optimal visual results.
+     * If not provided, defaults to 12 for 'icon'/'sm', 24 for others.
+     */
+    barCount?: number;
+    /**
+     * The audio track to visualize. Can be a local/remote audio track or a track reference.
+     */
+    audioTrack?: LocalAudioTrack | RemoteAudioTrack | TrackReferenceOrPlaceholder;
+    /**
+     * Volume values (0-1) to use instead of the values computed from the audioTrack.
+     * The volumeBands.length should match barCount.
+     */
+    volumeBands?: number[];
+    /**
+     * Additional CSS class names to apply to the container.
+     */
+    className?: string;
+}
+/**
+ * A radial (circular) audio visualizer that responds to agent state and audio levels.
+ * Displays animated bars arranged in a circle that react to the current agent state
+ * and audio volume when speaking.
+ *
+ * @extends ComponentProps<'div'>
+ *
+ * @example
+ * ```tsx
+ * <AgentAudioVisualizerRadial
+ *   size="lg"
+ *   state="speaking"
+ *   barCount={24}
+ *   audioTrack={agentAudioTrack}
+ * />
+ * ```
+ */
+export declare function AgentAudioVisualizerRadial({ size, state, color, radius, barCount, audioTrack, volumeBands, className, style, ...props }: AgentAudioVisualizerRadialProps & ComponentProps<"div"> & VariantProps<typeof AgentAudioVisualizerRadialVariants>): import("react").JSX.Element;
+```
+
+### components/voice-agents/livekit/agent-audio-visualizer-wave.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-audio-visualizer-wave.tsx)
+
+```ts
+import { type AgentState, type TrackReferenceOrPlaceholder } from "@livekit/components-react";
+import { type VariantProps } from "class-variance-authority";
+import type { LocalAudioTrack, RemoteAudioTrack } from "livekit-client";
+import { type ComponentProps } from "react";
+export declare const AgentAudioVisualizerWaveVariants: (props?: ({
+    size?: "sm" | "lg" | "icon" | "md" | "xl" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+export interface AgentAudioVisualizerWaveProps {
+    /**
+     * The size of the visualizer.
+     * @defaultValue 'lg'
+     */
+    size?: "icon" | "sm" | "md" | "lg" | "xl";
+    /**
+     * The agent state.
+     * @defaultValue 'speaking'
+     */
+    state?: AgentState;
+    /**
+     * The color of the wave in hexidecimal format.
+     * @defaultValue '#1FD5F9'
+     */
+    color?: `#${string}`;
+    /**
+     * The color shift of the wave. Higher values increase hue variation toward the edges.
+     * @defaultValue 0.05
+     */
+    colorShift?: number;
+    /**
+     * The line width of the wave in pixels.
+     * @defaultValue 2.0
+     */
+    lineWidth?: number;
+    /**
+     * The blur of the wave in pixels.
+     * @defaultValue 0.5
+     */
+    blur?: number;
+    /**
+     * The audio track to visualize. Can be a local/remote audio track or a track reference.
+     */
+    audioTrack?: LocalAudioTrack | RemoteAudioTrack | TrackReferenceOrPlaceholder;
+    /**
+     * Volume value (0-1) to use instead of the value computed from the audioTrack.
+     */
+    volume?: number;
+    /**
+     * Additional CSS class names to apply to the container.
+     */
+    className?: string;
+}
+/**
+ * A wave-style audio visualizer that responds to agent state and audio levels.
+ * Displays an animated wave that reacts to the current agent state (connecting, thinking, speaking, etc.)
+ * and audio volume when speaking.
+ *
+ * @extends ComponentProps<'div'>
+ *
+ * @example ```tsx
+ * <AgentAudioVisualizerWave
+ *   size="lg"
+ *   state="speaking"
+ *   color="#1FD5F9"
+ *   colorShift={0.3}
+ *   lineWidth={2}
+ *   blur={0.5}
+ *   audioTrack={audioTrack}
+ * />
+ * ```
+ */
+export declare function AgentAudioVisualizerWave({ size, state, color, colorShift, lineWidth, blur, audioTrack, volume, className, ref, ...props }: AgentAudioVisualizerWaveProps & ComponentProps<"div"> & VariantProps<typeof AgentAudioVisualizerWaveVariants>): import("react").JSX.Element;
+```
+
+### components/voice-agents/livekit/agent-chat-indicator.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-chat-indicator.tsx)
+
+```ts
+import { type VariantProps } from "class-variance-authority";
+import { type MotionProps } from "motion/react";
+import { type ComponentProps, type Ref } from "react";
+declare const agentChatIndicatorVariants: (props?: ({
+    size?: "sm" | "lg" | "md" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+/**
+ * Props for the AgentChatIndicator component.
+ */
+export interface AgentChatIndicatorProps extends MotionProps {
+    /**
+     * The size of the indicator dot.
+     * @defaultValue 'md'
+     */
+    size?: "sm" | "md" | "lg";
+    /**
+     * Additional CSS class names to apply to the indicator.
+     */
+    className?: string;
+    /**
+     * Allows getting a ref to the component instance.\nOnce the component unmounts, React will set `ref.current` to `null`\n(or call the ref with `null` if you passed a callback ref).\n@see {@link https://react.dev/learn/referencing-values-with-refs#refs-and-the-dom React Docs}
+     */
+    ref?: Ref<HTMLSpanElement>;
+}
+/**
+ * An animated indicator that shows the agent is processing or thinking.
+ * Displays as a pulsing dot, typically used in chat interfaces.
+ *
+ * @extends ComponentProps<'span'>
+ *
+ * @example
+ * ```tsx
+ * {agentState === 'thinking' && <AgentChatIndicator size="md" />}
+ * ```
+ */
+export declare function AgentChatIndicator({ size, className, ...props }: AgentChatIndicatorProps & ComponentProps<"span"> & VariantProps<typeof agentChatIndicatorVariants>): import("react").JSX.Element;
+export {};
+```
+
+### components/voice-agents/livekit/agent-chat-transcript.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-chat-transcript.tsx)
+
+```ts
+import { MessageScrollerButton, MessageScrollerContent, MessageScrollerProvider, MessageScrollerViewport } from "@/components/voice-agents/livekit/_ui/message-scroller";
+import { type AgentState, type ReceivedMessage } from "@livekit/components-react";
+import { type ComponentProps } from "react";
+/**
+ * Props for the AgentChatTranscript component.
+ */
+export interface AgentChatTranscriptProps extends ComponentProps<"div">, ComponentProps<typeof MessageScrollerProvider>, ComponentProps<typeof MessageScrollerViewport>, ComponentProps<typeof MessageScrollerContent> {
+    /**
+     * Whether to automatically scroll to the bottom of the transcript when new messages are added.
+     * @defaultValue true
+     */
+    autoScroll?: boolean;
+    /**
+     * The scroll anchor to use when auto-scrolling.
+     * @defaultValue false
+     */
+    scrollAnchor?: boolean | "user" | "other" | "any";
+    /**
+     * The scroll button render function
+     */
+    scrollButtonRender?: ComponentProps<typeof MessageScrollerButton>["render"];
+    /**
+     * The scroll button behavior
+     */
+    scrollButtonBehavior?: ComponentProps<typeof MessageScrollerButton>["behavior"];
+    /**
+     * The scroll button direction
+     */
+    scrollButtonDirection?: ComponentProps<typeof MessageScrollerButton>["direction"];
+    /**
+     * The current state of the agent. When 'thinking', displays a loading indicator.
+     */
+    agentState?: AgentState;
+    /**
+     * Array of messages to display in the transcript.
+     * @defaultValue []
+     */
+    messages?: ReceivedMessage[];
+    /**
+     * Additional CSS class names to apply to the conversation container.
+     */
+    className?: string;
+}
+/**
+ * A chat transcript component that displays a conversation between the user and agent.
+ * Shows messages with timestamps and origin indicators, plus a thinking indicator
+ * when the agent is processing.
+ *
+ * @extends ComponentProps<'div'>, ComponentProps<typeof MessageScrollerProvider>, ComponentProps<typeof MessageScrollerViewport>, ComponentProps<typeof MessageScrollerContent>
+ *
+ *
+ * @example
+ * ```tsx
+ * <AgentChatTranscript
+ *   agentState={agentState}
+ *   messages={chatMessages}
+ * />
+ * ```
+ */
+export declare function AgentChatTranscript({ scrollAnchor, autoScroll, scrollMargin, scrollEdgeThreshold, preserveScrollOnPrepend, scrollPreviousItemPeek, defaultScrollPosition, scrollButtonRender, scrollButtonBehavior, scrollButtonDirection, spacerClassName, agentState, messages, className, ...props }: AgentChatTranscriptProps): import("react").JSX.Element;
+```
+
+### components/voice-agents/livekit/agent-control-bar.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-control-bar.tsx)
+
+```ts
+import { type UseInputControlsProps } from "@/components/voice-agents/livekit/hooks/use-agent-control-bar";
+import { Track } from "livekit-client";
+import { type ComponentProps } from "react";
+/** Configuration for which controls to display in the AgentControlBar. */
+export interface AgentControlBarControls {
+    /**
+     * Whether to show the leave/disconnect button.
+     *
+     * @defaultValue true
+     */
+    leave?: boolean;
+    /**
+     * Whether to show the camera toggle control.
+     *
+     * @defaultValue true (if camera publish permission is granted)
+     */
+    camera?: boolean;
+    /**
+     * Whether to show the microphone toggle control.
+     *
+     * @defaultValue true (if microphone publish permission is granted)
+     */
+    microphone?: boolean;
+    /**
+     * Whether to show the screen share toggle control.
+     *
+     * @defaultValue true (if screen share publish permission is granted)
+     */
+    screenShare?: boolean;
+    /**
+     * Whether to show the chat toggle control.
+     *
+     * @defaultValue true (if data publish permission is granted)
+     */
+    chat?: boolean;
+}
+export interface AgentControlBarProps extends UseInputControlsProps {
+    /**
+     * The visual style of the control bar.
+     *
+     * @default 'default'
+     */
+    variant?: "default" | "outline" | "livekit";
+    /**
+     * This takes an object with the following keys: `leave`, `microphone`, `screenShare`, `camera`,
+     * `chat`. Each key maps to a boolean value that determines whether the control is displayed.
+     *
+     * @default
+     * {
+     *   leave: true,
+     *   microphone: true,
+     *   screenShare: true,
+     *   camera: true,
+     *   chat: true,
+     * }
+     */
+    controls?: AgentControlBarControls;
+    /**
+     * Whether to save user choices.
+     *
+     * @default true
+     */
+    saveUserChoices?: boolean;
+    /**
+     * Whether the agent is connected to a session.
+     *
+     * @default false
+     */
+    isConnected?: boolean;
+    /**
+     * Whether the chat input interface is open.
+     *
+     * @default false
+     */
+    isChatOpen?: boolean;
+    /** The callback for when the user disconnects. */
+    onDisconnect?: () => void;
+    /** The callback for when the chat is opened or closed. */
+    onIsChatOpenChange?: (open: boolean) => void;
+    /** The callback for when a device error occurs. */
+    onDeviceError?: (error: {
+        source: Track.Source;
+        error: Error;
+    }) => void;
+}
+/**
+ * A control bar specifically designed for voice assistant interfaces. Provides controls for
+ * microphone, camera, screen share, chat, and disconnect. Includes an expandable chat input for
+ * text-based interaction with the agent.
+ *
+ * @example
+ *
+ * ```tsx
+ * <AgentControlBar
+ *   variant="livekit"
+ *   isConnected={true}
+ *   onDisconnect={() => handleDisconnect()}
+ *   controls={{
+ *     microphone: true,
+ *     camera: true,
+ *     screenShare: false,
+ *     chat: true,
+ *     leave: true,
+ *   }}
+ * />;
+ * ```
+ *
+ * @extends ComponentProps<'div'>
+ */
+export declare function AgentControlBar({ variant, controls, isChatOpen, isConnected, saveUserChoices, onDisconnect, onDeviceError, onIsChatOpenChange, className, ...props }: AgentControlBarProps & ComponentProps<"div">): import("react").JSX.Element | null;
+```
+
+### components/voice-agents/livekit/agent-disconnect-button.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-disconnect-button.tsx)
+
+```ts
+import { type buttonVariants } from "@/components/voice-agents/livekit/_ui/button";
+import { type VariantProps } from "class-variance-authority";
+import { type ComponentProps } from "react";
+/**
+ * Props for the AgentDisconnectButton component.
+ */
+export interface AgentDisconnectButtonProps extends ComponentProps<"button">, VariantProps<typeof buttonVariants> {
+    /**
+     * Custom icon to display. Defaults to PhoneOffIcon.
+     */
+    icon?: React.ReactNode;
+    /**
+     * The size of the button.
+     * @default 'default'
+     */
+    size?: "default" | "sm" | "lg" | "icon";
+    /**
+     * The variant of the button.
+     * @default 'destructive'
+     */
+    variant?: "default" | "outline" | "destructive" | "ghost" | "link";
+    /**
+     * The children to render.
+     */
+    children?: React.ReactNode;
+    /**
+     * The callback for when the button is clicked.
+     */
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+}
+/**
+ * A button to disconnect from the current agent session.
+ * Calls the session's end() method when clicked.
+ *
+ * @extends ComponentProps<'button'>
+ *
+ * @example
+ * ```tsx
+ * <AgentDisconnectButton onClick={() => console.log('Disconnecting...')} />
+ * ```
+ */
+export declare function AgentDisconnectButton({ icon, size, variant, children, onClick, ...props }: AgentDisconnectButtonProps): import("react").JSX.Element;
+```
+
+### components/voice-agents/livekit/agent-session-provider.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-session-provider.tsx)
+
+```ts
+import { type RoomAudioRendererProps, type SessionProviderProps, type UseSessionReturn } from "@livekit/components-react";
+import { type Room } from "livekit-client";
+/**
+ * Props for the AgentSessionProvider component.
+ * Combines SessionProviderProps with RoomAudioRendererProps.
+ */
+export type AgentSessionProviderProps = SessionProviderProps & RoomAudioRendererProps & {
+    /**
+     * The room to provide.
+     */
+    room?: Room;
+    /**
+     * The volume to set for the audio renderer.
+     */
+    volume?: number;
+    /**
+     * Whether to mute the audio renderer.
+     */
+    muted?: boolean;
+    /**
+     * The session to provide.
+     */
+    session: UseSessionReturn;
+    /**
+     * The children to render.
+     */
+    children: React.ReactNode;
+};
+/**
+ * A provider component for agent sessions that wraps SessionProvider
+ * and includes RoomAudioRenderer for audio playback.
+ *
+ * @example
+ * ```tsx
+ * <AgentSessionProvider session={agentSession}>
+ *   <AgentControlBar />
+ *   <AgentChatTranscript />
+ * </AgentSessionProvider>
+ * ```
+ */
+export declare function AgentSessionProvider({ session, children, ...roomAudioRendererProps }: AgentSessionProviderProps): import("react").JSX.Element;
+```
+
+### components/voice-agents/livekit/agent-track-control.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-track-control.tsx)
+
+```ts
+import { type toggleVariants } from "@/components/voice-agents/livekit/_ui/toggle";
+import { type TrackReferenceOrPlaceholder } from "@livekit/components-react";
+import { type VariantProps } from "class-variance-authority";
+/**
+ * Props for the AgentTrackControl component.
+ */
+export type AgentTrackControlProps = VariantProps<typeof toggleVariants> & {
+    /**
+     * The type of media device (audioinput or videoinput).
+     */
+    kind: MediaDeviceKind;
+    /**
+     * The track source to control (Microphone, Camera, or ScreenShare).
+     */
+    source: "camera" | "microphone" | "screen_share";
+    /**
+     * Whether the track is currently enabled/published.
+     */
+    pressed?: boolean;
+    /**
+     * Whether the control is in a pending/loading state.
+     */
+    pending?: boolean;
+    /**
+     * Whether the control is disabled.
+     */
+    disabled?: boolean;
+    /**
+     * The audio track reference for visualization (only for microphone).
+     */
+    audioTrack?: TrackReferenceOrPlaceholder;
+    /**
+     * Additional CSS class names to apply to the container.
+     */
+    className?: string;
+    /**
+     * Callback when the pressed state changes.
+     */
+    onPressedChange?: (pressed: boolean) => void;
+    /**
+     * Callback when a media device error occurs.
+     */
+    onMediaDeviceError?: (error: Error) => void;
+    /**
+     * Callback when the active device changes.
+     */
+    onActiveDeviceChange?: (deviceId: string) => void;
+};
+/**
+ * A combined track toggle and device selector control.
+ * Includes a toggle button and a dropdown to select the active device.
+ * For microphone tracks, displays an audio visualizer.
+ *
+ * @example
+ * ```tsx
+ * <AgentTrackControl
+ *   kind="audioinput"
+ *   source={Track.Source.Microphone}
+ *   pressed={isMicEnabled}
+ *   audioTrack={micTrackRef}
+ *   onPressedChange={(pressed) => setMicEnabled(pressed)}
+ *   onActiveDeviceChange={(deviceId) => setMicDevice(deviceId)}
+ * />
+ * ```
+ */
+export declare function AgentTrackControl({ kind, variant, source, pressed, pending, disabled, className, audioTrack, onPressedChange, onMediaDeviceError, onActiveDeviceChange, }: AgentTrackControlProps): import("react").JSX.Element;
+```
+
+### components/voice-agents/livekit/agent-track-toggle.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/agent-track-toggle.tsx)
+
+```ts
+import { type VariantProps } from "class-variance-authority";
+import { type ComponentProps } from "react";
+export declare const agentTrackToggleVariants: (props?: ({
+    size?: "default" | "sm" | "lg" | null | undefined;
+    variant?: "default" | "outline" | null | undefined;
+} & import("class-variance-authority/types").ClassProp) | undefined) => string;
+/**
+ * Props for the AgentTrackToggle component.
+ */
+export type AgentTrackToggleProps = VariantProps<typeof agentTrackToggleVariants> & ComponentProps<"button"> & {
+    /**
+     * The size of the toggle.
+     */
+    size?: "sm" | "default" | "lg";
+    /**
+     * The variant of the toggle.
+     * @defaultValue 'default'
+     */
+    variant?: "default" | "outline";
+    /**
+     * The track source to toggle (Microphone, Camera, or ScreenShare).
+     */
+    source: "camera" | "microphone" | "screen_share";
+    /**
+     * Whether the toggle is in a pending/loading state.
+     * When true, displays a loading spinner icon.
+     * @defaultValue false
+     */
+    pending?: boolean;
+    /**
+     * Whether the toggle is currently pressed/enabled.
+     * @defaultValue false
+     */
+    pressed?: boolean;
+    /**
+     * The default pressed state when uncontrolled.
+     * @defaultValue false
+     */
+    defaultPressed?: boolean;
+    /**
+     * Callback fired when the pressed state changes.
+     */
+    onPressedChange?: (pressed: boolean) => void;
+};
+/**
+ * A toggle button for controlling track publishing state.
+ * Displays appropriate icons based on the track source and state.
+ *
+ * @extends ComponentProps<'button'>
+ *
+ * @example
+ * ```tsx
+ * <AgentTrackToggle
+ *   source={Track.Source.Microphone}
+ *   pressed={isMicEnabled}
+ *   onPressedChange={(pressed) => setMicEnabled(pressed)}
+ * />
+ * ```
+ */
+export declare function AgentTrackToggle({ size, variant, source, pending, pressed, defaultPressed, className, onPressedChange, ...props }: AgentTrackToggleProps): import("react").JSX.Element;
+```
+
+### components/voice-agents/livekit/blocks/agent-popup-01/components/agent-popup-block.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/blocks/agent-popup-01/components/agent-popup-block.tsx)
+
+```ts
+import { type AgentControlBarControls } from "@/components/voice-agents/livekit/agent-control-bar";
+import type { AudioVisualizerConfig } from "@/components/voice-agents/livekit/blocks/agent-session-view-01/components/agent-session-block";
+import { type TokenSourceConfigurable, type TokenSourceFixed } from "livekit-client";
+export interface AgentPopupError {
+    title: string;
+    description: string;
+}
+export interface AgentPopupProps {
+    /** Logo shown in the trigger bubble in place of the default agent icon. */
+    logo?: string;
+    /** @default 'Agent' */
+    agentName?: string;
+    /** Where to fetch a LiveKit session token from. See `useSession`'s `tokenSource` argument. */
+    tokenSource: TokenSourceConfigurable | TokenSourceFixed;
+    /** Retained for API compatibility with LiveKit's complete popup block. */
+    themeMode?: "dark" | "light";
+    /**
+     * Message shown above the controls before the first chat message is sent.
+     *
+     * @default 'Agent is listening, ask it a question'
+     */
+    preConnectMessage?: string;
+    /**
+     * An object with the following keys: leave, microphone, screenShare, camera, chat. Each key maps
+     * to a boolean value that determines whether the control is displayed.
+     *
+     * @default { leave: false, microphone: true, chat: false, camera: false, screenShare: false }
+     */
+    controls?: AgentControlBarControls;
+    /** Brand color used for the trigger bubble's idle ring/disc and fallback icon contrast. */
+    triggerColor?: `#${string}`;
+    /**
+     * Shows a pre-connect buffer state with a shimmer message before messages appear.
+     *
+     * @default true
+     */
+    isPreConnectBufferEnabled?: boolean;
+    /**
+     * Configures the visualizer style rendered in the main tile area.
+     *
+     * @default { type: 'bar', size: 'lg' }
+     */
+    audioVisualizer?: AudioVisualizerConfig;
+}
+export declare function AgentPopup_01({ logo, themeMode, tokenSource, triggerColor, agentName, controls, isPreConnectBufferEnabled, preConnectMessage, audioVisualizer, }: AgentPopupProps): import("react").JSX.Element;
+```
+
+### components/voice-agents/livekit/blocks/agent-popup-01/components/popup-view.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/blocks/agent-popup-01/components/popup-view.tsx)
+
+```ts
+import { type AgentControlBarControls } from "@/components/voice-agents/livekit/agent-control-bar";
+import type { AudioVisualizerConfig } from "@/components/voice-agents/livekit/blocks/agent-session-view-01/components/agent-session-block";
+import type { AgentPopupError } from "./agent-popup-block";
+export interface PopupViewProps {
+    agentName?: string;
+    logo?: string;
+    error?: AgentPopupError;
+    controls: AgentControlBarControls;
+    themeMode?: "dark" | "light";
+    preConnectMessage?: string;
+    isPreConnectBufferEnabled?: boolean;
+    audioVisualizer?: AudioVisualizerConfig;
+    onDisconnect?: () => void;
+}
+export declare function PopupView({ agentName, logo, error, controls, themeMode, isPreConnectBufferEnabled, preConnectMessage, audioVisualizer, onDisconnect, }: PopupViewProps): import("react").JSX.Element;
+```
+
+### components/voice-agents/livekit/blocks/agent-popup-01/components/trigger.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/blocks/agent-popup-01/components/trigger.tsx)
+
+```ts
+import { type ComponentProps } from "react";
+import type { AgentPopupError } from "./agent-popup-block";
+export interface TriggerProps extends ComponentProps<"button"> {
+    /** Logo image shown in place of the default audio icon. */
+    logo?: string;
+    /** Brand color used for the idle ring/disc and, via contrast, the fallback icon color. */
+    color?: string;
+    /** Used to build the default `aria-label` (e.g. "Rex agent") and image `alt` text. */
+    agentName?: string;
+    /** Whether the popup is currently open. Drives the connecting/active/error visual states. */
+    isPressed?: boolean;
+    /** Whether the agent session is connected. Only relevant while `isPressed` is true. */
+    isConnected?: boolean;
+    /** Session error, if any. Only relevant while `isPressed` is true. */
+    error?: AgentPopupError;
+    /** Called when the trigger is clicked. */
+    onToggle: () => void;
+}
+export declare function Trigger({ logo, color, error, agentName, isPressed, isConnected, onToggle, className, ...props }: TriggerProps): import("react").JSX.Element;
+```
+
+### components/voice-agents/livekit/blocks/agent-session-view-01/components/agent-session-block.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/blocks/agent-session-view-01/components/agent-session-block.tsx)
+
+```ts
+import { type AgentAudioVisualizerBarProps } from "@/components/voice-agents/livekit/agent-audio-visualizer-bar";
+import { type AgentAudioVisualizerGridProps } from "@/components/voice-agents/livekit/agent-audio-visualizer-grid";
+import { type AgentAudioVisualizerRadialProps } from "@/components/voice-agents/livekit/agent-audio-visualizer-radial";
+import { type AgentAudioVisualizerWaveProps } from "@/components/voice-agents/livekit/agent-audio-visualizer-wave";
+import { type AgentControlBarControls } from "@/components/voice-agents/livekit/agent-control-bar";
+import React from "react";
+/**
+ * Configures the visualizer style rendered in the main tile area. `type` selects the
+ * visualizer, and the remaining fields are exactly the props of the matching
+ * `AgentAudioVisualizer*` component (e.g. `type: 'grid'` accepts `rowCount`/`columnCount`,
+ * `type: 'wave'` accepts `lineWidth`, etc).
+ */
+export type AudioVisualizerConfig = ({
+    type?: "bar";
+} & AgentAudioVisualizerBarProps) | ({
+    type: "wave";
+} & AgentAudioVisualizerWaveProps) | ({
+    type: "grid";
+} & AgentAudioVisualizerGridProps) | ({
+    type: "radial";
+} & AgentAudioVisualizerRadialProps);
+interface FadeProps {
+    top?: boolean;
+    bottom?: boolean;
+    className?: string;
+}
+export declare function Fade({ top, bottom, className }: FadeProps): React.JSX.Element;
+export interface AgentSessionView_01Props {
+    /**
+     * Retained for API compatibility with LiveKit's complete block.
+     * This distribution omits the separately licensed aura visualizer.
+     */
+    themeMode?: "dark" | "light";
+    /**
+     * Message shown above the controls before the first chat message is sent.
+     *
+     * @default 'Agent is listening, ask it a question'
+     */
+    preConnectMessage?: string;
+    /**
+     * An object with the following keys: leave, microphone, screenShare, camera, chat.
+     * Each key maps to a boolean value that determines whether the control is displayed.
+     *
+     * @default {
+     *   leave: true,
+     *   microphone: true,
+     *   chat: false,
+     *   camera: false,
+     *   screenShare: false,
+     * }
+     */
+    controls?: AgentControlBarControls;
+    /** Whether device choices are read from and saved to local storage. */
+    saveUserChoices?: boolean;
+    /**
+     * Shows a pre-connect buffer state with a shimmer message before messages appear.
+     *
+     * @default true
+     */
+    isPreConnectBufferEnabled?: boolean;
+    /**
+     * Configures the visualizer style rendered in the main tile area.
+     *
+     * @default { type: 'bar' }
+     */
+    audioVisualizer?: AudioVisualizerConfig;
+    /** Optional class name merged onto the outer `<section>` container. */
+    className?: string;
+    /** Called when the user clicks the leave control, in addition to ending the session. */
+    onDisconnect?: () => void;
+}
+export declare function AgentSessionView_01({ preConnectMessage, controls, saveUserChoices, isPreConnectBufferEnabled, audioVisualizer, themeMode, onDisconnect, ref, className, ...props }: React.ComponentProps<"section"> & AgentSessionView_01Props): React.JSX.Element;
+export {};
+```
+
+### components/voice-agents/livekit/blocks/agent-session-view-01/components/audio-visualizer.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/blocks/agent-session-view-01/components/audio-visualizer.tsx)
+
+```ts
+import { type AgentAudioVisualizerBarProps } from "@/components/voice-agents/livekit/agent-audio-visualizer-bar";
+import { type AgentAudioVisualizerGridProps } from "@/components/voice-agents/livekit/agent-audio-visualizer-grid";
+import { type AgentAudioVisualizerRadialProps } from "@/components/voice-agents/livekit/agent-audio-visualizer-radial";
+import { type AgentAudioVisualizerWaveProps } from "@/components/voice-agents/livekit/agent-audio-visualizer-wave";
+import { type MotionProps } from "motion/react";
+import React from "react";
+interface AudioVisualizerProps extends MotionProps {
+    type: "bar" | "wave" | "grid" | "radial";
+    config?: AgentAudioVisualizerBarProps | AgentAudioVisualizerWaveProps | AgentAudioVisualizerGridProps | AgentAudioVisualizerRadialProps;
+    className?: string;
+}
+export declare function AudioVisualizer({ type, config, className, ...props }: AudioVisualizerProps): React.JSX.Element;
+export {};
+```
+
+### components/voice-agents/livekit/blocks/agent-session-view-01/components/tile-view.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/blocks/agent-session-view-01/components/tile-view.tsx)
+
+```ts
+import { type TrackReference } from "@livekit/components-react";
+import { Track } from "livekit-client";
+import React from "react";
+import { type AudioVisualizerConfig } from "./agent-session-block";
+export declare function useLocalTrackRef(source: Track.Source): TrackReference | undefined;
+interface TileLayoutProps {
+    isChatOpen: boolean;
+    audioVisualizer?: AudioVisualizerConfig;
+}
+export declare function TileLayout({ isChatOpen, audioVisualizer }: TileLayoutProps): React.JSX.Element;
+export {};
+```
+
+### components/voice-agents/livekit/hooks/use-agent-audio-visualizer-bar.ts
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/hooks/use-agent-audio-visualizer-bar.ts)
+
+```ts
+import { type AgentState } from "@livekit/components-react";
+export declare function useAgentAudioVisualizerBarAnimator(state: AgentState | undefined, columns: number, interval: number): number[];
+```
+
+### components/voice-agents/livekit/hooks/use-agent-audio-visualizer-grid.ts
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/hooks/use-agent-audio-visualizer-grid.ts)
+
+```ts
+import { type AgentState } from "@livekit/components-react";
+export interface Coordinate {
+    x: number;
+    y: number;
+}
+export declare function generateConnectingSequence(rows: number, columns: number, radius: number): {
+    x: number;
+    y: number;
+}[];
+export declare function generateListeningSequence(rows: number, columns: number): {
+    x: number;
+    y: number;
+}[];
+export declare function generateThinkingSequence(rows: number, columns: number): {
+    x: number;
+    y: number;
+}[];
+export declare function useAgentAudioVisualizerGridAnimator(state: AgentState, rows: number, columns: number, interval: number, radius?: number): Coordinate;
+```
+
+### components/voice-agents/livekit/hooks/use-agent-audio-visualizer-radial.ts
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/hooks/use-agent-audio-visualizer-radial.ts)
+
+```ts
+import { type AgentState } from "@livekit/components-react";
+export declare const useAgentAudioVisualizerRadialAnimator: (state: AgentState | undefined, barCount: number, interval: number) => number[];
+```
+
+### components/voice-agents/livekit/hooks/use-agent-audio-visualizer-wave.ts
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/hooks/use-agent-audio-visualizer-wave.ts)
+
+```ts
+import { type AgentState, type TrackReferenceOrPlaceholder } from "@livekit/components-react";
+import { LocalAudioTrack, RemoteAudioTrack } from "livekit-client";
+interface UseAgentAudioVisualizerWaveAnimatorArgs {
+    state?: AgentState;
+    audioTrack?: LocalAudioTrack | RemoteAudioTrack | TrackReferenceOrPlaceholder;
+    volume?: number;
+}
+export declare function useAgentAudioVisualizerWave({ state, audioTrack, volume: volumeProp, }: UseAgentAudioVisualizerWaveAnimatorArgs): {
+    speed: number;
+    amplitude: number;
+    frequency: number;
+    opacity: number;
+};
+export {};
+```
+
+### components/voice-agents/livekit/hooks/use-agent-control-bar.ts
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/hooks/use-agent-control-bar.ts)
+
+```ts
+import { useTrackToggle, type TrackReference } from "@livekit/components-react";
+import { Track } from "livekit-client";
+export interface PublishPermissions {
+    camera: boolean;
+    microphone: boolean;
+    screenShare: boolean;
+    data: boolean;
+}
+export declare function usePublishPermissions(): PublishPermissions;
+export interface UseInputControlsProps {
+    saveUserChoices?: boolean;
+    onDisconnect?: () => void;
+    onDeviceError?: (error: {
+        source: Track.Source;
+        error: Error;
+    }) => void;
+}
+export interface UseInputControlsReturn {
+    microphoneTrack?: TrackReference;
+    microphoneToggle: ReturnType<typeof useTrackToggle<Track.Source.Microphone>>;
+    cameraToggle: ReturnType<typeof useTrackToggle<Track.Source.Camera>>;
+    screenShareToggle: ReturnType<typeof useTrackToggle<Track.Source.ScreenShare>>;
+    handleAudioDeviceChange: (deviceId: string) => void;
+    handleVideoDeviceChange: (deviceId: string) => void;
+    handleMicrophoneDeviceSelectError: (error: Error) => void;
+    handleCameraDeviceSelectError: (error: Error) => void;
+}
+export declare function useInputControls({ saveUserChoices, onDeviceError, }?: UseInputControlsProps): UseInputControlsReturn;
+```
+
+### components/voice-agents/livekit/react-shader-toy.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/react-shader-toy.tsx)
+
+```ts
+/**
+ * @license
+ *
+ * MIT License
+ *
+ * Copyright (c) 2018 Morgan Villedieu
+ * Copyright (c) 2023 Rysana, Inc. (forked from the above)
+ * Copyright (c) 2026 LiveKit, Inc. (forked from the above)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+import React, { type ComponentPropsWithoutRef } from "react";
+type Vector4<T = number> = [T, T, T, T];
+type Uniform = {
+    type: string;
+    value: number[] | number;
+};
+type Uniforms = Record<string, Uniform>;
+type TextureParams = {
+    url: string;
+    wrapS?: number;
+    wrapT?: number;
+    minFilter?: number;
+    magFilter?: number;
+    flipY?: number;
+};
+export interface ReactShaderToyProps {
+    /** Fragment shader GLSL code. */
+    fs: string;
+    /** Vertex shader GLSL code. */
+    vs?: string;
+    /**
+     * Textures to be passed to the shader. Textures need to be squared or will be
+     * automatically resized.
+     *
+     * Options default to:
+     *
+     * ```js
+     * {
+     *   minFilter: LinearMipMapLinearFilter,
+     *   magFilter: LinearFilter,
+     *   wrapS: RepeatWrapping,
+     *   wrapT: RepeatWrapping,
+     * }
+     * ```
+     *
+     * See [textures in the docs](https://rysana.com/docs/react-shaders#textures)
+     * for details.
+     */
+    textures?: TextureParams[];
+    /**
+     * Custom uniforms to be passed to the shader.
+     *
+     * See [custom uniforms in the
+     * docs](https://rysana.com/docs/react-shaders#custom-uniforms) for details.
+     */
+    uniforms?: Uniforms;
+    /**
+     * Color used when clearing the canvas.
+     *
+     * See [the WebGL
+     * docs](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/clearColor)
+     * for details.
+     */
+    clearColor?: Vector4;
+    /**
+     * GLSL precision qualifier. Defaults to `'highp'`. Balance between
+     * performance and quality.
+     */
+    precision?: "highp" | "lowp" | "mediump";
+    /** Custom inline style for canvas. */
+    style?: React.CSSProperties;
+    /** Customize WebGL context attributes. See [the WebGL docs](https://developer.mozilla.org/en-US/docs/Web/API/WebGLRenderingContext/getContextAttributes) for details. */
+    contextAttributes?: Record<string, unknown>;
+    /** Lerp value for `iMouse` built-in uniform. Must be between 0 and 1. */
+    lerp?: number;
+    /** Device pixel ratio. */
+    devicePixelRatio?: number;
+    /**
+     * Callback for when the textures are done loading. Useful if you want to do
+     * something like e.g. hide the canvas until textures are done loading.
+     */
+    onDoneLoadingTextures?: () => void;
+    /** Custom callback to handle errors. Defaults to `console.error`. */
+    onError?: (error: string) => void;
+    /** Custom callback to handle warnings. Defaults to `console.warn`. */
+    onWarning?: (warning: string) => void;
+    /**
+     * When true, the animation loop runs even when the canvas is not visible in the viewport.
+     * When false (default), animation runs only while visible (uses Intersection Observer),
+     * reducing CPU/GPU usage when the shader is off-screen.
+     */
+    animateWhenNotVisible?: boolean;
+}
+export declare function ReactShaderToy({ fs, vs, textures, uniforms: propUniforms, clearColor, precision, style, contextAttributes, lerp, devicePixelRatio, onDoneLoadingTextures, onError, onWarning, animateWhenNotVisible, ...canvasProps }: ReactShaderToyProps & ComponentPropsWithoutRef<"canvas">): React.JSX.Element;
+export {};
+```
+
+### components/voice-agents/livekit/start-audio-button.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/livekit/start-audio-button.tsx)
+
+```ts
+import { type Room } from "livekit-client";
+import { type ComponentProps } from "react";
+/**
+ * Props for the StartAudioButton component.
+ */
+export interface StartAudioButtonProps extends ComponentProps<"button"> {
+    /**
+     * The size of the button.
+     * @defaultValue 'default'
+     */
+    size?: "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg";
+    /**
+     * The variant of the button.
+     * @defaultValue 'default'
+     */
+    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
+    /**
+     * The LiveKit room instance. If not provided, uses the room from context.
+     */
+    room?: Room;
+    /**
+     * The label text to display on the button.
+     */
+    label: string;
+}
+/**
+ * A button that allows users to start audio playback.
+ * Required for browsers that block autoplay of audio.
+ * Only renders when audio playback is blocked.
+ *
+ * @extends ComponentProps<'button'>
+ *
+ * @example
+ * ```tsx
+ * <StartAudioButton label="Click to allow audio playback" />
+ * ```
+ */
+export declare function StartAudioButton({ size, variant, label, room, className, ...props }: StartAudioButtonProps): import("react").JSX.Element;
+```
+
+### components/voice-agents/orbkit/core.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/orbkit/core.tsx)
+
+```ts
+import React, { type CSSProperties } from "react";
+export type OrbState = "idle" | "thinking" | "speaking";
+export declare const ORB_STATES: readonly ["idle", "thinking", "speaking"];
+export interface OrbParamDef {
+    key: string;
+    label: string;
+    min: number;
+    max: number;
+    step: number;
+    default: number;
+    /**
+     * Rate params. The engine integrates them into a clock
+     * (`clock += dt * value * volumeSpeed`) and uploads the clock instead of the
+     * raw value, so changing the rate never jumps the phase — the motion speeds
+     * up or slows down rather than snapping to a new position.
+     */
+    integrate?: boolean;
+}
+export interface OrbColorDef {
+    key: string;
+    label: string;
+    /** hex, e.g. `#ff8b73` */
+    default: string;
+}
+export interface OrbVariant {
+    key: string;
+    label: string;
+    note: string;
+    /** GLSL fragment shader body. Uniform declarations are generated for you. */
+    frag: string;
+    params: OrbParamDef[];
+    colors: OrbColorDef[];
+    /**
+     * Per-state parameter targets. The engine glides each param toward the
+     * active state's preset. Params passed explicitly via the `params` prop
+     * always win over the preset.
+     */
+    statePresets?: Partial<Record<OrbState, Record<string, number>>>;
+    /**
+     * Per-state colour targets, the colour counterpart of `statePresets`.
+     * Kept a separate map because presets are numeric and colours are hex
+     * strings — a union would lose type safety on both. Colours glide in RGB
+     * on the same easing as params, so a state change cross-fades rather
+     * than cutting. Colours passed explicitly via the `colors` prop always
+     * win, exactly as with params.
+     */
+    stateColors?: Partial<Record<OrbState, Record<string, string>>>;
+}
+export type OrbParamValues = Partial<Record<string, number>>;
+export type OrbColorValues = Partial<Record<string, string>>;
+/** Every param and color at its schema default. */
+export declare function defaultValuesFor(variant: OrbVariant): {
+    params: Record<string, number>;
+    colors: Record<string, string>;
+};
+export declare function hexToRgb(hex: string): [number, number, number];
+/**
+ * Prelude prepended to every orb fragment shader: uniforms, value noise, fbm,
+ * and the centered aspect-corrected UV helper.
+ */
+export declare const ORB_GLSL_HELPERS = "\nprecision highp float;\nuniform vec2 uRes;\nuniform float uTime;   // slow ambient clock (half real-time)\nuniform float uAnim;   // flow clock \u2014 its speed follows the output volume\nuniform float uInput;  // input volume 0..1: user speech energy\nuniform float uOutput; // output volume 0..1: agent speech energy\n\nfloat hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123); }\nfloat noise(vec2 p) {\n  vec2 i = floor(p);\n  vec2 f = fract(p);\n  f = f * f * (3.0 - 2.0 * f);\n  return mix(\n    mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x),\n    mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x),\n    f.y\n  );\n}\nfloat fbm(vec2 p) {\n  float v = 0.0;\n  float a = 0.5;\n  for (int i = 0; i < 5; i++) {\n    v += a * noise(p);\n    p = p * 2.03 + vec2(11.7, 7.3);\n    a *= 0.5;\n  }\n  return v;\n}\nvec2 orbUV() { return (2.0 * gl_FragCoord.xy - uRes) / min(uRes.x, uRes.y); }\n\n// GLSL ES 1.0 has no tanh() \u2014 it arrived in ES 3.0. Shader-golf listings lean\n// on it as a tone-mapper, so it ships here. Clamped against exp() overflow;\n// accurate for the non-negative accumulators those shaders produce.\nvec3 tanh3(vec3 x) {\n  x = clamp(x, -10.0, 10.0);\n  vec3 e = exp(2.0 * x);\n  return (e - 1.0) / (e + 1.0);\n}\n\n";
+export declare const ORB_WRAPPERS: readonly ["none", "glass", "ring", "dotted", "ticks", "reticle", "grid", "halftone", "scanlines"];
+export type OrbWrapper = (typeof ORB_WRAPPERS)[number];
+export interface ShaderOrbProps {
+    /** The orb definition: shader + param schema + state presets. */
+    variant: OrbVariant;
+    /** Drives the synthesized volume signals. Defaults to `"idle"`. */
+    state?: OrbState;
+    /** Rendered size in CSS pixels. Ignored when `className` sizes the canvas. */
+    size?: number;
+    /** Explicit param overrides. Any key present here wins over the state preset. */
+    params?: OrbParamValues;
+    /** Explicit color overrides, as hex strings. */
+    colors?: OrbColorValues;
+    /**
+     * Per-state parameter targets, overriding the variant's own. Merged KEY BY
+     * KEY over what the orb already defines, so `{ thinking: { churn: 1.62 } }`
+     * retouches one param of one state and leaves every other param — and the
+     * other two states — exactly as the orb ships them.
+     *
+     * This is the prop form of the variant's `statePresets`, so you can retune
+     * an orb's states from the outside without forking its file. Values still
+     * glide, so switching states cross-fades into your targets. An explicit
+     * `params` value outranks this, the same way it outranks the variant.
+     */
+    statePresets?: Partial<Record<OrbState, Record<string, number>>>;
+    /** The colour counterpart of `statePresets`, merged the same key-by-key way. */
+    stateColors?: Partial<Record<OrbState, Record<string, string>>>;
+    /**
+     * Per-state volume drive, the third member of the same family. Use it to
+     * give each state its own energy; use `volumes` below instead when you have
+     * a real signal to feed in, such as live mic level.
+     */
+    stateVolumes?: Partial<Record<OrbState, {
+        input?: number;
+        output?: number;
+    }>>;
+    /**
+     * Overrides the synthesized volume signals for the active state. The engine
+     * normally derives these from `state` — a slow breath at idle, a restless
+     * wander while thinking, speech-shaped peaks while speaking — and most
+     * shaders read them as their reactivity. Setting either channel here pins
+     * it instead, which is how the playground lets you dial each state's drive
+     * independently. Omit a channel to keep its synthesized motion.
+     */
+    volumes?: {
+        input?: number;
+        output?: number;
+    };
+    /** Freeze the animation on the current frame. */
+    paused?: boolean;
+    /**
+     * Stop rendering while the orb is scrolled out of view. Defaults to `true` —
+     * a page full of orbs would otherwise run a WebGL loop per card.
+     */
+    pauseOffscreen?: boolean;
+    /** Device-pixel-ratio ceiling. Defaults to `2`. */
+    maxDpr?: number;
+    /**
+     * Decoration drawn around the orb — a glass bubble, a dotted bezel, a
+     * viewfinder. Defaults to `"none"`, which renders the bare canvas exactly as
+     * it always has, with no extra element in the tree.
+     *
+     * A wrapper never changes the orb's footprint: `size` stays the outer
+     * diameter and the canvas is inset inside it, so switching one on reflows
+     * nothing around it.
+     */
+    wrapper?: OrbWrapper;
+    /**
+     * The colour a wrapper draws its lines and dots in. Defaults to
+     * `currentColor` — the inherited text colour — which is what makes the
+     * bezels legible on a light and a dark page without being told which one
+     * they are on. `glass` ignores it: glass has no colour of its own.
+     */
+    wrapperColor?: string;
+    /** Applied to the outermost element — the wrapper when there is one. */
+    className?: string;
+    /** Merged onto the outermost element's style. */
+    style?: CSSProperties;
+    /** Accessible label. When omitted the orb is hidden from assistive tech. */
+    ariaLabel?: string;
+}
+export declare function ShaderOrb({ variant, state, size, params, colors, statePresets, stateColors, stateVolumes, volumes, paused, pauseOffscreen, maxDpr, wrapper, wrapperColor, className, style, ariaLabel, }: ShaderOrbProps): React.JSX.Element;
+```
+
+### components/voice-agents/orbkit/shdr-11.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/orbkit/shdr-11.tsx)
+
+```ts
+import { type OrbVariant, type ShaderOrbProps } from "./core";
+export declare const shdr11Orb: OrbVariant;
+export type Shdr11Props = Omit<ShaderOrbProps, "variant">;
+export declare function Shdr11({ size, ...rest }: Shdr11Props): import("react").JSX.Element;
+export default Shdr11;
+```
+
+### components/voice-agents/orbkit/shdr-13.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/orbkit/shdr-13.tsx)
+
+```ts
+import { type OrbVariant, type ShaderOrbProps } from "./core";
+export declare const shdr13Orb: OrbVariant;
+export type Shdr13Props = Omit<ShaderOrbProps, "variant">;
+export declare function Shdr13({ size, ...rest }: Shdr13Props): import("react").JSX.Element;
+export default Shdr13;
+```
+
+### components/voice-agents/orbkit/shdr-14.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/orbkit/shdr-14.tsx)
+
+```ts
+import { type OrbVariant, type ShaderOrbProps } from "./core";
+export declare const shdr14Orb: OrbVariant;
+export type Shdr14Props = Omit<ShaderOrbProps, "variant">;
+export declare function Shdr14({ size, ...rest }: Shdr14Props): import("react").JSX.Element;
+export default Shdr14;
+```
+
+### components/voice-agents/orbkit/shdr-21.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/orbkit/shdr-21.tsx)
+
+```ts
+import { type OrbVariant, type ShaderOrbProps } from "./core";
+export declare const shdr21Orb: OrbVariant;
+export type Shdr21Props = Omit<ShaderOrbProps, "variant">;
+export declare function Shdr21({ size, ...rest }: Shdr21Props): import("react").JSX.Element;
+export default Shdr21;
+```
+
+### components/voice-agents/session.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/session.tsx)
+
+```ts
+import type { ReceivedMessage } from "@livekit/components-react";
+import { type VoiceSessionState } from "./state";
+export { voiceOrbState, type VoiceSessionState } from "./state";
+export interface VoiceAgentSessionProps {
+    name?: string;
+    state: VoiceSessionState;
+    messages?: ReceivedMessage[];
+    microphoneEnabled: boolean;
+    speakerEnabled: boolean;
+    inputLevel?: number;
+    outputLevel?: number;
+    onMicrophoneChange: (enabled: boolean) => void;
+    onSpeakerChange: (enabled: boolean) => void;
+    onDisconnect: () => void;
+    onConnect?: () => void;
+    statusText?: string;
+    className?: string;
+}
+/** Controlled composition: the host owns connection, capture, playback, and agent execution. */
+export declare function VoiceAgentSession({ name, state, messages, microphoneEnabled, speakerEnabled, inputLevel, outputLevel, onMicrophoneChange, onSpeakerChange, onDisconnect, onConnect, statusText, className, }: VoiceAgentSessionProps): import("react").JSX.Element;
+```
+
+### components/voice-agents/state.ts
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/voice-agents/state.ts)
+
+```ts
+export type VoiceSessionState = "idle" | "connecting" | "listening" | "thinking" | "speaking" | "disconnected" | "failed";
+export declare function voiceOrbState(state: VoiceSessionState): "thinking" | "listening" | "talking" | null;
 ```
 
 ### lib/utils.ts

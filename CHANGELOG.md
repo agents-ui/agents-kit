@@ -2,6 +2,27 @@
 
 This file records user-visible changes to Agents Kit.
 
+## 0.3.0
+
+Date: 2026-09-13
+
+### Added
+
+- Dedicated Voice page and navigation with LiveKit and ElevenLabs components on the existing compact design foundation.
+- Fifteen LiveKit registry entries, including four visualizers, transcript/media controls, session context, and session/popup blocks.
+- All 17 ElevenLabs UI families, including the original Orb shader adapted to the existing Three.js renderer and all seven waveform exports.
+- Four MIT OrbKit shaders: Hydrogen, Ion, Dither, and Nimbus; no additional runtime dependencies.
+- Controlled `VoiceAgentSession` combining LiveKit controls/transcript with the ElevenLabs Orb.
+- Credential-free previews, explicit disconnected provider states, manual audio levels, and user-initiated sample playback.
+- Voice integration documentation, source metadata, license notices, and fresh README screenshots.
+- Restore the author's useagenthq/useagent project link in the README.
+
+### Compatibility
+
+- Retain existing v0.1/v0.2 source paths and registry names.
+- Keep the existing Three.js version; no Fiber/Drei dependency or global renderer upgrade.
+- LiveKit Aura is excluded because its separate Non-Resale license text could not be verified. ElevenLabs' MIT Orb provides the spherical visualization.
+
 ## 0.2.0
 
 Date: 2026-09-05

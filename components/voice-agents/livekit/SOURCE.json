@@ -1,0 +1,102 @@
+{
+  "name": "LiveKit Agents UI",
+  "repository": "https://github.com/livekit/components-js",
+  "revision": "20aa613fcab699385fe7385d0bf31a9262210421",
+  "license": "Apache-2.0 with an MIT file-level exception",
+  "sourceRoot": "packages/shadcn",
+  "components": [
+    {
+      "name": "agent-disconnect-button",
+      "path": "agent-disconnect-button.tsx",
+      "title": "Agent Disconnect Button"
+    },
+    {
+      "name": "agent-track-toggle",
+      "path": "agent-track-toggle.tsx",
+      "title": "Agent Track Toggle"
+    },
+    {
+      "name": "agent-track-control",
+      "path": "agent-track-control.tsx",
+      "title": "Agent Track Control"
+    },
+    {
+      "name": "agent-control-bar",
+      "path": "agent-control-bar.tsx",
+      "title": "Agent Control Bar"
+    },
+    {
+      "name": "agent-audio-visualizer-bar",
+      "path": "agent-audio-visualizer-bar.tsx",
+      "title": "Agent Audio Visualizer Bar"
+    },
+    {
+      "name": "agent-audio-visualizer-radial",
+      "path": "agent-audio-visualizer-radial.tsx",
+      "title": "Agent Audio Visualizer Radial"
+    },
+    {
+      "name": "agent-audio-visualizer-grid",
+      "path": "agent-audio-visualizer-grid.tsx",
+      "title": "Agent Audio Visualizer Grid"
+    },
+    {
+      "name": "agent-session-provider",
+      "path": "agent-session-provider.tsx",
+      "title": "Agent Session Provider"
+    },
+    {
+      "name": "start-audio-button",
+      "path": "start-audio-button.tsx",
+      "title": "Start Audio Button"
+    },
+    {
+      "name": "agent-chat-indicator",
+      "path": "agent-chat-indicator.tsx",
+      "title": "Agent Chat Indicator"
+    },
+    {
+      "name": "agent-chat-transcript",
+      "path": "agent-chat-transcript.tsx",
+      "title": "Agent Chat Transcript"
+    },
+    {
+      "name": "react-shader-toy",
+      "path": "react-shader-toy.tsx",
+      "title": "React Shader Toy"
+    },
+    {
+      "name": "agent-audio-visualizer-wave",
+      "path": "agent-audio-visualizer-wave.tsx",
+      "title": "Agent Audio Visualizer Wave"
+    },
+    {
+      "name": "agent-session-view-01",
+      "path": "blocks/agent-session-view-01/components/agent-session-block.tsx",
+      "title": "Agent Session View"
+    },
+    {
+      "name": "agent-popup-01",
+      "path": "blocks/agent-popup-01/components/agent-popup-block.tsx",
+      "title": "Agent Popup"
+    }
+  ],
+  "changes": [
+    "Rewritten local imports into components/voice-agents/livekit.",
+    "Bundled the registry UI dependency closure locally; MessageScroller uses an equivalent native scroll implementation because @shadcn/react is not a project dependency.",
+    "ReactShaderToy caps device pixel ratio at 2, pauses while off-screen, and renders a static frame when reduced motion is requested.",
+    "Bar, radial, grid, wave, and chat-indicator animation loops stop or resolve to a static state when reduced motion is requested.",
+    "Gallery previews use explicit offline state and volume overrides and never create a fake LiveKit room or start audio capture.",
+    "Marked hook-based public entry points as client components for direct Next.js App Router imports.",
+    "Replaced the popup trigger robot glyph with a contextual Lucide audio-lines icon."
+  ],
+  "fileLevelLicenses": {
+    "react-shader-toy.tsx": "MIT"
+  },
+  "excluded": [
+    {
+      "name": "agent-audio-visualizer-aura",
+      "reason": "Upstream file is licensed under PolyForm Non-Resale 1.0.0, so it is not included in this distributable kit."
+    }
+  ]
+}

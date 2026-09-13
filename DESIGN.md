@@ -3,8 +3,8 @@
 ## Source of truth
 
 - Status: Active
-- Last refreshed: 2026-09-12
-- Primary product surfaces: component catalog, generative previews, landing page, source registry.
+- Last refreshed: 2026-09-13
+- Primary product surfaces: component catalog, voice section, generative previews, landing page, source registry.
 - User-approved direction: the compact, restrained Beautiful UI visual language across every collection in Agents Kit.
 - Evidence reviewed: Beautiful UI at `ff0f74d62d8be9d89bcb735b3632e31a6ccf88dc`, its live gallery and compiled CSS; local and deployed computed styles; all collection catalogs; shared BoardUI foundations and `styles/agents.css`.
 - The local diagnostic showed missing compiled theme utilities, omitted body typography and an unbound monospace font. A source file existing is not proof that its styles render.
@@ -31,7 +31,7 @@
 ## Information architecture
 
 - Keep the existing component families, collection filter, search and explicit variant labels.
-- Core surfaces: `/`, `/components`, `/generative`, `/docs`, and the retained `/v0.1` archive.
+- Core surfaces: `/`, `/components`, `/voice`, `/generative`, `/docs`, and the retained `/v0.1` archive.
 - Component content leads; source and variant controls are secondary chrome.
 
 ## Design principles
@@ -54,7 +54,7 @@
 
 - Reuse the existing BoardUI/shadcn controls and imported source components.
 - Shared tokens and typography belong in the existing stylesheet pipeline; Beautiful UI utilities must compile with Tailwind before reaching the browser.
-- Preserve all 218 current catalog examples and variants, callbacks, source paths, model-independent behavior, and license notices.
+- Preserve all existing catalog examples and variants, callbacks, source paths, model-independent behavior, and license notices.
 - Local source adaptations should repair styling at the shared boundary first; use a component edit only for a demonstrated local mismatch.
 
 ## Accessibility
@@ -89,7 +89,7 @@
 
 ## Implementation constraints
 
-- React 19, Next.js 15, Tailwind 4, existing dependencies only.
+- React 19, Next.js 15, Tailwind 4, existing dependencies plus the explicitly requested LiveKit and ElevenLabs provider packages.
 - Fix the real global CSS pipeline; do not ship a generated demo-only override as the production foundation.
 - Existing imports, registry names, behavior and source attribution stay compatible.
 - All source variants require screenshots with typography, spacing, border, corner, alignment and clipping review. Use matched content when attributing geometry differences.
@@ -98,4 +98,4 @@
 
 ## Open questions
 
-- None blocks the authorized design-system work. Scope is all current catalog collections; importing additional upstream application templates is separate work.
+- LiveKit Aura is excluded because its file-specific Non-Resale license text could not be verified. ElevenLabs MIT Orb supplies the spherical voice visualization. Scope is all current catalog collections; importing additional upstream application templates is separate work.

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://agents-ui.github.io/agents-kit/"),
   title: "Agents Kit",
   description:
-    "Compact React components for generative UI, agent thinking, tools, approvals, and interactive results. Copy the source and connect your own models.",
+    "React components for voice agents, chat, and generative UI. Explore LiveKit, ElevenLabs, and OrbKit components, preview them live, and copy the source.",
 }
 
 export default function RootLayout({

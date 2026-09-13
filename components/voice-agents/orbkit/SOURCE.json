@@ -1,0 +1,49 @@
+{
+  "name": "OrbKit",
+  "repository": "https://github.com/zzzzshawn/orbkit",
+  "commit": "35e42484560fd35e8502703ba58fa99541d8c686",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2026 zzzzshawn",
+  "core": "components/voice-agents/orbkit/core.tsx",
+  "credits": "components/voice-agents/orbkit/CREDITS.md",
+  "shaderLicense": "components/voice-agents/orbkit/LICENSE-SHADERS.md",
+  "changes": [
+    "Moved the dependency-free OrbKit runtime and selected variants into the Agents Kit voice collection.",
+    "Mapped variant imports to the local shared runtime.",
+    "Kept the upstream reduced-motion, offscreen pause, DPR cap, context recovery, and cleanup behavior."
+  ],
+  "exclusions": [
+    {
+      "name": "shdr-19",
+      "reason": "Non-commercial XorDev shader; excluded from this distributable MIT collection.",
+      "license": "components/voice-agents/orbkit/LICENSE-SHADERS.md"
+    },
+    {
+      "name": "XorDev shader ports",
+      "reason": "All variants listed under Shaders by XorDev in CREDITS.md are non-commercial and excluded.",
+      "license": "components/voice-agents/orbkit/LICENSE-SHADERS.md"
+    }
+  ],
+  "components": [
+    {
+      "name": "shdr-11",
+      "path": "shdr-11.tsx",
+      "title": "Hydrogen"
+    },
+    {
+      "name": "shdr-13",
+      "path": "shdr-13.tsx",
+      "title": "Ion"
+    },
+    {
+      "name": "shdr-14",
+      "path": "shdr-14.tsx",
+      "title": "Dither"
+    },
+    {
+      "name": "shdr-21",
+      "path": "shdr-21.tsx",
+      "title": "Nimbus"
+    }
+  ]
+}

@@ -87,6 +87,15 @@ const order = [
   "Generated results",
   "Image generation",
   "Conversation scrolling",
+  "Voice session",
+  "Voice visualizers",
+  "Voice controls",
+  "Voice transcript",
+  "Voice conversation",
+  "Voice playback",
+  "Voice selection",
+  "Voice status",
+  "Voice foundations",
 ]
 export type ComponentFamily = {
   id: string
@@ -116,6 +125,7 @@ export function groupEntries(entries: GalleryEntry[]): ComponentFamily[] {
     "AI Elements",
     "Prompt Kit",
     "BoardUI",
+    "Voice Agents",
     "Generative UI",
     "Blocks.so",
     "Effects",
