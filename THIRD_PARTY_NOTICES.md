@@ -95,3 +95,21 @@ All 21 public primitives and 52 documented variants are based on [Prompt Kit](ht
 ## Metal FX and Image FX
 
 Metal FX v2 and Image FX are copied from [Libraries.dev](https://github.com/Jakubantalik/Libraries.dev/tree/422180dd7a5ac646c85deedc65500c4a74339127). The legacy Metal FX v1 source exposed by the current upstream playground comes from [metal-fx](https://github.com/Jakubantalik/metal-fx/tree/be1bf89c63056521a4e8224f368768314c9006f7). MIT licenses and pinned source metadata are distributed beside each implementation under `components/effects/`.
+
+## LiveKit Agents UI
+
+The voice source collection is adapted from [livekit/components-js](https://github.com/livekit/components-js/tree/20aa613fcab699385fe7385d0bf31a9262210421/packages/shadcn) at revision `20aa613fcab699385fe7385d0bf31a9262210421`. The Apache-2.0 license and file-level MIT notices are included under `components/voice-agents/livekit/`. Local imports, styling, reduced-motion behavior, and demo boundaries are recorded in `SOURCE.json`.
+
+The upstream Aura component and its shader are not distributed: they carry a separate PolyForm Non-Resale notice whose linked license text was unavailable. The collection contains four LiveKit visualizers; the combined voice session uses ElevenLabs' MIT Orb.
+
+## ElevenLabs UI
+
+All 17 UI families are adapted from [elevenlabs/ui](https://github.com/elevenlabs/ui/tree/88a5342ee74632a3f66f3cf9a75cbe87f97007f9) at revision `88a5342ee74632a3f66f3cf9a75cbe87f97007f9`. The full MIT license, copyright (c) 2025 Eleven Labs Inc., is included at `components/voice-agents/elevenlabs/LICENSE`. The Orb renderer uses the kit's existing Three.js while retaining the upstream shaders and API. Its Perlin-noise texture remains at the upstream public URL; binary redistribution is not claimed.
+
+The gallery's four-second WAV is a generated tone created for these examples. It contains no speech or third-party recording.
+
+## OrbKit
+
+Hydrogen (SHDR-11), Ion (SHDR-13), Dither (SHDR-14), Nimbus (SHDR-21), and their shared renderer are adapted from [zzzzshawn/orbkit](https://github.com/zzzzshawn/orbkit/tree/35e42484560fd35e8502703ba58fa99541d8c686). These files are identified as MIT in the pinned repository's `CREDITS.md` and `LICENSE-SHADERS.md`; the full MIT license and source metadata are included under `components/voice-agents/orbkit/`. No new runtime dependency is required.
+
+The nineteen XorDev shader ports carry separate non-commercial attribution terms and are excluded. The repository's root MIT license is not applied to those shaders.

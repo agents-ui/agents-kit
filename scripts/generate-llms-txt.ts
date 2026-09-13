@@ -41,8 +41,8 @@ for (const item of [...items].sort((a, b) =>
 const groupNames = [...groups.keys()]
   .filter((name) => name !== "v0.1 compatibility")
   .concat("v0.1 compatibility")
-const header = `# Agents Kit ${version}\n\n> React components for conversations, generated results, and agent interactions. Copy source into your application through the shadcn-compatible registry.\n\nComponents receive data through props and return user intent through callbacks. Your application owns model calls, streaming, tool execution, permissions, and persistence. This library does not supply an agent backend.\n`
-const links = `\n## Documentation\n\n- [Overview](${site}/docs/introduction)\n- [Installation and required styles](${site}/docs/installation)\n- [Component catalog](${site}/components)\n- [Generative playground](${site}/generative)\n- [MCP setup](${site}/docs/mcp): use the standard shadcn MCP server with the @agents-kit registry namespace.\n- [Registry index](${site}/c/registry.json)\n- [Full API reference](${site}/llms-full.txt)\n- [v0.1 archive](${site}/v0.1)\n- [Migration guide](${repo}/blob/main/docs/migrating-to-v0.2.md)\n- [Source and README](${repo})\n- [Credits and licenses](${repo}/blob/main/THIRD_PARTY_NOTICES.md)\n`
+const header = `# Agents Kit ${version}\n\n> React components for voice agents, conversations, generated results, and agent interactions. Copy source into your application through the shadcn-compatible registry.\n\nComponents receive data through props and return user intent through callbacks. Your application owns model calls, streaming, tool execution, permissions, and persistence. This library does not supply an agent backend.\n`
+const links = `\n## Documentation\n\n- [Overview](${site}/docs/introduction)\n- [Installation and required styles](${site}/docs/installation)\n- [Component catalog](${site}/components)\n- [Voice agents](${site}/voice)\n- [Voice integration guide](${site}/docs/voice-agents)\n- [Generative playground](${site}/generative)\n- [MCP setup](${site}/docs/mcp): use the standard shadcn MCP server with the @agents-kit registry namespace.\n- [Registry index](${site}/c/registry.json)\n- [Full API reference](${site}/llms-full.txt)\n- [v0.1 archive](${site}/v0.1)\n- [Migration guide](${repo}/blob/main/docs/migrating-to-v0.2.md)\n- [Source and README](${repo})\n- [Credits and licenses](${repo}/blob/main/THIRD_PARTY_NOTICES.md)\n`
 function inventory(detailed: boolean) {
   return (
     `\n## Registry catalog\n\n${items.length} installable entries. Related source variants share a family in the visual catalog. Registry names and file paths remain explicit here.\n\n` +
@@ -83,7 +83,7 @@ for (const item of items) {
   for (const file of item.files) {
     assert.match(
       file.path,
-      /^(components\/(agents-ui|ai-elements|beautiful-ui|beui|blocks-so|boardui|effects|prompt-kit|ui)|hooks|lib|styles)\//
+      /^(components\/(agents-ui|ai-elements|beautiful-ui|beui|blocks-so|boardui|effects|prompt-kit|ui|voice-agents)|hooks|lib|styles)\//
     )
     assert.ok(!file.path.split("/").includes(".."), "Unexpected registry path")
     const resolved = fs.realpathSync(path.join(root, file.path))
@@ -123,7 +123,8 @@ const emitted = program.emit(
     const relative = path
       .relative(root, source.fileName)
       .replaceAll(path.sep, "/")
-    if (sourceFiles.has(relative)) declarations.set(relative, text.replace(/[ \t]+$/gm, "").trim())
+    if (sourceFiles.has(relative))
+      declarations.set(relative, text.replace(/[ \t]+$/gm, "").trim())
   },
   undefined,
   true
@@ -154,7 +155,9 @@ const outputs = {
     header +
     links +
     "\n" +
-    ["introduction", "installation", "mcp"].map(guide).join("\n") +
+    ["introduction", "installation", "mcp", "voice-agents"]
+      .map(guide)
+      .join("\n") +
     inventory(true) +
     appendix,
 }

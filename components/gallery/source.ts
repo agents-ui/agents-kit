@@ -14,6 +14,7 @@ export async function readGallerySources() {
     "components/effects",
     "components/ai-elements",
     "components/boardui",
+    "components/voice-agents",
   ]
   const allowed = directories.map(
     (directory) => path.resolve(root, directory) + path.sep

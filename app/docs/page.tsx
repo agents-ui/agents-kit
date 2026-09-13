@@ -6,12 +6,18 @@ import Link from "next/link"
 export const metadata: Metadata = {
   title: "Documentation | Agents Kit",
   description:
-    "Install, integrate, and migrate to the Agents Kit v0.2 generative UI component library.",
+    "Install, integrate, and migrate to the Agents Kit v0.3 generative UI component library.",
 }
 
 const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "")
 
 const guides = [
+  {
+    href: "/docs/voice-agents",
+    title: "Voice agents",
+    description:
+      "Combine LiveKit and ElevenLabs visualizers, controls, and transcripts with your provider configuration.",
+  },
   {
     href: "/docs/installation",
     title: "Installation",
@@ -35,7 +41,7 @@ const guides = [
     href: "/components",
     title: "Component catalog",
     description:
-      "Browse the v0.2 families for thinking, messages, approvals, tools, tasks, citations, code, media, and complete agent surfaces.",
+      "Browse the v0.3 families for thinking, messages, approvals, tools, tasks, citations, code, media, and complete agent surfaces.",
   },
   {
     href: "/generative",
@@ -62,7 +68,7 @@ export default function DocsPage() {
             Build useful agent interfaces from controlled React components.
           </h1>
           <p className="text-text-secondary mt-5 max-w-2xl text-base leading-7">
-            Agents Kit v0.2 organizes generative answers, reasoning states,
+            Agents Kit v0.3 organizes generative answers, reasoning states,
             approvals, tools, tasks, messages, citations, code, and media into a
             focused copy-source library as model capabilities and product
             interfaces change.
@@ -157,11 +163,11 @@ export default function DocsPage() {
             </h2>
             <p className="text-text-secondary mt-3 text-sm leading-6">
               Existing public entry paths and registry slugs stay available.
-              Adopt v0.2 one surface at a time without an automatic breaking
+              Adopt v0.3 one surface at a time without an automatic breaking
               rename.
             </p>
             <a
-              href="https://github.com/agents-ui/agents-kit/blob/main/docs/migrating-to-v0.2.md"
+              href="https://github.com/agents-ui/agents-kit/blob/main/docs/migrating-to-v0.3.md"
               className="mt-4 inline-flex items-center gap-2 text-sm font-medium underline-offset-4 hover:underline"
             >
               Read the migration guide
@@ -171,7 +177,7 @@ export default function DocsPage() {
         </section>
 
         <aside className="border-separator-border bg-background-secondary-default mt-14 rounded-2xl border p-5">
-          <p className="text-sm font-medium">v0.2.0</p>
+          <p className="text-sm font-medium">v0.3.0</p>
           <p className="text-text-secondary mt-2 text-sm leading-6">
             Released 2026-09-05. Existing v0.1 paths remain available, with an
             archive for the previous component collection.

@@ -14,6 +14,7 @@ const allowedRoots = [
   "components/effects/",
   "components/prompt-kit/",
   "components/ui/",
+  "components/voice-agents/",
   "hooks/",
   "lib/",
   "styles/",
@@ -107,6 +108,42 @@ function collect(
 }
 
 const definitions = [
+  {
+    name: "voice-agent-session",
+    path: path.join(root, "components/voice-agents/session.tsx"),
+    description:
+      "Controlled voice session combining LiveKit media controls and transcript with the ElevenLabs Orb.",
+    source: "Agents Kit",
+    dependencies: [] as string[],
+    tailwind: undefined,
+    cssVars: undefined,
+  },
+  ...(["livekit", "elevenlabs", "orbkit"] as const).flatMap((provider) => {
+    const directory = path.join(root, "components/voice-agents", provider)
+    const source = JSON.parse(
+      fs.readFileSync(path.join(directory, "SOURCE.json"), "utf8")
+    ) as {
+      components: {
+        name: string
+        path: string
+        title: string
+        description?: string
+      }[]
+    }
+    return source.components.map((component) => ({
+      name: `${provider}-${component.name}`,
+      path: path.join(directory, component.path),
+      description: component.description ?? component.title,
+      source: {
+        livekit: "LiveKit",
+        elevenlabs: "ElevenLabs",
+        orbkit: "OrbKit",
+      }[provider],
+      dependencies: [] as string[],
+      tailwind: undefined,
+      cssVars: undefined,
+    }))
+  }),
   ...promptComponents.map((item) => ({
     name: item.name,
     path: item.path,
@@ -346,6 +383,24 @@ const items = definitions.map((definition) => {
           files,
           dependencies
         )
+    }
+  }
+  for (const provider of ["livekit", "elevenlabs", "orbkit"]) {
+    const directory = `components/voice-agents/${provider}/`
+    if ([...files.keys()].some((file) => file.startsWith(directory))) {
+      for (const name of [
+        "LICENSE",
+        "SOURCE.json",
+        "NOTICE",
+        "NOTICE.md",
+        "CREDITS.md",
+        "LICENSE-SHADERS.md",
+      ]) {
+        const filename = path.join(root, directory, name)
+        if (fs.existsSync(filename)) collect(filename, files, dependencies)
+        else if (name === "LICENSE" || name === "SOURCE.json")
+          throw new Error(`Missing voice collection attribution: ${filename}`)
+      }
     }
   }
   if (

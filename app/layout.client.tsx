@@ -400,7 +400,7 @@ export function LayoutClient({ children }: { children: React.ReactNode }) {
                       href="/components"
                       className="text-foreground underline underline-offset-4"
                     >
-                      v0.2 catalog
+                      v0.3 catalog
                     </Link>{" "}
                     for new components. Follow the{" "}
                     <Link

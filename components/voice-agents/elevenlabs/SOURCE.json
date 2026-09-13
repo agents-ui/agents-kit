@@ -1,0 +1,105 @@
+{
+  "name": "ElevenLabs UI",
+  "repository": "https://github.com/elevenlabs/ui",
+  "commit": "88a5342ee74632a3f66f3cf9a75cbe87f97007f9",
+  "license": "MIT",
+  "copyright": "Copyright (c) 2025 ElevenLabs Inc.",
+  "changes": [
+    "Mapped shared shadcn controls and project tokens to Agents Kit.",
+    "Replaced React Three Fiber and Drei in Orb with the existing Three.js renderer while preserving shaders, props, and uniform behavior.",
+    "Replaced ElevenLabs SDK-only public data types with compatible local structural types.",
+    "Changed framer-motion imports to the installed motion package.",
+    "Added Orb reduced-motion and offscreen pause, capped DPR, cleanup, and render-failure fallback behavior.",
+    "Stopped inactive LiveWaveform render loops and reduced nonessential waveform motion.",
+    "Prevented disabled demos and cancelled permission requests from retaining microphone streams.",
+    "Made AudioScrubber share its requested height with the nested waveform and use a native range input for pointer, touch, and keyboard seeking.",
+    "Redraw static waveforms after root theme changes so canvas colors stay readable without reloading."
+  ],
+  "components": [
+    {
+      "name": "audio-player",
+      "path": "audio-player.tsx",
+      "title": "Audio Player"
+    },
+    {
+      "name": "bar-visualizer",
+      "path": "bar-visualizer.tsx",
+      "title": "Bar Visualizer"
+    },
+    {
+      "name": "conversation-bar",
+      "path": "conversation-bar.tsx",
+      "title": "Conversation Bar"
+    },
+    {
+      "name": "conversation",
+      "path": "conversation.tsx",
+      "title": "Conversation"
+    },
+    {
+      "name": "live-waveform",
+      "path": "live-waveform.tsx",
+      "title": "Live Waveform"
+    },
+    {
+      "name": "matrix",
+      "path": "matrix.tsx",
+      "title": "Matrix"
+    },
+    {
+      "name": "message",
+      "path": "message.tsx",
+      "title": "Message"
+    },
+    {
+      "name": "mic-selector",
+      "path": "mic-selector.tsx",
+      "title": "Mic Selector"
+    },
+    {
+      "name": "orb",
+      "path": "orb.tsx",
+      "title": "Orb"
+    },
+    {
+      "name": "response",
+      "path": "response.tsx",
+      "title": "Response"
+    },
+    {
+      "name": "scrub-bar",
+      "path": "scrub-bar.tsx",
+      "title": "Scrub Bar"
+    },
+    {
+      "name": "shimmering-text",
+      "path": "shimmering-text.tsx",
+      "title": "Shimmering Text"
+    },
+    {
+      "name": "speech-input",
+      "path": "speech-input.tsx",
+      "title": "Speech Input"
+    },
+    {
+      "name": "transcript-viewer",
+      "path": "transcript-viewer.tsx",
+      "title": "Transcript Viewer"
+    },
+    {
+      "name": "voice-button",
+      "path": "voice-button.tsx",
+      "title": "Voice Button"
+    },
+    {
+      "name": "voice-picker",
+      "path": "voice-picker.tsx",
+      "title": "Voice Picker"
+    },
+    {
+      "name": "waveform",
+      "path": "waveform.tsx",
+      "title": "Waveform"
+    }
+  ]
+}

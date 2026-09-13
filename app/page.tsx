@@ -11,14 +11,14 @@ export default function Home() {
       <PublicHeader />
       <main>
         <section className="mx-auto max-w-[860px] px-5 pt-20 pb-16 text-center sm:pt-28">
-          <p className="text-text-secondary text-xs">Agents Kit v0.2</p>
+          <p className="text-text-secondary text-xs">Agents Kit v0.3</p>
           <h1 className="mt-5 text-4xl leading-[1.08] font-semibold tracking-tight sm:text-6xl">
             Build better
             <br />
             agent interfaces.
           </h1>
           <p className="text-text-secondary mx-auto mt-6 max-w-xl text-base leading-7">
-            Messages, tools, approvals, and results people can work with. Built
+            Messages, voice, tools, approvals, and results people can work with. Built
             in React. Yours to copy and change.
           </p>
           <HomeChatPreview />
@@ -171,6 +171,9 @@ export default function Home() {
               ],
               ["AI Elements", "https://github.com/vercel/ai-elements"],
               ["Prompt Kit", "https://github.com/ibelick/prompt-kit"],
+              ["LiveKit", "https://github.com/livekit/components-js"],
+              ["ElevenLabs UI", "https://github.com/elevenlabs/ui"],
+              ["OrbKit", "https://github.com/zzzzshawn/orbkit"],
             ].map(([name, href]) => (
               <a
                 key={name}
