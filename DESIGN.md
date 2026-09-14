@@ -3,8 +3,8 @@
 ## Source of truth
 
 - Status: Active
-- Last refreshed: 2026-09-13
-- Primary product surfaces: component catalog, voice section, generative previews, landing page, source registry.
+- Last refreshed: 2026-09-14
+- Primary product surfaces: component catalog, app examples, voice section, generative previews, landing page, source registry.
 - User-approved direction: the compact, restrained Beautiful UI visual language across every collection in Agents Kit.
 - Evidence reviewed: Beautiful UI at `ff0f74d62d8be9d89bcb735b3632e31a6ccf88dc`, its live gallery and compiled CSS; local and deployed computed styles; all collection catalogs; shared BoardUI foundations and `styles/agents.css`.
 - The local diagnostic showed missing compiled theme utilities, omitted body typography and an unbound monospace font. A source file existing is not proof that its styles render.
@@ -20,7 +20,9 @@
 - Give all collections one coherent design foundation while keeping their APIs, distinct capabilities and complete variants.
 - Let people judge and copy real working components.
 - Success: correct rendered tokens, consistent hierarchy and spacing, accessible interactions, no clipped controls, and screenshot evidence for every catalog entry.
-- Non-goals: replacing component behavior, inventing a dashboard, changing the model/backend boundary, flattening diagrams or artwork into ordinary form controls.
+- Non-goals: replacing component behavior, changing the model/backend boundary, flattening diagrams or artwork into ordinary form controls.
+- App examples teach composition through one shared conversation opened from voice or text entry points, plus the coding workspace. Voice and chat use the standard theme without a basic comparison. The coding basic/kit comparison shares sample content and is labelled as an authored reference, not a measured model result. Prompts point to actual installable source and API documentation.
+- Example controls must change shared application data: voice and text input use one composer, message history, draft, and attached note; local sample replies use that note; accepted patches update the working file and check results. The conversation preview does not capture or play microphone audio or connect to an agent backend. Unsupported demo requests explain the supported scope instead of claiming work completed.
 
 ## Personas and jobs
 
@@ -31,7 +33,7 @@
 ## Information architecture
 
 - Keep the existing component families, collection filter, search and explicit variant labels.
-- Core surfaces: `/`, `/components`, `/voice`, `/generative`, `/docs`, and the retained `/v0.1` archive.
+- Core surfaces: `/`, `/components`, `/examples`, `/voice`, `/generative`, `/docs`, and the retained `/v0.1` archive.
 - Component content leads; source and variant controls are secondary chrome.
 
 ## Design principles

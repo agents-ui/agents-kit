@@ -1,9 +1,11 @@
 import { GitHubStarButton } from "@/components/app/github-star-button"
+import { appExamples } from "@/components/gallery/app-examples-data"
 import { GenerativeShowcase } from "@/components/gallery/generative-previews"
 import { HomeChatPreview } from "@/components/gallery/home-chat-preview"
 import { HomeVoicePreview } from "@/components/gallery/home-voice-preview"
 import { PublicHeader } from "@/components/gallery/public-header"
 import { ArrowRight } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
 export default function Home() {
@@ -110,6 +112,51 @@ export default function Home() {
             <div className="min-h-[480px] min-w-0">
               <HomeVoicePreview />
             </div>
+          </div>
+        </section>
+        <section
+          id="app-examples"
+          className="border-separator-border mx-auto max-w-[1120px] border-t px-5 py-12 sm:px-8"
+        >
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-text-secondary text-xs">Build with the kit</p>
+              <h2 className="mt-2 text-xl font-medium tracking-tight">
+                Start with a complete app.
+              </h2>
+            </div>
+            <Link
+              href="/examples"
+              className="text-text-secondary hover:text-text-primary text-sm"
+            >
+              Explore app examples
+            </Link>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {appExamples.map((example) => (
+              <Link
+                key={example.id}
+                href={`/examples#${example.id}`}
+                className="border-separator-border hover:bg-background-secondary-default rounded-[10px] border p-4 transition-colors"
+              >
+                <Image
+                  src={`${process.env.NEXT_PUBLIC_BASE_PATH || ""}/screenshots/example-${example.id}.png`}
+                  alt={`${example.title} built with Agents Kit`}
+                  width={2432}
+                  height={1520}
+                  className="border-separator-border mb-4 aspect-[8/5] w-full rounded-md border object-contain"
+                />
+                <p className="text-text-secondary text-xs">{example.label}</p>
+                <h3 className="mt-2 text-sm font-medium">{example.title}</h3>
+                <p className="text-text-secondary mt-2 text-[13px] leading-6">
+                  {example.description}
+                </p>
+                <span className="mt-4 inline-flex items-center gap-2 text-xs">
+                  Try the app and get the prompt{" "}
+                  <ArrowRight className="size-3" aria-hidden="true" />
+                </span>
+              </Link>
+            ))}
           </div>
         </section>
         <section className="border-separator-border mx-auto max-w-[1120px] border-t px-5 py-12 sm:px-8">

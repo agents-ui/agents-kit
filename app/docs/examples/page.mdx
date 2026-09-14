@@ -1,0 +1,68 @@
+import { generateMetadata } from "../utils/metadata"
+
+export const metadata = generateMetadata(
+  "Build an app",
+  "Start a shared voice and chat conversation or a coding workspace from working Agents Kit examples."
+)
+
+# Build an app
+
+The [app examples](/examples) show how the kit's components fit into a complete interface. Each includes a live UI, a build prompt, and installable source.
+
+## Choose a starting point
+
+| Example          | What you can try                                                                                                            | Registry entry       |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| Voice assistant  | Open the shared conversation in voice mode, type or try a sample voice turn, mute the microphone control, and attach a note | `example-voice-app`  |
+| Research chat    | Open the same conversation in text mode, ask questions from local notes, and switch voice mode on when useful               | `example-chat-app`   |
+| Coding workspace | Select files, review a proposed patch, accept or reject changes, and run checks against the accepted working copy           | `example-coding-app` |
+
+## Use the build prompt
+
+Choose an example and copy its build prompt into your coding agent. The prompt points to the kit's API documentation and source, describes the product flow, and asks the agent to keep your existing routes, authentication, and data boundaries.
+
+The examples are starting points, not claims that a prompt produces the same screen in every model or project. Inspect the result and adapt it to your users.
+
+## Install the source
+
+First follow the [installation guide](/docs/installation) to prepare React, Tailwind, aliases, fonts, and the shared styles. Then install the starter you want:
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/example-voice-app.json
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/example-chat-app.json
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/example-coding-app.json
+```
+
+Each entry includes the starter and its component dependencies. Mount the copied component in your application's route:
+
+```tsx
+"use client"
+
+import { ChatAppExample } from "@/components/examples/chat-app"
+import { ThemeProvider } from "next-themes"
+
+export default function ResearchPage() {
+  return (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <ChatAppExample />
+    </ThemeProvider>
+  )
+}
+```
+
+If your app already configures `next-themes`, use that existing provider instead.
+
+`VoiceAppExample` and `ChatAppExample` are entry wrappers around the same `ConversationAppExample`; they start with `initialVoice` set to `true` or `false`. The shared component accepts `initialVoice` and `className`. Both entries use the standard theme and keep one composer, message history, draft, and attached note while you switch between voice and text input. The coding example's optional `appearance="basic"` mode uses native HTML and the same sample content for its visual comparison.
+
+## Try the connected flows
+
+- **Voice and chat:** type in either mode, try the sample voice turn, switch modes without losing the conversation, and attach one `.txt`, `.md`, or `.csv` note up to 64 KB. Prompt Kit supplies the input, messages, suggestions, scrolling, and loader; LiveKit supplies the microphone toggle; OrbKit supplies the Nimbus orb. Replies are extractive local samples. The preview does not capture or play microphone audio or connect to an agent backend.
+- **Coding:** apply or reject a patch, then inspect the working file. Fixture checks compare the current file snapshots with the expected changes, so an unapplied patch fails its check. No shell command is executed.
+
+## Connect the real application
+
+The previews keep messages, attachments, files, and checks in local state. No preview runs a shell, connects to an agent, or captures or plays microphone audio.
+
+Replace the starter's sample data and event handlers with your application's services. The conversation app needs your message stream and, for live voice, a provider session with server-issued credentials. The coding app needs an execution service and a real approval boundary. Keep secrets on the server, make side effects explicit, and handle loading, cancellation, and errors.
+
+See the [voice integration guide](/docs/voice-agents) for LiveKit and ElevenLabs setup. The copied source and [full API reference](https://agents-ui.github.io/agents-kit/llms-full.txt) document the component contracts.

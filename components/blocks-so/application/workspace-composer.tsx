@@ -110,6 +110,7 @@ export function WorkspaceComposer({
         </div>
       )}
       <textarea
+        aria-label={placeholder}
         value={value}
         onChange={(e) => onValueChange(e.target.value)}
         onKeyDown={(e) => {

@@ -9,6 +9,8 @@ Components receive data through props and return user intent through callbacks. 
 - [Overview](https://agents-ui.github.io/agents-kit/docs/introduction)
 - [Installation and required styles](https://agents-ui.github.io/agents-kit/docs/installation)
 - [Component catalog](https://agents-ui.github.io/agents-kit/components)
+- [App examples and build prompts](https://agents-ui.github.io/agents-kit/examples)
+- [App starter guide](https://agents-ui.github.io/agents-kit/docs/examples)
 - [Voice agents](https://agents-ui.github.io/agents-kit/voice)
 - [Voice integration guide](https://agents-ui.github.io/agents-kit/docs/voice-agents)
 - [Generative playground](https://agents-ui.github.io/agents-kit/generative)
@@ -293,9 +295,71 @@ Existing v0.1 and v0.2 import paths and registry names remain available. New sou
 
 Each collection includes a pinned revision, license, and adaptation record. See [Third-party notices](https://github.com/agents-ui/agents-kit/blob/main/THIRD_PARTY_NOTICES.md) and the copied `SOURCE.json` files. The Orb's Perlin-noise texture remains at its upstream public URL; remote asset availability is separate from source installation.
 
+## Build an app
+
+The [app examples](https://agents-ui.github.io/agents-kit/examples) show how the kit's components fit into a complete interface. Each includes a live UI, a build prompt, and installable source.
+
+### Choose a starting point
+
+| Example          | What you can try                                                                                                            | Registry entry       |
+| ---------------- | --------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| Voice assistant  | Open the shared conversation in voice mode, type or try a sample voice turn, mute the microphone control, and attach a note | `example-voice-app`  |
+| Research chat    | Open the same conversation in text mode, ask questions from local notes, and switch voice mode on when useful               | `example-chat-app`   |
+| Coding workspace | Select files, review a proposed patch, accept or reject changes, and run checks against the accepted working copy           | `example-coding-app` |
+
+### Use the build prompt
+
+Choose an example and copy its build prompt into your coding agent. The prompt points to the kit's API documentation and source, describes the product flow, and asks the agent to keep your existing routes, authentication, and data boundaries.
+
+The examples are starting points, not claims that a prompt produces the same screen in every model or project. Inspect the result and adapt it to your users.
+
+### Install the source
+
+First follow the [installation guide](https://agents-ui.github.io/agents-kit/docs/installation) to prepare React, Tailwind, aliases, fonts, and the shared styles. Then install the starter you want:
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/example-voice-app.json
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/example-chat-app.json
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/example-coding-app.json
+```
+
+Each entry includes the starter and its component dependencies. Mount the copied component in your application's route:
+
+```tsx
+"use client"
+
+import { ChatAppExample } from "@/components/examples/chat-app"
+import { ThemeProvider } from "next-themes"
+
+export default function ResearchPage() {
+  return (
+    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <ChatAppExample />
+    </ThemeProvider>
+  )
+}
+```
+
+If your app already configures `next-themes`, use that existing provider instead.
+
+`VoiceAppExample` and `ChatAppExample` are entry wrappers around the same `ConversationAppExample`; they start with `initialVoice` set to `true` or `false`. The shared component accepts `initialVoice` and `className`. Both entries use the standard theme and keep one composer, message history, draft, and attached note while you switch between voice and text input. The coding example's optional `appearance="basic"` mode uses native HTML and the same sample content for its visual comparison.
+
+### Try the connected flows
+
+- **Voice and chat:** type in either mode, try the sample voice turn, switch modes without losing the conversation, and attach one `.txt`, `.md`, or `.csv` note up to 64 KB. Prompt Kit supplies the input, messages, suggestions, scrolling, and loader; LiveKit supplies the microphone toggle; OrbKit supplies the Nimbus orb. Replies are extractive local samples. The preview does not capture or play microphone audio or connect to an agent backend.
+- **Coding:** apply or reject a patch, then inspect the working file. Fixture checks compare the current file snapshots with the expected changes, so an unapplied patch fails its check. No shell command is executed.
+
+### Connect the real application
+
+The previews keep messages, attachments, files, and checks in local state. No preview runs a shell, connects to an agent, or captures or plays microphone audio.
+
+Replace the starter's sample data and event handlers with your application's services. The conversation app needs your message stream and, for live voice, a provider session with server-issued credentials. The coding app needs an execution service and a real approval boundary. Keep secrets on the server, make side effects explicit, and handle loading, cancellation, and errors.
+
+See the [voice integration guide](https://agents-ui.github.io/agents-kit/docs/voice-agents) for LiveKit and ElevenLabs setup. The copied source and [full API reference](https://agents-ui.github.io/agents-kit/llms-full.txt) document the component contracts.
+
 ## Registry catalog
 
-221 installable entries. Related source variants share a family in the visual catalog. Registry names and file paths remain explicit here.
+224 installable entries. Related source variants share a family in the visual catalog. Registry names and file paths remain explicit here.
 
 ### Generated results and runtime controls (4)
 
@@ -2518,6 +2582,48 @@ Waveform
 
 ```bash
 npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/elevenlabs-waveform.json
+```
+
+
+### App examples (3)
+
+#### example-chat-app
+
+Start with a question or source note, then switch to voice without losing your draft.
+
+- Registry: https://agents-ui.github.io/agents-kit/c/example-chat-app.json
+- Entry source: [components/examples/chat-app.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/examples/chat-app.tsx)
+- Import path (default alias): `@/components/examples/chat-app`
+- Dependencies: `@radix-ui/react-avatar@^1.1.3`, `@radix-ui/react-slot@^1.2.2`, `@radix-ui/react-tooltip@^1.2.6`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `lucide-react@0.577.0`, `marked@^15.0.7`, `motion@12.26.2`, `next-themes@^0.4.4`, `radix-ui@1.6.7`, `react-aria-components@^1.21.1`, `react-markdown@^10.1.0`, `remark-breaks@^4.0.0`, `remark-gfm@^4.0.1`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`, `use-stick-to-bottom@^1.1.0`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/example-chat-app.json
+```
+
+#### example-coding-app
+
+An agent proposes a patch, you review it, and the checks explain the result.
+
+- Registry: https://agents-ui.github.io/agents-kit/c/example-coding-app.json
+- Entry source: [components/examples/coding-app.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/examples/coding-app.tsx)
+- Import path (default alias): `@/components/examples/coding-app`
+- Dependencies: `@radix-ui/react-slot@^1.2.2`, `@radix-ui/react-tooltip@^1.2.6`, `ansi-to-react@6.2.6`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `lucide-react@0.577.0`, `radix-ui@1.6.7`, `react-aria-components@^1.21.1`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/example-coding-app.json
+```
+
+#### example-voice-app
+
+Talk and type in the same conversation, with one composer and shared context.
+
+- Registry: https://agents-ui.github.io/agents-kit/c/example-voice-app.json
+- Entry source: [components/examples/voice-app.tsx](https://github.com/agents-ui/agents-kit/blob/main/components/examples/voice-app.tsx)
+- Import path (default alias): `@/components/examples/voice-app`
+- Dependencies: `@radix-ui/react-avatar@^1.1.3`, `@radix-ui/react-slot@^1.2.2`, `@radix-ui/react-tooltip@^1.2.6`, `class-variance-authority@^0.7.1`, `clsx@^2.1.1`, `livekit-client@2.22.3`, `lucide-react@0.577.0`, `marked@^15.0.7`, `motion@12.26.2`, `next-themes@^0.4.4`, `radix-ui@1.6.7`, `react-aria-components@^1.21.1`, `react-markdown@^10.1.0`, `remark-breaks@^4.0.0`, `remark-gfm@^4.0.1`, `shiki@^3.0.0`, `tailwind-merge@^3.0.1`, `tailwindcss@^4.1.7`, `tw-animate-css@1.3.6`, `use-stick-to-bottom@^1.1.0`
+
+```bash
+npx shadcn@latest add https://agents-ui.github.io/agents-kit/c/example-voice-app.json
 ```
 
 
@@ -5613,8 +5719,8 @@ export { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, buttonGroupVariants
 import { type VariantProps } from "class-variance-authority";
 import * as React from "react";
 declare const buttonVariants: (props?: ({
-    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined;
-    size?: "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg" | null | undefined;
+    variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | null | undefined;
+    size?: "sm" | "lg" | "default" | "icon" | "icon-sm" | "icon-lg" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 declare function Button({ className, variant, size, asChild, ...props }: React.ComponentProps<"button"> & VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
@@ -5782,7 +5888,7 @@ declare const inputGroupAddonVariants: (props?: ({
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 declare function InputGroupAddon({ className, align, ...props }: React.ComponentProps<"div"> & VariantProps<typeof inputGroupAddonVariants>): React.JSX.Element;
 declare const inputGroupButtonVariants: (props?: ({
-    size?: "sm" | "xs" | "icon-xs" | "icon-sm" | null | undefined;
+    size?: "sm" | "xs" | "icon-sm" | "icon-xs" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 declare function InputGroupButton({ className, type, variant, size, ...props }: Omit<React.ComponentProps<typeof Button>, "size"> & VariantProps<typeof inputGroupButtonVariants>): React.JSX.Element;
 declare function InputGroupText({ className, ...props }: React.ComponentProps<"span">): React.JSX.Element;
@@ -6151,7 +6257,7 @@ import type { ComponentProps, HTMLAttributes } from "react";
 export type CheckpointProps = HTMLAttributes<HTMLDivElement>;
 export declare const Checkpoint: ({ className, children, ...props }: CheckpointProps) => import("react").JSX.Element;
 export type CheckpointIconProps = LucideProps;
-export declare const CheckpointIcon: ({ className, children, ...props }: CheckpointIconProps) => string | number | bigint | boolean | import("react").JSX.Element | Iterable<import("react").ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<import("react").ReactNode> | null | undefined>;
+export declare const CheckpointIcon: ({ className, children, ...props }: CheckpointIconProps) => string | number | bigint | boolean | Iterable<import("react").ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<import("react").ReactNode> | null | undefined> | import("react").JSX.Element;
 export type CheckpointTriggerProps = ComponentProps<typeof Button> & {
     tooltip?: string;
 };
@@ -6371,13 +6477,13 @@ export declare const ContextContentBody: ({ children, className, ...props }: Con
 export type ContextContentFooterProps = ComponentProps<"div">;
 export declare const ContextContentFooter: ({ children, className, ...props }: ContextContentFooterProps) => import("react").JSX.Element;
 export type ContextInputUsageProps = ComponentProps<"div">;
-export declare const ContextInputUsage: ({ className, children, ...props }: ContextInputUsageProps) => string | number | bigint | true | import("react").JSX.Element | Iterable<import("react").ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<import("react").ReactNode> | null | undefined> | null;
+export declare const ContextInputUsage: ({ className, children, ...props }: ContextInputUsageProps) => string | number | bigint | true | Iterable<import("react").ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<import("react").ReactNode> | null | undefined> | import("react").JSX.Element | null;
 export type ContextOutputUsageProps = ComponentProps<"div">;
-export declare const ContextOutputUsage: ({ className, children, ...props }: ContextOutputUsageProps) => string | number | bigint | true | import("react").JSX.Element | Iterable<import("react").ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<import("react").ReactNode> | null | undefined> | null;
+export declare const ContextOutputUsage: ({ className, children, ...props }: ContextOutputUsageProps) => string | number | bigint | true | Iterable<import("react").ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<import("react").ReactNode> | null | undefined> | import("react").JSX.Element | null;
 export type ContextReasoningUsageProps = ComponentProps<"div">;
-export declare const ContextReasoningUsage: ({ className, children, ...props }: ContextReasoningUsageProps) => string | number | bigint | true | import("react").JSX.Element | Iterable<import("react").ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<import("react").ReactNode> | null | undefined> | null;
+export declare const ContextReasoningUsage: ({ className, children, ...props }: ContextReasoningUsageProps) => string | number | bigint | true | Iterable<import("react").ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<import("react").ReactNode> | null | undefined> | import("react").JSX.Element | null;
 export type ContextCacheUsageProps = ComponentProps<"div">;
-export declare const ContextCacheUsage: ({ className, children, ...props }: ContextCacheUsageProps) => string | number | bigint | true | import("react").JSX.Element | Iterable<import("react").ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<import("react").ReactNode> | null | undefined> | null;
+export declare const ContextCacheUsage: ({ className, children, ...props }: ContextCacheUsageProps) => string | number | bigint | true | Iterable<import("react").ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<import("react").ReactNode> | null | undefined> | import("react").JSX.Element | null;
 export {};
 ```
 
@@ -8136,8 +8242,8 @@ export declare function LoadingState({ variant, label, elapsed, elapsedSeconds, 
 import { ButtonHTMLAttributes } from "react";
 import { type VariantProps } from "class-variance-authority";
 export declare const buttonVariants: (props?: ({
-    variant?: "secondary" | "ghost" | "success" | "accent" | "primary" | "quiet" | null | undefined;
-    size?: "sm" | "xs" | "md" | null | undefined;
+    variant?: "secondary" | "ghost" | "accent" | "primary" | "success" | "quiet" | null | undefined;
+    size?: "sm" | "md" | "xs" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 export type ButtonVariant = NonNullable<VariantProps<typeof buttonVariants>["variant"]>;
 export declare function Button({ variant, size, className, ...props }: ButtonHTMLAttributes<HTMLButtonElement> & VariantProps<typeof buttonVariants>): import("react").JSX.Element;
@@ -17148,6 +17254,100 @@ import { type RefObject } from 'react';
 export declare function useMetalTextReflection(ref: RefObject<HTMLElement | null>): void;
 ```
 
+### components/examples/chat-app.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/examples/chat-app.tsx)
+
+```ts
+export declare function ChatAppExample(): import("react").JSX.Element;
+```
+
+### components/examples/coding-app.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/examples/coding-app.tsx)
+
+```ts
+export declare function CodingAppExample({ appearance, }: {
+    appearance?: "basic" | "kit";
+}): import("react").JSX.Element;
+```
+
+### components/examples/coding-workflow.ts
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/examples/coding-workflow.ts)
+
+```ts
+export type PatchDecision = "pending" | "accepted" | "rejected";
+export declare const codingFiles: readonly [{
+    readonly path: "src/routes/visits.ts";
+    readonly name: "visits.ts";
+    readonly task: "Validate the visit limit";
+    readonly test: "clamps the limit to an integer between 1 and 100";
+    readonly before: "export function visitLimit(value: string) {\n  return Number(value)\n}\n";
+    readonly after: "export function visitLimit(value: string) {\n  const parsed = Math.trunc(Number(value)) || 20\n  return Math.max(1, Math.min(parsed, 100))\n}\n";
+}, {
+    readonly path: "src/components/visit-card.tsx";
+    readonly name: "visit-card.tsx";
+    readonly task: "Improve the empty state";
+    readonly test: "announces the empty state to assistive technology";
+    readonly before: "export function EmptyVisits() {\n  return <p>No visits</p>\n}\n";
+    readonly after: "export function EmptyVisits() {\n  return <p role=\"status\">No field visits scheduled.</p>\n}\n";
+}];
+export declare function workingCode(index: number, decisions: PatchDecision[]): "export function visitLimit(value: string) {\n  return Number(value)\n}\n" | "export function visitLimit(value: string) {\n  const parsed = Math.trunc(Number(value)) || 20\n  return Math.max(1, Math.min(parsed, 100))\n}\n" | "export function EmptyVisits() {\n  return <p>No visits</p>\n}\n" | "export function EmptyVisits() {\n  return <p role=\"status\">No field visits scheduled.</p>\n}\n";
+export declare function checkWorkingFiles(decisions: PatchDecision[]): {
+    name: "clamps the limit to an integer between 1 and 100" | "announces the empty state to assistive technology";
+    passed: boolean;
+    path: "src/routes/visits.ts" | "src/components/visit-card.tsx";
+}[];
+```
+
+### components/examples/conversation-app.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/examples/conversation-app.tsx)
+
+```ts
+/** Composition of kit components with shared text and voice demo state. */
+export declare function ConversationAppExample({ initialVoice, className, }?: {
+    initialVoice?: boolean;
+    className?: string;
+}): import("react").JSX.Element;
+```
+
+### components/examples/research-workflow.ts
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/examples/research-workflow.ts)
+
+```ts
+export interface ResearchNote {
+    id: string;
+    title: string;
+    text: string;
+    attached?: boolean;
+}
+export declare const researchProjects: {
+    id: string;
+    title: string;
+    subtitle: string;
+    question: string;
+    notes: {
+        id: string;
+        title: string;
+        text: string;
+    }[];
+}[];
+/** Extractive local demo: return the selected notes, never invented research. */
+export declare function researchAnswer(question: string, notes: ResearchNote[], concise?: boolean): string;
+export declare function researchReport(title: string, notes: ResearchNote[], answer: string): string;
+```
+
+### components/examples/voice-app.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/examples/voice-app.tsx)
+
+```ts
+export declare function VoiceAppExample(): import("react").JSX.Element;
+```
+
 ### components/prompt-kit/_ui/hover-card.tsx
 
 [Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/prompt-kit/_ui/hover-card.tsx)
@@ -17632,7 +17832,7 @@ export declare function Steps({ defaultOpen, className, ...props }: StepsProps):
 import { type VariantProps } from "class-variance-authority";
 import React from "react";
 declare const systemMessageVariants: (props?: ({
-    variant?: "error" | "action" | "warning" | null | undefined;
+    variant?: "action" | "error" | "warning" | null | undefined;
     fill?: boolean | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 export type SystemMessageProps = React.ComponentProps<"div"> & VariantProps<typeof systemMessageVariants> & {
@@ -17737,8 +17937,8 @@ export { Badge, badgeVariants };
 import { type VariantProps } from "class-variance-authority";
 import * as React from "react";
 declare const buttonVariants: (props?: ({
-    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined;
-    size?: "default" | "sm" | "lg" | "icon" | null | undefined;
+    variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | null | undefined;
+    size?: "sm" | "lg" | "default" | "icon" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 declare function Button({ className, variant, size, asChild, ...props }: React.ComponentProps<"button"> & VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
@@ -17840,6 +18040,14 @@ export { Skeleton };
 import * as React from "react";
 declare function Textarea({ className, ...props }: React.ComponentProps<"textarea">): React.JSX.Element;
 export { Textarea };
+```
+
+### components/ui/theme-toggle.tsx
+
+[Implementation](https://github.com/agents-ui/agents-kit/blob/main/components/ui/theme-toggle.tsx)
+
+```ts
+export declare function ThemeToggle(): import("react").JSX.Element;
 ```
 
 ### components/ui/tooltip.tsx
@@ -18279,7 +18487,7 @@ import { type AudioFormat, type CommitStrategy } from "@/components/voice-agents
 import { type VariantProps } from "class-variance-authority";
 import * as React from "react";
 declare const buttonVariants: (props?: ({
-    size?: "default" | "sm" | "lg" | null | undefined;
+    size?: "sm" | "lg" | "default" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 type ButtonSize = VariantProps<typeof buttonVariants>["size"];
 export interface SpeechInputData {
@@ -18876,7 +19084,7 @@ import { type VariantProps } from "class-variance-authority";
 import * as React from "react";
 declare function BubbleGroup({ className, ...props }: React.ComponentProps<"div">): React.JSX.Element;
 declare const bubbleVariants: (props?: ({
-    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "muted" | "tinted" | null | undefined;
+    variant?: "default" | "muted" | "destructive" | "outline" | "secondary" | "ghost" | "tinted" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 declare function Bubble({ variant, align, className, ...props }: React.ComponentProps<"div"> & VariantProps<typeof bubbleVariants> & {
     align?: "start" | "end";
@@ -18899,8 +19107,8 @@ export { BubbleGroup, Bubble, BubbleContent, BubbleReactions };
 import { type VariantProps } from "class-variance-authority";
 import * as React from "react";
 declare const buttonVariants: (props?: ({
-    variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link" | null | undefined;
-    size?: "default" | "sm" | "lg" | "icon" | "xs" | "icon-xs" | "icon-sm" | "icon-lg" | null | undefined;
+    variant?: "link" | "default" | "destructive" | "outline" | "secondary" | "ghost" | null | undefined;
+    size?: "sm" | "lg" | "default" | "icon" | "xs" | "icon-sm" | "icon-lg" | "icon-xs" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 declare function Button({ className, variant, size, asChild, ...props }: React.ComponentProps<"button"> & VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
@@ -18916,7 +19124,7 @@ export { Button, buttonVariants };
 import { type VariantProps } from "class-variance-authority";
 import * as React from "react";
 declare const markerVariants: (props?: ({
-    variant?: "default" | "separator" | "border" | null | undefined;
+    variant?: "separator" | "default" | "border" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 declare function Marker({ className, variant, asChild, ...props }: React.ComponentProps<"div"> & VariantProps<typeof markerVariants> & {
     asChild?: boolean;
@@ -19012,7 +19220,7 @@ import { Toggle as TogglePrimitive } from "radix-ui";
 import * as React from "react";
 declare const toggleVariants: (props?: ({
     variant?: "default" | "outline" | null | undefined;
-    size?: "default" | "sm" | "lg" | null | undefined;
+    size?: "sm" | "lg" | "default" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 declare function Toggle({ className, variant, size, ...props }: React.ComponentProps<typeof TogglePrimitive.Root> & VariantProps<typeof toggleVariants>): React.JSX.Element;
 export { Toggle, toggleVariants };
@@ -19034,10 +19242,10 @@ import React, { type ComponentProps, type ReactNode } from "react";
  */
 export declare function normalizeVolumeBands(bands: number[], count: number): number[];
 export declare const AgentAudioVisualizerBarElementVariants: (props?: ({
-    size?: "sm" | "lg" | "icon" | "md" | "xl" | null | undefined;
+    size?: "sm" | "md" | "lg" | "icon" | "xl" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 export declare const AgentAudioVisualizerBarVariants: (props?: ({
-    size?: "sm" | "lg" | "icon" | "md" | "xl" | null | undefined;
+    size?: "sm" | "md" | "lg" | "icon" | "xl" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 /**
  * Props for the AgentAudioVisualizerBar component.
@@ -19116,10 +19324,10 @@ import React, { type ComponentProps, type ReactNode } from "react";
  */
 export declare function normalizeVolumeBands(bands: number[], count: number): number[];
 export declare const AgentAudioVisualizerGridCellVariants: (props?: ({
-    size?: "sm" | "lg" | "icon" | "md" | "xl" | null | undefined;
+    size?: "sm" | "md" | "lg" | "icon" | "xl" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 export declare const AgentAudioVisualizerGridVariants: (props?: ({
-    size?: "sm" | "lg" | "icon" | "md" | "xl" | null | undefined;
+    size?: "sm" | "md" | "lg" | "icon" | "xl" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 /**
  * Configuration options for the grid visualizer.
@@ -19223,7 +19431,7 @@ import { type ComponentProps } from "react";
  */
 export declare function normalizeVolumeBands(bands: number[], count: number): number[];
 export declare const AgentAudioVisualizerRadialVariants: (props?: ({
-    size?: "sm" | "lg" | "icon" | "md" | "xl" | null | undefined;
+    size?: "sm" | "md" | "lg" | "icon" | "xl" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 /**
  * Props for the AgentAudioVisualizerRadial component.
@@ -19298,7 +19506,7 @@ import { type VariantProps } from "class-variance-authority";
 import type { LocalAudioTrack, RemoteAudioTrack } from "livekit-client";
 import { type ComponentProps } from "react";
 export declare const AgentAudioVisualizerWaveVariants: (props?: ({
-    size?: "sm" | "lg" | "icon" | "md" | "xl" | null | undefined;
+    size?: "sm" | "md" | "lg" | "icon" | "xl" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 export interface AgentAudioVisualizerWaveProps {
     /**
@@ -19375,7 +19583,7 @@ import { type VariantProps } from "class-variance-authority";
 import { type MotionProps } from "motion/react";
 import { type ComponentProps, type Ref } from "react";
 declare const agentChatIndicatorVariants: (props?: ({
-    size?: "sm" | "lg" | "md" | null | undefined;
+    size?: "sm" | "md" | "lg" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 /**
  * Props for the AgentChatIndicator component.
@@ -19772,7 +19980,7 @@ export declare function AgentTrackControl({ kind, variant, source, pressed, pend
 import { type VariantProps } from "class-variance-authority";
 import { type ComponentProps } from "react";
 export declare const agentTrackToggleVariants: (props?: ({
-    size?: "default" | "sm" | "lg" | null | undefined;
+    size?: "sm" | "lg" | "default" | null | undefined;
     variant?: "default" | "outline" | null | undefined;
 } & import("class-variance-authority/types").ClassProp) | undefined) => string;
 /**
@@ -20530,11 +20738,13 @@ export interface VoiceAgentSessionProps {
     onSpeakerChange: (enabled: boolean) => void;
     onDisconnect: () => void;
     onConnect?: () => void;
+    showTranscript?: boolean;
+    onTranscriptChange?: (visible: boolean) => void;
     statusText?: string;
     className?: string;
 }
 /** Controlled composition: the host owns connection, capture, playback, and agent execution. */
-export declare function VoiceAgentSession({ name, state, messages, microphoneEnabled, speakerEnabled, inputLevel, outputLevel, onMicrophoneChange, onSpeakerChange, onDisconnect, onConnect, statusText, className, }: VoiceAgentSessionProps): import("react").JSX.Element;
+export declare function VoiceAgentSession({ name, state, messages, microphoneEnabled, speakerEnabled, inputLevel, outputLevel, onMicrophoneChange, onSpeakerChange, onDisconnect, onConnect, showTranscript: controlledShowTranscript, onTranscriptChange, statusText, className, }: VoiceAgentSessionProps): import("react").JSX.Element;
 ```
 
 ### components/voice-agents/state.ts

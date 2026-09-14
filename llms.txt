@@ -9,6 +9,8 @@ Components receive data through props and return user intent through callbacks. 
 - [Overview](https://agents-ui.github.io/agents-kit/docs/introduction)
 - [Installation and required styles](https://agents-ui.github.io/agents-kit/docs/installation)
 - [Component catalog](https://agents-ui.github.io/agents-kit/components)
+- [App examples and build prompts](https://agents-ui.github.io/agents-kit/examples)
+- [App starter guide](https://agents-ui.github.io/agents-kit/docs/examples)
 - [Voice agents](https://agents-ui.github.io/agents-kit/voice)
 - [Voice integration guide](https://agents-ui.github.io/agents-kit/docs/voice-agents)
 - [Generative playground](https://agents-ui.github.io/agents-kit/generative)
@@ -22,7 +24,7 @@ Components receive data through props and return user intent through callbacks. 
 
 ## Registry catalog
 
-221 installable entries. Related source variants share a family in the visual catalog. Registry names and file paths remain explicit here.
+224 installable entries. Related source variants share a family in the visual catalog. Registry names and file paths remain explicit here.
 
 ### Generated results and runtime controls (4)
 
@@ -219,6 +221,12 @@ Components receive data through props and return user intent through callbacks. 
 - [elevenlabs-voice-button](https://agents-ui.github.io/agents-kit/c/elevenlabs-voice-button.json): Voice Button
 - [elevenlabs-voice-picker](https://agents-ui.github.io/agents-kit/c/elevenlabs-voice-picker.json): Voice Picker
 - [elevenlabs-waveform](https://agents-ui.github.io/agents-kit/c/elevenlabs-waveform.json): Waveform
+
+### App examples (3)
+
+- [example-chat-app](https://agents-ui.github.io/agents-kit/c/example-chat-app.json): Start with a question or source note, then switch to voice without losing your draft.
+- [example-coding-app](https://agents-ui.github.io/agents-kit/c/example-coding-app.json): An agent proposes a patch, you review it, and the checks explain the result.
+- [example-voice-app](https://agents-ui.github.io/agents-kit/c/example-voice-app.json): Talk and type in the same conversation, with one composer and shared context.
 
 ### LiveKit (15)
 

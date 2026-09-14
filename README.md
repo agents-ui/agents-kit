@@ -6,7 +6,7 @@ Build chat, voice, and generative interfaces with React. Agents Kit brings messa
 
 Version 0.3 keeps existing v0.1 and v0.2 component paths and registry slugs available. The previous public source is preserved in the [v0.1.0 tag](https://github.com/agents-ui/agents-kit/tree/v0.1.0).
 
-[Live site](https://agents-ui.github.io/agents-kit/) · [Components](https://agents-ui.github.io/agents-kit/components) · [Voice](https://agents-ui.github.io/agents-kit/voice) · [Playground](https://agents-ui.github.io/agents-kit/generative) · [v0.1 archive](https://agents-ui.github.io/agents-kit/v0.1)
+[Live site](https://agents-ui.github.io/agents-kit/) · [Components](https://agents-ui.github.io/agents-kit/components) · [App examples](https://agents-ui.github.io/agents-kit/examples) · [Voice](https://agents-ui.github.io/agents-kit/voice) · [Playground](https://agents-ui.github.io/agents-kit/generative) · [v0.1 archive](https://agents-ui.github.io/agents-kit/v0.1)
 
 [Installation](https://agents-ui.github.io/agents-kit/docs/installation) · [MCP setup](https://agents-ui.github.io/agents-kit/docs/mcp) · [llms.txt](https://agents-ui.github.io/agents-kit/llms.txt) · [Full LLM reference](https://agents-ui.github.io/agents-kit/llms-full.txt)
 
@@ -25,10 +25,29 @@ Voice agents are now part of the kit. Explore 37 new entries from LiveKit, Eleve
 ## Explore
 
 - `/components` presents the current component families in one continuous, searchable catalog.
+- `/examples` shows complete voice, chat, and coding interfaces with live previews, build prompts, and installable source. The coding example also includes a basic/kit comparison.
 - `/voice` brings together voice visualizers, session controls, transcripts, playback, and voice selection.
 - `/generative` shows generated answers and work products in ready, loading, and error states.
 - `/v0.1` keeps the previous component gallery available for existing users.
 - `/docs` explains installation, integration, provenance, and the v0.2 migration.
+
+## Build an app
+
+Start with a working interface, then make it yours. Each [app example](https://agents-ui.github.io/agents-kit/examples) includes a prompt you can paste into your coding agent, the components it uses, and source you can install.
+
+- [Voice assistant](https://agents-ui.github.io/agents-kit/examples#voice): open the shared conversation in voice mode, type or try a sample voice turn, mute the microphone control, and attach a note.
+- [Research chat](https://agents-ui.github.io/agents-kit/examples#chat): open the same conversation in text mode, ask questions from local notes, and switch voice mode on when useful.
+- [Coding workspace](https://agents-ui.github.io/agents-kit/examples#coding): apply a patch, inspect the working file, and check whether the required changes are present.
+
+Voice and chat are two entry points to one conversation example with shared messages, draft, attachment, and composer. Its replies are local samples; it does not capture or play microphone audio or connect to an agent backend. The coding example's basic and kit views use the same sample content. [Read the setup guide](https://agents-ui.github.io/agents-kit/docs/examples).
+
+<table>
+  <tr>
+    <td width="33%" valign="top"><a href="https://agents-ui.github.io/agents-kit/examples#voice"><img src="public/screenshots/example-voice.png" alt="Shared conversation app opened in voice mode" width="100%" /></a></td>
+    <td width="33%" valign="top"><a href="https://agents-ui.github.io/agents-kit/examples#chat"><img src="public/screenshots/example-chat.png" alt="Shared conversation app opened in text mode" width="100%" /></a></td>
+    <td width="33%" valign="top"><a href="https://agents-ui.github.io/agents-kit/examples#coding"><img src="public/screenshots/example-coding.png" alt="Coding workspace app built with Agents Kit" width="100%" /></a></td>
+  </tr>
+</table>
 
 ## Included collections
 

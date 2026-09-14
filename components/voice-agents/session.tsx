@@ -24,6 +24,8 @@ export interface VoiceAgentSessionProps {
   onSpeakerChange: (enabled: boolean) => void
   onDisconnect: () => void
   onConnect?: () => void
+  showTranscript?: boolean
+  onTranscriptChange?: (visible: boolean) => void
   statusText?: string
   className?: string
 }
@@ -41,10 +43,20 @@ export function VoiceAgentSession({
   onSpeakerChange,
   onDisconnect,
   onConnect,
+  showTranscript: controlledShowTranscript,
+  onTranscriptChange,
   statusText,
   className,
 }: VoiceAgentSessionProps) {
-  const [showTranscript, setShowTranscript] = useState(true)
+  const [uncontrolledShowTranscript, setUncontrolledShowTranscript] =
+    useState(true)
+  const showTranscript = controlledShowTranscript ?? uncontrolledShowTranscript
+  const setShowTranscript = (visible: boolean) => {
+    if (controlledShowTranscript === undefined) {
+      setUncontrolledShowTranscript(visible)
+    }
+    onTranscriptChange?.(visible)
+  }
   const connected = !["idle", "disconnected", "failed"].includes(state)
   const labels: Record<VoiceSessionState, string> = {
     idle: "Ready when you are",

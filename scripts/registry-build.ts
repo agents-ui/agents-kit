@@ -1,5 +1,6 @@
 import fs from "node:fs"
 import path from "node:path"
+import { appExamples } from "../components/gallery/app-examples-data"
 import { components as promptComponents } from "./registry-components"
 
 const root = process.cwd()
@@ -15,6 +16,7 @@ const allowedRoots = [
   "components/prompt-kit/",
   "components/ui/",
   "components/voice-agents/",
+  "components/examples/",
   "hooks/",
   "lib/",
   "styles/",
@@ -108,6 +110,15 @@ function collect(
 }
 
 const definitions = [
+  ...appExamples.map((example) => ({
+    name: example.registryName,
+    path: path.join(root, example.sourcePath),
+    description: example.description,
+    source: "App examples",
+    dependencies: [] as string[],
+    tailwind: undefined,
+    cssVars: undefined,
+  })),
   {
     name: "voice-agent-session",
     path: path.join(root, "components/voice-agents/session.tsx"),

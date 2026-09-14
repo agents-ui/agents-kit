@@ -33,7 +33,8 @@
     "llms-full.txt",
     "components/ai-elements",
     "DESIGN.md",
-    "components/voice-agents"
+    "components/voice-agents",
+    "components/examples"
   ],
   "scripts": {
     "dev": "next dev",
